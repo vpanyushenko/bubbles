@@ -155,8 +155,8 @@
   .spinner {
     content: "";
     box-sizing: border-box;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     border-radius: 50%;
     border: 2px solid #ccc;
     border-top-color: #fff;
@@ -176,8 +176,8 @@
 
   button {
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     font-size: 0;
     -webkit-transition: all 0.25s;
@@ -190,7 +190,7 @@
   }
 
   button .icon {
-    /* font-size: 24px; */
+    /* font-size: 1.5rem; */
     font-size: 17px;
     fill: #1b1d21;
     -webkit-transition: fill 0.25s;
@@ -199,8 +199,8 @@
   }
 
   button:hover {
-    -webkit-box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
-    box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
+    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
   }
 
   :global(.table__cell button) {
@@ -209,8 +209,8 @@
   }
 
   :global(.table__row:hover button) {
-    -webkit-box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6) !important;
-    box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6) !important;
+    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6) !important;
+    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6) !important;
   }
 
   .icon__btn__counter {
@@ -218,8 +218,8 @@
     top: 0;
     right: -12px;
     display: inline-block;
-    min-width: 24px;
-    line-height: 24px;
+    min-width: 1.5rem;
+    line-height: 1.5rem;
     border-radius: 50%;
     background: var(--red);
     font-size: 12px;
@@ -232,18 +232,18 @@
     text-align: initial;
     right: -12px;
     width: 360px;
-    padding: 24px 12px;
-    -webkit-box-shadow: 0 10px 36px rgba(227, 230, 236, 0.8);
-    box-shadow: 0 10px 36px rgba(227, 230, 236, 0.8);
+    padding: 1.5rem 12px;
+    -webkit-box-shadow: 0 0.625rem 36px rgba(227, 230, 236, 0.8);
+    box-shadow: 0 0.625rem 36px rgba(227, 230, 236, 0.8);
     background: #ffffff;
-    border-radius: 24px;
+    border-radius: 1.5rem;
     visibility: hidden;
     opacity: 0;
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
     z-index: 100;
-    margin-top: 16px;
+    margin-top: 1rem;
     border: 1px solid rgba(227, 230, 236, 0.8);
     max-height: 600px;
     overflow-y: auto;
@@ -251,7 +251,7 @@
 
   .icon__btn__info {
     margin-bottom: 0px;
-    padding: 0 24px;
+    padding: 0 1.5rem;
   }
 
   .icon__btn__options {
@@ -265,7 +265,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 16px 28px 16px 20px;
+    padding: 1rem 28px 1rem 1.25rem;
     border-radius: 12px;
     background: transparent;
     cursor: pointer;
@@ -281,14 +281,14 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 16px 16px 16px 20px;
+    padding: 1rem 1rem 1rem 1.25rem;
     background: transparent;
     flex-grow: 1;
   }
 
   .icon__btn__table__row .table__cell {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .icon__btn__item:hover {
@@ -318,7 +318,7 @@
   .icon__btn__title {
     font-size: 17px;
     margin-right: auto;
-    padding-left: 20px;
+    padding-left: 1.25rem;
     color: #11142d;
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
@@ -349,13 +349,13 @@
 
   .icon__btn__text {
     margin-top: 6px;
-    padding-right: 10px;
+    padding-right: 0.625rem;
   }
 
   .icon__btn__time {
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    margin-left: 20px;
+    margin-left: 1.25rem;
   }
 
   .icon__btn__btns {
@@ -368,8 +368,8 @@
 
   .icon__btn.active button {
     background: #6c5dd3;
-    -webkit-box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
-    box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
+    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
   }
 
   .icon__btn.active button img {
@@ -386,14 +386,14 @@
       position: static;
     }
     button {
-      width: 40px;
-      height: 40px;
-      -webkit-box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
-      box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
+      width: 2.5rem;
+      height: 2.5rem;
+      -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+      box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
     }
 
     button .icon {
-      font-size: 20px;
+      font-size: 1.25rem;
     }
     .icon__btn__counter {
       top: 5px;
@@ -407,29 +407,29 @@
       right: 0;
       left: 0;
       width: auto;
-      padding: 24px 16px;
+      padding: 1.5rem 1rem;
       -webkit-box-shadow: 0px 30px 30px rgba(27, 29, 33, 0.3);
       box-shadow: 0px 30px 30px rgba(27, 29, 33, 0.3);
     }
     .icon__btn__info {
-      margin-bottom: 16px;
+      margin-bottom: 1rem;
       padding: 0;
     }
     /* .icon__btn__options {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
   } */
     .icon__btn__item {
-      padding: 8px 16px;
+      padding: 8px 1rem;
     }
 
     .icon__btn__item:hover {
       background: none;
     }
     .icon__btn__item:not(:last-child) {
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
     }
     .icon__btn__ava {
-      margin-right: 16px;
+      margin-right: 1rem;
     }
   }
 </style>

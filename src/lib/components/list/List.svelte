@@ -74,8 +74,8 @@
   }
 
   .table__header .table__cell {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     font-size: 13px;
     line-height: 1.38462;
     font-weight: 500;
@@ -85,9 +85,9 @@
   .table__cell {
     display: table-cell;
     vertical-align: middle;
-    padding-left: 20px;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-left: 1.25rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid #e4e4e4;
     color: var(--black);
     flex-grow: 1;
@@ -102,8 +102,8 @@
   }
 
   .table__cell.thin {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .table__cell.thinnest {
@@ -112,7 +112,7 @@
   }
 
   .table__cell.icon {
-    width: 20px;
+    width: 1.25rem;
     padding: 0;
     font-size: 0;
   }
@@ -131,9 +131,9 @@
     align-items: center;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    margin-right: 14px;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.875rem;
     border-radius: 12px;
     font-size: 0;
     /* align-self: baseline; */
@@ -148,8 +148,8 @@
   }
 
   .table__cell__img {
-    width: 48px;
-    height: 48px;
+    width: 3rem;
+    height: 3rem;
   }
   /* Utility Styles */
   .text-gray {
@@ -161,7 +161,7 @@
   }
 
   .h6 {
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: 1.5;
     font-weight: bold;
     color: var(--black);
@@ -187,7 +187,7 @@
       height: 64px;
     }
     .table__details {
-      padding-left: 16px;
+      padding-left: 1rem;
     }
     .table__bg {
       border-radius: 50%;
@@ -217,12 +217,12 @@
     }
     .table__cell {
       display: block;
-      padding: 16px 0px;
+      padding: 1rem 0px;
       border: none;
     }
 
     .table__cell__img {
-      margin-right: 10px;
+      margin-right: 0.625rem;
     }
   } */
 
@@ -240,12 +240,12 @@
       display: flex;
       width: 100%;
       position: relative;
-      padding: 32px;
-      border-radius: 24px;
+      padding: 2rem;
+      border-radius: 1.5rem;
       background: #fff;
-      -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 110px;
-      -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 110px;
-      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 110px;
+      -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+      -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
       align-items: center;
       flex-wrap: none;
     }

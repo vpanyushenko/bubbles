@@ -226,7 +226,7 @@
     background: rgba(228, 228, 228, 0.3);
     border: 2px solid transparent;
     font-family: "Inter", sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #11142d;
     -webkit-transition: all 0.25s;
@@ -261,11 +261,11 @@
 
   .field__label {
     position: absolute;
-    top: 32px;
-    right: 24px;
-    left: 24px;
+    top: 2rem;
+    right: 1.5rem;
+    left: 1.5rem;
     pointer-events: none;
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 700;
     letter-spacing: 0.9px;
     text-transform: uppercase;
@@ -287,7 +287,7 @@
     position: relative;
     bottom: -3px;
     margin-left: 5px;
-    font-size: 14px;
+    font-size: 0.875rem;
     color: var(--black);
   }
 
@@ -307,12 +307,12 @@
   .field__input {
     width: 100%;
     height: 80px;
-    padding: 18px 22px 0 !important;
+    padding: 1.125rem 22px 0 !important;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
     font-family: "Inter", sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--black);
     transition: all 0.2s;
@@ -326,12 +326,12 @@
 
   .field__textarea {
     width: 100%;
-    padding: 40px 22px 0 !important;
+    padding: 2.5rem 22px 0 !important;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
     font-family: "Inter", sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--black);
     transition: all 0.2s;
@@ -355,16 +355,16 @@
   .field.success:before {
     content: "";
     position: absolute;
-    right: 24px;
-    bottom: 24px;
+    right: 1.5rem;
+    bottom: 1.5rem;
     width: 23px;
-    height: 18px;
+    height: 1.125rem;
     background: url("data:image/svg+xml,%3Csvg width='23' height='18' viewBox='0 0 23 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 18L0 10L3 7L8 12L20 0L23 3L8 18Z' fill='%234FBF67'/%3E%3C/svg%3E%0A")
       no-repeat 50% 50%/100% auto;
   }
 
   .field__desc {
-    padding: 10px 22px 0 !important;
+    padding: 0.625rem 22px 0 !important;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33333;

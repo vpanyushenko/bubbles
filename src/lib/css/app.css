@@ -57,7 +57,7 @@ button:focus:not(:focus-visible) {
 	outline: none;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 767px) {
 	h1 {
 		font-size: 2.4rem;
 	}
@@ -72,8 +72,8 @@ button:focus:not(:focus-visible) {
   .spinner {
 	content: "";
 	box-sizing: border-box;
-	width: 20px;
-	height: 20px;
+	width: 1.25rem;
+	height: 1.25rem;
 	border-radius: 50%;
 	border: 2px solid #ccc;
 	border-top-color: #fff;
@@ -82,8 +82,8 @@ button:focus:not(:focus-visible) {
   
   .spinner.spinner__textarea {
 	position: absolute;
-	top: 24px;
-	right: 20px;
+	top: 1.5rem;
+	right: 1.25rem;
   }
 
   .hidden {
@@ -294,8 +294,8 @@ button {
 body {
 	min-width: 375px;
 	font-family: "Inter", sans-serif;
-	font-size: 14px;
-	line-height: 1.71429;
+	font-size: 0.875rem;
+	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	color: #11142d;
@@ -346,28 +346,28 @@ h1 {
 }
 
 h2 {
-  font-size: 48px;
+  font-size: 3rem;
   line-height: 1.5;
 }
 
 h3 {
-  font-size: 40px;
+  font-size: 2.5rem;
   line-height: 1.5;
 }
 
 h4 {
-  font-size: 32px;
+  font-size: 2rem;
   line-height: 1.5;
   letter-spacing: -0.5px;
 }
 
 h5 {
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 1.5;
 }
 
 h6 {
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.5;
 }
 
@@ -388,7 +388,7 @@ p {
 }
 
 .caption-lg {
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -398,7 +398,7 @@ p {
 }
 
 .font-lg {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .font-bold {
@@ -439,7 +439,7 @@ hr {
     border: none;
     border-top: 1px solid var(--gray-light);
     clear: both;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
   }
 
 @media only screen and (max-width: 1419px) {
@@ -448,11 +448,11 @@ hr {
 
 @media only screen and (max-width: 1339px) {
 	h1 {
-		font-size: 48px;
+		font-size: 3rem;
 		line-height: 1.5;
 	  }
 	  h2 {
-		font-size: 40px;
+		font-size: 2.5rem;
 		line-height: 1.5;
 	  }
 }
@@ -480,7 +480,7 @@ hr {
 		text-align: right;
 	}
 	.h3 {
-		font-size: 32px;
+		font-size: 2rem;
 		line-height: 1.5;
 		letter-spacing: -0.5px;
 	}
@@ -492,12 +492,12 @@ hr {
 
 @media only screen and (max-width: 767px) {
 	h1 {
-		font-size: 40px;
+		font-size: 2.5rem;
 		line-height: 1.5;
 	  }
 
 	h2 {
-		font-size: 32px;
+		font-size: 2rem;
 		line-height: 1.5;
 		letter-spacing: -0.5px;
 	  }
@@ -553,7 +553,7 @@ hr {
   
   .page__row__wrap > a,
   .page__row__wrap > div {
-	margin: 16px;
+	margin: 1rem;
   }
   
   .page__row__header {
@@ -614,15 +614,15 @@ hr {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	margin: 0 -16px;
+	margin: 0 -1rem;
   }
   
   .page__card__row .card {
 	-webkit-box-flex: 0;
-	-ms-flex: 0 0 calc(50% - 32px);
-	flex: 0 0 calc(50% - 32px);
-	width: calc(50% - 32px);
-	margin: 0 16px;
+	-ms-flex: 0 0 calc(50% - 2rem);
+	flex: 0 0 calc(50% - 2rem);
+	width: calc(50% - 2rem);
+	margin: 0 1rem;
   }
   
   .page__group .card:not(:last-child) {
@@ -640,8 +640,8 @@ hr {
   
   .page__stat {
 	position: relative;
-	padding: 50px 32px 40px;
-	border-radius: 24px;
+	padding: 50px 2rem 2.5rem;
+	border-radius: 1.5rem;
 	background: #ffffff;
   }
   
@@ -655,7 +655,7 @@ hr {
 	-ms-flex-negative: 0;
 	flex-shrink: 0;
 	width: 298px;
-	margin-right: 32px;
+	margin-right: 2rem;
   }
   
   .page__flex .card:nth-of-type(2) {
@@ -665,18 +665,18 @@ hr {
   }
   
   .page__title {
-	margin-bottom: 32px;
+	margin-bottom: 2rem;
   }
   
   .page__nav {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	margin-bottom: 48px;
+	margin-bottom: 3rem;
   }
   
   .page__nav .page__link {
-	padding: 7px 18px;
+	padding: 7px 1.125rem;
 	border-radius: 12px;
 	font-weight: 600;
 	color: #808191;
@@ -693,7 +693,7 @@ hr {
   
   @media only screen and (max-width: 1419px) {
 	.page__col {
-	  padding: 0 48px 44px;
+	  padding: 0 3rem 44px;
 	}
 	.page__col:nth-of-type(1) {
 	  -webkit-box-flex: 0;
@@ -705,7 +705,7 @@ hr {
 	  width: 390px;
 	}
 	.page__content {
-	  padding: 0 48px 48px;
+	  padding: 0 3rem 3rem;
 	}
   }
   
@@ -713,7 +713,7 @@ hr {
 	.page__center {
 	  width: 100%;
 	  max-width: 930px;
-	  padding: 0 70px 40px;
+	  padding: 0 70px 2.5rem;
 	}
 	.page__row {
 	  display: block;
@@ -726,13 +726,13 @@ hr {
 	  display: -webkit-box;
 	  display: -ms-flexbox;
 	  display: flex;
-	  margin: 0 -40px;
+	  margin: 0 -2.5rem;
 	}
   
 	.page__row_responsive .page__col {
 	  margin: 0;
-	  padding-left: 40px;
-	  padding-right: 40px;
+	  padding-left: 2.5rem;
+	  padding-right: 2.5rem;
 	}
 	.page__row_responsive .page__col:first-of-type {
 	  -webkit-box-flex: 0;
@@ -777,8 +777,8 @@ hr {
 	  flex: 0 0 50%;
 	  max-width: 50%;
 	  margin: 0;
-	  padding-left: 40px;
-	  padding-right: 40px;
+	  padding-left: 2.5rem;
+	  padding-right: 2.5rem;
 	}
 	.page__group {
 	  display: -webkit-box;
@@ -787,28 +787,28 @@ hr {
 	  -webkit-box-align: start;
 	  -ms-flex-align: start;
 	  align-items: flex-start;
-	  margin: 0 -16px;
+	  margin: 0 -1rem;
 	}
 	.page__group .card {
 	  -webkit-box-flex: 0;
-	  -ms-flex: 0 0 calc(50% - 32px);
-	  flex: 0 0 calc(50% - 32px);
-	  max-width: calc(50% - 32px);
-	  margin: 0 16px;
+	  -ms-flex: 0 0 calc(50% - 2rem);
+	  flex: 0 0 calc(50% - 2rem);
+	  max-width: calc(50% - 2rem);
+	  margin: 0 1rem;
 	}
 	.page__group .card:not(:last-child) {
 	  margin-bottom: 0;
 	}
 	.page__content {
-	  padding: 0 0 40px;
+	  padding: 0 0 2.5rem;
 	}
 	.page__content_pt64 {
-	  margin-top: 32px;
+	  margin-top: 2rem;
 	  padding: 0;
 	  border: none;
 	}
 	.page__hello {
-	  font-size: 18px;
+	  font-size: 1.125rem;
 	  line-height: 1.33333;
 	}
 	.page_other .page__center {
@@ -854,10 +854,10 @@ hr {
 	}
 	.page__flex .card:first-of-type {
 	  width: 100%;
-	  margin: 0 0 32px;
+	  margin: 0 0 2rem;
 	}
 	.page__nav {
-	  margin-bottom: 32px;
+	  margin-bottom: 2rem;
 	}
 	body.toggle .page__wrapper {
 	  padding-left: 96px;
@@ -866,7 +866,7 @@ hr {
 	  overflow: hidden;
 	}
 	.page_other .page__center {
-	  padding-bottom: 40px;
+	  padding-bottom: 2.5rem;
 	}
   }
   
@@ -878,7 +878,7 @@ hr {
 	  padding-left: 96px;
 	}
 	.page__center {
-	  padding: 0 32px 40px;
+	  padding: 0 2rem 2.5rem;
 	}
   
 	.page__content {
@@ -896,7 +896,7 @@ hr {
 	  padding-left: 0;
 	}
 	.page__center {
-	  padding: 0 16px 32px;
+	  padding: 0 1rem 2rem;
 	}
   
 	.page__col_w100 {
@@ -907,14 +907,14 @@ hr {
 	  margin: 0;
 	}
 	.page__card__row:not(:last-child) {
-	  margin-bottom: 32px;
+	  margin-bottom: 2rem;
 	}
 	.page__card__row .card {
 	  width: 100%;
 	  margin: 0;
 	}
 	.page__card__row .card:not(:last-child) {
-	  margin-bottom: 32px;
+	  margin-bottom: 2rem;
 	}
 	.page__group {
 	  display: block;
@@ -925,13 +925,13 @@ hr {
 	  margin: 0;
 	}
 	.page__group .card:not(:last-child) {
-	  margin-bottom: 32px;
+	  margin-bottom: 2rem;
 	}
 	.page__hello {
-	  font-size: 16px;
+	  font-size: 1rem;
 	}
 	.page__title {
-	  padding: 0 24px;
+	  padding: 0 1.5rem;
 	}
 	body.toggle .page__wrapper {
 	  padding-left: 0;

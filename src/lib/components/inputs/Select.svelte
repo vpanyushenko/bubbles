@@ -260,7 +260,7 @@
     padding: 0 46px 0 21px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
-    border-radius: 16px;
+    border-radius: 1rem;
     font-weight: 600;
     color: #808191;
     -webkit-transition: all 0.25s;
@@ -274,11 +274,11 @@
     content: "";
     position: absolute;
     top: 50%;
-    right: 20px;
+    right: 1.25rem;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    width: 14px;
+    width: 0.875rem;
     height: 8px;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath fill='%231b1d21' d='M.293.293A1 1 0 0 1 1.613.21l.094.083L7 5.585 12.293.293a1 1 0 0 1 1.32-.083l.094.083a1 1 0 0 1 .083 1.32l-.083.094-6 6a1 1 0 0 1-1.32.083l-.094-.083-6-6a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E")
       no-repeat 50% 50%/100% auto;
@@ -298,10 +298,10 @@
     transform: none;
     position: absolute;
     top: 40%;
-    right: 20px;
+    right: 1.25rem;
     box-sizing: border-box;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     border-radius: 50%;
     border: 2px solid #ccc;
     border-top-color: #fff;
@@ -318,10 +318,10 @@
 
   .label {
     margin-bottom: 0 !important;
-    padding-top: 16px;
+    padding-top: 1rem;
     padding-bottom: 4px;
     pointer-events: none;
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 700;
     line-height: 1.6;
     letter-spacing: 0.9px;
@@ -349,16 +349,16 @@
     width: 100%;
     margin: auto;
     margin-top: 8px;
-    padding: 16px;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     border: 1px solid #e4e4e4;
     background: #ffffff;
-    border-radius: 24px;
+    border-radius: 1.5rem;
     visibility: hidden;
     opacity: 0;
-    -webkit-box-shadow: 0 20px 16px rgba(227, 230, 236, 0.6);
-    box-shadow: 0 20px 16px rgba(227, 230, 236, 0.6);
+    -webkit-box-shadow: 0 1.25rem 1rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 1.25rem 1rem rgba(227, 230, 236, 0.6);
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
@@ -372,7 +372,7 @@
     background: rgba(228, 228, 228, 0.3);
     border: 2px solid transparent;
     font-family: "Inter", sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #11142d;
     -webkit-transition: all 0.25s;
@@ -389,8 +389,8 @@
     display: block;
     padding-top: 12px;
     padding-bottom: 12px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   hr {
@@ -419,7 +419,7 @@
     top: 5px;
     right: 8px;
     width: 6px;
-    height: 10px;
+    height: 0.625rem;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='10'%3E%3Cpath fill='%2311142d' d='M.293.293A1 1 0 0 1 1.613.21l.094.083 4 4a1 1 0 0 1 .083 1.32l-.083.094-4 4A1 1 0 0 1 .21 8.387l.083-.094L3.585 5 .293 1.707A1 1 0 0 1 .21.387L.293.293z'/%3E%3C/svg%3E")
       no-repeat 50% 50%/100% auto;
     -webkit-transition: -webkit-transform 0.25s;
@@ -479,10 +479,10 @@
 
   .label {
     margin-bottom: 0 !important;
-    padding-top: 16px;
+    padding-top: 1rem;
     padding-bottom: 4px;
     pointer-events: none;
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 700;
     line-height: 1.6;
     letter-spacing: 0.9px;
@@ -502,7 +502,7 @@
   }
 
   .field__desc {
-    padding: 10px 22px 0 !important;
+    padding: 0.625rem 22px 0 !important;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33333;
@@ -513,7 +513,7 @@
     .body {
       right: 0;
       width: auto;
-      padding: 24px 21px;
+      padding: 1.5rem 21px;
     }
   }
 

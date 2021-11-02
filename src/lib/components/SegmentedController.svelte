@@ -71,15 +71,15 @@
 <style>
   nav {
     position: relative;
-    margin-bottom: 32px;
+    margin-bottom: 2rem;
   }
   button {
     background: transparent;
     text-align: center;
     z-index: 1;
     height: 42px;
-    border-radius: 10px;
-    min-width: 120px;
+    border-radius: 0.625rem;
+    min-width: 11.25rem;
     font-weight: bolder;
     color: var(--gray);
   }
@@ -108,7 +108,7 @@
   }
   .wrapper:before {
     background-color: var(--white);
-    border-radius: 10px;
+    border-radius: 0.625rem;
     bottom: 0;
     content: "";
     left: var(--left);

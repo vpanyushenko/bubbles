@@ -66,9 +66,9 @@
     position: relative;
     display: block;
     width: 64px;
-    height: 24px;
+    height: 1.5rem;
     background: rgba(228, 228, 228, 0.5);
-    border-radius: 16px;
+    border-radius: 1rem;
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
@@ -82,8 +82,8 @@
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     border-radius: 50%;
     border: 4px solid #ffffff;
     -webkit-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
@@ -100,9 +100,9 @@
 
   .switch.active .switch__box:before {
     background: var(--purple);
-    -webkit-transform: translate(40px, -50%);
-    -ms-transform: translate(40px, -50%);
-    transform: translate(40px, -50%);
+    -webkit-transform: translate(2.5rem, -50%);
+    -ms-transform: translate(2.5rem, -50%);
+    transform: translate(2.5rem, -50%);
   }
 
   .loading:before {
@@ -110,8 +110,8 @@
     position: absolute;
     left: 2px;
     top: 2px;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     border-radius: 50%;
     border: 4px solid #ccc;
     border-top-color: #fff;

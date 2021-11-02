@@ -12,8 +12,8 @@
 
 <style>
   div {
-    margin-bottom: 24px;
-    margin-top: 24px;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -22,7 +22,7 @@
   }
 
   span {
-    padding: 0 20px;
+    padding: 0 1.25rem;
   }
 
   .left,
@@ -41,6 +41,6 @@
     border: none;
     border-top: 1px solid var(--gray-light);
     clear: both;
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
   }
 </style>

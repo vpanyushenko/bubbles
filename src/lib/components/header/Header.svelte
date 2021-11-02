@@ -74,7 +74,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 48px 64px 44px;
+    padding: 3rem 64px 44px;
   }
 
   .breadcrumbs a:hover {
@@ -132,8 +132,8 @@
     display: none;
     -ms-flex-negative: 0;
     flex-shrink: 0;
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     font-size: 0;
   }
 
@@ -145,8 +145,8 @@
 
   .header__burger {
     display: none;
-    width: 32px;
-    height: 40px;
+    width: 2rem;
+    height: 2.5rem;
     margin-right: auto;
     font-size: 0;
   }
@@ -155,7 +155,7 @@
   .header__burger:after {
     content: "";
     display: inline-block;
-    width: 32px;
+    width: 2rem;
     height: 2px;
     margin: 3px auto;
     border-radius: 1px;
@@ -189,9 +189,9 @@
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      margin: 0 -16px;
-      padding: 40px 0;
-      padding-bottom: 40px;
+      margin: 0 -1rem;
+      padding: 2.5rem 0;
+      padding-bottom: 2.5rem;
     }
 
     /* h2 {
@@ -203,22 +203,22 @@
     header .text,
     header .icons {
       -webkit-box-flex: 0;
-      -ms-flex: 0 0 calc(50% - 32px);
-      flex: 0 0 calc(50% - 32px);
-      max-width: calc(50% - 32px);
-      margin: 0 16px;
+      -ms-flex: 0 0 calc(50% - 2rem);
+      flex: 0 0 calc(50% - 2rem);
+      max-width: calc(50% - 2rem);
+      margin: 0 1rem;
       padding: 0;
     }
 
     header .icons {
-      margin-left: 48px;
+      margin-left: 3rem;
       display: contents;
     }
   }
 
   @media only screen and (max-width: 1023) {
     .breadcrumbs {
-      margin-left: 48px;
+      margin-left: 3rem;
     }
 
     header {
@@ -243,8 +243,8 @@
 
     .header {
       height: 96px;
-      max-width: calc(100% + 32px);
-      margin: 0 -16px;
+      max-width: calc(100% + 2rem);
+      margin: 0 -1rem;
       padding: 0px;
       border-bottom: 1px solid #e4e4e4;
       width: 100%;
@@ -252,7 +252,7 @@
       justify-content: space-between;
     }
     header .text {
-      padding: 16px 0px 28px;
+      padding: 1rem 0px 28px;
       width: 100%;
       max-width: 100%;
     }
@@ -262,7 +262,7 @@
     }
 
     .breadcrumbs {
-      margin-left: 48px;
+      margin-left: 3rem;
     }
 
     .header__burger {

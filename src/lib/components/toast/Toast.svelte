@@ -43,7 +43,7 @@
 
 <style>
   .toast {
-    padding: 12px 20px;
+    padding: 12px 1.25rem;
     color: #ffffff;
     display: inline-block;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -52,7 +52,7 @@
     border-radius: 2px;
     cursor: pointer;
     text-decoration: none;
-    max-width: calc(50% - 20px);
+    max-width: calc(50% - 1.25rem);
     z-index: 2147483647;
     right: 15px;
     /* top: 30px; */
@@ -71,7 +71,7 @@
   img {
     opacity: 0.4;
     padding: 0 5px;
-    margin-left: 10px;
+    margin-left: 0.625rem;
   }
 
   .toast-rounded {
@@ -96,7 +96,7 @@
   @media only screen and (max-width: 500px) {
     .toast {
       margin-left: auto;
-      margin-right: 10px;
+      margin-right: 0.625rem;
       left: 0;
       right: 0;
       max-width: fit-content;

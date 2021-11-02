@@ -97,8 +97,8 @@
     overflow-y: scroll;
     overflow-x: hidden;
     box-sizing: border-box;
-    padding: 10px 32px 10px;
-    border-radius: 24px;
+    padding: 0.625rem 2rem 0.625rem;
+    border-radius: 1.5rem;
     background: #fff;
     display: flex;
     flex-direction: column;
@@ -112,8 +112,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     font-size: 13px;
     line-height: 1.38462;
     font-weight: 500;
@@ -122,7 +122,7 @@
 
   .title {
     font-family: "Poppins", sans-serif;
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: 1.33333;
     color: var(--black);
   }
@@ -133,13 +133,13 @@
     -o-transition: color 0.25s;
     transition: color 0.25s;
     padding-top: 12px;
-    padding-bottom: 40px;
+    padding-bottom: 2.5rem;
     flex: 1 0 auto;
   }
 
   footer {
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     text-align: end;
     flex-shrink: 0;
   }

@@ -33,7 +33,7 @@
     align-items: center;
     width: 100%;
     font-family: "Inter", sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #11142d;
     -webkit-transition: all 0.25s;
@@ -48,7 +48,7 @@
 
   .error {
     pointer-events: none;
-    font-size: 10px;
+    font-size: 0.625rem;
     font-weight: 700;
     letter-spacing: 0.9px;
     text-transform: uppercase;

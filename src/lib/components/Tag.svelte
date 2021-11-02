@@ -25,7 +25,7 @@
     font-family: "Fira Mono";
     display: inline-block;
     white-space: nowrap;
-    padding: 3px 10px;
+    padding: 3px 0.625rem;
     border-radius: 8px;
     color: #fff;
     font-size: 12px;

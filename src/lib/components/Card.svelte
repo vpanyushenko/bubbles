@@ -83,20 +83,20 @@
 <style>
   .card {
     position: relative;
-    padding: 10px 32px 10px;
-    border-radius: 24px;
+    padding: 0.625rem 2rem 0.625rem;
+    border-radius: 1.5rem;
     background: #fff;
-    -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 110px;
-    -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 110px;
-    box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 110px;
+    -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+    -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+    box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
   }
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .border {
@@ -131,8 +131,8 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding-bottom: 32px;
-    /* height: 40px; */
+    padding-bottom: 2rem;
+    /* height: 2.5rem; */
   }
 
   @media only screen and (max-width: 767px) {
