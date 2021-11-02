@@ -1,9 +1,16 @@
 <!--
   @component
 
-  @param {Array<(String|null)>} header - an array of header to use 
-  @param {Array<Object>} rows - the rows that will be included
-  @example: rows = [
+  ## Create a table with headers, rows, and footers.
+  ---
+  #### Inputs
+  - `@param {Array<(String|null)>} header - an array of header to use`
+  - `@param {Array<Object>} rows - the rows that will be included`
+  ---
+  #### Example
+
+  ```json
+  rows = [
     {
       type: "text"
       title: "Title",
@@ -26,12 +33,15 @@
       ]
     }
   ]
+  ```
+
+  ---
 -->
 <script>
   import { pageStore } from "$lib/stores/page.store";
   import Select from "$lib/components/inputs/Select.svelte";
   import Tag from "$lib/components/Tag.svelte";
-  import CircleButton from "$lib/components/inputs/circle-button/CircleButton.svelte";
+  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
 
   export let rows = [];
   export let header = [];
@@ -157,9 +167,9 @@
 
           {/if} -->
             <div class="table__cell right">
-              <CircleButton icon="arrowRight" {...cell} />
+              <IconButton icon="arrowRight" {...cell} />
               <!-- {#if cell.icon}
-              <CircleButton {...cell.icon} />
+              <IconButton {...cell.icon} />
             {/if} -->
             </div>
           {/if}

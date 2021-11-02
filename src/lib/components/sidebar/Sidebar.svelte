@@ -7,7 +7,7 @@
   export let logo = null;
 
   const sectionsWithTitles = {};
-
+  const path = $page.path.split("/").filter(Boolean)[0];
   let activeSection = sections.find((a) => a.active === true);
 
   sections.forEach((section, index) => {
@@ -16,23 +16,28 @@
     }
 
     if (!activeSection) {
-      const path = $page.path.split("/").filter(Boolean)[0];
-
       if (path === section.href.split("/").filter(Boolean)[0]) {
         activeSection = true;
 
         $pageStore.sidebar.active_item = section.id;
+      } else if (section.href_aliases) {
+        const urls = section.href_aliases.map((href) => href.split("/").filter(Boolean)[0]);
+        const aliasActiveSection = urls.find((a) => a === path);
+
+        if (aliasActiveSection) {
+          activeSection = true;
+
+          $pageStore.sidebar.active_item = section.id;
+        }
       }
     }
 
-    section = section;
-
-    if (sectionsWithTitles[section.section]) {
-      sectionsWithTitles[section.section].push(section);
-    } else {
+    if (!sectionsWithTitles[section.section]) {
       sectionsWithTitles[section.section] = [];
-      sectionsWithTitles[section.section].push(section);
     }
+
+    section = section;
+    sectionsWithTitles[section.section].push(section);
   });
 
   function sidebarItemSelected(obj) {

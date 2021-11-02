@@ -1,12 +1,63 @@
+<!--
+  @component
+
+  ### Add a header with a title, breadcrumbs, and action buttons
+  ---
+  #### Inputs
+  - `@param {String} title` - The string for the header. You can also add a `title` property to the `pageStore`, which will add the title to the header
+  - `@param {Boolean} [true] breadcrumbs` - Selects if you want to include breadcrumbs, defaults to true. The breadcrumbs will be automatically set for you but if you want to manually set them, use `pageStore`
+  - `@param {Array<Object>} buttons - An array of buttons that you want to add. 
+  ---
+  #### Example
+
+  ```json
+  {
+    title: "Page Title",
+    breadcrumbs: false,
+    buttons: [
+      {
+        icon: "add" //use one of the bundled icons or pass in your own svg
+        onclick: someFunction(), //you can all a function on click, like opening a moda;
+        href: null, //if you want this button to bring you to a different page. The benefit of href instead of onclick here is that the page will prefetch on hover for a faster load
+        dropdown: [] //if you want to open a menu of options, you can pass them in here
+      },
+      {
+        icon: "more" //use one of the bundled icons or pass in your own svg
+        onclick: null, 
+        href: null, 
+        dropdown: [
+          {
+            label: "Option 1",
+            caption: "This is an option caption"
+            href: "/about"
+          },
+          {
+            label: "Option 2",
+            caption: "This is an example with onclick",
+            onclick: someFunction() //can use onclick instead of href
+          }
+        ]
+      }
+    ]
+  }
+  
+  ```
+
+  ---
+-->
 <script>
   import { pageStore } from "$lib/stores/stores";
-  import calcBreadcrumbs from "$lib/utils/breadcrumbs";
   import { page } from "$app/stores";
   import { browser } from "$app/env";
-  import CircleButton from "$lib/components/inputs/circle-button/CircleButton.svelte";
+  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
 
   export let title = "";
+  export let breadcrumbs = true;
   export let buttons = [];
+
+  if (title) {
+    $pageStore.title = title;
+  }
 
   $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar.is_toggled);
   $: if (browser)
@@ -14,34 +65,74 @@
       ? document.querySelector(".sidebar").classList.toggle("active", $pageStore.sidebar.is_toggled)
       : null;
 
-  $: breadcrumbs = calcBreadcrumbs($page.path);
+  $: _breadcrumbs = calcBreadcrumbs($page.path);
   $: back = null;
 
-  $: if (breadcrumbs.length > 1) {
-    const backObject = breadcrumbs[breadcrumbs.length - 2];
+  $: if (_breadcrumbs.length > 1) {
+    const backObject = _breadcrumbs[_breadcrumbs.length - 2];
     back = backObject.href;
   }
 
   function toggleSidebar(event) {
     $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
+
+  function calcBreadcrumbs(path) {
+    const pathArray = path.split("/").filter(Boolean);
+
+    if (pathArray.length > 0 && !$pageStore.title) {
+      pageStore.update((data) => {
+        const title = pathArray[pathArray.length - 1];
+        data.title = title.charAt(0).toUpperCase() + title.slice(1);
+        return data;
+      });
+    }
+
+    if (pathArray.length <= 1) {
+      return [];
+    } else {
+      // const title = get(pageStore).title;
+
+      const breadcrumbs = pathArray.map((crumb, index) => {
+        let href = "";
+
+        for (let i = 0; i <= index; i++) {
+          href += `/${pathArray[i]}`;
+        }
+
+        if (pathArray.length - 1 === index && $pageStore.title) {
+          crumb = $pageStore.title;
+        }
+
+        const obj = {
+          text: pathArray.length - 3 >= index ? "..." : crumb,
+          href: href,
+        };
+        return obj;
+      });
+
+      console.log(breadcrumbs);
+
+      return breadcrumbs;
+    }
+  }
 </script>
 
 <header>
   <div class="text">
     <div class="header__title">
-      {#if breadcrumbs && breadcrumbs.length}
-        <CircleButton icon="arrowLeft" href={back} />
+      {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+        <IconButton icon="arrowLeft" href={back} />
       {/if}
       <h2>
         {title ? title : $pageStore.title}
       </h2>
     </div>
-    {#if breadcrumbs && breadcrumbs.length}
+    {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
       <h6 class="breadcrumbs">
-        {#each breadcrumbs as breadcrumb, index}
+        {#each _breadcrumbs as breadcrumb, index}
           <a sveltekit:prefetch href={breadcrumb.href}>{breadcrumb.text}</a>
-          {#if index !== breadcrumbs.length - 1}
+          {#if index !== breadcrumb.length - 1}
             <span> / </span>
           {/if}
         {/each}
@@ -53,7 +144,7 @@
       <button class="header__burger" on:click={toggleSidebar} />
       <div class="header__buttons">
         {#each buttons as button}
-          <CircleButton {...button} />
+          <IconButton {...button} />
         {/each}
       </div>
     </div>

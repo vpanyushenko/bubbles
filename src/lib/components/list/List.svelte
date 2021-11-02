@@ -13,7 +13,7 @@
 <script>
   import { pageStore } from "$lib/stores/page.store";
   import Tag from "$lib/components/Tag.svelte";
-  import CircleButton from "$lib/components/inputs/circle-button/CircleButton.svelte";
+  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
 
   export let rows = [];
   export let empty = "Nothing here yet.";
@@ -48,7 +48,7 @@
         </div>
 
         <div class="table__cell right">
-          <CircleButton icon="arrowRight" {...row} />
+          <IconButton icon="arrowRight" {...row} />
         </div>
       </a>
     {/each}

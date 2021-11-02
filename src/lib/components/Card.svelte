@@ -1,6 +1,6 @@
 <script>
   import Button from "$lib/components/inputs/Button.svelte";
-  import CircleButton from "$lib/components/inputs/circle-button/CircleButton.svelte";
+  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
   import Select from "$lib/components/inputs/Select.svelte";
   import Form from "$lib/components/form/Form.svelte";
   import Table from "$lib/components/table/Table.svelte";
@@ -47,7 +47,7 @@
         </div>
 
         {#each actions as action}
-          <CircleButton {...action} />
+          <IconButton {...action} />
         {/each}
       </div>
     {/if}

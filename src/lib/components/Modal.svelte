@@ -1,7 +1,7 @@
 <script>
   import { fly, fade } from "svelte/transition";
   import { modalStore } from "$lib/stores/modal.store";
-  import CircleButton from "$lib/components/inputs/circle-button/CircleButton.svelte";
+  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
   import Button from "$lib/components/inputs/Button.svelte";
   import Input from "$lib/components/inputs/Input.svelte";
   import Divider from "$lib/components/Divider.svelte";
@@ -32,7 +32,7 @@
       <div class="container" transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
         <header>
           <h6 class="title">{$modalStore.title}</h6>
-          <CircleButton icon="close" onclick={hideModal} />
+          <IconButton icon="close" onclick={hideModal} />
         </header>
 
         <main class="form">
