@@ -1,3 +1,40 @@
+<!--
+  @component
+
+  #### Create a table with headers, rows, and footers.
+  ---
+  ###### Inputs
+  - `@param {Array<(String|null)>} header - an array of header to use`
+  - `@param {Array<Object>} rows - the rows that will be included`
+  ---
+  ###### Example
+
+  `rows = [
+    {
+      type: "text"
+      title: "Title",
+      large: true, // makes the title large,
+      subtitle: "subtitle",
+      href: "/"
+    },
+    {
+      type: "complex",
+      rows: [
+        {
+          type: "tag",
+          label: "Tag",
+          color: "purple",
+        },
+        {
+          type; "text"
+          ...
+        }
+      ]
+    }
+  ]`
+
+  ---
+-->
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/page.store";
@@ -26,10 +63,11 @@
   };
 
   export let icon;
-  export let dropdown = false;
   export let onclick = null;
   export let options = [];
   export let href = "";
+
+  const dropdown = options.length ? true : false;
 
   let src = icons[icon] ? icons[icon] : more;
   let id = uuid();
