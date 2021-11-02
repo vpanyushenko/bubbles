@@ -30,14 +30,14 @@
 
 <svelte:window bind:innerWidth />
 
-{#if expanded}
+{#if expanded || !body}
   <div class="card">
     {#if filters.length || title}
-      <div class="card__header" class:border>
+      <div class="header" class:border>
         {#each filters as filter}
           <Select {...filter} />
         {/each}
-        <div class="card__header__text" class:center>
+        <div class="header__text" class:center>
           {#if title}
             <h6>{title}</h6>
           {/if}
@@ -51,7 +51,8 @@
         {/each}
       </div>
     {/if}
-    <div class="card__body">
+
+    <div class="body">
       {#if !body}
         <slot />
       {:else if body === "form"}
@@ -60,7 +61,8 @@
         <Table rows={table_rows} header={table_header} mobile="true" />
       {/if}
     </div>
-    {#if buttons.length || footer == true}
+
+    {#if buttons.length || footer === true}
       <div class="card__footer">
         {#each buttons as button}
           <Button {...button} />
@@ -89,7 +91,7 @@
     box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 110px;
   }
 
-  .card__header {
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -105,7 +107,7 @@
     text-align: center;
   }
 
-  .card__header__text {
+  .header__text {
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
@@ -134,11 +136,11 @@
   }
 
   @media only screen and (max-width: 767px) {
-    .card__header__filter {
+    .header__filter {
       margin-bottom: 1rem;
     }
 
-    .card__header__filter > div {
+    .header__filter > div {
       margin-left: 0;
       margin-bottom: 1rem;
       width: 100%;

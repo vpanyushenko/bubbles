@@ -3,9 +3,11 @@ import { modalStore } from "$lib/stores/modal.store";
 
 export const pageStore = writable({
   title: null,
-  sidebar: null,
-  sidebar_active: false,
-  layout: "one-col",
+  sidebar: {
+    is_toggled: false,
+    active_item: null,
+    notifications: [],
+  },
   select: null,
   dropdown: null,
   fetching: false,
@@ -15,7 +17,7 @@ export const pageStore = writable({
 });
 
 export const noscrollStore = derived([modalStore, pageStore], ([$modalStore, $pageStore]) => {
-  if ($modalStore.active || $pageStore.sidebar_active) {
+  if ($modalStore.active || $pageStore.sidebar.is_toggled) {
     return true;
   } else {
     return false;

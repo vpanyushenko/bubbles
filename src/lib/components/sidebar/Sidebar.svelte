@@ -1,74 +1,71 @@
 <script>
-  import logo from "./logo.svg";
-  import bag from "./bag.svg";
-  import bell from "./bell.svg";
-  import settings from "./settings.svg";
-  import user from "./profile.svg";
-  import chart from "./chart.svg";
-  import cases from "./folder.svg";
-  import chat from "./chat.svg";
-  import { pageStore } from "$lib/stores/page.store";
-  import { auth } from "$lib/utils/firebase-auth";
-  import { navigating, session } from "$app/stores";
+  import { pageStore } from "$lib/stores/stores";
+  import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
-  import { apiURI } from "$lib/utils/fetch";
 
-  $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar_active);
+  export let sections = [];
+  export let logo = null;
 
-  $: sections = {
-    Main: [
-      {
-        title: "Models",
-        href: "/",
-        notifications: 0,
-        active: $pageStore.sidebar === "models",
-        icon: chart,
-      },
-    ],
-    Settings: [
-      {
-        title: "Notifications",
-        href: "/notifications",
-        notifications: 4,
-        active: $pageStore.sidebar === "notifications",
-        icon: bell,
-      },
-      {
-        title: "Settings",
-        href: "/settings",
-        notifications: 0,
-        active: $pageStore.sidebar === "settings",
-        icon: settings,
-      },
-    ],
-  };
+  const sectionsWithTitles = {};
 
-  const logout = () => {
-    auth
-      .signOut()
-      .catch((err) => {
-        console.error(err);
-      })
-      .then(() => {
-        return fetch(`${apiURI()}/v1/auth/logout`, {
-          method: "POST",
-          credentials: "include",
-        });
-      })
-      .then(() => {
-        $session = {};
-      })
-      .catch((err) => {
-        console.error(err);
+  let activeSection = sections.find((a) => a.active === true);
+
+  sections.forEach((section, index) => {
+    if (!section.id) {
+      section.id = index + 1;
+    }
+
+    if (!activeSection) {
+      const path = $page.path.split("/").filter(Boolean)[0];
+
+      if (path === section.href.split("/").filter(Boolean)[0]) {
+        activeSection = true;
+
+        $pageStore.sidebar.active_item = section.id;
+      }
+    }
+
+    section = section;
+
+    if (sectionsWithTitles[section.section]) {
+      sectionsWithTitles[section.section].push(section);
+    } else {
+      sectionsWithTitles[section.section] = [];
+      sectionsWithTitles[section.section].push(section);
+    }
+  });
+
+  function sidebarItemSelected(obj) {
+    $pageStore.sidebar.active_item = obj.id;
+  }
+
+  function formatSidebar(sections, pageStore) {
+    const keys = Object.keys(sections);
+
+    keys.forEach((key) => {
+      const array = sections[key];
+      array.forEach((sidebarItem) => {
+        if (sidebarItem.id === pageStore.sidebar.active_item) {
+          sidebarItem.active = true;
+        } else {
+          sidebarItem.active = false;
+        }
       });
-  };
+    });
+
+    return sections;
+  }
+
+  $: _sections = formatSidebar(sectionsWithTitles, $pageStore);
+
+  $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar.is_toggled);
 
   function toggleSidebar(event) {
-    $pageStore.sidebar_active = !$pageStore.sidebar_active ? true : false;
+    $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
 </script>
 
-<nav class="sidebar" class:active={$pageStore.sidebar_active}>
+<nav class="sidebar" class:active={$pageStore.sidebar.is_toggled}>
   <section class="top">
     <a href="/">
       <img src={logo} alt="Logo" />
@@ -79,26 +76,29 @@
   <section class="sidebar__wrapper">
     <div class="sidebar__inner">
       <div class="sidebar__list">
-        {#each Object.keys(sections) as section}
+        {#each Object.keys(_sections) as section}
           <div class="sidebar__group">
             <div class="caption">{section}</div>
             <div class="sidebar__menu">
-              {#each sections[section] as items}
+              {#each _sections[section] as obj}
                 <a
                   class="sidebar__item cursor-pointer"
-                  class:active={items.active}
+                  class:active={obj.active}
                   sveltekit:prefetch
-                  href={items.href}
-                  on:click={() => ($pageStore.sidebar_active = false)}
+                  href={obj.href}
+                  on:click={() => ($pageStore.sidebar.is_toggled = false)}
+                  on:click={() => {
+                    sidebarItemSelected(obj);
+                  }}
                 >
                   <div class="sidebar__icon">
-                    <span class="spinner" class:hidden={!$navigating || $navigating.to.path !== items.href} />
-                    <img class:hidden={$navigating && $navigating.to.path === items.href} src={items.icon} alt="Icon" />
+                    <span class="spinner" class:hidden={!$navigating || $navigating.to.path !== obj.href} />
+                    <img class:hidden={$navigating && $navigating.to.path === obj.href} src={obj.icon} alt="Icon" />
                   </div>
 
-                  <div class="sidebar__text">{items.title}</div>
-                  {#if items.notifications}
-                    <div class="sidebar__counter">{items.notifications}</div>
+                  <div class="sidebar__text">{obj.title}</div>
+                  {#if obj.notifications}
+                    <div class="sidebar__counter">{obj.notifications}</div>
                   {/if}
                 </a>
               {/each}
@@ -121,7 +121,7 @@
     height: 100vh;
     padding: 140px 0 72px;
     background: #ffffff;
-    border-right: 1px solid #e4e4e4;
+    border-right: 1px solid var(--gray-light);
     z-index: 5;
   }
 
@@ -477,9 +477,10 @@
     nav .top > a > img {
       opacity: 0;
     }
-    nav button {
-      border-color: #e4e4e4;
+    nav .top {
+      border-bottom: 1px solid var(--gray-light);
     }
+
     .sidebar__group:not(:last-child):before {
       left: -20px;
       right: -20px;
@@ -559,7 +560,6 @@
     }
     .top {
       padding-left: 40px;
-      border-bottom: 1px solid #e4e4e4;
     }
     nav button {
       opacity: 1;

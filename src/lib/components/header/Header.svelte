@@ -1,5 +1,5 @@
 <script>
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore } from "$lib/stores/stores";
   import calcBreadcrumbs from "$lib/utils/breadcrumbs";
   import { page } from "$app/stores";
   import { browser } from "$app/env";
@@ -8,10 +8,10 @@
   export let title = "";
   export let buttons = [];
 
-  $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar_active);
+  $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar.is_toggled);
   $: if (browser)
     document.querySelector(".sidebar")
-      ? document.querySelector(".sidebar").classList.toggle("active", $pageStore.sidebar_active)
+      ? document.querySelector(".sidebar").classList.toggle("active", $pageStore.sidebar.is_toggled)
       : null;
 
   $: breadcrumbs = calcBreadcrumbs($page.path);
@@ -23,7 +23,7 @@
   }
 
   function toggleSidebar(event) {
-    $pageStore.sidebar_active = !$pageStore.sidebar_active ? true : false;
+    $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
 </script>
 

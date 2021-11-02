@@ -187,11 +187,6 @@
     /* cursor: pointer; */
   }
 
-  .table__row:hover button {
-    -webkit-box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
-    box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
-  }
-
   .table__header .table__cell {
     padding-top: 24px;
     padding-bottom: 24px;

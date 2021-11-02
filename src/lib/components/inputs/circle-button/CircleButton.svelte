@@ -10,6 +10,8 @@
   import close from "./close.svg";
   import search from "./search.svg";
   import edit from "./edit.svg";
+  import trash from "./trash.svg";
+  import filter from "./filter.svg";
 
   const icons = {
     arrowLeft: arrowLeft,
@@ -19,6 +21,8 @@
     close: close,
     search: search,
     edit: edit,
+    trash: trash,
+    filter: filter,
   };
 
   export let icon;
@@ -94,18 +98,6 @@
     <button>
       <span class="spinner" class:hidden={!loading} />
       <img class="icon icon-main" {src} class:hidden={loading} alt="icon" />
-      <!-- {{#if icon}}
-                    <svg class="icon icon-main {{#unless icon_large}}icon__sm{{/unless}}">
-                        <use xlink:href="/img/sprite.svg#icon-{{icon}}"></use>
-                    </svg>
-                {{else}}
-                    <svg class="icon icon-main icon__sm">
-                        <use xlink:href="/img/sprite.svg#icon-arrow-right"></use>
-                    </svg>
-                {{/if}}
-                {{#if counter}}
-                    <span class="icon__btn__counter">{{counter}}</span>
-                {{/if}} -->
     </button>
     {#if dropdown}
       <div class="icon__btn__dropdown">
@@ -209,6 +201,16 @@
   button:hover {
     -webkit-box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
     box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
+  }
+
+  :global(.table__cell button) {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  :global(.table__row:hover button) {
+    -webkit-box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6) !important;
+    box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6) !important;
   }
 
   .icon__btn__counter {
@@ -389,10 +391,7 @@
       -webkit-box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
       box-shadow: 0 5px 10px rgba(227, 230, 236, 0.6);
     }
-    .table__cell button {
-      -webkit-box-shadow: none;
-      box-shadow: none;
-    }
+
     button .icon {
       font-size: 20px;
     }
