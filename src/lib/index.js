@@ -18,10 +18,22 @@ import Column from "./layouts/Column.svelte";
 import Column50 from "./layouts/Column50.svelte";
 import Column100 from "./layouts/Column100.svelte";
 import Center from "./layouts/Center.svelte";
+import PageTransitionWrapper from "./layouts/PageTransitionWrapper.svelte";
 
 //TODO: Add grid layouts
 
-export { SidebarPageWrapper, PageWrapper, Row, RowBorder, RowFlex, Column, Column50, Column100, Center };
+export {
+  SidebarPageWrapper,
+  PageWrapper,
+  Row,
+  RowBorder,
+  RowFlex,
+  Column,
+  Column50,
+  Column100,
+  Center,
+  PageTransitionWrapper,
+};
 
 //Stores
 export { toastStore, modalStore, pageStore, noscrollStore } from "./stores/stores";

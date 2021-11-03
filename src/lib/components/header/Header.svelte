@@ -124,9 +124,8 @@
       {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
         <IconButton icon="arrowLeft" href={back} />
       {/if}
-      <h2>
-        {title ? title : $pageStore.title}
-      </h2>
+
+      <h2>{$pageStore.title}</h2>
     </div>
     {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
       <h6 class="breadcrumbs">
