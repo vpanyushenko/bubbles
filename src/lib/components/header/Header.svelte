@@ -91,8 +91,6 @@
     if (pathArray.length <= 1) {
       return [];
     } else {
-      // const title = get(pageStore).title;
-
       const breadcrumbs = pathArray.map((crumb, index) => {
         let href = "";
 
@@ -131,7 +129,7 @@
       <h6 class="breadcrumbs">
         {#each _breadcrumbs as breadcrumb, index}
           <a sveltekit:prefetch href={breadcrumb.href}>{breadcrumb.text}</a>
-          {#if index !== breadcrumb.length - 1}
+          {#if index !== _breadcrumbs.length - 1}
             <span> / </span>
           {/if}
         {/each}
