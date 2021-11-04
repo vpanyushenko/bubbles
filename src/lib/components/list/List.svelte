@@ -12,7 +12,7 @@
 -->
 <script>
   import { pageStore } from "$lib/stores/page.store";
-  import Tag from "$lib/components/Tag.svelte";
+  import Tag from "$lib/components//tag/Tag.svelte";
   import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
 
   export let rows = [];

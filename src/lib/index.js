@@ -1,12 +1,20 @@
 import Header from "./components/header/Header.svelte";
-import Card from "./components/Card.svelte";
-import Table from "./components/table/Table.svelte";
+import Card from "./components/card/Card.svelte";
+
 import List from "./components/list/List.svelte";
 import Sidebar from "./components/sidebar/Sidebar.svelte";
-import Modal from "./components/Modal.svelte";
+import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
 
-export { Header, Card, Table, List, Sidebar, Modal, Toast };
+export { Header, Card, List, Sidebar, Modal, Toast };
+
+//tables
+import Table from "./components/table/Table.svelte";
+import TableRow from "./components/table/TableRow.svelte";
+import TableHeader from "./components/table/TableHeader.svelte";
+import TableCell from "./components/table/TableCell.svelte";
+
+export { Table, TableCell, TableHeader, TableRow };
 
 //layouts
 import SidebarPageWrapper from "./layouts/SidebarPageWrapper.svelte";

@@ -4,7 +4,7 @@
   import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
   import Button from "$lib/components/inputs/Button.svelte";
   import Input from "$lib/components/inputs/Input.svelte";
-  import Divider from "$lib/components/Divider.svelte";
+  import Divider from "$lib/components/divider/Divider.svelte";
   import Select from "$lib/components/inputs/Select.svelte";
   import Switch from "$lib/components/inputs/switch/LabledSwitch.svelte";
 

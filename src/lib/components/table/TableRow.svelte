@@ -1,0 +1,79 @@
+<script>
+  import TableCell from "./TableCell.svelte";
+
+  export let cursor_pointer = false;
+  export let href = null;
+  export let onclick = null;
+  export let cells = [];
+</script>
+
+{#if href}
+  <a class="row" class:cursor-pointer={cursor_pointer === true} sveltekit:prefetch {href}>
+    {#if cells && cells.length}
+      {#each cells as cell}
+        <TableCell {...cell} />
+      {/each}
+    {:else}
+      <slot><TableCell><p>--</p></TableCell></slot>
+    {/if}
+  </a>
+{:else}
+  <div class="row" class:cursor-pointer={cursor_pointer === true} on:click={onclick}>
+    {#if cells && cells.length}
+      {#each cells as cell}
+        <TableCell {...cell} />
+      {/each}
+    {:else}
+      <slot><TableCell><p>--</p></TableCell></slot>
+    {/if}
+  </div>
+{/if}
+
+<style>
+  .row {
+    display: table-row;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  :global(.row:last-child .cell) {
+    border-bottom: none !important;
+  }
+
+  :global(a.row:hover button) {
+    -webkit-box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
+    box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
+  }
+
+  @media only screen and (max-width: 1023px) {
+    .row {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      justify-content: space-between;
+      flex-basis: 100%;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    .row {
+      display: flex;
+      width: 100%;
+      position: relative;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      background: #fff;
+      -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+      -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+      align-items: center;
+      flex-wrap: none;
+    }
+  }
+</style>

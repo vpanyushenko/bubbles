@@ -3,7 +3,7 @@
   import Input from "$lib/components/inputs/Input.svelte";
   import Select from "$lib/components/inputs/Select.svelte";
   import Button from "$lib/components/inputs/Button.svelte";
-  import Divider from "$lib/components/Divider.svelte";
+  import Divider from "$lib/components/divider/Divider.svelte";
 
   export let blocks = [];
   export let center = false;

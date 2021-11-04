@@ -2,186 +2,150 @@
   @component
 
   ## Create a table with headers, rows, and footers.
+  While you can create tables by importing `TableRow` and `TableCell` you're most likely fetching data from some API and displaying to the customer. As a result, you can just pass in the a `header` prop and `rows` prop and your table will be built progamatically.
   ---
   #### Inputs
-  - `@param {Array<(String|null)>} header - an array of header to use`
-  - `@param {Array<Object>} rows - the rows that will be included`
+  - `@param {Array<(String|null)>} header` - an array of header to use
+  - `@param {Array<Object>} rows` - the rows that will be included
   ---
   #### Example
 
-  ```json
-  rows = [
+  ```js
+  
+  //the header component is optional but will give your table labels for the columns
+  const header = [
     {
-      type: "text"
-      title: "Title",
-      large: true, // makes the title large,
-      subtitle: "subtitle",
-      href: "/"
+      label: "Column 1",
+      align: "left" //you can omit this because left align is the default
     },
     {
-      type: "complex",
-      rows: [
-        {
-          type: "tag",
-          label: "Tag",
-          color: "purple",
-        },
-        {
-          type; "text"
-          ...
-        }
-      ]
+      label: "Column 2",
+    },
+    {
+      label: "Column 3",
+      align: "right" 
+    }
+    {
+      label: null, //pass any falsy value to skip the label. Usefullif you have a button as the last part of your table and you don't want to label it
     }
   ]
+
+
+  //While most table are pretty simple, bubbles supports common modifications to table rows. 
+  const rows = [
+    //When a title is passed, this tells Bubbles to use a standard table cell
+    {
+      title: "Title", 
+      large: true, // makes the title large, useful for simple tables for something like a settings menu
+      subtitle: "subtitle", //adds a subtitle below the main title. Useful when the title is a person's name and you want to include their email below it
+      href: "/"
+      align: "left" //You can omit aligning left because that's the default
+    },
+    //adding an image object will add a picture into the cell
+    {
+
+      img: { 
+        src: "/images/profile.png", 
+        alt: "Profile Picture"
+      }
+      href: "/profile",
+    },
+    //adding a tag property will cause the tag to be rendered
+    {
+      tag: {
+       label: "Active",
+       color: "primary", //you can omit colorL primary as that is the default
+       small: true //make the tag smaller, not recommented for this use case
+      }
+      align: "right",
+    },
+    //adding a button property will render an button in the table
+    {
+      button: {
+        icon: "more", //include one of the default icons or passin your own svg,
+        onclick: someFunction(), //pass a custom function like opening a modal,
+        href: "/profile", //use href to go to a page. The is recommended for navigation because data will be prefetched for faster performance,
+        //you can pass options which will open a dropdown
+        options: [
+          {
+            label: "See details",
+            caption: "View the page details"
+            href: "/profile"
+          },
+          {
+            label: "Delete profile",
+            caption: "Deletes the profile"
+            onclick: deleteConfirmationModal(),
+          }
+        ]
+      }
+    },
+    //if you add a rows property, you'll created a stacked cell. This is different from title and caption because you can add tags before and after each row
+    //You most likely don't need this type and might be better off creating your own custom rows and cells with slots.
+    {
+      rows: [
+        [
+          {
+            title: "Jamie Jones"
+            href: "profile/jamie_jones"
+          },
+          {
+            tag: {
+              label: "Active",
+              color: "primary", //you can omit colorL primary as that is the default
+            }
+          }
+        ],
+        [
+          {
+            title: "jamie@bubbles.com"
+          },
+        ],
+        [
+          {
+            title: "(123) 456-7890"
+          },
+        ]
+      ]
+    }
+
   ```
 
   ---
 -->
 <script>
   import { pageStore } from "$lib/stores/page.store";
-  import Select from "$lib/components/inputs/Select.svelte";
-  import Tag from "$lib/components/Tag.svelte";
-  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
+  import TableRow from "./TableRow.svelte";
+  import TableCell from "./TableCell.svelte";
+  import TableHeader from "./TableHeader.svelte";
 
-  export let rows = [];
   export let header = [];
+  export let rows = [];
   export let empty = "Nothing here yet.";
-  export let mobile = false;
 
-  function rowClicked(event) {
-    const icon = event.currentTarget.querySelector(".icon__btn");
-
-    if (icon) {
-      $pageStore.clicked = icon.id;
-    }
-  }
+  $: innerWidth = 0;
+  $pageStore.is_mobile = innerWidth < 767 ? true : false;
 </script>
+
+<svelte:window bind:innerWidth />
 
 <div class="table">
   {#if header && rows.length}
-    <div class="table__row table__header">
-      {#each header as cell}
-        <div class="table__cell" class:right={cell.align === "right"}>
-          {#if cell && !cell.label}
-            {cell}
-          {/if}
-
-          {#if cell.label}
-            {cell.label}
-          {/if}
-        </div>
-      {/each}
-    </div>
+    <TableHeader {...header} />
   {/if}
 
-  {#if rows.length}
+  {#if rows && rows.length}
     {#each rows as row}
-      <a
-        class="table__row"
-        class:cursor-pointer={row.cursor_pointer === true}
-        sveltekit:prefetch
-        href={row.href}
-        on:click={rowClicked}
-      >
-        {#each row.cells as cell}
-          {#if cell.type === "text"}
-            <div class="table__cell">
-              <div class="d-flex align-items-center">
-                {#if cell.href}
-                  <a class:h6={cell.large} sveltekit:prefetch href={cell.href}>{cell.title}</a>
-                {:else}
-                  <p class:h6={cell.large}>{cell.title}</p>
-                {/if}
-
-                {#if cell.subtitle}
-                  <p class="text-gray">{cell.subtitle}</p>
-                {/if}
-              </div>
-            </div>
-          {/if}
-
-          {#if row.type === "double"}
-            <div class="table__cell">
-              <div class="d-flex align-items-center">
-                {#if cell.href}
-                  <a sveltekit:prefetch href={cell.href}>{cell.title}</a>
-                {:else}
-                  <p>{cell.title}</p>
-                {/if}
-              </div>
-            </div>
-          {/if}
-
-          {#if cell.type === "complex"}
-            <div class="table__cell">
-              <div class="d-flex align-items-center">
-                {#each cell.rows as nested_row}
-                  <div>
-                    {#each nested_row as nested_cell}
-                      {#if nested_cell.type === "text"}
-                        <!-- <span class="block__text"> -->
-                        {#if nested_cell.href}
-                          <a sveltekit:prefetch href={nested_cell.href}>{nested_cell.title}</a>
-                        {:else}
-                          <p class:text-gray={nested_cell.text_gray}>{nested_cell.title}</p>
-                        {/if}
-                        <!-- </span> -->
-                      {/if}
-
-                      {#if nested_cell.type === "tag"}
-                        <span class="tag">
-                          <Tag {...nested_cell} small={true} />
-                        </span>
-                      {/if}
-                    {/each}
-                  </div>
-                {/each}
-              </div>
-            </div>
-          {/if}
-
-          {#if cell.type === "image"}
-            <div class="table__cell table__cell__img">
-              {#if cell.href}
-                <a sveltekit:prefetch href={cell.href}>
-                  <picture>
-                    <img src={cell.src} alt={cell.alt} />
-                  </picture>
-                </a>
-              {:else}
-                <picture>
-                  <img src={cell.src} alt={cell.alt} />
-                </picture>
-              {/if}
-            </div>
-          {/if}
-
-          {#if cell.type === "tag"}
-            <div class="table__cell" class:right={cell.align === "right"}>
-              <Tag {...cell} align={"right"} />
-            </div>
-          {/if}
-
-          {#if cell.type === "button" && !mobile}
-            <!-- {#if cell.href}
-
-          {/if} -->
-            <div class="table__cell right">
-              <IconButton icon="arrowRight" {...cell} />
-              <!-- {#if cell.icon}
-              <IconButton {...cell.icon} />
-            {/if} -->
-            </div>
-          {/if}
-        {/each}
-      </a>
+      <TableRow {...row} />
     {/each}
   {:else}
-    <div class="table__row">
-      <div class="table__cell">
-        <p class="empty">{empty}</p>
-      </div>
-    </div>
+    <slot>
+      <TableRow>
+        <TableCell>
+          <p class="empty">{empty}</p>
+        </TableCell>
+      </TableRow>
+    </slot>
   {/if}
 </div>
 
@@ -192,166 +156,9 @@
     color: var(--black);
   }
 
-  .table__row {
-    display: table-row;
-    /* cursor: pointer; */
-  }
-
-  .table__header .table__cell {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    font-size: 13px;
-    line-height: 1.38462;
-    font-weight: 500;
-    color: #b2b3bd;
-  }
-
-  .table__cell {
-    display: table-cell;
-    vertical-align: middle;
-    padding-left: 1.25rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #e4e4e4;
-    color: var(--black);
-    flex-grow: 1;
-  }
-
-  .table__cell.right {
-    text-align: -webkit-right;
-  }
-
-  .table__borderless .table__cell {
-    border-bottom: none;
-  }
-
-  .table__cell:first-child {
-    padding-left: 0px;
-  }
-
-  .table__cell.thin {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
-  .table__cell.thinnest {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-  .table__cell.icon {
-    width: 1.25rem;
-    padding: 0;
-    font-size: 0;
-  }
-
-  .table__cell picture {
-    position: relative;
-    z-index: 2;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    width: 3rem;
-    height: 3rem;
-    margin-right: 0.875rem;
-    border-radius: 12px;
-    font-size: 0;
-    /* align-self: baseline; */
-  }
-
-  .table__cell img {
-    max-height: 100%;
-  }
-
-  .table__row:last-child > .table__cell {
-    border-bottom: none;
-  }
-
-  .table__cell__img {
-    width: 3rem;
-    height: 3rem;
-  }
-  /* Utility Styles */
-  .text-gray {
-    color: var(--gray);
-  }
-
-  .cursor-pointer {
-    cursor: pointer;
-  }
-
-  .h6 {
-    font-size: 1.125rem;
-    line-height: 1.5;
-    font-weight: bold;
-    color: var(--black);
-  }
-
-  p {
-    display: inline-block;
-  }
-
-  a + a,
-  a + p,
-  p + p,
-  a + span + a {
-    display: flex;
-  }
-
-  @media only screen and (max-width: 1179px) {
-    .table__cell {
-      padding-left: 15px;
-    }
-    .table__preview {
-      width: 86px;
-      height: 64px;
-    }
-    .table__details {
-      padding-left: 1rem;
-    }
-    .table__bg {
-      border-radius: 50%;
-    }
-    .table__color .table__text {
-      display: none;
-    }
-  }
-
   @media only screen and (max-width: 1023px) {
     .table {
       display: block;
-    }
-    .table__header .table__cell {
-      display: none;
-    }
-    .table__row {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      justify-content: space-between;
-      flex-basis: 100%;
-      flex-wrap: wrap;
-      /* margin-bottom: 2rem; */
-    }
-    .table__cell {
-      display: block;
-      padding: 1rem 0px;
-      border: none;
-    }
-
-    .table__cell__img {
-      margin-right: 0.625rem;
     }
   }
 
@@ -361,34 +168,8 @@
       flex-direction: column;
     }
 
-    .table .table__row {
+    :global(.table .row) {
       margin-bottom: 2rem;
-    }
-
-    .table__row {
-      display: flex;
-      width: 100%;
-      position: relative;
-      padding: 2rem;
-      border-radius: 1.5rem;
-      background: #fff;
-      -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      align-items: center;
-      flex-wrap: none;
-    }
-
-    .table__cell {
-      display: flex;
-      width: 100%;
-      padding: 0px;
-      text-align: center;
-      justify-content: center;
-    }
-
-    .table__cell picture {
-      margin-right: 0px;
     }
   }
 </style>
