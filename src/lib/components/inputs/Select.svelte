@@ -218,6 +218,7 @@
         <div
           class="option"
           on:click|stopPropagation={selectOption}
+          on:click={option.onselect}
           on:mouseover|stopPropagation={hoverOption}
           tabindex="-1"
           class:selected={option.value === value}
