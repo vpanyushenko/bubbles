@@ -1,16 +1,71 @@
+<!--
+  @component
+
+  ## Cards
+  Cards are the focus of Bubbles and they will normally be the sections of your page. Cards will fit into whatever `Column` or `Grid` layouts you choose.About
+
+  ---
+  #### Anatomy
+  Cards have three sections, `header`, `body`, and `footer`
+  
+  - The `header` is normally used for the `title` + `action` items or `filters`, which are select elements. You'll use the filters most often when the `body` of your card has a table, as the filter should modify the page url trigger the svelte load function to run again
+  - The `body` is where you add your content. This can be a `Table`, `Form`, or any other element(s) you choose.Card
+  - The `footer` is the bottom of the card and off by default. Most uses for the card footer are for pagination of a table or for CTA buttons (though in a form it's best to include the CTA buttons in the form instead of the card footer)
+
+
+  #### Example
+
+  ```js
+  
+  //The card header is optional. If can include a title, subtitle, + button combo or filters. 
+
+  const headerConfig = {
+    title: "Card Title" //This string will appear at the top of your card
+    subtitle: "Card Subtitle" //If you need a subtitle
+
+    export let filters = [];
+    export let title = "";
+    export let caption = "";
+    export let actions = [];
+    export let center = false;
+    export let border = true;
+  }
+
+
+  const header = [
+    {
+      label: "Column 1",
+      align: "left" //you can omit this because left align is the default
+    },
+    {
+      label: "Column 2",
+    },
+    {
+      label: "Column 3",
+      align: "right" 
+    }
+    {
+      label: null, //pass any falsy value to skip the label. Usefullif you have a button as the last part of your table and you don't want to label it
+    }
+  ]
+
+
+
+
+  ```
+
+  ---
+-->
 <script>
+  import { pageStore } from "$lib/stores/page.store";
+  import CardHeader from "./CardHeader.svelte";
   import Button from "$lib/components/inputs/Button.svelte";
-  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
-  import Select from "$lib/components/inputs/Select.svelte";
   import Form from "$lib/components/form/Form.svelte";
   import Table from "$lib/components/table/Table.svelte";
 
-  export let title = null;
-  export let subtitle = null;
-  export let center = false;
-  export let border = false;
-  export let actions = [];
-  export let filters = [];
+  export let header = {};
+  export let my = 0.625;
+  export let mx = 2;
   export let blocks = [];
   export let buttons = [];
   export let body = null;
@@ -18,40 +73,20 @@
   export let table_rows = [];
   export let table_header = [];
 
-  let innerWidth = 0;
-  let expanded = true;
+  let y = `${my}rem`;
+  let x = `${mx}rem`;
 
-  $: if (innerWidth > 767) {
-    expanded = true;
-  } else {
-    expanded = false;
-  }
+  $: innerWidth = 0;
+  $pageStore.is_mobile = innerWidth < 767 ? true : false;
 </script>
 
 <svelte:window bind:innerWidth />
 
-{#if expanded || !body}
-  <div class="card">
-    {#if filters.length || title}
-      <div class="header" class:border>
-        {#each filters as filter}
-          <Select {...filter} />
-        {/each}
-        <div class="header__text" class:center>
-          {#if title}
-            <h6>{title}</h6>
-          {/if}
-          {#if subtitle}
-            <p>{subtitle}</p>
-          {/if}
-        </div>
-
-        {#each actions as action}
-          <IconButton {...action} />
-        {/each}
-      </div>
+{#if !$pageStore.is_mobile || !body}
+  <div class="card" style="padding-top:{y};padding-bottom:{y};padding-left:{x};padding-right:{x}">
+    {#if Object.keys(header).length}
+      <CardHeader {...header} />
     {/if}
-
     <div class="body">
       {#if !body}
         <slot />

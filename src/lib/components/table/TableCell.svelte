@@ -4,9 +4,10 @@
   import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
 
   export let href = null;
-  export let title = "";
-  export let subtitle = "";
+  export let text = "";
+  export let caption = "";
   export let large = false;
+  export let bold = false;
   export let align = "left";
 
   //conditions passed for custom cell types
@@ -17,7 +18,7 @@
 
   let _type = null;
 
-  if (title) {
+  if (text) {
     _type = "text";
   } else if (rows.length) {
     _type = "stacked";
@@ -34,13 +35,13 @@
   <div class="cell">
     <div class="d-flex align-items-center">
       {#if href}
-        <a class:h6={large} sveltekit:prefetch {href}>{title}</a>
+        <a class:h6={large} class:bold sveltekit:prefetch {href}>{text}</a>
       {:else}
-        <p class:h6={large}>{title}</p>
+        <p class:h6={large} class:bold>{text}</p>
       {/if}
 
-      {#if subtitle}
-        <p class="text-gray">{subtitle}</p>
+      {#if caption}
+        <p class="text-gray">{caption}</p>
       {/if}
     </div>
   </div>
@@ -52,12 +53,12 @@
       {#each rows as nested_row}
         <div>
           {#each nested_row as nested_cell}
-            {#if nested_cell.title}
+            {#if nested_cell.text}
               <!-- <span class="block__text"> -->
               {#if nested_cell.href}
-                <a sveltekit:prefetch href={nested_cell.href}>{nested_cell.title}</a>
+                <a sveltekit:prefetch href={nested_cell.href}>{nested_cell.text}</a>
               {:else}
-                <p class:text-gray={nested_cell.text_gray}>{nested_cell.title}</p>
+                <p class:text-gray={nested_cell.text_gray}>{nested_cell.text}</p>
               {/if}
               <!-- </span> -->
             {/if}
@@ -188,6 +189,10 @@
     line-height: 1.5;
     font-weight: bold;
     color: var(--black);
+  }
+
+  .bold {
+    font-weight: bold;
   }
 
   p {

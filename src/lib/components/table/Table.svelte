@@ -35,9 +35,10 @@
   const rows = [
     //When a title is passed, this tells Bubbles to use a standard table cell
     {
-      title: "Title", 
+      label: "Title", 
       large: true, // makes the title large, useful for simple tables for something like a settings menu
-      subtitle: "subtitle", //adds a subtitle below the main title. Useful when the title is a person's name and you want to include their email below it
+      bold: true, // makes the title bold, useful for complex tables for the primary piece of information
+      caption: "subtitle", //adds a subtitle below the main title. Useful when the title is a person's name and you want to include their email below it
       href: "/"
       align: "left" //You can omit aligning left because that's the default
     },
