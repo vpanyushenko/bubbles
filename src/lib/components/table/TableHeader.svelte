@@ -1,8 +1,9 @@
 <script>
   export let header = [];
+  export let mobile_transform = true;
 </script>
 
-<div class="row header">
+<div class="row header" class:mobile-transform={mobile_transform}>
   {#each header as cell}
     <div class="cell" class:right={cell.align === "right"}>
       {#if cell && !cell.label}
@@ -96,6 +97,10 @@
   }
 
   @media only screen and (max-width: 767px) {
+    .row.mobile-transform {
+      display: none;
+    }
+
     .row {
       display: flex;
       width: 100%;

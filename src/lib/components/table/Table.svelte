@@ -2,6 +2,7 @@
   @component
 
   ## Create a table with headers, rows, and footers.
+
   While you can create tables by importing `TableRow` and `TableCell` you're most likely fetching data from some API and displaying to the customer. As a result, you can just pass in the a `header` prop and `rows` prop and your table will be built progamatically.
   ---
   #### Inputs
@@ -123,6 +124,7 @@
   export let header = [];
   export let rows = [];
   export let empty = "Nothing here yet.";
+  export let mobile_transform = true;
 
   $: innerWidth = 0;
   $pageStore.is_mobile = innerWidth < 767 ? true : false;
@@ -130,9 +132,9 @@
 
 <svelte:window bind:innerWidth />
 
-<div class="table">
+<div class="table" class:mobile-transform={mobile_transform}>
   {#if header && rows.length}
-    <TableHeader {...header} />
+    <TableHeader {...header} {mobile_transform} />
   {/if}
 
   {#if rows && rows.length}
@@ -157,20 +159,14 @@
     color: var(--black);
   }
 
-  @media only screen and (max-width: 1023px) {
-    .table {
-      display: block;
-    }
-  }
-
   @media only screen and (max-width: 767px) {
-    .table {
+    .table.mobile-transform {
       display: flex;
       flex-direction: column;
     }
 
-    :global(.table .row) {
+    /* :global(.table .row) {
       margin-bottom: 2rem;
-    }
+    } */
   }
 </style>

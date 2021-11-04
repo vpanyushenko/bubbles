@@ -213,12 +213,6 @@
   }
 
   @media only screen and (max-width: 1023px) {
-    .cell {
-      display: block;
-      padding: 1rem 0px;
-      border: none;
-    }
-
     .image {
       margin-right: 0.625rem;
     }
@@ -229,8 +223,10 @@
       display: flex;
       width: 100%;
       padding: 0px;
-      text-align: center;
+      text-align: left;
       justify-content: center;
+      display: block;
+      border: none;
     }
 
     .cell picture {

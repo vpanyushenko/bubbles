@@ -47,7 +47,7 @@
     box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
   }
 
-  @media only screen and (max-width: 1023px) {
+  @media only screen and (max-width: 767px) {
     .row {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -57,23 +57,16 @@
       align-items: center;
       justify-content: space-between;
       flex-basis: 100%;
-      flex-wrap: wrap;
-    }
-  }
-
-  @media only screen and (max-width: 767px) {
-    .row {
-      display: flex;
       width: 100%;
       position: relative;
       padding: 2rem;
       border-radius: 1.5rem;
       background: #fff;
-      -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+      /* -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
       -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      align-items: center;
+      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem; */
       flex-wrap: none;
+      border-bottom: 1px solid var(--gray-light);
     }
   }
 </style>
