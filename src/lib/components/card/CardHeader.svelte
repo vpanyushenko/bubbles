@@ -87,10 +87,6 @@
     margin-left: 0.5rem;
   }
 
-  /* .filters .filter:first-child {
-    margin-left: 0rem;
-  } */
-
   p {
     color: var(--gray);
   }
