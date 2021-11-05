@@ -49,7 +49,7 @@
   import { pageStore } from "$lib/stores/stores";
   import { page } from "$app/stores";
   import { browser } from "$app/env";
-  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
+  import IconButton from "$lib/components/button/IconButton.svelte";
 
   export let title = "";
   export let breadcrumbs = true;
@@ -162,7 +162,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 3rem 64px 44px;
+    padding: 3rem 4rem 2.75rem;
   }
 
   .breadcrumbs a:hover {
@@ -269,6 +269,12 @@
   .breadcrumbs a:hover {
     color: var(--gray) !important;
     transition: 0.3s;
+  }
+
+  @media only screen and (max-width: 1419px) {
+    header {
+      padding: 3rem 3rem 2.75rem;
+    }
   }
 
   @media only screen and (max-width: 1339px) {

@@ -306,7 +306,7 @@
 
   .field__input {
     width: 100%;
-    height: 80px;
+    height: 5rem;
     padding: 1.125rem 22px 0 !important;
     border-radius: 12px;
     border: 2px solid transparent;

@@ -39,7 +39,7 @@
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
-    height: 80px;
+    height: 5rem;
     padding-left: 22px;
     padding-right: 22px;
     /* border-radius: 8px;

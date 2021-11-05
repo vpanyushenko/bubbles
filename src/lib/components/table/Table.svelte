@@ -126,6 +126,8 @@
   export let empty = "Nothing here yet.";
   export let mobile_transform = true;
 
+  console.log(header);
+
   $: innerWidth = 0;
   $pageStore.is_mobile = innerWidth < 767 ? true : false;
 </script>
@@ -133,8 +135,8 @@
 <svelte:window bind:innerWidth />
 
 <div class="table" class:mobile-transform={mobile_transform}>
-  {#if header && rows.length}
-    <TableHeader {...header} {mobile_transform} />
+  {#if header && header.length}
+    <TableHeader {header} {mobile_transform} />
   {/if}
 
   {#if rows && rows.length}

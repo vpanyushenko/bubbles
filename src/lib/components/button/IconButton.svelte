@@ -38,7 +38,7 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/page.store";
-  import LabeledSwitch from "$lib/components/inputs/switch/LabledSwitch.svelte";
+  import LabeledSwitch from "$lib/components/switch/LabledSwitch.svelte";
   import { navigating } from "$app/stores";
   import arrowLeft from "./arrow-left.svg";
   import arrowRight from "./arrow-right.svg";
@@ -73,7 +73,7 @@
   let id = uuid();
 
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
-  $: loading = ($pageStore.clicked === id && $navigating) || ($pageStore.clicked === id && $pageStore.fetching);
+  $: loading = ($pageStore.clicked === id && $navigating) || ($pageStore.clicked === id && $pageStore.is_fetching);
 
   function iconClick(event) {
     let iconElement = event.currentTarget;
@@ -150,7 +150,7 @@
                 href={option.href}
                 sveltekit:prefetch
                 on:click={iconClick}
-                on:click={() => ($pageStore.fetching = true)}
+                on:click={() => ($pageStore.is_fetching = true)}
               >
                 <div class="icon__btn__details">
                   <h6 class="">{option.label}</h6>

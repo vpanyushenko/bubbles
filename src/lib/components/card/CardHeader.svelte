@@ -1,6 +1,6 @@
 <script>
-  import IconButton from "$lib/components/inputs/icon-button/IconButton.svelte";
-  import Select from "$lib/components/inputs/Select.svelte";
+  import IconButton from "$lib/components/button/IconButton.svelte";
+  import Select from "$lib/components/select/Select.svelte";
 
   export let filters = [];
   export let title = "";

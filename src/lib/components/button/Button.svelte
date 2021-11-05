@@ -12,21 +12,21 @@
   export let href;
   let id = uuid();
 
-  $: loading = $pageStore.fetching && $pageStore.clicked === id;
+  $: loading = $pageStore.is_fetching && $pageStore.clicked === id;
 
   function buttonClicked(event) {
     const id = event.currentTarget.id;
     $pageStore.clicked = id;
 
     if (href) {
-      $pageStore.fetching = true;
+      $pageStore.is_fetching = true;
       goto(href)
         .then(() => {
-          $pageStore.fetching = false;
+          $pageStore.is_fetching = false;
         })
         .catch((err) => {
           console.error(err);
-          $pageStore.fetching = false;
+          $pageStore.is_fetching = false;
         });
     }
   }
@@ -220,7 +220,7 @@
   }
 
   .btn_small {
-    width: 80px;
+    width: 5rem;
     min-width: auto;
   }
 
@@ -265,7 +265,7 @@
   }
 
   .btn__group .btn_small {
-    width: 80px;
+    width: 5rem;
     min-width: auto;
   }
 

@@ -257,8 +257,8 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     display: block;
-    height: 80px;
-    padding: 0 46px 0 21px;
+    height: 5rem;
+    padding: 0 46px 0 1.25rem;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
     border-radius: 1rem;
@@ -514,7 +514,7 @@
     .body {
       right: 0;
       width: auto;
-      padding: 1.5rem 21px;
+      padding: 1.5rem 1.25rem;
     }
   }
 

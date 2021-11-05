@@ -65,7 +65,7 @@
   .switch__box {
     position: relative;
     display: block;
-    width: 64px;
+    width: 4rem;
     height: 1.5rem;
     background: rgba(228, 228, 228, 0.5);
     border-radius: 1rem;

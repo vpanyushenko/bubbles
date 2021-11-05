@@ -284,7 +284,7 @@
     font-size: 0;
   }
   .sidebar__icon img {
-    font-size: 21px;
+    font-size: 1.25rem;
     fill: #1b1d21;
     opacity: 0.4;
     flex-shrink: 0;
@@ -509,7 +509,7 @@
       color: #808191;
     }
     .sidebar__icon {
-      margin-right: 21px;
+      margin-right: 1.25rem;
     }
     .sidebar__counter {
       position: absolute;

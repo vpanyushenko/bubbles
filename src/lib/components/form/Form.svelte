@@ -1,8 +1,8 @@
 <script>
-  import Switch from "$lib/components/inputs/switch/LabledSwitch.svelte";
-  import Input from "$lib/components/inputs/Input.svelte";
-  import Select from "$lib/components/inputs/Select.svelte";
-  import Button from "$lib/components/inputs/Button.svelte";
+  import Switch from "$lib/components/switch/LabledSwitch.svelte";
+  import Input from "$lib/components/input/Input.svelte";
+  import Select from "$lib/components/select/Select.svelte";
+  import Button from "$lib/components/button/Button.svelte";
   import Divider from "$lib/components/divider/Divider.svelte";
 
   export let blocks = [];

@@ -59,12 +59,8 @@
       flex-basis: 100%;
       width: 100%;
       position: relative;
-      padding: 2rem;
-      border-radius: 1.5rem;
+      padding: 2rem 0rem;
       background: #fff;
-      /* -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem; */
       flex-wrap: none;
       border-bottom: 1px solid var(--gray-light);
     }

@@ -7,7 +7,6 @@
 <script>
   export let label;
   export let color = "purple";
-  export let text; //TODO: delete
   export let small = false;
   export let min_width = true;
 

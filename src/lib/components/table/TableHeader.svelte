@@ -1,15 +1,13 @@
 <script>
   export let header = [];
   export let mobile_transform = true;
+
+  console.log(header);
 </script>
 
 <div class="row header" class:mobile-transform={mobile_transform}>
   {#each header as cell}
-    <div class="cell" class:right={cell.align === "right"}>
-      {#if cell && !cell.label}
-        {cell}
-      {/if}
-
+    <div class="cell" class:right={cell.align === "right" || cell.align === "end"}>
       {#if cell.label}
         {cell.label}
       {/if}

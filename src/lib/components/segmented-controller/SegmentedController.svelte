@@ -1,5 +1,5 @@
 <script>
-  import Select from "$lib/components/inputs/Select.svelte";
+  import Select from "$lib/components/select/Select.svelte";
   let expanded = true;
 
   const segments = [
