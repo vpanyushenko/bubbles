@@ -33,13 +33,7 @@
 	--white: #ffffff;
 	--input-bg: rgba(228, 228, 228, 0.3);
 
-	--main: var(--dark);
-
-	--screen-xs: 767px;
-	--screen-s: 1023px;
-	--screen-md: 1179px;
-	--screen-lg: 1339px;
-	--screen-xl: 1419px;
+	--primary: #6c5dd3;
 }
 
 body {
@@ -464,9 +458,6 @@ hr {
 	.desktop-show {
 		display: block;
 	}
-	.desktop-text-right {
-		text-align: right;
-	}
 }
 
 @media only screen and (max-width: 1023px) {
@@ -476,17 +467,10 @@ hr {
 	.tablet-show {
 		display: block;
 	}
-	.tablet-text-right {
-		text-align: right;
-	}
 	.h3 {
 		font-size: 2rem;
 		line-height: 1.5;
 		letter-spacing: -0.5px;
-	}
-
-	.card:not(:last-child) {
-		margin-bottom: 1rem;
 	}
 }
 
@@ -501,10 +485,6 @@ hr {
 		line-height: 1.5;
 		letter-spacing: -0.5px;
 	  }
-
-	  .card:not(:last-child) {
-		margin-bottom: .5rem;
-	}
 }
 
 /* Below are page styles that are global to layouts */
@@ -565,7 +545,7 @@ hr {
   }
   
   .page__col_w100 {
-	padding: 0 64px 44px;
+	padding: 0 4rem 2.75rem;
 	flex: 0 0 100%;
 	width: 100%;
   }
@@ -582,7 +562,7 @@ hr {
   }
   
   .page__col {
-	padding: 0 64px 44px;
+	padding: 0 4rem 2.75rem;
   }
   
   .page__row__flex {
@@ -630,11 +610,11 @@ hr {
   }
   
   .page__content {
-	padding: 0 64px 64px;
+	padding: 0 4rem 4rem;
   }
   
   .page__content_pt64 {
-	padding-top: 64px;
+	padding-top: 4rem;
 	border-top: 1px solid #e4e4e4;
   }
   
@@ -692,8 +672,10 @@ hr {
   }
   
   @media only screen and (max-width: 1419px) {
-	.page__col {
-	  padding: 0 3rem 44px;
+	
+	.page__col,
+	.page__col_w100 {
+	  padding: 0 3rem 2.75rem;
 	}
 	.page__col:nth-of-type(1) {
 	  -webkit-box-flex: 0;
@@ -713,7 +695,7 @@ hr {
 	.page__center {
 	  width: 100%;
 	  max-width: 930px;
-	  padding: 0 70px 2.5rem;
+	  padding: 0 4.375rem 2.5rem;
 	}
 	.page__row {
 	  display: block;
@@ -722,31 +704,7 @@ hr {
 	.page__row_border .page__col:nth-of-type(2) {
 	  border: none;
 	}
-	.page__row_responsive {
-	  display: -webkit-box;
-	  display: -ms-flexbox;
-	  display: flex;
-	  margin: 0 -2.5rem;
-	}
-  
-	.page__row_responsive .page__col {
-	  margin: 0;
-	  padding-left: 2.5rem;
-	  padding-right: 2.5rem;
-	}
-	.page__row_responsive .page__col:first-of-type {
-	  -webkit-box-flex: 0;
-	  -ms-flex: 0 0 55%;
-	  flex: 0 0 55%;
-	  max-width: 55%;
-	}
-	.page__row_responsive .page__col:nth-of-type(2) {
-	  -webkit-box-flex: 0;
-	  -ms-flex: 0 0 45%;
-	  flex: 0 0 45%;
-	  max-width: 45%;
-	  border-left: 1px solid #e4e4e4;
-	}
+
 	.page__col_w100,
 	.page__col {
 	  padding: 0px;
@@ -762,14 +720,12 @@ hr {
 	}
 	main .page__col.page__col_w50:first-of-type {
 	  max-width: 100%;
-	  margin-bottom: 30px;
+	  margin-bottom: 3rem;
 	}
 	main .page__col.page__col_w50:nth-of-type(2) {
 	  max-width: 100%;
 	}
-	main .page__col.page__col_w50:not(:last-of-type) {
-	  margin-bottom: 0;
-	}
+
   
 	main .page__col.page__col_w50 {
 	  -webkit-box-flex: 0;
@@ -777,62 +733,24 @@ hr {
 	  flex: 0 0 50%;
 	  max-width: 50%;
 	  margin: 0;
-	  padding-left: 2.5rem;
-	  padding-right: 2.5rem;
 	}
-	.page__group {
-	  display: -webkit-box;
-	  display: -ms-flexbox;
-	  display: flex;
-	  -webkit-box-align: start;
-	  -ms-flex-align: start;
-	  align-items: flex-start;
-	  margin: 0 -1rem;
-	}
-	.page__group .card {
-	  -webkit-box-flex: 0;
-	  -ms-flex: 0 0 calc(50% - 2rem);
-	  flex: 0 0 calc(50% - 2rem);
-	  max-width: calc(50% - 2rem);
-	  margin: 0 1rem;
-	}
-	.page__group .card:not(:last-child) {
-	  margin-bottom: 0;
-	}
-	.page__content {
-	  padding: 0 0 2.5rem;
-	}
-	.page__content_pt64 {
-	  margin-top: 2rem;
-	  padding: 0;
-	  border: none;
-	}
+	
 	.page__hello {
 	  font-size: 1.125rem;
 	  line-height: 1.33333;
 	}
-	.page_other .page__center {
-	  padding-bottom: 0;
+
+	.page__row + .page__row,
+	.page__col_w100 + .page__row,
+	.page__row + .page__col_w100,
+	.page__col + .page__col {
+		margin-top: 3rem
 	}
+
   }
   
   @media only screen and (max-width: 1179px) {
-	.page__row_responsive {
-	  display: block;
-	  margin: 0;
-	}
-  
-	.page__row_responsive .page__col {
-	  padding-left: 0;
-	  padding-right: 0;
-	}
-	.page__row_responsive .page__col:first-of-type {
-	  max-width: 100%;
-	}
-	.page__row_responsive .page__col:nth-of-type(2) {
-	  max-width: 100%;
-	  border: none;
-	}
+
   
 	.page__col_w100,
 	main .page__col.page__col_w50 {
@@ -840,34 +758,19 @@ hr {
 	}
 	main .page__col.page__col_w50:first-of-type {
 	  max-width: 100%;
-	  margin-bottom: 30px;
+	  margin-bottom: 3rem;
 	}
 	main .page__col.page__col_w50:nth-of-type(2) {
 	  max-width: 100%;
 	}
-	main .page__col.page__col_w50:not(:last-child) {
+	/* main .page__col.page__col_w50:not(:last-child) {
 	  margin-bottom: 0;
-	}
-  
-	.page__flex {
-	  display: block;
-	}
-	.page__flex .card:first-of-type {
-	  width: 100%;
-	  margin: 0 0 2rem;
-	}
-	.page__nav {
-	  margin-bottom: 2rem;
-	}
+	} */
+
 	body.toggle .page__wrapper {
 	  padding-left: 96px;
 	}
-	.page_other {
-	  overflow: hidden;
-	}
-	.page_other .page__center {
-	  padding-bottom: 2.5rem;
-	}
+
   }
   
   @media only screen and (max-width: 1023px) {
