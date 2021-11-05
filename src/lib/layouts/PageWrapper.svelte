@@ -8,6 +8,6 @@
     max-width: 1280px;
     min-height: 100vh;
     margin: 0 auto;
-    padding: 0 80px;
+    padding: 0 5rem;
   }
 </style>
