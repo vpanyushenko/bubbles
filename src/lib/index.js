@@ -4,11 +4,13 @@ import CardHeader from "./components/card/CardHeader.svelte";
 import CardFooter from "./components/card/CardFooter.svelte";
 
 import List from "./components/list/List.svelte";
+import ListItem from "./components/list/ListItem.svelte";
+import ListItemTimeline from "./components/list/ListItemTimeline.svelte";
 import Sidebar from "./components/sidebar/Sidebar.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
 
-export { Header, Card, CardHeader, CardFooter, List, Sidebar, Modal, Toast };
+export { Header, Card, CardHeader, CardFooter, List, ListItem, ListItemTimeline, Sidebar, Modal, Toast };
 
 //tables
 import Table from "./components/table/Table.svelte";
