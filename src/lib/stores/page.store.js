@@ -10,7 +10,7 @@ export const pageStore = writable({
   },
   select: null,
   dropdown: null,
-  fetching: false,
+  is_fetching: false,
   clicked: null,
   errors: [],
   host: null,
