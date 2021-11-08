@@ -109,8 +109,6 @@
         return obj;
       });
 
-      console.log(breadcrumbs);
-
       return breadcrumbs;
     }
   }
@@ -283,7 +281,7 @@
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      margin: 0 -1rem;
+      margin: 0;
       padding: 2.5rem 0;
       padding-bottom: 2.5rem;
     }
@@ -300,7 +298,7 @@
       -ms-flex: 0 0 calc(50% - 2rem);
       flex: 0 0 calc(50% - 2rem);
       max-width: calc(50% - 2rem);
-      margin: 0 1rem;
+      margin: 0 0rem;
       padding: 0;
     }
 
