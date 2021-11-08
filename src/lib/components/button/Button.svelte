@@ -10,6 +10,7 @@
   export let mb = false;
   export let wide = false;
   export let href;
+
   let id = uuid();
 
   $: loading = $pageStore.is_fetching && $pageStore.clicked === id;
@@ -140,19 +141,19 @@
   }
 
   .btn_red {
-    background: var(--red);
+    background: var(--error);
     color: #ffffff;
   }
 
   .btn_red_outline {
     background: none;
-    border: 2px solid var(--red);
-    color: var(--red);
+    border: 2px solid var(--error);
+    color: var(--error);
   }
 
   .btn_red_outline:hover,
   .btn_red:hover {
-    background: var(--red-light);
+    background: var(--error-light);
     color: var(--white);
   }
 
@@ -331,7 +332,7 @@
     min-width: 1.5rem;
     line-height: 1.5rem;
     border-radius: 50%;
-    background: var(--red);
+    background: var(--error);
     font-size: 12px;
     font-weight: 600;
     color: #ffffff;

@@ -259,7 +259,7 @@
     min-width: 1.5rem;
     line-height: 1.5rem;
     border-radius: 50%;
-    background: var(--red);
+    background: var(--error);
     font-size: 12px;
     font-weight: 600;
     color: #ffffff;

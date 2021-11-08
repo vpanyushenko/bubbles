@@ -11,7 +11,7 @@
 </script>
 
 {#if filters.length || title || caption || actions.length}
-  <div class="header" class:border class:filters={filters.length > 0}>
+  <div class="header" class:border={border === true || border === "true"} class:filters={filters.length > 0}>
     <div class="filters">
       {#each filters as filter}
         <div class="filter">
