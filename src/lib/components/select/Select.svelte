@@ -54,6 +54,14 @@
     }
   }
 
+  function _removeError() {
+    const errorIndex = $pageStore.errors.findIndex((item) => item === id);
+
+    if (errorIndex > -1) {
+      $pageStore.errors.splice(errorIndex, 1);
+    }
+  }
+
   function toggleSelect(event) {
     id = event.currentTarget.parentElement.id;
 
