@@ -8,7 +8,7 @@
   import Input from "$lib/components/input/Input.svelte";
   import Divider from "$lib/components/divider/Divider.svelte";
   import Select from "$lib/components/select/Select.svelte";
-  import Switch from "$lib/components/switch/LabledSwitch.svelte";
+  import Switch from "$lib/components/switch/LabeledSwitch.svelte";
 
   export let id = "";
   export let title = "";

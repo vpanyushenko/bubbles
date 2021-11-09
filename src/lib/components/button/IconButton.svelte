@@ -1,7 +1,7 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/page.store";
-  import LabeledSwitch from "$lib/components/switch/LabledSwitch.svelte";
+  import LabeledSwitch from "$lib/components/switch/LabeledSwitch.svelte";
   import { navigating } from "$app/stores";
   import arrowLeft from "./arrow-left.svg";
   import arrowRight from "./arrow-right.svg";

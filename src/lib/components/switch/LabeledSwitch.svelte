@@ -3,30 +3,36 @@
 
   export let id = "";
   export let desc = "";
-  export let isError = false;
   export let error = "An error occured";
-  export let label = "Label";
+  export let label = "";
   export let disabled = false;
-  export let loading = false;
   export let onclick = null;
+
   export let value = true;
+
+  $: is_error = false; //TODO:
+  $: is_loading = false;
 </script>
 
-<div class="js-form-field-container" {id}>
+<div class="form__field__container" {id}>
   <div class="field js-field">
     <span>
-      <p class="error" class:hidden={!isError}>{error}</p>
-      <p class="label">{label}</p>
+      <p class="error" class:hidden={!is_error}>{error}</p>
+      <p class="label" class:hidden={is_error}>{label}</p>
+      {#if desc}
+        <p class="field__desc">{desc}</p>
+      {/if}
     </span>
 
-    <Switch {disabled} {loading} {onclick} bind:value />
+    <Switch {disabled} {onclick} bind:value bind:is_loading />
   </div>
-  {#if desc}
-    <p class="field__desc">{desc}</p>
-  {/if}
 </div>
 
 <style>
+  .form__field__container {
+    width: 100%;
+  }
+
   .field {
     display: flex;
     justify-content: space-between;
@@ -55,5 +61,13 @@
     color: var(--error);
     transition: transform 0.2s;
     margin-bottom: 0px !important;
+  }
+
+  .field__desc {
+    padding: 0.625rem 0 0 !important;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33333;
+    color: var(--gray);
   }
 </style>

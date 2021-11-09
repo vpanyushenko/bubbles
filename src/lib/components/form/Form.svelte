@@ -44,7 +44,7 @@
       id: "age", 
       label: "Age", 
       value: null, //You can add a value to the input
-      desc: null
+      desc: null,
       error: "You must be at least 13 years old", 
       validation: "numeric|required|min:13", 
       bounds: [0, 120]: //Set the min and max values for this input. If you only want the min or max, you can do something like: [0, null]
@@ -63,7 +63,7 @@
       id: "role", 
       label: "Select Your Role", 
       value: null, //You can add a value to the input
-      desc: null
+      desc: null,
       error: "Your role is required", 
       validation: "required", //since you're adding the options, you can just set it to required
       search: false //By default, if your select has more than 5 options, it will turn on fuzzy search unles you explictly turn it off
@@ -74,7 +74,7 @@
           caption: "This is the highest position" //This is optional to add more context to the option,
           value: "owner" //This is the actual value the user is selecting
         },
-        "break" //if you pass a string that says break, Bubbles will add a line break between these options for you
+        "break", //if you pass a string that says break, Bubbles will add a line break between these options for you
         {
           label: "Collaborator" //The label is the main option the user is picking,
           value: "collab" //This is the actual value the user is selecting
@@ -82,6 +82,31 @@
         {
           label: "User",
           value: "user"
+        }
+      ]
+    },
+    {
+      type: "select-number", //This is a special type of select in case you need to select only from number elements. Use this if all values in a select need to be numbers
+      id: "number", 
+      label: "Select Your Number", 
+      value: null, //You can add a value to the input
+      desc: null,
+      error: "This is required", 
+      validation: "required", //since you're adding the options, you can just set it to required
+      search: false, //By default, if your select has more than 5 options, it will turn on fuzzy search unles you explictly turn it off
+      //an array of options for your input
+      options: [
+        {
+          label: "One", //The label is the main option the user is picking,
+          value: 0, //This is the actual value the user is selecting
+        },
+        {
+          label: "Two", //The label is the main option the user is picking,
+          value: 1, //This is the actual value the user is selecting
+        },
+        {
+          label: "Three",
+          value: 3,
         }
       ]
     },
@@ -145,7 +170,7 @@
 -->
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
-  import Switch from "$lib/components/switch/LabledSwitch.svelte";
+  import Switch from "$lib/components/switch/LabeledSwitch.svelte";
   import Input from "$lib/components/input/Input.svelte";
   import Select from "$lib/components/select/Select.svelte";
   import Button from "$lib/components/button/Button.svelte";
