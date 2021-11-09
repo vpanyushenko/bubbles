@@ -1,8 +1,6 @@
 <script>
   export let header = [];
   export let mobile_transform = true;
-
-  console.log(header);
 </script>
 
 <div class="row header" class:mobile-transform={mobile_transform}>

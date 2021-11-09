@@ -6,34 +6,57 @@
 	--font: font-family: "Inter", sans-serif;
 	--font-mono: font-family: "Fira Mono";
 	--font-title: font-family: "Poppins";
-	--black: #11142d;
-	--dark: #1b1d21;
-	--dark-border: rgba(--gray-light, 0.1);
-	--dark-active: #191b20;
-	--dark-color: #242731;
-	--dark-bg: #1f2128;
-	--blue: #355dff;
-	--blue-dark: #5f75ee;
-	--blue-light: #3f8cff;
-	--gray: #808191;
-	--gray-light: #e4e4e4;
-	--gray-lightest: #f9f9f9;
-	--blue-gray: #748fb5;
-	--purple: #6c5dd3;
-	--purple-light: #cfc8ff;
-	--pink: #ff98e5;
-	--pink-light: #ffebf6;
-	--green: #4fbf67;
-	--green-dark: #3dbaa2;
-	--red: #ff6628;
-	--red-light: #ff7a68;
-	--orange: #ff9f38;
-	--yellow: #ffce73;
-	--yellow-light: #ffe2ac;
-	--white: #ffffff;
 	--input-bg: rgba(228, 228, 228, 0.3);
+	--white: #ffffff;
+	--black: #11142d;
 
+	--primary-lightest: #bdb7eb;
+	--primary-light: #9085de;
 	--primary: #6c5dd3;
+	--primary-dark: #4836c7;
+	--primary-darkest: #30295d;
+
+	--secondary-lightest: #ffdcf6;
+	--secondary-light: #ffcbf2;
+	--secondary: #ff98e5;
+	--secondary-dark: #ff65d8;
+	--secondary-darkest: #714365;
+
+	--error-lightest: #ffbb9f;
+	--error-light: #ff8a5b;
+	--error: #ff6628;
+	--error-dark: #f44600;
+	--error-darkest: #712d11;
+
+	--warning-lightest: #ffd4a6;
+	--warning-light: #ffb86b;
+	--warning: #ff9f38;
+	--warning-dark: #ff8605;
+	--warning-darkest: #714618;
+
+	--success-lightest: #b0e2bb;
+	--success-light: #74cd87;
+	--success: #4fbf67;
+	--success-dark: #3aa150;
+	--success-darkest: #23542d;
+
+	--info-lightest: #a5b7ff;
+	--info-light: #6886ff;
+	--info: #355dff;
+	--info-dark: #0234ff;
+	--info-darkest: #172971;
+
+	--gray-lightest: #f9f9f9;
+	--gray-light: #e4e4e4;
+	--gray: #808191;
+	--gray-dark: #676877;
+	--gray-darkest: #383940;
+
+	--dark-darkest: #11142D;
+	--dark-dark: #191b20;
+	--dark: #1b1d21;
+	--dark-light: #242731;
+	--dark-lightest: #64666F;
 }
 
 body {
@@ -214,6 +237,12 @@ button::-moz-focus-inner {
 	border: 0;
 }
 
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
 textarea {
 	overflow: auto;
 }
@@ -292,7 +321,7 @@ body {
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	color: #11142d;
+	color: var(--black);
 }
 
 

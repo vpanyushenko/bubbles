@@ -1,10 +1,26 @@
 <script>
+  import { onMount } from "svelte";
   import { pageStore } from "$lib/stores/stores";
   import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
+  import { hexToRgb, getColorFilter } from "$lib/utils/colors";
 
   export let sections = [];
   export let logo = null;
+
+  onMount(() => {
+    const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
+
+    if (primaryhex) {
+      const rgb = hexToRgb(`${primaryhex.trim()}`);
+
+      const iconFilter = getColorFilter(rgb);
+      let filter = iconFilter.filter.split("filter: ")[1];
+      filter = filter.substring(0, filter.length - 1);
+
+      document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
+    }
+  });
 
   const sectionsWithTitles = {};
   const path = $page.path.split("/").filter(Boolean)[0];
@@ -97,6 +113,7 @@
                   }}
                 >
                   <div class="sidebar__icon">
+                    <!-- <Icon src={obj.icon} href={obj.href} /> -->
                     <span class="spinner" class:hidden={!$navigating || $navigating.to.path !== obj.href} />
                     <img class:hidden={$navigating && $navigating.to.path === obj.href} src={obj.icon} alt="Icon" />
                   </div>
@@ -258,12 +275,12 @@
   }
 
   .sidebar__item:hover {
-    color: #6c5dd3;
+    color: var(--primary);
   }
 
   .sidebar__item.active {
-    background: #6c5dd3;
-    color: #ffffff;
+    background: var(--primary);
+    color: var(--white);
   }
 
   .sidebar__icon {
@@ -285,7 +302,6 @@
   }
   .sidebar__icon img {
     font-size: 1.25rem;
-    fill: #1b1d21;
     opacity: 0.4;
     flex-shrink: 0;
     width: 1.5rem;
@@ -299,23 +315,12 @@
   }
 
   .sidebar__item:hover img {
-    filter: invert(44%) sepia(7%) saturate(6567%) hue-rotate(212deg) brightness(89%) contrast(90%);
+    filter: var(--sidebar-hover-filter);
     opacity: 1;
   }
 
   .sidebar__item .sidebar__text {
     margin-right: auto;
-  }
-
-  .sidebar__item .sidebar__text.stacked {
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    text-align: start;
-  }
-
-  .stacked > p:last-child {
-    font-size: smaller;
   }
 
   .sidebar__bottom {
@@ -354,7 +359,7 @@
   }
 
   .sidebar__profile {
-    color: #11142d;
+    color: var(--black);
     -webkit-box-direction: normal;
     box-sizing: inherit;
     margin: 0;
@@ -373,7 +378,7 @@
     padding: 0 1.25rem;
     height: 62px;
     border-radius: 12px;
-    color: #11142d;
+    color: var(--black);
     cursor: pointer;
     transition: background 0.25s;
   }

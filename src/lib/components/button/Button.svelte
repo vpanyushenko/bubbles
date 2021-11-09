@@ -5,13 +5,13 @@
 
   export let label = "Submit";
   export let onclick = null;
+  export let onsubmit = null;
   export let color = "purple";
   export let mt = false;
   export let mb = false;
   export let wide = false;
   export let href;
-
-  let id = uuid();
+  export let id = uuid();
 
   $: loading = $pageStore.is_fetching && $pageStore.clicked === id;
 
@@ -44,6 +44,7 @@
   class:btn_wide={wide}
   on:click={onclick}
   on:click={buttonClicked}
+  on:click={onsubmit}
 >
   <div class="d-flex">
     <span class="spinner mr-1 hidden" class:hidden={!loading} />

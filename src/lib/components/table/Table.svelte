@@ -126,8 +126,6 @@
   export let empty = "Nothing here yet.";
   export let mobile_transform = true;
 
-  console.log(header);
-
   $: innerWidth = 0;
   $pageStore.is_mobile = innerWidth < 767 ? true : false;
 </script>

@@ -1,7 +1,8 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import Fuse from "$lib/utils/fuzzy-search";
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore, configStore } from "$lib/stores/stores";
+  import { isValidInput } from "$lib/utils/form";
 
   export let label = "Select an option";
   export let error = "An error occured";
@@ -11,6 +12,12 @@
   export let id = uuid();
   export let search = options.length > 5 ? true : false;
   export let type = "select";
+  export let validation = null;
+  export let validate_on_blur = $configStore.validate_on_blur;
+  export let vob = $configStore.validate_on_blur;
+
+  const _label =
+    $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
 
   $: searchValue = "";
   let searchFocused = false;
@@ -19,7 +26,7 @@
   let selectedIndex = 0;
   $: title = "Select an option";
   $: active = $pageStore.select === id && $pageStore.select !== null ? true : false;
-  $: isError = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
+  $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
 
   const fuse = new Fuse(options, {
     shouldSort: false,
@@ -29,13 +36,13 @@
   });
   $: filteredOptions = !searchValue ? options : fuse.search(searchValue).map((obj) => obj.item);
 
-  $: if (isError) {
+  $: if (is_error) {
     setTimeout(() => {
       const index = $pageStore.errors.findIndex((item) => item === id);
       if (index > -1) {
         $pageStore.errors.splice(index, 1);
       }
-      isError = false;
+      is_error = false;
     }, 4500);
   }
 
@@ -103,6 +110,19 @@
         searchValue = "";
       }
     }, 0);
+
+    if (validate_on_blur === true && vob === true) {
+      if (validation && !isValidInput(value, validation)) {
+        if ($pageStore.errors === undefined) {
+          $pageStore.errors = [];
+        }
+
+        if (!$pageStore.errors.includes(id)) {
+          $pageStore.errors.push(id);
+          $pageStore.errors = $pageStore.errors;
+        }
+      }
+    }
   }
 
   function selectOption(event) {
@@ -184,9 +204,9 @@
 
 <div class="form__field__container select" class:active {id} tabindex="0" on:focus={showSelect} on:blur={hideSelect}>
   <!-- <div> -->
-  <div class="head" class:loading class:error={isError} on:click={toggleSelect}>
-    <div class="label" class:hidden={isError}>{label}</div>
-    <div class="label error" class:hidden={!isError}>{error}</div>
+  <div class="head" class:loading class:error={is_error} on:click={toggleSelect}>
+    <div class="label" class:hidden={is_error}>{_label}</div>
+    <div class="label error" class:hidden={!is_error}>{error}</div>
     <span class="value">{title}</span>
     {#if type === "select-number"}
       <input type="number" class="hidden" {value} />
@@ -332,8 +352,8 @@
   }
 
   .error {
-    color: var(--red) !important;
-    border-color: var(--red) !important;
+    color: var(--error) !important;
+    border-color: var(--error) !important;
   }
 
   .value {
@@ -462,7 +482,7 @@
   }
 
   .select.active .head {
-    border-color: var(--purple);
+    border-color: var(--primary);
     background: #ffffff;
     color: #11142d;
   }

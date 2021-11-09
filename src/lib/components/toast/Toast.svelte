@@ -61,11 +61,11 @@
   }
 
   .toast.success {
-    background-color: var(--green);
+    background-color: var(--success);
   }
 
   .toast.error {
-    background-color: var(--red);
+    background-color: var(--error);
   }
 
   img {

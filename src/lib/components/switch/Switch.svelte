@@ -99,7 +99,7 @@
   }
 
   .switch.active .switch__box:before {
-    background: var(--purple);
+    background: var(--primary);
     -webkit-transform: translate(2.5rem, -50%);
     -ms-transform: translate(2.5rem, -50%);
     transform: translate(2.5rem, -50%);
@@ -132,7 +132,7 @@
 
   .switch.active .loading:before {
     left: 42px;
-    background: var(--purple);
+    background: var(--primary);
   }
 
   @media (hover: hover) {

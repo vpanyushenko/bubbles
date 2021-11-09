@@ -11,7 +11,7 @@
   export let id = uuid();
   export let timeline_color = "gray";
   export let active = false;
-  export let is_pulsing = true;
+  export let pulse = true;
 
   const target = new_page === true ? "_blank" : "self";
 </script>
@@ -21,7 +21,7 @@
     <div class="timeline__bubble__container">
       {#if active}
         <div class="active__circle" />
-        {#if is_pulsing}
+        {#if pulse}
           <div class="pulse" />
         {/if}
       {/if}
@@ -171,14 +171,14 @@
     margin: 0px;
     width: 15px;
     height: 15px;
-    background-color: var(--green);
+    background-color: var(--success);
     border-radius: 50%;
     position: absolute;
   }
 
   .pulse {
     margin: 0px;
-    border: 3px solid var(--green);
+    border: 3px solid var(--success);
     -webkit-border-radius: 30px;
     border-radius: 30px;
     height: 25px;

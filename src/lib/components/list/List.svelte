@@ -113,7 +113,7 @@
     margin: 0px;
     width: 15px;
     height: 15px;
-    background-color: var(--green);
+    background-color: var(--success);
     border-radius: 50%;
     position: absolute;
     top: -6px;
@@ -122,7 +122,7 @@
 
   .timeline__active {
     margin: 0px;
-    border: 3px solid var(--green);
+    border: 3px solid var(--success);
     -webkit-border-radius: 30px;
     border-radius: 30px;
     height: 25px;

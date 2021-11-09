@@ -1,5 +1,6 @@
 <script>
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore, configStore } from "$lib/stores/stores";
+  import { isValidInput } from "$lib/utils/form";
 
   export let id;
   export let label;
@@ -7,20 +8,25 @@
   export let type = "text";
   export let desc;
   export let margin = false;
-  export let value = "";
-  export let required = false;
+  export let value = null;
   export let bounds = null;
+  export let validation = null;
+  export let validate_on_blur = $configStore.validate_on_blur;
+  export let vob = $configStore.validate_on_blur;
+
+  const _label =
+    $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
 
   let focused = false;
-  $: isError = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
+  $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
 
-  $: if (isError) {
+  $: if (is_error) {
     setTimeout(() => {
       const index = $pageStore?.errors?.findIndex((item) => item === id);
       if (index > -1) {
         $pageStore.errors.splice(index, 1);
       }
-      isError = false;
+      is_error = false;
     }, 5000);
   }
 
@@ -30,7 +36,7 @@
       $pageStore.errors.splice(index, 1);
     }
     focused = true;
-    isError = false;
+    is_error = false;
   }
 
   function inputBlured() {
@@ -41,15 +47,27 @@
       return;
     }
 
-    if (required && !value) {
-      if ($pageStore.errors === undefined) {
-        $pageStore.errors = [];
-      }
+    if (validate_on_blur === true && vob === true) {
+      if (validation && !isValidInput(value, validation)) {
+        if ($pageStore.errors === undefined) {
+          $pageStore.errors = [];
+        }
 
-      if (!$pageStore.errors.includes(id)) {
-        $pageStore.errors.push(id);
-        $pageStore.errors = $pageStore.errors;
+        if (!$pageStore.errors.includes(id)) {
+          $pageStore.errors.push(id);
+          $pageStore.errors = $pageStore.errors;
+        }
       }
+    }
+  }
+
+  function dateFieldFocused(event) {
+    event.currentTarget.type = "date";
+  }
+
+  function dateFieldBlurred(event) {
+    if (!event.currentTarget.value) {
+      event.currentTarget.type = "text";
     }
   }
 </script>
@@ -58,18 +76,17 @@
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field js-field" class:active={focused || value}>
       <div class="field__label">
-        <span class:hidden={isError}>{label}</span>
-        <span class="error hidden" class:hidden={!isError}>{error}</span>
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
       </div>
       <div class="field__wrap">
         <input
           class="field__input"
-          class:error={isError}
+          class:error={is_error}
           type="text"
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}
-          {required}
         />
       </div>
       {#if desc}
@@ -81,18 +98,17 @@
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field js-field" class:active={focused || value}>
       <div class="field__label">
-        <span class:hidden={isError}>{label}</span>
-        <span class="error hidden" class:hidden={!isError}>{error}</span>
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
       </div>
       <div class="field__wrap">
         <input
           class="field__input"
-          class:error={isError}
+          class:error={is_error}
           type="email"
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}
-          {required}
         />
       </div>
       {#if desc}
@@ -104,18 +120,17 @@
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field js-field" class:active={focused || value}>
       <div class="field__label">
-        <span class:hidden={isError}>{label}</span>
-        <span class="error hidden" class:hidden={!isError}>{error}</span>
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
       </div>
       <div class="field__wrap">
         <input
           class="field__input"
-          class:error={isError}
+          class:error={is_error}
           type="password"
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}
-          {required}
         />
       </div>
       {#if desc}
@@ -127,18 +142,19 @@
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field js-field" class:active={focused || value}>
       <div class="field__label">
-        <span class:hidden={isError}>{label}</span>
-        <span class="error hidden" class:hidden={!isError}>{error}</span>
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
       </div>
       <div class="field__wrap">
         <input
           class="field__input"
-          class:error={isError}
-          type="date"
+          class:error={is_error}
+          type="text"
           bind:value
           on:focus={inputFocused}
+          on:focus={dateFieldFocused}
           on:blur={inputBlured}
-          {required}
+          on:blur={dateFieldBlurred}
         />
       </div>
       {#if desc}
@@ -150,18 +166,17 @@
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field js-field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
-        <span class:hidden={isError}>{label}</span>
-        <span class="error hidden" class:hidden={!isError}>{error}</span>
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
       </div>
       <div class="field__wrap">
         <input
           class="field__input"
-          class:error={isError}
+          class:error={is_error}
           type="number"
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}
-          {required}
           min={bounds ? bounds[0] : null}
           max={bounds ? bounds[1] : null}
         />
@@ -175,18 +190,17 @@
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field js-field" class:active={focused || value}>
       <div class="field__label">
-        <span class:hidden={isError}>{label}</span>
-        <span class="error hidden" class:hidden={!isError}>{error}</span>
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
       </div>
       <div class="field__wrap">
         <input
           class="field__input"
-          class:error={isError}
+          class:error={is_error}
           type="text"
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}
-          {required}
         />
       </div>
       {#if desc}
@@ -296,12 +310,12 @@
     top: 0;
     right: 0;
     text-transform: none;
-    color: var(--blue);
+    color: var(--info);
   }
 
   .error {
-    color: var(--red) !important;
-    border-color: var(--red) !important;
+    color: var(--error) !important;
+    border-color: var(--error) !important;
   }
 
   .field__input {
@@ -342,7 +356,7 @@
 
   .field__textarea:focus,
   .field__input:focus {
-    border-color: var(--purple);
+    border-color: var(--primary);
     background: var(--white);
   }
 

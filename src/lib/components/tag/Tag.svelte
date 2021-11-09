@@ -6,15 +6,16 @@
 -->
 <script>
   export let label;
-  export let color = "purple";
+  export let color = "primary";
   export let small = false;
   export let min_width = true;
 
-  let style = `var(--${color})`;
+  let background = `var(--${color}-lightest)`;
+  let text_color = `var(--${color}-darkest)`;
 </script>
 
 {#if label}
-  <span style="background: {style}" class:small class:min_width>{label}</span>
+  <span style="background: {background}; color: {text_color}" class:small class:min_width>{label}</span>
 {/if}
 
 <style>

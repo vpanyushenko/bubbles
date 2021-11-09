@@ -1,4 +1,6 @@
 <script>
+  import ModalHeader from "./ModalHeader.svelte";
+  import ModalFooter from "./ModalFooter.svelte";
   import { fly, fade } from "svelte/transition";
   import { modalStore } from "$lib/stores/modal.store";
   import IconButton from "$lib/components/button/IconButton.svelte";
@@ -27,13 +29,10 @@
 <svelte:window on:keydown={keydown} />
 
 {#if $modalStore.active}
-  <div class="modal" {id}>
-    <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
+  <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
+    <div class="modal" {id}>
       <div class="container" transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
-        <header>
-          <h6 class="title">{$modalStore.title}</h6>
-          <IconButton icon="close" onclick={hideModal} />
-        </header>
+        <ModalHeader />
 
         <main class="form">
           {#each $modalStore.inputs as input}
@@ -58,13 +57,7 @@
             {/if}
           {/each}
         </main>
-        <footer>
-          {#each $modalStore.inputs as input}
-            {#if input.type === "button"}
-              <Button {...input} />
-            {/if}
-          {/each}
-        </footer>
+        <ModalFooter buttons={$modalStore.footer} />
       </div>
     </div>
   </div>
@@ -91,7 +84,6 @@
   .container {
     max-width: 500px;
     min-width: 350px;
-    width: 40%;
     max-height: 80vh;
     min-height: 50vh;
     overflow-y: scroll;
@@ -102,29 +94,6 @@
     background: #fff;
     display: flex;
     flex-direction: column;
-  }
-
-  .container.small {
-    max-width: 400px;
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    font-size: 13px;
-    line-height: 1.38462;
-    font-weight: 500;
-    color: #b2b3bd;
-  }
-
-  .title {
-    font-family: "Poppins", sans-serif;
-    font-size: 1.125rem;
-    line-height: 1.33333;
-    color: var(--black);
   }
 
   main {
@@ -193,8 +162,8 @@
 
   @media only screen and (max-width: 767px) {
     .container {
-      width: 100% !important;
-      height: 100vh !important;
+      width: 100%;
+      min-height: 50vh !important;
       max-height: 100vh;
     }
   }
