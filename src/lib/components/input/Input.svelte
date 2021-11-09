@@ -74,7 +74,7 @@
 
 {#if type === "text"}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field js-field" class:active={focused || value}>
+    <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
@@ -96,7 +96,7 @@
   </div>
 {:else if type === "email"}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field js-field" class:active={focused || value}>
+    <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
@@ -118,7 +118,7 @@
   </div>
 {:else if type === "password"}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field js-field" class:active={focused || value}>
+    <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
@@ -140,7 +140,7 @@
   </div>
 {:else if type === "date"}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field js-field" class:active={focused || value}>
+    <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
@@ -164,7 +164,7 @@
   </div>
 {:else if type === "number"}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field js-field" class:active={focused || value || value === 0 || value === "0"}>
+    <div class="field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
@@ -188,7 +188,7 @@
   </div>
 {:else}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field js-field" class:active={focused || value}>
+    <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
