@@ -5,13 +5,19 @@
   - *color*: The color of the tag
 -->
 <script>
-  export let label;
+  export let label = "";
   export let color = "primary";
+  export let style = "light";
   export let small = false;
   export let min_width = true;
 
   let background = `var(--${color}-lightest)`;
   let text_color = `var(--${color}-darkest)`;
+
+  if (style === "dark") {
+    background = `var(--${color})`;
+    text_color = color !== "warning" ? `var(--${white})` : `var(--${black})`;
+  }
 </script>
 
 {#if label}
