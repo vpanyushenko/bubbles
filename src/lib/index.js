@@ -9,15 +9,19 @@ import Sidebar from "./components/sidebar/Sidebar.svelte";
 import Form from "./components/form/Form.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
+import Tag from "./components/tag/Tag.svelte";
 
-export { Header, Card, CardHeader, CardFooter, List, ListItem, ListItemTimeline, Sidebar, Modal, Toast, Form };
+export { Header, Card, CardHeader, CardFooter, List, ListItem, ListItemTimeline, Sidebar, Modal, Toast, Form, Tag };
 
 //Inputs
 import Button from "./components/button/Button.svelte";
 import Input from "./components/input/Input.svelte";
 import Select from "./components/select/Select.svelte";
+import Switch from "./components/switch/Switch.svelte";
+import LabeledSwitch from "./components/switch/LabeledSwitch.svelte";
+import Checkbox from "./components/checkbox/Checkbox.svelte";
 
-export { Button, Input, Select };
+export { Button, Input, Select, Switch, LabeledSwitch, Checkbox };
 
 //tables
 import Table from "./components/table/Table.svelte";
