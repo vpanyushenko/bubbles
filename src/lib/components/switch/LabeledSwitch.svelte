@@ -1,5 +1,6 @@
 <script>
   import Switch from "./Switch.svelte";
+  import { configStore, pageStore } from "$lib/stores/stores";
 
   export let id = "";
   export let desc = "";
@@ -7,10 +8,24 @@
   export let label = "";
   export let disabled = false;
   export let onclick = null;
+  export let validation = null;
+  export let value = null;
 
-  export let value = true;
+  const _label =
+    $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
 
-  $: is_error = false; //TODO:
+  $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
+
+  $: if (is_error) {
+    setTimeout(() => {
+      const index = $pageStore?.errors?.findIndex((item) => item === id);
+      if (index > -1) {
+        $pageStore.errors.splice(index, 1);
+      }
+      is_error = false;
+    }, 5000);
+  }
+
   $: is_loading = false;
 </script>
 
@@ -18,7 +33,7 @@
   <div class="field js-field">
     <span>
       <p class="error" class:hidden={!is_error}>{error}</p>
-      <p class="label" class:hidden={is_error}>{label}</p>
+      <p class="label" class:hidden={is_error}>{_label}</p>
       {#if desc}
         <p class="field__desc">{desc}</p>
       {/if}
@@ -41,26 +56,20 @@
     font-family: "Inter", sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #11142d;
+    color: var(--black);
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
     height: 5rem;
-    padding-left: 22px;
-    padding-right: 22px;
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
     /* border-radius: 8px;
     border: 1px solid var(--gray-light); */
   }
 
   .error {
-    pointer-events: none;
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.9px;
-    text-transform: uppercase;
     color: var(--error);
     transition: transform 0.2s;
-    margin-bottom: 0px !important;
   }
 
   .field__desc {

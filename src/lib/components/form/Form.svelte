@@ -86,7 +86,7 @@
       ]
     },
     {
-      type: "select-number", //This is a special type of select in case you need to select only from number elements. Use this if all values in a select need to be numbers
+      type: "select-number", //This is a special type of select in case you need to select only from number elements. Use this if all values in a select need to be numbers (Floats or Ints) 
       id: "number", 
       label: "Select Your Number", 
       value: null, //You can add a value to the input
@@ -161,8 +161,8 @@
 
   #### Utility Functions
 
-  There are two utility functions you can import from Bubbles: `getFormData` and `validateInputs`. Sicne you've passed in an array of inputs to the `<Form>` component, you can use the and array for these functions since input value will be bound to it. 
-  Best practice with Bubbles to to create a input with a `type` of "sumbit" and give it an `onsubmit` function. This function will be called when the submit button is clicked or the Enter button is used. 
+  There are two utility functions you can import from Bubbles: `getFormData` and `validateInputs`. Since you've passed in an array of inputs to the `<Form>` component, you can use the and array for these functions since input value will be bound to it. 
+  Best practice with Bubbles to to create a input with a `type` of "sumbit" (a button) and give it an `onsubmit` function. This function will be called when the submit button is clicked or the Enter button is used. 
   Normally, you'll want to verify the data first, then get the data, then do whatever networking requests you need.
 
   ---
@@ -175,6 +175,9 @@
   import Select from "$lib/components/select/Select.svelte";
   import Button from "$lib/components/button/Button.svelte";
   import Divider from "$lib/components/divider/Divider.svelte";
+  import RadioGroup from "$lib/components/radio/RadioGroup.svelte";
+  import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
+  import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
 
   export let inputs = [];
   export let id = uuid();
@@ -226,6 +229,18 @@
 
         {#if input.type === "divider"}
           <Divider {...input} />
+        {/if}
+
+        {#if input.type === "radio" || input.type === "radio-group"}
+          <RadioGroup {...input} bind:value={input.value} />
+        {/if}
+
+        {#if input.type === "checkbox"}
+          <LabeledCheckbox {...input} bind:value={input.value} />
+        {/if}
+
+        {#if input.type === "checkbox-group"}
+          <CheckboxGroup {...input} bind:value={input.value} />
         {/if}
 
         {#if input.type === "p"}

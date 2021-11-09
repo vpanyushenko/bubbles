@@ -291,7 +291,7 @@
     background: rgba(228, 228, 228, 0.3);
     border-radius: 1rem;
     font-weight: 600;
-    color: #808191;
+    color: var(--gray);
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
@@ -403,7 +403,7 @@
     font-family: "Inter", sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #11142d;
+    color: var(--black);
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
@@ -434,7 +434,7 @@
     position: relative;
     margin-bottom: 3px;
     padding-right: 30px;
-    color: #11142d;
+    color: var(--black);
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;
@@ -459,7 +459,7 @@
   }
 
   .caption {
-    color: #808191;
+    color: var(--gray);
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;
@@ -492,7 +492,7 @@
   .select.active .head {
     border-color: var(--primary);
     background: #ffffff;
-    color: #11142d;
+    color: var(--black);
   }
 
   .select.active .head:before {
@@ -531,7 +531,7 @@
   }
 
   .field__desc {
-    padding: 0.625rem 22px 0 !important;
+    padding: 0.625rem 1.375rem 0 !important;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33333;

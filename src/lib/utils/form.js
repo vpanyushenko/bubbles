@@ -244,8 +244,9 @@ const _inputTypes = [
   "textarea",
   "phone",
   "select",
-  "select-number",
+  "select-number", //custom type for bubbles
   "checkbox",
+  "checkbox-group", //custom type for bubbles
   "radio",
   "date",
   "password",
@@ -343,7 +344,6 @@ const validateInputs = (inputs) => {
   const errors = [];
 
   _inputs.forEach((input) => {
-    console.log(isValidInput(input.value, input.validation));
     if (!isValidInput(input.value, input.validation)) {
       errors.push(input.id);
     }
@@ -366,7 +366,7 @@ const validateInputs = (inputs) => {
     });
   }
 
-  return errors;
+  return { errors: errors };
 };
 
 export { getFormData, getValidationRequirements, isValidInput, validateInputs };

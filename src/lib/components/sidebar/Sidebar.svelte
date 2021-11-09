@@ -265,7 +265,7 @@
     background: transparent;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #808191;
+    color: var(--gray);
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;
@@ -467,7 +467,7 @@
     .sidebar.active .sidebar__counter {
       position: absolute;
       top: 15px;
-      left: 22px;
+      left: 1.375rem;
       min-width: 0.625rem;
       height: 0.625rem;
       font-size: 0;
@@ -511,7 +511,7 @@
       padding-left: 0;
     }
     .sidebar__item:hover {
-      color: #808191;
+      color: var(--gray);
     }
     .sidebar__icon {
       margin-right: 1.25rem;
@@ -519,7 +519,7 @@
     .sidebar__counter {
       position: absolute;
       top: 15px;
-      left: 22px;
+      left: 1.375rem;
       min-width: 0.625rem;
       height: 0.625rem;
       font-size: 0;

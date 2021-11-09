@@ -320,7 +320,7 @@
     font-size: 17px;
     margin-right: auto;
     padding-left: 1.25rem;
-    color: #11142d;
+    color: var(--black);
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;
@@ -333,7 +333,7 @@
   .icon__btn__header {
     font-size: 17px;
     margin-right: auto;
-    color: #11142d;
+    color: var(--black);
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;

@@ -34,7 +34,7 @@
     padding-left: 1.25rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid #e4e4e4;
+    border-bottom: 1px solid var(--gray-light);
     color: var(--black);
     flex-grow: 1;
   }

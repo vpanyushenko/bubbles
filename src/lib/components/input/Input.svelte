@@ -242,7 +242,7 @@
     font-family: "Inter", sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #11142d;
+    color: var(--black);
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
@@ -321,7 +321,7 @@
   .field__input {
     width: 100%;
     height: 5rem;
-    padding: 1.125rem 22px 0 !important;
+    padding: 1.125rem 1.375rem 0 !important;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
@@ -340,7 +340,7 @@
 
   .field__textarea {
     width: 100%;
-    padding: 2.5rem 22px 0 !important;
+    padding: 2.5rem 1.375rem 0 !important;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
@@ -378,7 +378,7 @@
   }
 
   .field__desc {
-    padding: 0.625rem 22px 0 !important;
+    padding: 0.625rem 1.375rem 0 !important;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33333;

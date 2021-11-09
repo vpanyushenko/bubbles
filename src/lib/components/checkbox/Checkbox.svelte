@@ -1,5 +1,10 @@
+<script>
+  export let value = null;
+  export let onchange = null;
+</script>
+
 <label class="checkbox">
-  <input class="checkbox__input" type="checkbox" />
+  <input class="checkbox__input" type="checkbox" bind:checked={value} on:change={onchange} />
   <span class="checkbox__in">
     <span class="checkbox__tick" />
   </span>
@@ -25,8 +30,8 @@
   }
 
   .checkbox__input:checked + .checkbox__in .checkbox__tick {
-    background: #6c5dd3;
-    border-color: #6c5dd3;
+    background: var(--primary);
+    border-color: var(--primary);
   }
 
   .checkbox__input:checked + .checkbox__in .checkbox__tick:before {
@@ -65,7 +70,7 @@
     width: 20px;
     height: 20px;
     border-radius: 4px;
-    border: 2px solid #e4e4e4;
+    border: 2px solid var(--gray-light);
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;

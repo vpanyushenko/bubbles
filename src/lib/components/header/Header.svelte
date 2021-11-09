@@ -338,7 +338,7 @@
       max-width: calc(100% + 2rem);
       margin: 0 -1rem;
       padding: 0px;
-      border-bottom: 1px solid #e4e4e4;
+      border-bottom: 1px solid var(--gray-light);
       width: 100%;
       display: flex;
       justify-content: space-between;

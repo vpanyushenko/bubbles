@@ -20,8 +20,11 @@ import Select from "./components/select/Select.svelte";
 import Switch from "./components/switch/Switch.svelte";
 import LabeledSwitch from "./components/switch/LabeledSwitch.svelte";
 import Checkbox from "./components/checkbox/Checkbox.svelte";
+import LabeledCheckbox from "./components/checkbox/LabeledCheckbox.svelte";
+import CheckboxGroup from "./components/checkbox/CheckboxGroup.svelte";
+import RadioGroup from "./components/radio/RadioGroup.svelte";
 
-export { Button, Input, Select, Switch, LabeledSwitch, Checkbox };
+export { Button, Input, Select, Switch, LabeledSwitch, Checkbox, CheckboxGroup, LabeledCheckbox, RadioGroup };
 
 //tables
 import Table from "./components/table/Table.svelte";

@@ -97,7 +97,7 @@
   }
 
   main {
-    color: #808191;
+    color: var(--gray);
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;
