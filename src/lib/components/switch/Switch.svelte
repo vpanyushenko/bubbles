@@ -1,6 +1,6 @@
 <script>
   export let disabled = false;
-  export let loading = false;
+  export let is_loading = false;
   export let onclick = null;
   export let value = true;
 
@@ -9,15 +9,17 @@
   // $: console.log(value, active);
 
   function toggleSwitch(event) {
-    value = !value ? true : false;
+    if (!disabled) {
+      value = !value ? true : false;
+    }
   }
 </script>
 
 <label class="switch" class:active class:disabled>
   <input type="checkbox" on:click={toggleSwitch} on:click={onclick} {value} />
   <span class="switch__in">
-    <span class="switch__box" class:hidden={loading} />
-    <span class="loading" class:hidden={!loading} />
+    <span class="switch__box" class:hidden={is_loading} />
+    <span class="loading" class:hidden={!is_loading} />
   </span>
 </label>
 
@@ -44,10 +46,6 @@
     -webkit-transition: opacity 0.25s;
     -o-transition: opacity 0.25s;
     transition: opacity 0.25s;
-  }
-
-  .switch.disabled {
-    cursor: not-allowed;
   }
 
   input {
@@ -133,6 +131,13 @@
   .switch.active .loading:before {
     left: 42px;
     background: var(--primary);
+  }
+
+  .switch.disabled {
+    cursor: not-allowed;
+  }
+  .switch.disabled .switch__box:before {
+    background: var(--gray);
   }
 
   @media (hover: hover) {
