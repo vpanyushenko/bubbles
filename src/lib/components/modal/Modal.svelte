@@ -1,8 +1,8 @@
 <script>
-  import ModalHeader from "./ModalHeader.svelte";
-  import ModalFooter from "./ModalFooter.svelte";
   import { fly, fade } from "svelte/transition";
   import { modalStore } from "$lib/stores/modal.store";
+  import IconButton from "$lib/components/button/IconButton.svelte";
+  import Button from "$lib/components/button/Button.svelte";
   import Form from "$lib/components/form/Form.svelte";
 
   function hideModal() {
@@ -24,7 +24,10 @@
   <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
     <div class="modal">
       <div class="container" transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
-        <ModalHeader />
+        <header>
+          <h6 class="title">{$modalStore.title}</h6>
+          <IconButton icon="close" onclick={hideModal} />
+        </header>
 
         <main>
           {#if $modalStore.message}
@@ -36,7 +39,13 @@
           {/if}
         </main>
 
-        <ModalFooter buttons={$modalStore.footer} />
+        {#if $modalStore.footer.length > 0}
+          <footer class="modal__footer">
+            {#each $modalStore.footer as button}
+              <Button {...button} wide={true} />
+            {/each}
+          </footer>
+        {/if}
       </div>
     </div>
   </div>
@@ -61,8 +70,7 @@
   }
 
   .container {
-    max-width: 500px;
-    min-width: 350px;
+    width: 31rem;
     max-height: 80vh;
     min-height: 50vh;
     overflow-y: scroll;
@@ -75,6 +83,26 @@
     flex-direction: column;
   }
 
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    font-size: 13px;
+    line-height: 1.38462;
+    font-weight: 500;
+    color: #b2b3bd;
+    flex-shrink: 0;
+  }
+
+  .title {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.33333;
+    color: var(--black);
+  }
+
   main {
     color: var(--gray);
     -webkit-transition: color 0.25s;
@@ -82,7 +110,12 @@
     transition: color 0.25s;
     padding-top: 12px;
     padding-bottom: 2.5rem;
-    flex: 1 0 auto;
+    flex: 1;
+    overflow: scroll;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
   }
 
   footer {
@@ -90,6 +123,10 @@
     padding-bottom: 1.5rem;
     text-align: end;
     flex-shrink: 0;
+  }
+
+  :global(.modal__footer button + button) {
+    margin-top: 1rem;
   }
 
   /**************************\
@@ -131,15 +168,12 @@
     }
   }
 
-  @media only screen and (max-width: 1179px) {
-    .container {
-      max-width: 500px;
-      min-width: 350px;
-      width: 60%;
-    }
-  }
-
   @media only screen and (max-width: 767px) {
+    .modal {
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+    }
     .container {
       width: 100%;
       min-height: 50vh !important;

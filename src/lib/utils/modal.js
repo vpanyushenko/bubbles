@@ -15,8 +15,6 @@ const showModal = (title, options = { message: "", form: [], footer: [] }) => {
     footer: options.footer ? options.footer : [],
   };
 
-  console.log(_options);
-
   modalStore.update((data) => {
     data.title = title;
     data.active = true;
