@@ -1,22 +1,41 @@
 <script>
+  import { pageStore } from "$lib/stores/stores";
+  import { v4 as uuid } from "@lukeed/uuid";
+
+  export let id = uuid();
   export let disabled = false;
-  export let is_loading = false;
   export let onclick = null;
+  export let onselect = null;
+  export let onchange = null;
   export let value = true;
 
   $: active = value ? true : false;
-
-  // $: console.log(value, active);
+  let is_animation_compelted = true;
+  $: is_loading = $pageStore.loading.includes(id) && is_animation_compelted;
 
   function toggleSwitch(event) {
-    if (!disabled) {
+    if (!disabled && !is_loading && is_animation_compelted) {
       value = !value ? true : false;
+
+      is_animation_compelted = false;
+
+      setTimeout(() => {
+        is_animation_compelted = true;
+      }, 250);
     }
   }
 </script>
 
 <label class="switch" class:active class:disabled>
-  <input type="checkbox" on:click={toggleSwitch} on:click={onclick} {value} />
+  <input
+    type="checkbox"
+    on:change={toggleSwitch}
+    on:change={onclick}
+    on:change={onselect}
+    on:change={onchange}
+    {value}
+    {id}
+  />
   <span class="switch__in">
     <span class="switch__box" class:hidden={is_loading} />
     <span class="loading" class:hidden={!is_loading} />
@@ -83,7 +102,7 @@
     width: 1.25rem;
     height: 1.25rem;
     border-radius: 50%;
-    border: 4px solid #ffffff;
+    border: 4px solid var(--white);
     -webkit-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
     background: var(--gray);
@@ -111,8 +130,8 @@
     width: 1.25rem;
     height: 1.25rem;
     border-radius: 50%;
-    border: 4px solid #ccc;
-    border-top-color: #fff;
+    border: 4px solid var(--gray-light);
+    border-top-color: var(--white);
     background: var(--gray);
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
@@ -126,6 +145,9 @@
     animation-iteration-count: infinite;
     animation-duration: 0.8s;
     animation-timing-function: linear;
+    -webkit-transition: all 0.25s;
+    -o-transition: all 0.25s;
+    transition: all 0.25s;
   }
 
   .switch.active .loading:before {

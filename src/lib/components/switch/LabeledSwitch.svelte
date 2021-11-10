@@ -39,7 +39,7 @@
       {/if}
     </span>
 
-    <Switch {disabled} {onclick} bind:value bind:is_loading />
+    <Switch {disabled} {onclick} bind:value />
   </div>
 </div>
 

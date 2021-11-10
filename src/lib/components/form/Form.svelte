@@ -111,13 +111,78 @@
       ]
     },
     {
+      type: "switch", //will render a switch component
+      id: "preferences.email",
+      label: "Email Updates",
+      value: true, //value should be a boolean
+      desc: "Let us know if you want to recieve email updates",
+      disabled: false,
+      error: "An error occured",
+      validation: "accepted", //best UX is to not make switches mandatory, use a checkbox instead if you need
+    },
+    {
+      type: "radio", //a group of radio buttons
+      id: "radio",
+      label: "Select your bread",
+      value: "plain",
+      desc: "Let us know what type of bread you want",
+      error: "Select a type of bread",
+      validation: "required", //if you set a default value, one will always be selected
+      options: [
+        {
+          label: "Plain", 
+          value: "plain",
+        },
+        {
+          label: "Whole Wheat", 
+          value: "whole_wheat",
+        },
+        {
+          label: "Spinach", 
+          value: "spinach",
+        },
+      ],
+    },
+    {
+      type: "checkbox-group", //This will give a group of checkboxes, here the user can select multiple options
+      id: "toppings",
+      label: "Select Your Toppings",
+      value: [], //Will need an array because you can select multiple
+      desc: "Select as many toppings as you'd like",
+      error: "Something went wrong",
+      validation: null, 
+      options: [
+        {
+          label: "Beans", 
+          value: "beans", 
+        },
+        {
+          label: "Lettuce", 
+          value: "lettuce", 
+        },
+        {
+          label: "Tomato Sauce", 
+          value: "tomato_sauce", 
+        },
+      ],
+    },
+    {
+      type: "checkbox", //a single checkbox, like for accepting terms and conditions
+      id: "terms",
+      label: "Terms and conditions",
+      value: false, //You can add a value to the input
+      desc: "By submitting this form you agree to our terms. <a href='https://google.com' target='_blank'>View Terms</a>.", //you can add html into the description
+      error: "You must accept the terms and conditions",
+      validation: "required|accepted", 
+    },
+    {
       type: "submit", //The form must have a submit button
       label: "Submit Form" //The label for the submit button,
-      onsubmit: () => {
+      onsubmit: (event) => {
         //you can also use the onclick, if it's on a submit button Bubbles will look for the onsubmit event
-        import {validateInputs, getFormData, showToast} from "bubbles" //You should do this at the top of your file
+        import { validateInputs, getFormData, showToast, showLoading, hideLoading } from "bubbles" //You should do this at the top of your file
 
-        const errors = validateInputs(inputs) //this will automatically trigger error states
+        const errors = validateInputs(inputs).errors  //check for errors
 
         if (errors.length) {
           showToast("Please fill in all required inputs", "error")
@@ -126,7 +191,29 @@
 
         const data = getFormData(inputs)
 
+        //the onsubmit and onclick function on buttons, will give you the event param
+        //if you want to toggle the loading state on your button while doing a networking request
+        //just use showLoading() and pass in the id
+        //An id will automatically be assigned to the button for you
+
+        const button_id = event.currentTarget.id
+        showLoading(button_id)
+
         //do the fetch request with your data
+        fetch("/api/profile", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }).then(res => {
+          return res.json()
+        }).then(body => {
+          hideLoading(button_id)
+        }).catch(err => {
+          hideLoading(button_id)
+        })
 
       }
 
@@ -209,7 +296,7 @@
   {#each inputs as input}
     {#if !input.hidden}
       <span class="row">
-        {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number"}
+        {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number" || input.type === "textarea"}
           <Input {...input} bind:value={input.value} />
         {/if}
 

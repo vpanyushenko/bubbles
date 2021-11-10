@@ -10,53 +10,69 @@
 	--white: #ffffff;
 	--black: #11142d;
 
-	--primary-lightest: #bdb7eb;
-	--primary-light: #9085de;
-	--primary: #6c5dd3;
-	--primary-dark: #4836c7;
-	--primary-darkest: #30295d;
+	--primary-lightest: #DAD6F4;
+	--primary-lighter: #B5AEE9;
+	--primary-light: #9186DE;
+	--primary: #6C5DD3;
+	--primary-dark: #50459E;
+	--primary-darker: #352E69;
+	--primary-darkest: #1B1734;
 
-	--secondary-lightest: #ffdcf6;
-	--secondary-light: #ffcbf2;
-	--secondary: #ff98e5;
-	--secondary-dark: #ff65d8;
-	--secondary-darkest: #714365;
+	--secondary-lightest: #FFE5F8;
+	--secondary-lighter: #FFCBF2;
+	--secondary-light: #FFB2EC;
+	--secondary: #FF98E5;
+	--secondary-dark: #BF71AB;
+	--secondary-darker: #7F4B72;
+	--secondary-darkest: #402639;
 
-	--error-lightest: #ffbb9f;
-	--error-light: #ff8a5b;
-	--error: #ff6628;
-	--error-dark: #f44600;
-	--error-darkest: #712d11;
+	--error-lightest: #FFD9C9;
+	--error-lighter: #FFB293;
+	--error-light: #FF8D5E;
+	--error: #FF6628;
+	--error-dark: #BF4C1D;
+	--error-darker: #7F3213;
+	--error-darkest: #40190A;
 
-	--warning-lightest: #ffd4a6;
-	--warning-light: #ffb86b;
-	--warning: #ff9f38;
-	--warning-dark: #ff8605;
-	--warning-darkest: #714618;
+	--warning-lightest: #FFE7CD;
+	--warning-lighter: #FFCF9B;
+	--warning-light: #FFB76A;
+	--warning: #FF9F38;
+	--warning-dark: #BF7729;
+	--warning-darker: #7F4F1B;
+	--warning-darkest: #40270E;
 
-	--success-lightest: #b0e2bb;
-	--success-light: #74cd87;
-	--success: #4fbf67;
-	--success-dark: #3aa150;
-	--success-darkest: #23542d;
+	--success-lightest: #D3EFD9;
+	--success-lighter: #A7DFB3;
+	--success-light: #7BCF8D;
+	--success: #4FBF67;
+	--success-dark: #3B8F4D;
+	--success-darker: #275F33;
+	--success-darkest: #132F19;
 
-	--info-lightest: #a5b7ff;
-	--info-light: #6886ff;
-	--info: #355dff;
-	--info-dark: #0234ff;
-	--info-darkest: #172971;
+	--info-lightest: #CCD6FF;
+	--info-lighter: #9AAEFF;
+	--info-light: #6886FF;
+	--info: #355DFF;
+	--info-dark: #2745BF;
+	--info-darker: #1A2E7F;
+	--info-darkest: #0D1740;
 
-	--gray-lightest: #f9f9f9;
-	--gray-light: #e4e4e4;
+	--gray-lightest: #F9F9F9;
+	--gray-lighter: #F6F5F5;
+	--gray-light: #E4E4E4;
 	--gray: #808191;
-	--gray-dark: #676877;
-	--gray-darkest: #383940;
+	--gray-dark: #5F606C;
+	--gray-darker: #3F4048;
+	--gray-darkest: #202024;
 
-	--dark-darkest: #11142D;
-	--dark-dark: #191b20;
-	--dark: #1b1d21;
-	--dark-light: #242731;
-	--dark-lightest: #64666F;
+	--dark-lightest: #C6C6C7;
+	--dark-lighter: #6E6F71;
+	--dark-light: #353739;
+	--dark: #1B1D21;
+	--dark-dark: #141518;
+	--dark-darker: #0D0E10;
+	--dark-darkest: #060708;
 }
 
 body {

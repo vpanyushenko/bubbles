@@ -186,6 +186,28 @@
       {/if}
     </div>
   </div>
+{:else if type === "textarea"}
+  <div class="form__field__container" {id} class:mb-2={margin}>
+    <div class="field" class:active={focused || value || value === 0 || value === "0"}>
+      <div class="field__label">
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
+      </div>
+      <div class="field__wrap">
+        <!-- <input type="hidden" class="hidden" bind:value /> -->
+        <textarea
+          class="field__textarea"
+          class:error={is_error}
+          on:focus={inputFocused}
+          on:blur={inputBlured}
+          bind:value
+        />
+      </div>
+      {#if desc}
+        <p class="field__desc">{desc}</p>
+      {/if}
+    </div>
+  </div>
 {:else}
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>

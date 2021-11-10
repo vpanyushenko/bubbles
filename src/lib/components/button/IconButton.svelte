@@ -25,6 +25,7 @@
     filter: filter,
   };
 
+  export let id = uuid();
   export let icon;
   export let onclick = null;
   export let options = [];
@@ -33,7 +34,6 @@
   const dropdown = options.length ? true : false;
 
   let src = icons[icon] ? icons[icon] : more;
-  let id = uuid();
 
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: loading = ($pageStore.clicked === id && $navigating) || ($pageStore.clicked === id && $pageStore.is_fetching);
@@ -41,9 +41,6 @@
   function iconClick(event) {
     let iconElement = event.currentTarget;
 
-    //we want to show the loading loading icon if we clicked on a href in a dropdown
-    //as a result, we need to check if we are on the icon, otherwise we need to go up
-    //the DOM tree to find it
     if (!event.currentTarget.classList.contains("icon__btn")) {
       iconElement = iconElement.closest(".icon__btn");
     }
