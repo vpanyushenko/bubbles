@@ -59,6 +59,15 @@
       validation: "required|date", //date validator is built in
     },
     {
+      type: "textarea", //the textarea / fieldfield input
+      id: "description",
+      label: "Your Address",
+      value: "",
+      desc: "Type your address",
+      rows: 8, //specify how many rows you want. Defaults to 5
+      validation: "required", 
+    },
+    {
       type: "select",
       id: "role", 
       label: "Select Your Role", 
