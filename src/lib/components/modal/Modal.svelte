@@ -14,8 +14,6 @@
       hideModal();
     }
   }
-
-  console.log($modalStore);
 </script>
 
 <svelte:window on:keydown={keydown} />
