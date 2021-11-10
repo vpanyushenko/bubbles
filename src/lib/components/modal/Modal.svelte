@@ -3,17 +3,7 @@
   import ModalFooter from "./ModalFooter.svelte";
   import { fly, fade } from "svelte/transition";
   import { modalStore } from "$lib/stores/modal.store";
-  import IconButton from "$lib/components/button/IconButton.svelte";
-  import Button from "$lib/components/button/Button.svelte";
-  import Input from "$lib/components/input/Input.svelte";
-  import Divider from "$lib/components/divider/Divider.svelte";
-  import Select from "$lib/components/select/Select.svelte";
-  import Switch from "$lib/components/switch/LabeledSwitch.svelte";
-
-  export let id = "";
-  export let title = "";
-
-  title = $modalStore.title;
+  import Form from "$lib/components/form/Form.svelte";
 
   function hideModal() {
     $modalStore = {};
@@ -24,39 +14,28 @@
       hideModal();
     }
   }
+
+  console.log($modalStore);
 </script>
 
 <svelte:window on:keydown={keydown} />
 
 {#if $modalStore.active}
   <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
-    <div class="modal" {id}>
+    <div class="modal">
       <div class="container" transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
         <ModalHeader />
 
-        <main class="form">
-          {#each $modalStore.inputs as input}
-            {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date"}
-              <Input {...input} bind:value={input.value} />
-            {/if}
+        <main>
+          {#if $modalStore.message}
+            <p>{$modalStore.message}</p>
+          {/if}
 
-            {#if input.type === "switch"}
-              <Switch {...input} bind:value={input.value} />
-            {/if}
-
-            {#if input.type === "select"}
-              <Select {...input} bind:value={input.value} />
-            {/if}
-
-            {#if input.type === "info"}
-              <p>{input.text}</p>
-            {/if}
-
-            {#if input === "break"}
-              <Divider />
-            {/if}
-          {/each}
+          {#if $modalStore.form}
+            <Form inputs={$modalStore.form} />
+          {/if}
         </main>
+
         <ModalFooter buttons={$modalStore.footer} />
       </div>
     </div>
