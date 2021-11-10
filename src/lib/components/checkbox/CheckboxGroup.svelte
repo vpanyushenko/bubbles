@@ -31,7 +31,7 @@
       <p class="error" class:hidden={!is_error}>{error}</p>
       <p class="label" class:hidden={is_error}>{_label}</p>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </span>
 

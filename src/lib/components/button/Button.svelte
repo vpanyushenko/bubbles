@@ -252,6 +252,7 @@
   .dark-light:focus,
   .dark-light:hover {
     background: var(--dark-light);
+    color: var(--white);
   }
 
   .gray {

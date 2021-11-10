@@ -11,6 +11,7 @@
   export let value = null;
   export let bounds = null;
   export let validation = null;
+  export let rows = 5;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
 
@@ -90,7 +91,7 @@
         />
       </div>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
   </div>
@@ -112,7 +113,7 @@
         />
       </div>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
   </div>
@@ -134,7 +135,7 @@
         />
       </div>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
   </div>
@@ -158,7 +159,7 @@
         />
       </div>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
   </div>
@@ -182,7 +183,7 @@
         />
       </div>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
   </div>
@@ -197,6 +198,7 @@
         <!-- <input type="hidden" class="hidden" bind:value /> -->
         <textarea
           class="field__textarea"
+          {rows}
           class:error={is_error}
           on:focus={inputFocused}
           on:blur={inputBlured}
@@ -204,7 +206,7 @@
         />
       </div>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
   </div>
@@ -226,7 +228,7 @@
         />
       </div>
       {#if desc}
-        <p class="field__desc">{desc}</p>
+        <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
   </div>
@@ -276,7 +278,6 @@
   }
 
   .field__textarea {
-    height: 157px;
     padding: 15px 23px;
     resize: none;
   }

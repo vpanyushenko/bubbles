@@ -262,7 +262,7 @@
     {/each}
   </div>
   {#if desc}
-    <p class="field__desc">{desc}</p>
+    <p class="field__desc">{@html desc}</p>
   {/if}
   <!-- </div> -->
 </div>
