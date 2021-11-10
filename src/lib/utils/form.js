@@ -218,8 +218,8 @@ const _validation = {
 
   regex: function (val, req) {
     req = req.split(":")[1];
-    const mod = /[g|i|m]{1,3}$/;
-    const flag = req.match(mod);
+    let mod = /[g|i|m]{1,3}$/;
+    let flag = req.match(mod);
     flag = flag ? flag[0] : "";
 
     req = req.replace(mod, "").slice(1, -1);
