@@ -59,8 +59,6 @@
   function typeaheadOnInput(event) {
     const value = event.target.value;
 
-    console.log(value);
-
     if (typeahead && value) {
       is_loading = true;
       typeahead(value)
@@ -169,7 +167,7 @@
     //can perhaps come up with a better solution in the future
     setTimeout(() => {
       typeahead_options = [];
-    }, 500);
+    }, 100);
   }
 </script>
 
