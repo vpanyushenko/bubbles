@@ -1,6 +1,9 @@
 <script>
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
+  import { hideLoading, showLoading } from "$lib/utils/loading";
+  import { configLabel } from "$lib/utils/config";
+  import { v4 as uuid } from "@lukeed/uuid";
 
   export let id;
   export let label;
@@ -12,13 +15,14 @@
   export let bounds = null;
   export let validation = null;
   export let rows = 5;
+  export let typeahead = null;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
 
-  const _label =
-    $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
-
+  const _uuid = uuid();
+  const _label = configLabel(label, validation);
   let focused = false;
+  let selectedIndex = 0;
   $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
 
   $: if (is_error) {
@@ -29,6 +33,105 @@
       }
       is_error = false;
     }, 5000);
+  }
+
+  function dateFieldFocused(event) {
+    event.currentTarget.type = "date";
+  }
+
+  function dateFieldBlurred(event) {
+    if (!event.currentTarget.value) {
+      event.currentTarget.type = "text";
+    }
+  }
+
+  //options for typeahead inside of input or textarea elements
+
+  $: typeahead_options = [];
+  $: is_loading = false;
+
+  $: if (typeahead_options && typeahead_options.length > 0) {
+    $pageStore.select = _uuid;
+  } else {
+    $pageStore.select = null;
+  }
+
+  function typeaheadOnInput(event) {
+    const value = event.target.value;
+
+    console.log(value);
+
+    if (typeahead && value) {
+      is_loading = true;
+      typeahead(value)
+        .then((options) => {
+          is_loading = false;
+          if (options && options.length) {
+            typeahead_options = options;
+          } else {
+            typeahead_options = [];
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          is_loading = false;
+          typeahead_options = [];
+        });
+    }
+
+    if (!value) {
+      is_loading = false;
+      typeahead_options = [];
+    }
+  }
+
+  function selectOption(event) {
+    const option = event.currentTarget;
+    value = option.querySelector("input").value;
+    typeahead_options = [];
+  }
+
+  function hoverOption(event) {
+    const option = event.currentTarget;
+
+    const _value = option.querySelector("input").value;
+    const index = typeahead_options.findIndex((item) => item.value === _value);
+    selectedIndex = index;
+  }
+
+  function keydown(event) {
+    if (typeahead_options && typeahead_options.length > 0) {
+      switch (event.key) {
+        case "ArrowDown": {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (selectedIndex === typeahead_options.length - 1) {
+            selectedIndex = 0;
+          } else {
+            selectedIndex++;
+          }
+          break;
+        }
+        case "ArrowUp": {
+          event.preventDefault();
+          event.stopPropagation();
+          if (selectedIndex === 0) {
+            selectedIndex = typeahead_options.length - 1;
+          } else {
+            selectedIndex--;
+          }
+          break;
+        }
+        case "Enter": {
+          event.preventDefault();
+          event.stopPropagation();
+          value = typeahead_options[selectedIndex].value;
+          typeahead_options = [];
+          break;
+        }
+      }
+    }
   }
 
   function inputFocused() {
@@ -60,18 +163,17 @@
         }
       }
     }
-  }
 
-  function dateFieldFocused(event) {
-    event.currentTarget.type = "date";
-  }
-
-  function dateFieldBlurred(event) {
-    if (!event.currentTarget.value) {
-      event.currentTarget.type = "text";
-    }
+    //set timeout so the blur happens at the end of the event loop
+    //this lets the onclick handler finish
+    //can perhaps come up with a better solution in the future
+    setTimeout(() => {
+      typeahead_options = [];
+    }, 500);
   }
 </script>
+
+<svelte:body on:keydown={keydown} />
 
 {#if type === "text"}
   <div class="form__field__container" {id} class:mb-2={margin}>
@@ -88,7 +190,33 @@
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}
+          on:input={typeaheadOnInput}
         />
+        {#if is_loading}
+          <span class="spinner" />
+        {/if}
+
+        {#if typeahead_options && typeahead_options.length > 0}
+          <div class="options">
+            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+            {#each typeahead_options as option, index}
+              <div
+                class="option"
+                on:click={selectOption}
+                on:mouseover={hoverOption}
+                tabindex="-1"
+                class:selected={option.value === value}
+                class:focused={selectedIndex === index}
+              >
+                <div class="title">{option.label}</div>
+                <input class="hidden" value={option.value} />
+                {#if option.caption}
+                  <div class="select__info caption">{option.caption}</div>
+                {/if}
+              </div>
+            {/each}
+          </div>
+        {/if}
       </div>
       {#if desc}
         <p class="field__desc">{@html desc}</p>
@@ -202,8 +330,34 @@
           class:error={is_error}
           on:focus={inputFocused}
           on:blur={inputBlured}
+          on:input={typeaheadOnInput}
           bind:value
         />
+        {#if is_loading}
+          <span class="spinner" />
+        {/if}
+
+        {#if typeahead_options && typeahead_options.length > 0}
+          <div class="options">
+            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+            {#each typeahead_options as option, index}
+              <div
+                class="option"
+                on:click={selectOption}
+                on:mouseover={hoverOption}
+                tabindex="-1"
+                class:selected={option.value === value}
+                class:focused={selectedIndex === index}
+              >
+                <div class="title">{option.label}</div>
+                <input class="hidden" value={option.value} />
+                {#if option.caption}
+                  <div class="select__info caption">{option.caption}</div>
+                {/if}
+              </div>
+            {/each}
+          </div>
+        {/if}
       </div>
       {#if desc}
         <p class="field__desc">{@html desc}</p>
@@ -282,20 +436,6 @@
     resize: none;
   }
 
-  .input__row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .input__row .field {
-    width: 100%;
-  }
-
-  .input__row .field + .field {
-    margin-left: 1rem;
-  }
-
   .field__label {
     position: absolute;
     top: 2rem;
@@ -309,31 +449,6 @@
     color: var(--gray);
     transition: transform 0.2s;
     margin-bottom: 0px !important;
-  }
-
-  .field__label.center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    right: 0;
-    left: 0;
-  }
-
-  .field__label.icon {
-    position: relative;
-    bottom: -3px;
-    margin-left: 5px;
-    font-size: 0.875rem;
-    color: var(--black);
-  }
-
-  .field__max {
-    position: absolute;
-    top: 0;
-    right: 0;
-    text-transform: none;
-    color: var(--info);
   }
 
   .error {
@@ -353,12 +468,6 @@
     font-weight: 600;
     color: var(--black);
     transition: all 0.2s;
-  }
-
-  .field__input.center {
-    text-align: center;
-    right: 0;
-    left: 0;
   }
 
   .field__textarea {
@@ -389,17 +498,6 @@
     transform: translateY(-12px);
   }
 
-  .field.success:before {
-    content: "";
-    position: absolute;
-    right: 1.5rem;
-    bottom: 1.5rem;
-    width: 23px;
-    height: 1.125rem;
-    background: url("data:image/svg+xml,%3Csvg width='23' height='18' viewBox='0 0 23 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 18L0 10L3 7L8 12L20 0L23 3L8 18Z' fill='%234FBF67'/%3E%3C/svg%3E%0A")
-      no-repeat 50% 50%/100% auto;
-  }
-
   .field__desc {
     padding: 0.625rem 1.375rem 0 !important;
     font-size: 12px;
@@ -408,12 +506,83 @@
     color: var(--gray);
   }
 
-  body.dark .field__label .icon {
-    fill: var(--white);
+  .spinner {
+    position: absolute;
+    top: 1.875rem;
+    right: 1.25rem;
   }
 
-  body.dark .field__input {
-    background: rgba(228, 228, 228, 0.03);
-    color: var(--white);
+  .options {
+    position: absolute;
+    left: 0;
+    z-index: 20;
+    width: 100%;
+    margin: auto;
+    margin-top: 8px;
+    padding: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border: 1px solid #e4e4e4;
+    background: #ffffff;
+    border-radius: 1.5rem;
+    -webkit-box-shadow: 0 1.25rem 1rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 1.25rem 1rem rgba(227, 230, 236, 0.6);
+    -webkit-transition: all 0.25s;
+    -o-transition: all 0.25s;
+    transition: all 0.25s;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .option {
+    display: block;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    cursor: pointer;
+  }
+
+  .title {
+    position: relative;
+    margin-bottom: 3px;
+    padding-right: 30px;
+    color: var(--black);
+    -webkit-transition: color 0.25s;
+    -o-transition: color 0.25s;
+    transition: color 0.25s;
+    line-height: 1.1875;
+    font-weight: 600;
+  }
+
+  .caption {
+    color: var(--gray);
+    -webkit-transition: color 0.25s;
+    -o-transition: color 0.25s;
+    transition: color 0.25s;
+  }
+
+  .option:hover .title:before,
+  .option.focused .title:before {
+    -webkit-transform: translateX(5px);
+    -ms-transform: translateX(5px);
+    transform: translateX(5px);
+  }
+  .option.selected .title,
+  .option.selected .title,
+  .option:hover .title,
+  .option.focused .title,
+  .option:hover .select__info {
+    color: #6c5dd3;
+  }
+
+  .border .option:hover,
+  .option.focused {
+    background-color: var(--gray-lightest);
+    border-radius: 12px;
+  }
+
+  .option.border-bottom {
+    padding: 0px;
   }
 </style>
