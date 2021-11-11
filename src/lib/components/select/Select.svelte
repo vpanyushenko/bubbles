@@ -3,6 +3,7 @@
   import Fuse from "$lib/utils/fuzzy-search";
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
+  import { configLabel } from "$lib/utils/config";
 
   export let label = "Select an option";
   export let error = "An error occured";
@@ -16,8 +17,8 @@
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
 
-  const _label =
-    $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
+  const _label = configLabel(label, validation);
+  const _uuid = uuid();
 
   $: searchValue = "";
   let searchFocused = false;
@@ -34,6 +35,7 @@
     minMatchCharLength: 2,
     threshold: 0.4,
   });
+
   $: filteredOptions = !searchValue ? options : fuse.search(searchValue).map((obj) => obj.item);
 
   $: if (is_error) {
@@ -42,7 +44,6 @@
       if (index > -1) {
         $pageStore.errors.splice(index, 1);
       }
-      is_error = false;
     }, 4500);
   }
 
@@ -54,15 +55,16 @@
     }
   }
 
-  function _removeError() {
-    const errorIndex = $pageStore.errors.findIndex((item) => item === id);
-
-    if (errorIndex > -1) {
-      $pageStore.errors.splice(errorIndex, 1);
+  function hideError() {
+    const index = $pageStore.errors.findIndex((item) => item === id);
+    if (index > -1) {
+      $pageStore.errors.splice(index, 1);
     }
   }
 
-  function toggleSelect(event) {
+  function toggleSelectWithClick(event) {
+    console.log("toggle");
+
     id = event.currentTarget.parentElement.id;
 
     if (event.timeStamp - timestamp < 150) {
@@ -73,13 +75,12 @@
 
     setTimeout(() => {
       if (active) {
-        active = false;
+        //deactive the select
         $pageStore.select = null;
         selectedIndex = 0;
         searchValue = "";
         searchFocused = false;
       } else {
-        active = true;
         $pageStore.select = id;
         loading = false;
       }
@@ -96,7 +97,6 @@
     timestamp = event.timeStamp;
 
     setTimeout(() => {
-      active = true;
       $pageStore.select = id;
       loading = false;
     }, 0);
@@ -112,37 +112,48 @@
 
         timestamp = event.timeStamp;
 
-        active = false;
         $pageStore.select = null;
         selectedIndex = 0;
         searchValue = "";
       }
     }, 0);
 
-    if (validate_on_blur === true && vob === true) {
-      if (validation && !isValidInput(value, validation)) {
-        if ($pageStore.errors === undefined) {
-          $pageStore.errors = [];
-        }
+    //This is a poor way to do this, but it's waiting for the value to update
+    //before it does any validation
 
-        if (!$pageStore.errors.includes(id)) {
-          $pageStore.errors.push(id);
-          $pageStore.errors = $pageStore.errors;
+    setTimeout(() => {
+      if (validate_on_blur === true && vob === true) {
+        if (validation && !isValidInput(value, validation)) {
+          if ($pageStore.errors === undefined) {
+            $pageStore.errors = [];
+          }
+
+          if (!$pageStore.errors.includes(id)) {
+            $pageStore.errors.push(id);
+            $pageStore.errors = $pageStore.errors;
+          }
         }
       }
-    }
+    }, 250);
   }
 
   function selectOption(event) {
+    hideError();
     const option = event.currentTarget;
-    value = option.querySelector("input").value;
-    active = false;
+    if (type === "select-number") {
+      value = Number(option.querySelector("input").value);
+    } else {
+      value = option.querySelector("input").value;
+    }
     $pageStore.select = null;
   }
 
   function hoverOption(event) {
     const option = event.currentTarget;
-    const _value = option.querySelector("input").value;
+    let _value = option.querySelector("input").value;
+    if (type === "select-number") {
+      _value = Number(_value);
+    }
     const index = options.findIndex((item) => item.value === _value);
     selectedIndex = index;
   }
@@ -150,7 +161,6 @@
   function windowClick(event) {
     //if you click outside of the select, we want to close it
     if (!event.target.closest(`.select`)) {
-      active = false;
       $pageStore.select = null;
     }
   }
@@ -212,17 +222,13 @@
 
 <div class="form__field__container select" class:active {id} tabindex="0" on:focus={showSelect} on:blur={hideSelect}>
   <!-- <div> -->
-  <div class="head" class:loading class:error={is_error} on:click={toggleSelect}>
+  <div class="head" class:loading class:error={is_error} on:click={toggleSelectWithClick}>
     <div class="label" class:hidden={is_error}>{_label}</div>
     <div class="label error" class:hidden={!is_error}>{error}</div>
     <span class="value">{title}</span>
-    {#if type === "select-number"}
-      <input type="number" class="hidden" {value} />
-    {:else}
-      <input type="hidden" class="hidden" {value} />
-    {/if}
   </div>
-  <div class="body">
+
+  <div class="options">
     {#if search}
       <input
         class="search"
@@ -253,7 +259,7 @@
           class:focused={selectedIndex === index}
         >
           <div class="title">{option.label}</div>
-          <input class="hidden" value={option.value} />
+          <input class="hidden" type="hidden" value={option.value} />
           {#if option.caption}
             <div class="select__info caption">{option.caption}</div>
           {/if}
@@ -261,6 +267,7 @@
       {/if}
     {/each}
   </div>
+
   {#if desc}
     <p class="field__desc">{@html desc}</p>
   {/if}
@@ -368,11 +375,8 @@
     color: var(--black);
   }
 
-  .body {
+  .options {
     position: absolute;
-    /* top: calc(100% + 8px); */
-    /* top: 8px; */
-
     left: 0;
     z-index: 20;
     width: 100%;
@@ -501,7 +505,7 @@
     transform: translateY(-50%) rotate(180deg);
   }
 
-  .select.active .body {
+  .select.active .options {
     visibility: visible;
     opacity: 1;
   }
@@ -539,7 +543,7 @@
   }
 
   @media only screen and (max-width: 1179px) {
-    .body {
+    .options {
       right: 0;
       width: auto;
       padding: 1.5rem 1.25rem;
