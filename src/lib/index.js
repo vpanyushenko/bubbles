@@ -50,7 +50,7 @@ export { Table, TableCell, TableHeader, TableRow };
 
 //layouts
 import SidebarPageWrapper from "./layouts/SidebarPageWrapper.svelte";
-import PageWrapper from "./layouts/SidebarPageWrapper.svelte";
+import PageWrapper from "./layouts/PageWrapper.svelte";
 import Row from "./layouts/Row.svelte";
 import RowBorder from "./layouts/RowBorder.svelte";
 import RowFlex from "./layouts/RowFlex.svelte";
