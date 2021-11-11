@@ -266,6 +266,7 @@
 -->
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
+  import { pageStore } from "$lib/stores/stores";
   import Switch from "$lib/components/switch/LabeledSwitch.svelte";
   import Input from "$lib/components/input/Input.svelte";
   import Select from "$lib/components/select/Select.svelte";
@@ -285,7 +286,12 @@
   }
 
   function keydown(event) {
-    if (event.key === "Enter" && document.activeElement.closest(".form")) {
+    if (
+      event.key === "Enter" &&
+      document.activeElement.closest(".form") &&
+      !event.defaultPrevented &&
+      !document.activeElement.classList.contains("select")
+    ) {
       if (
         document.activeElement.closest(".form").id === id ||
         document.activeElement.closest(".form").id === `form_btn_${id}`
