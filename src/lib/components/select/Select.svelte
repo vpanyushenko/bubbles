@@ -17,18 +17,6 @@
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
 
-  const _label = configLabel(label, validation);
-  const _uuid = uuid();
-
-  $: searchValue = "";
-  let searchFocused = false;
-  let loading = false;
-  let timestamp = 0;
-  let selectedIndex = 0;
-  $: title = "Select an option";
-  $: active = $pageStore.select === id && $pageStore.select !== null ? true : false;
-  $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
-
   const fuse = new Fuse(options, {
     shouldSort: false,
     keys: ["label", "caption"],
@@ -36,7 +24,18 @@
     threshold: 0.4,
   });
 
-  $: filteredOptions = !searchValue ? options : fuse.search(searchValue).map((obj) => obj.item);
+  const _label = configLabel(label, validation);
+  let is_search_focused = false;
+  let is_loading = false;
+  let timestamp = 0;
+  let selected_index = 0;
+  let title = "Select an option";
+  let is_focused = false;
+  let is_list_open = false;
+
+  $: search_value = "";
+  $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
+  $: filteredOptions = !search_value ? options : fuse.search(search_value).map((obj) => obj.item);
 
   $: if (is_error) {
     setTimeout(() => {
@@ -55,6 +54,12 @@
     }
   }
 
+  $: if (is_list_open) {
+    is_search_focused = false;
+    search_value = "";
+    selected_index = 0;
+  }
+
   function hideError() {
     const index = $pageStore.errors.findIndex((item) => item === id);
     if (index > -1) {
@@ -63,78 +68,57 @@
   }
 
   function toggleSelectWithClick(event) {
-    console.log("toggle");
+    event.preventDefault();
 
-    id = event.currentTarget.parentElement.id;
-
-    if (event.timeStamp - timestamp < 150) {
-      return;
+    if (!is_focused) {
+      is_focused = true;
     }
 
-    timestamp = event.timeStamp;
+    //the focus event fires before the click event
+    //check to make sure the focus event didn't open
 
-    setTimeout(() => {
-      if (active) {
-        //deactive the select
-        $pageStore.select = null;
-        selectedIndex = 0;
-        searchValue = "";
-        searchFocused = false;
+    if (event.timeStamp - timestamp > 200) {
+      if (!is_list_open) {
+        is_list_open = true;
       } else {
-        $pageStore.select = id;
-        loading = false;
+        is_list_open = false;
       }
-    }, 10);
+    }
   }
 
-  function showSelect(event) {
-    id = event.currentTarget.id;
+  function selectFocused(event) {
+    timestamp = event.timeStamp;
+    is_focused = true;
 
-    if (event.timeStamp - timestamp < 150) {
+    //if the search was open, the focus would be lost but we force the list open
+    //so when we focus back, we want to close the list
+    if (event?.relatedTarget && event?.relatedTarget?.classList.contains("search")) {
+      is_list_open = false;
+    } else {
+      is_list_open = true;
+    }
+  }
+
+  function selectBlurred(event) {
+    if (event.relatedTarget && event.relatedTarget.classList.contains("search")) {
       return;
     }
 
-    timestamp = event.timeStamp;
+    is_focused = false;
+    is_list_open = false;
 
-    setTimeout(() => {
-      $pageStore.select = id;
-      loading = false;
-    }, 0);
-  }
-
-  function hideSelect(event) {
-    id = event.currentTarget.id;
-    setTimeout(() => {
-      if (!searchFocused) {
-        if (event.timeStamp - timestamp < 150) {
-          return;
+    if (validate_on_blur === true && vob === true) {
+      if (validation && !isValidInput(value, validation)) {
+        if ($pageStore.errors === undefined) {
+          $pageStore.errors = [];
         }
 
-        timestamp = event.timeStamp;
-
-        $pageStore.select = null;
-        selectedIndex = 0;
-        searchValue = "";
-      }
-    }, 0);
-
-    //This is a poor way to do this, but it's waiting for the value to update
-    //before it does any validation
-
-    setTimeout(() => {
-      if (validate_on_blur === true && vob === true) {
-        if (validation && !isValidInput(value, validation)) {
-          if ($pageStore.errors === undefined) {
-            $pageStore.errors = [];
-          }
-
-          if (!$pageStore.errors.includes(id)) {
-            $pageStore.errors.push(id);
-            $pageStore.errors = $pageStore.errors;
-          }
+        if (!$pageStore.errors.includes(id)) {
+          $pageStore.errors.push(id);
+          $pageStore.errors = $pageStore.errors;
         }
       }
-    }, 250);
+    }
   }
 
   function selectOption(event) {
@@ -145,7 +129,9 @@
     } else {
       value = option.querySelector("input").value;
     }
-    $pageStore.select = null;
+
+    is_focused = true;
+    is_list_open = false;
   }
 
   function hoverOption(event) {
@@ -155,56 +141,64 @@
       _value = Number(_value);
     }
     const index = options.findIndex((item) => item.value === _value);
-    selectedIndex = index;
+    selected_index = index;
   }
 
   function windowClick(event) {
     //if you click outside of the select, we want to close it
     if (!event.target.closest(`.select`)) {
-      $pageStore.select = null;
+      is_focused = false;
+      is_list_open = false;
     }
   }
 
   function keydown(event) {
-    if (active) {
+    if (is_list_open) {
       switch (event.key) {
         case "ArrowDown": {
           event.preventDefault();
 
-          if (selectedIndex === options.length - 1) {
-            selectedIndex = 0;
+          if (selected_index === options.length - 1) {
+            selected_index = 0;
           } else {
-            selectedIndex++;
+            selected_index++;
           }
           break;
         }
         case "ArrowUp": {
           event.preventDefault();
 
-          if (selectedIndex === 0) {
-            selectedIndex = options.length - 1;
+          if (selected_index === 0) {
+            selected_index = options.length - 1;
           } else {
-            selectedIndex--;
+            selected_index--;
           }
           break;
         }
         case "Enter": {
           event.preventDefault();
-          value = filteredOptions[selectedIndex].value;
-          active = false;
-          $pageStore.select = null;
+          value = filteredOptions[selected_index].value;
+          is_list_open = false;
           break;
         }
         case "Backspace": {
-          if (!searchFocused && searchValue) {
-            searchValue = searchValue.slice(0, -1);
+          if (!is_search_focused && search_value) {
+            search_value = search_value.slice(0, -1);
+          }
+          break;
+        }
+        case "Tab": {
+          if (is_search_focused) {
+            is_list_open = false;
+            is_focused = false;
           }
           break;
         }
         default: {
-          if (!searchFocused && event.key.length === 1) {
-            selectedIndex = 0;
-            searchValue += event.key;
+          if (!is_search_focused && event.key.length === 1) {
+            selected_index = 0;
+            search_value += event.key;
+            event.preventDefault();
           }
         }
       }
@@ -213,6 +207,16 @@
         const element = document.getElementById(id);
         element.scrollIntoView({ behavior: "smooth", block: "center" });
       }
+    } else {
+      if (is_focused) {
+        switch (event.key) {
+          case "Enter": {
+            event.preventDefault();
+            is_list_open = true;
+            break;
+          }
+        }
+      }
     }
   }
 </script>
@@ -220,9 +224,16 @@
 <svelte:window on:click={windowClick} />
 <svelte:body on:keydown={keydown} />
 
-<div class="form__field__container select" class:active {id} tabindex="0" on:focus={showSelect} on:blur={hideSelect}>
+<div
+  class="form__field__container select"
+  class:is_list_open
+  {id}
+  tabindex="0"
+  on:focus={selectFocused}
+  on:blur={selectBlurred}
+>
   <!-- <div> -->
-  <div class="head" class:loading class:error={is_error} on:click={toggleSelectWithClick}>
+  <div class="head" class:is_loading class:error={is_error} on:click={toggleSelectWithClick}>
     <div class="label" class:hidden={is_error}>{_label}</div>
     <div class="label error" class:hidden={!is_error}>{error}</div>
     <span class="value">{title}</span>
@@ -234,12 +245,12 @@
         class="search"
         type="text"
         placeholder="Start typing to search..."
-        bind:value={searchValue}
+        bind:value={search_value}
         on:focus|preventDefault|stopPropagation={(event) => {
-          searchFocused = true;
+          is_search_focused = true;
         }}
         on:blur|preventDefault|stopPropagation={(event) => {
-          searchFocused = false;
+          is_search_focused = false;
         }}
       />
     {/if}
@@ -256,7 +267,7 @@
           on:mouseover|stopPropagation={hoverOption}
           tabindex="-1"
           class:selected={option.value === value}
-          class:focused={selectedIndex === index}
+          class:focused={selected_index === index}
         >
           <div class="title">{option.label}</div>
           <input class="hidden" type="hidden" value={option.value} />
@@ -285,6 +296,10 @@
     position: relative;
     min-width: 250px;
     cursor: pointer;
+  }
+
+  .select:focus .head {
+    border-color: var(--primary);
   }
 
   .head {
@@ -325,7 +340,7 @@
     transition: transform 0.25s, -webkit-transform 0.25s;
   }
 
-  .head.loading:before {
+  .head.is_loading:before {
     content: "";
     background: none;
     transition: none;
@@ -385,7 +400,7 @@
     padding: 1rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
-    border: 1px solid #e4e4e4;
+    border: 1px solid var(--gray-light);
     background: #ffffff;
     border-radius: 1.5rem;
     visibility: hidden;
@@ -493,19 +508,19 @@
     padding: 0px;
   }
 
-  .select.active .head {
+  .select.is_list_open .head {
     border-color: var(--primary);
     background: #ffffff;
     color: var(--black);
   }
 
-  .select.active .head:before {
+  .select.is_list_open .head:before {
     -webkit-transform: translateY(-50%) rotate(180deg);
     -ms-transform: translateY(-50%) rotate(180deg);
     transform: translateY(-50%) rotate(180deg);
   }
 
-  .select.active .options {
+  .select.is_list_open .options {
     visibility: visible;
     opacity: 1;
   }
