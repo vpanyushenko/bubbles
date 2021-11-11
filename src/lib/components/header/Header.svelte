@@ -52,6 +52,7 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
 
   export let title = "";
+  export let subtitle = "";
   export let breadcrumbs = true;
   export let buttons = [];
 
@@ -117,22 +118,28 @@
 <header>
   <div class="text">
     <div class="header__title">
-      {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+      {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
         <IconButton icon="arrowLeft" href={back} />
       {/if}
 
-      <h2>{$pageStore.title}</h2>
+      <div class="header__text">
+        <h2>{$pageStore.title}</h2>
+
+        {#if subtitle}
+          <h6>{subtitle}</h6>
+        {/if}
+      </div>
+      {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+        <h6 class="breadcrumbs">
+          {#each _breadcrumbs as breadcrumb, index}
+            <a sveltekit:prefetch href={breadcrumb.href}>{breadcrumb.text}</a>
+            {#if index !== _breadcrumbs.length - 1}
+              <span> / </span>
+            {/if}
+          {/each}
+        </h6>
+      {/if}
     </div>
-    {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
-      <h6 class="breadcrumbs">
-        {#each _breadcrumbs as breadcrumb, index}
-          <a sveltekit:prefetch href={breadcrumb.href}>{breadcrumb.text}</a>
-          {#if index !== _breadcrumbs.length - 1}
-            <span> / </span>
-          {/if}
-        {/each}
-      </h6>
-    {/if}
   </div>
   <div class="icons">
     <div class="header">
@@ -161,6 +168,12 @@
     align-items: center;
     width: 100%;
     padding: 3rem 4rem 2.75rem;
+  }
+
+  .header__text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
   }
 
   .breadcrumbs a:hover {

@@ -1,9 +1,12 @@
 <script>
+  import { v4 as uuid } from "@lukeed/uuid";
   import { fly, fade } from "svelte/transition";
   import { modalStore } from "$lib/stores/modal.store";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Button from "$lib/components/button/Button.svelte";
   import Form from "$lib/components/form/Form.svelte";
+
+  const id = uuid();
 
   function hideModal() {
     $modalStore = {};
@@ -14,13 +17,20 @@
       hideModal();
     }
   }
+
+  $: if ($modalStore.form && $modalStore.form.length) {
+    setTimeout(() => {
+      console.log(document.getElementById(id).querySelector(".field__input"));
+      document.getElementById(id).querySelector(".field__input").focus();
+    }, 0);
+  }
 </script>
 
 <svelte:window on:keydown={keydown} />
 
 {#if $modalStore.active}
   <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
-    <div class="modal">
+    <div class="modal" {id}>
       <div class="container" transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
         <header>
           <h6 class="title">{$modalStore.title}</h6>

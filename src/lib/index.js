@@ -10,8 +10,23 @@ import Form from "./components/form/Form.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
 import Tag from "./components/tag/Tag.svelte";
+import Chart from "./components/chart/Chart.svelte";
 
-export { Header, Card, CardHeader, CardFooter, List, ListItem, ListItemTimeline, Sidebar, Modal, Toast, Form, Tag };
+export {
+  Header,
+  Card,
+  CardHeader,
+  CardFooter,
+  List,
+  ListItem,
+  ListItemTimeline,
+  Sidebar,
+  Modal,
+  Toast,
+  Form,
+  Tag,
+  Chart,
+};
 
 //Inputs
 import Button from "./components/button/Button.svelte";

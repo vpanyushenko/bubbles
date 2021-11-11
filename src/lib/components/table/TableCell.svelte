@@ -1,5 +1,5 @@
 <script>
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore } from "$lib/stores/stores";
   import Tag from "$lib/components/tag/Tag.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
 
@@ -119,6 +119,10 @@
     border-bottom: 1px solid var(--gray-light);
     color: var(--black);
     flex-grow: 1;
+  }
+
+  .cell a:hover {
+    color: var(--primary);
   }
 
   .cell.right {

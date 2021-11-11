@@ -461,7 +461,7 @@ p {
 }
 
 a, a:visited, a:hover, a:active {
-	color: inherit;
+	color: var(--info);
   }
 
 code {
