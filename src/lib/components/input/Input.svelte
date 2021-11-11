@@ -50,12 +50,6 @@
   $: typeahead_options = [];
   $: is_loading = false;
 
-  $: if (typeahead_options && typeahead_options.length > 0) {
-    $pageStore.select = _uuid;
-  } else {
-    $pageStore.select = null;
-  }
-
   function typeaheadOnInput(event) {
     const value = event.target.value;
 
