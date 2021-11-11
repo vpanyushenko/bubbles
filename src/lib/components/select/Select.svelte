@@ -262,9 +262,9 @@
       {:else}
         <div
           class="option"
-          on:click|stopPropagation={selectOption}
+          on:mousedown={selectOption}
           on:click={option.onselect}
-          on:mouseover|stopPropagation={hoverOption}
+          on:mouseover={hoverOption}
           tabindex="-1"
           class:selected={option.value === value}
           class:focused={selected_index === index}
