@@ -98,7 +98,7 @@
   }
 
   function keydown(event) {
-    if (typeahead_options && typeahead_options.length > 0) {
+    if (typeahead_options && typeahead_options.length > 0 && !event.defaultPrevented) {
       switch (event.key) {
         case "ArrowDown": {
           event.preventDefault();
