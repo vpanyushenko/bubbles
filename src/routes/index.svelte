@@ -1,59 +1,68 @@
 <script context="module">
-	export const prerender = true;
+  export const prerender = true;
 </script>
 
 <script>
-	import Counter from '$lib/Counter.svelte';
+  import Row from "$lib/layouts/Row.svelte";
+  import Column from "$lib/layouts/Column100.svelte";
+  import Header from "$lib/components/header/Header.svelte";
+  import Card from "$lib/components/card/Card.svelte";
+  import CardHeader from "$lib/components/card/CardHeader.svelte";
 </script>
 
 <svelte:head>
-	<title>Home</title>
+  <title>Bubbles UI Kit</title>
 </svelte:head>
 
-<section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
+<Header title="Welcome" />
 
-		to your new<br />SvelteKit app
-	</h1>
+<section href="/">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Who should and shouldn't use bubbles?" />
+        <p class="mt-2">
+          Bubbles is an opinionated component library build for Svelte. It's has a specific structure and style that it
+          follows. If the overall structure of it's layouts and components don't fit your needs, you're most likely
+          better of using a more flexible component framework like Material UI, Tailwind, or writing your own.
+        </p>
+        <p>
+          Bubbles is mostly set up to construct dashboards NOT landing pages and marketing sites. It has not's of
+          dashboard specific components like <code>Sidebars</code> and <code>Tables</code> that are usually overkill and/or
+          are too restrictive for marketing sites.
+        </p>
+      </Card>
+    </Column>
+  </Row>
+</section>
 
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
+<section href="#installation">
+  <Row>
+    <Column>
+      <Card my={0} mx={0}>
+        <h6>Who should and shouldn't use Bubbles?</h6>
+        <p class="mt-2">
+          Bubbles is an opinionated component library build for Svelte. It's has a specific structure and style that it
+          follows. If the overall structure of it's layouts and components don't fit your needs, you're most likely
+          better of using a more flexible component framework like Material UI, Tailwind, or writing your own.
+        </p>
+      </Card>
+    </Column>
+  </Row>
 </section>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
+  h6,
+  p {
+    margin-bottom: 1rem;
+    color: var(--gray-darker);
+  }
 
-	h1 {
-		width: 100%;
-	}
+  p {
+    font-size: 1rem;
+  }
 
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
+  .mt-2 {
+    margin-top: 2rem;
+  }
 </style>

@@ -1,45 +1,61 @@
 <script>
-  import Header from "$lib/header/Header.svelte";
-  import "../app.css";
+  import "$lib/css/app.css";
+
+  import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
+  import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
+  import Modal from "$lib/components/modal/Modal.svelte";
+  import Toast from "$lib/components/toast/Toast.svelte";
+  import { toastStore } from "$lib/stores/stores";
+
+  const sidebarConfig = {
+    logo: "/logo.svg",
+    sections: [
+      {
+        title: "Welcome",
+        href: "/",
+        section: "Getting Started",
+      },
+      {
+        title: "Installation",
+        href: "#installation",
+        section: "Getting Started",
+      },
+      {
+        title: "Usage",
+        href: "#usage",
+        section: "Getting Started",
+      },
+      {
+        title: "Customization",
+        href: "#customization",
+        section: "Getting Started",
+      },
+      {
+        title: "Buttons",
+        href: "#buttons",
+        section: "Components",
+      },
+      {
+        title: "Cards",
+        href: "#cards",
+        section: "Components",
+      },
+      {
+        title: "Checkboxes",
+        href: "#checkboxes",
+        section: "Components",
+      },
+    ],
+  };
 </script>
 
-<Header />
+{#each $toastStore as toast}
+  <Toast {...toast} />
+{/each}
 
-<main>
+<Sidebar {...sidebarConfig} />
+<SidebarPageWrapper>
   <slot />
-</main>
+</SidebarPageWrapper>
 
-<footer>
-  <p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-</footer>
-
-<style>
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    width: 100%;
-    max-width: 101.5rem;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-
-  footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2.5rem;
-  }
-
-  footer a {
-    font-weight: bold;
-  }
-
-  @media (min-width: 480px) {
-    footer {
-      padding: 2.5rem 0;
-    }
-  }
-</style>
+<Modal />
