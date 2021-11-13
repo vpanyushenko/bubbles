@@ -112,11 +112,13 @@
                     sidebarItemSelected(obj);
                   }}
                 >
-                  <div class="sidebar__icon">
-                    <!-- <Icon src={obj.icon} href={obj.href} /> -->
-                    <span class="spinner" class:hidden={!$navigating || $navigating.to.path !== obj.href} />
-                    <img class:hidden={$navigating && $navigating.to.path === obj.href} src={obj.icon} alt="Icon" />
-                  </div>
+                  {#if obj.icon}
+                    <div class="sidebar__icon">
+                      <!-- <Icon src={obj.icon} href={obj.href} /> -->
+                      <span class="spinner" class:hidden={!$navigating || $navigating.to.path !== obj.href} />
+                      <img class:hidden={$navigating && $navigating.to.path === obj.href} src={obj.icon} alt="Icon" />
+                    </div>
+                  {/if}
 
                   <div class="sidebar__text">{obj.title}</div>
                   {#if obj.notifications}
