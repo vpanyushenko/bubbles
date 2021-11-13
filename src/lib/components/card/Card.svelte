@@ -75,9 +75,17 @@
   export let footer = {};
   export let my = 0.625;
   export let mx = 2;
+  export let color = "white";
+  export let shadow = true;
+  export let border = null;
 
   let y = `${my}rem`;
   let x = `${mx}rem`;
+  let background = null;
+
+  if (color) {
+    background = `var(--${color}`;
+  }
 
   $: innerWidth = 0;
   $pageStore.is_mobile = innerWidth < 767 ? true : false;
@@ -85,7 +93,12 @@
 
 <svelte:window bind:innerWidth />
 
-<div class="card" style="padding-top:{y};padding-bottom:{y};padding-left:{x};padding-right:{x}">
+<div
+  class="card"
+  class:shadow
+  class:border
+  style="padding-top:{y};padding-bottom:{y};padding-left:{x};padding-right:{x};background:{background}"
+>
   {#if header && Object.keys(header).length}
     <CardHeader {...header} />
   {/if}
@@ -103,9 +116,16 @@
     position: relative;
     padding: 0.625rem 2rem 0.625rem;
     border-radius: 1.5rem;
-    background: #fff;
+    background: var(--white);
+  }
+
+  .shadow {
     -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
     -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
     box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
+  }
+
+  .border {
+    border: 1px solid var(--gray-light);
   }
 </style>
