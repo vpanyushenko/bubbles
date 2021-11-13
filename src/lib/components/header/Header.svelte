@@ -321,7 +321,7 @@
     }
   }
 
-  @media only screen and (max-width: 1023) {
+  /* @media only screen and (max-width: 1023) {
     .breadcrumbs {
       margin-left: 3rem;
     }
@@ -330,13 +330,12 @@
       -webkit-box-orient: vertical;
       -webkit-box-direction: reverse;
       -ms-flex-direction: column-reverse;
-      /* flex-direction: column-reverse; */
       margin: 0;
       padding: 25px 0;
     }
-  }
+  } */
 
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 1179px) {
     header {
       padding: 0;
       -webkit-box-orient: vertical;
