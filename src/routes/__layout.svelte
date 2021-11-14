@@ -26,9 +26,34 @@
         section: "Getting Started",
       },
       {
-        title: "Customization",
-        href: "#customization",
+        title: "Colors",
+        href: "#colors",
         section: "Getting Started",
+      },
+      {
+        title: "Page Layouts",
+        href: "#page-layouts",
+        section: "Layouts",
+      },
+      {
+        title: "Page Rows",
+        href: "#page-rows",
+        section: "Layouts",
+      },
+      {
+        title: "Page Columns",
+        href: "#page-columnss",
+        section: "Layouts",
+      },
+      {
+        title: "Page Grids",
+        href: "#page-grids",
+        section: "Layouts",
+      },
+      {
+        title: "Page Center",
+        href: "#page-center",
+        section: "Layouts",
       },
       {
         title: "Buttons",
@@ -59,3 +84,18 @@
 </SidebarPageWrapper>
 
 <Modal />
+
+<style>
+  :global(p) {
+    margin-bottom: 1rem;
+    color: var(--gray-darker);
+  }
+
+  :global(p) {
+    font-size: 1rem;
+  }
+
+  :global(.mt-2) {
+    margin-top: 2rem;
+  }
+</style>
