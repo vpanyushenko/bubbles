@@ -7,6 +7,7 @@
 
   export let sections = [];
   export let logo = null;
+  export let hide_with_esc = true;
 
   onMount(() => {
     const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
@@ -84,7 +85,22 @@
   function toggleSidebar(event) {
     $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
+
+  function keydown(event) {
+    // console.log(event);
+    // console.log(event.key);
+    // console.log($pageStore.sidebar.is_toggled);
+    // console.log(hide_with_esc);
+
+    //TODO: This is not working
+
+    if (event.key === "Escape" && $pageStore.sidebar.is_toggled && hide_with_esc) {
+      $pageStore.sidebar.is_toggled = false;
+    }
+  }
 </script>
+
+<svelte:window on:keydown={keydown} />
 
 <nav class="sidebar" class:active={$pageStore.sidebar.is_toggled}>
   <section class="top">
@@ -147,6 +163,7 @@
     background: #ffffff;
     border-right: 1px solid var(--gray-light);
     z-index: 5;
+    overflow-y: scroll;
   }
 
   .top {
@@ -278,6 +295,7 @@
 
   .sidebar__item:hover {
     color: var(--primary);
+    background: var(--gray-lighter);
   }
 
   .sidebar__item.active {
@@ -321,8 +339,13 @@
     opacity: 1;
   }
 
-  .sidebar__item .sidebar__text {
+  .sidebar__text {
     margin-right: auto;
+    margin-left: 1.25rem;
+  }
+
+  .sidebar__icon + .sidebar__text {
+    margin-left: 0rem;
   }
 
   .sidebar__bottom {
@@ -391,10 +414,11 @@
     height: 1.5rem;
   }
 
-  @media only screen and (max-width: 1179px) {
+  /* @media only screen and (max-width: 1179px) {
     .sidebar {
       padding-top: 96px;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: scroll;
       -webkit-transition: width 0.25s, -webkit-transform 0.25s;
       transition: width 0.25s, -webkit-transform 0.25s;
       -o-transition: width 0.25s, transform 0.25s;
@@ -559,9 +583,20 @@
       text-align: left;
       padding-left: 1.25rem;
     }
-  }
+  } */
 
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 1179px) {
+    .sidebar {
+      padding-top: 96px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      -webkit-transition: width 0.25s, -webkit-transform 0.25s;
+      transition: width 0.25s, -webkit-transform 0.25s;
+      -o-transition: width 0.25s, transform 0.25s;
+      transition: width 0.25s, transform 0.25s;
+      transition: width 0.25s, transform 0.25s, -webkit-transform 0.25s;
+    }
+
     nav {
       width: 256px;
       -webkit-transform: translateX(-100%);
@@ -574,8 +609,26 @@
     .sidebar__inner {
       width: 100%;
     }
+
     .top {
+      -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+      justify-content: stretch;
+      height: 96px;
       padding-left: 2.5rem;
+      -webkit-transition: all 0.25s;
+      -o-transition: all 0.25s;
+      transition: all 0.25s;
+    }
+
+    .sidebar .top > a > img {
+      -webkit-transition: opacity 0.2s;
+      -o-transition: opacity 0.2s;
+      transition: opacity 0.2s;
+    }
+
+    .sidebar.active .top img {
+      opacity: 1;
     }
     nav button {
       opacity: 1;
@@ -598,14 +651,23 @@
       padding-left: 1.25rem;
       text-align: left;
     }
-    .caption span {
-      display: inline;
-    }
+
     .sidebar__item {
+      position: relative;
       padding-left: 3px;
     }
     .sidebar__icon {
+      width: 56px;
+      height: 56px;
       margin-right: 0;
+      -webkit-transition: margin 0.25s;
+      -o-transition: margin 0.25s;
+      transition: margin 0.25s;
+    }
+    .sidebar__counter {
+      -webkit-transition: all 0.25s;
+      -o-transition: all 0.25s;
+      transition: all 0.25s;
     }
     .sidebar__counter {
       position: static;
@@ -618,11 +680,13 @@
       -ms-transform: translateX(0);
       transform: translateX(0);
     }
-    .sidebar.active .sidebar__caption {
-      padding-left: 15px;
-    }
     .sidebar.active .sidebar__item {
       padding-left: 0;
+    }
+
+    .sidebar.active .caption {
+      text-align: left;
+      padding-left: 1.25rem;
     }
   }
 </style>
