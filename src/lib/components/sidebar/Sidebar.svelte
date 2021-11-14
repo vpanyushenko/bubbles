@@ -7,6 +7,7 @@
 
   export let sections = [];
   export let logo = null;
+  export let hide_with_esc = true;
 
   onMount(() => {
     const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
@@ -84,7 +85,22 @@
   function toggleSidebar(event) {
     $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
+
+  function keydown(event) {
+    // console.log(event);
+    // console.log(event.key);
+    // console.log($pageStore.sidebar.is_toggled);
+    // console.log(hide_with_esc);
+
+    //TODO: This is not working
+
+    if (event.key === "Escape" && $pageStore.sidebar.is_toggled && hide_with_esc) {
+      $pageStore.sidebar.is_toggled = false;
+    }
+  }
 </script>
+
+<svelte:window on:keydown={keydown} />
 
 <nav class="sidebar" class:active={$pageStore.sidebar.is_toggled}>
   <section class="top">
