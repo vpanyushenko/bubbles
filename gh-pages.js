@@ -3,8 +3,8 @@ import { publish } from "gh-pages";
 publish(
   "build", // path to public directory
   {
-    branch: "master",
-    repo: "https://github.com/vpanyushenko/bubbles", // Update to point to your repository
+    branch: "dev",
+    repo: "https://github.com/vpanyushenko/bubbles",
     user: {
       name: "vpanyushenko", // update to use your name
       email: "me@panyushenko.com", // Update to use your email
