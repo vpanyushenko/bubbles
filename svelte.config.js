@@ -1,8 +1,17 @@
+import adapter from "@sveltejs/adapter-static";
+// import preprocess from "svelte-preprocess";
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	kit: {
-		target: '#svelte'
-	}
+  //   preprocess: preprocess(),
+  kit: {
+    target: "#svelte",
+    adapter: adapter({
+      pages: "build",
+      assets: "build",
+      fallback: null,
+    }),
+  },
 };
 
 export default config;
