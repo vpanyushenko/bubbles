@@ -1,0 +1,210 @@
+code,
+pre {
+  height: 100%;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  color: var(--gray-light);
+  background: var(--dark-light);
+  border-radius: 1.5rem;
+  font-family: Fira Mono, monospace;
+  font-size: 1em;
+  line-height: 1.5em;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+code[class*="language-"]::-moz-selection,
+pre[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection,
+pre[class*="language-"] ::-moz-selection {
+  background: var(--gray-darker);
+}
+
+code[class*="language-"]::selection,
+pre[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+pre[class*="language-"] ::selection {
+  background: var(--gray-darker);
+}
+
+:not(pre) > code[class*="language-"] {
+  white-space: normal;
+  border-radius: 0.2em;
+  padding: 0.1em;
+}
+
+pre[class*="language-"] {
+  overflow: auto;
+  position: relative;
+  padding: 1.25em 1em;
+}
+
+.language-css > code,
+.language-sass > code,
+.language-scss > code {
+  color: var(--error);
+}
+
+[class*="language-"] .namespace {
+  opacity: 0.7;
+}
+
+.token.atrule {
+  color: var(--primary-light);
+}
+
+.token.attr-name {
+  color: var(--wraning);
+}
+
+.token.attr-value {
+  color: var(--success);
+}
+
+.token.attribute {
+  color: var(--success);
+}
+
+.token.boolean {
+  color: var(--primary-light);
+}
+
+.token.builtin {
+  color: var(--wraning);
+}
+
+.token.cdata {
+  color: var(--info);
+}
+
+.token.char {
+  color: var(--info);
+}
+
+.token.class {
+  color: var(--wraning);
+}
+
+.token.class-name {
+  color: var(--success-light);
+}
+
+.token.comment {
+  color: var(--gray);
+}
+
+.token.constant {
+  color: var(--primary-light);
+}
+
+.token.deleted {
+  color: var(--error);
+}
+
+.token.doctype {
+  color: var(--gray);
+}
+
+.token.entity {
+  color: var(--error);
+}
+
+.token.function {
+  color: var(--info-lighter);
+}
+
+.token.hexcode {
+  color: var(--success-light);
+}
+
+.token.id {
+  color: var(--primary-light);
+  font-weight: bold;
+}
+
+.token.important {
+  color: var(--primary-light);
+  font-weight: bold;
+}
+
+.token.inserted {
+  color: var(--info);
+}
+
+.token.keyword {
+  color: var(--primary-light);
+}
+
+.token.number {
+  color: var(--error-light);
+}
+
+.token.operator {
+  color: var(--info-light);
+}
+
+.token.prolog {
+  color: var(--gray);
+}
+
+.token.property {
+  color: var(--info);
+}
+
+.token.pseudo-class {
+  color: var(--success);
+}
+
+.token.pseudo-element {
+  color: var(--success);
+}
+
+.token.punctuation {
+  color: var(--secondary-light);
+}
+
+.token.regex {
+  color: var(--success-light);
+}
+
+.token.selector {
+  color: var(--error);
+}
+
+.token.string {
+  color: var(--success);
+}
+
+.token.symbol {
+  color: var(--primary-light);
+}
+
+.token.tag {
+  color: var(--error);
+}
+
+.token.unit {
+  color: var(--error-light);
+}
+
+.token.url {
+  color: var(--error);
+}
+
+.token.variable {
+  color: var(--error);
+}
