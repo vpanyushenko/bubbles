@@ -13,6 +13,7 @@
   export let mb = false;
   export let wide = false;
   export let href;
+  export let style;
 
   $: loading = $pageStore.loading.includes(id);
 
@@ -54,11 +55,20 @@
   class:info-light={color === "info-light"}
   class:gray-light={color === "gray-light"}
   class:dark-light={color === "dark-light"}
+  class:primary-border={color === "primary-border"}
+  class:secondary-border={color === "secondary-border"}
+  class:error-border={color === "error-border"}
+  class:warning-border={color === "warning-border"}
+  class:success-border={color === "success-border"}
+  class:info-border={color === "info-border"}
+  class:gray-border={color === "gray-border"}
+  class:dark-border={color === "dark-border"}
   class:mb
   class:mt
   class:wide
-  on:click={onclick}
+  {style}
   on:click={buttonClicked}
+  on:click={onclick}
   on:click={onsubmit}
 >
   <div class="d-flex">
@@ -134,6 +144,16 @@
     background: var(--primary-lighter);
   }
 
+  .primary-border {
+    border: 3px solid var(--primary);
+    color: var(--primary);
+  }
+
+  .primary-border:focus,
+  .primary-border:hover {
+    background: var(--primary-lightest);
+  }
+
   .secondary {
     background: var(--secondary);
     color: var(--white);
@@ -152,6 +172,16 @@
   .secondary-light:focus,
   .secondary-light:hover {
     background: var(--secondary-lighter);
+  }
+
+  .secondary-border {
+    border: 3px solid var(--secondary);
+    color: var(--secondary);
+  }
+
+  .secondary-border:focus,
+  .secondary-border:hover {
+    background: var(--secondary-lightest);
   }
 
   .error {
@@ -174,6 +204,16 @@
     background: var(--error-lighter);
   }
 
+  .error-border {
+    border: 3px solid var(--error);
+    color: var(--error);
+  }
+
+  .error-border:focus,
+  .error-border:hover {
+    background: var(--error-lightest);
+  }
+
   .warning {
     background: var(--warning);
     color: var(--white);
@@ -192,6 +232,16 @@
   .warning-light:focus,
   .warning-light:hover {
     background: var(--warning-lighter);
+  }
+
+  .warning-border {
+    border: 3px solid var(--warning);
+    color: var(--warning);
+  }
+
+  .warning-border:focus,
+  .warning-border:hover {
+    background: var(--warning-lightest);
   }
 
   .success {
@@ -214,6 +264,16 @@
     background: var(--success-lighter);
   }
 
+  .success-border {
+    border: 3px solid var(--success);
+    color: var(--success);
+  }
+
+  .success-border:focus,
+  .success-border:hover {
+    background: var(--success-lightest);
+  }
+
   .info {
     background: var(--info);
     color: var(--white);
@@ -232,6 +292,16 @@
   .info-light:focus,
   .info-light:hover {
     background: var(--info-lighter);
+  }
+
+  .info-border {
+    border: 3px solid var(--info);
+    color: var(--info);
+  }
+
+  .info-border:focus,
+  .info-border:hover {
+    background: var(--info-lightest);
   }
 
   .dark {
@@ -255,6 +325,16 @@
     color: var(--white);
   }
 
+  .dark-border {
+    border: 3px solid var(--dark);
+    color: var(--dark);
+  }
+
+  .dark-border:focus,
+  .dark-border:hover {
+    background: var(--dark-lightest);
+  }
+
   .gray {
     background: var(--gray);
     color: var(--gray-lightest);
@@ -273,6 +353,16 @@
   .gray-light:focus,
   .gray-light:hover {
     background: var(--gray-light);
+  }
+
+  .gray-border {
+    border: 3px solid var(--gray);
+    color: var(--gray);
+  }
+
+  .gray-border:focus,
+  .gray-border:hover {
+    background: var(--gray-lightest);
   }
 
   .wide {
