@@ -126,13 +126,16 @@
   export let empty = "Nothing here yet.";
   export let mobile_transform = true;
 
+  let w;
+
+  $: is_mobile = w <= 500 ? true : false;
+
   $: innerWidth = 0;
-  $pageStore.is_mobile = innerWidth < 767 ? true : false;
 </script>
 
 <svelte:window bind:innerWidth />
 
-<div class="table" class:mobile-transform={mobile_transform}>
+<div class="table" class:mobile={is_mobile === true} bind:clientWidth={w}>
   {#if header && header.length}
     <TableHeader {header} {mobile_transform} />
   {/if}
@@ -159,14 +162,14 @@
     color: var(--black);
   }
 
+  :global(.table .row:last-of-type .cell) {
+    border-bottom: none;
+  }
+
   @media only screen and (max-width: 767px) {
     .table.mobile-transform {
       display: flex;
       flex-direction: column;
     }
-
-    /* :global(.table .row) {
-      margin-bottom: 2rem;
-    } */
   }
 </style>
