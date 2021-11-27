@@ -1,3 +1,3 @@
 # Bubbles Component Library
 
-Documentation is not complete. But the important components like `Table` and `Form` have intellisense docs if you are using VS Code.  
+Bubbles is an opinionated UI Component Library for creating dashboards. You can view the documentation here: https://bubbles-pied.vercel.app/
