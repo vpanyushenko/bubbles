@@ -55,6 +55,11 @@
   export let subtitle = "";
   export let breadcrumbs = true;
   export let buttons = [];
+  export let sticky = true;
+
+  let y; //TODO: Add options to sticky headers
+
+  $: console.log(y);
 
   if (title) {
     $pageStore.title = title;
@@ -115,7 +120,9 @@
   }
 </script>
 
-<header>
+<!-- <svelte:window bind:scrollY={y} /> -->
+
+<header class:sticky={sticky && y > 40}>
   <div class="text">
     <div class="header__title">
       {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
@@ -168,6 +175,14 @@
     align-items: center;
     width: 100%;
     padding: 3rem 4rem 2.75rem;
+  }
+
+  .sticky {
+    position: sticky;
+    top: 0;
+    height: 60px;
+    background-color: red;
+    z-index: 10;
   }
 
   .header__text {
