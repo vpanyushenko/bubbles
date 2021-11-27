@@ -78,13 +78,14 @@
   export let color = "white";
   export let shadow = true;
   export let border = null;
+  export let height100 = false;
 
   let y = `${my}rem`;
   let x = `${mx}rem`;
   let background = null;
 
   if (color) {
-    background = `var(--${color}`;
+    background = `var(--${color})`;
   }
 
   $: innerWidth = 0;
@@ -97,12 +98,13 @@
   class="card"
   class:shadow
   class:border
+  class:height-100={height100}
   style="padding-top:{y};padding-bottom:{y};padding-left:{x};padding-right:{x};background:{background}"
 >
   {#if header && Object.keys(header).length}
     <CardHeader {...header} />
   {/if}
-  <div class="body">
+  <div class="body" class:height-100={height100}>
     <slot />
   </div>
 
@@ -127,5 +129,9 @@
 
   .border {
     border: 1px solid var(--gray-light);
+  }
+
+  .height-100 {
+    height: 100%;
   }
 </style>
