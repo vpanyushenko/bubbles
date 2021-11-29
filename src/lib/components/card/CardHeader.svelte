@@ -5,12 +5,12 @@
   export let filters = [];
   export let title = "";
   export let caption = "";
-  export let actions = [];
+  export let buttons = [];
   export let center = false;
   export let border = true;
 </script>
 
-{#if filters.length || title || caption || actions.length}
+{#if filters.length || title || caption || buttons.length}
   <div class="header" class:border={border === true || border === "true"} class:filters={filters.length > 0}>
     <div class="filters">
       {#each filters as filter}
@@ -26,15 +26,15 @@
           <h6>{title}</h6>
         {/if}
         {#if caption}
-          <p>{caption}</p>
+          <p>{@html caption}</p>
         {/if}
       </div>
     {/if}
 
-    <div class="actions">
-      {#each actions as action}
+    <div class="buttons">
+      {#each buttons as button}
         <div class="action">
-          <IconButton {...action} />
+          <IconButton {...button} />
         </div>
       {/each}
     </div>
@@ -74,7 +74,7 @@
     flex-wrap: wrap;
   }
 
-  .actions {
+  .buttons {
     display: flex;
     align-items: center;
   }

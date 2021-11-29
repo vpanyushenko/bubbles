@@ -1,39 +1,41 @@
 <script>
   import Select from "$lib/components/select/Select.svelte";
+
+  export let segments = [];
   let expanded = true;
 
-  const segments = [
-    {
-      label: "Info",
-      href: "/info",
-      hidden: false,
-    },
-    {
-      label: "Communication",
-      href: "/communication",
-      hidden: false,
-    },
-    {
-      label: "Tasks",
-      href: "/tasks",
-      hidden: false,
-    },
-    {
-      label: "Calendar",
-      href: "/calender",
-      hidden: true,
-    },
-    {
-      label: "Billing",
-      href: "/billing",
-      hidden: false,
-    },
-    {
-      label: "Expenses",
-      href: "/expenses",
-      hidden: false,
-    },
-  ];
+  // const segments = [
+  //   {
+  //     label: "Info",
+  //     href: "/info",
+  //     hidden: false,
+  //   },
+  //   {
+  //     label: "Communication",
+  //     href: "/communication",
+  //     hidden: false,
+  //   },
+  //   {
+  //     label: "Tasks",
+  //     href: "/tasks",
+  //     hidden: false,
+  //   },
+  //   {
+  //     label: "Calendar",
+  //     href: "/calender",
+  //     hidden: true,
+  //   },
+  //   {
+  //     label: "Billing",
+  //     href: "/billing",
+  //     hidden: false,
+  //   },
+  //   {
+  //     label: "Expenses",
+  //     href: "/expenses",
+  //     hidden: false,
+  //   },
+  // ];
 
   let items = [];
   let selected = 0;

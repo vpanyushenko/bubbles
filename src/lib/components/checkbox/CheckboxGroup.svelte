@@ -1,8 +1,8 @@
 <script>
   import { configStore, pageStore } from "$lib/stores/stores";
 
-  export let options = [];
   export let id = null;
+  export let options = [];
   export let value = [];
   export let error = "An error occured";
   export let label = "";
@@ -60,6 +60,11 @@
     width: 100%;
   }
 
+  .form .field {
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
+  }
+
   .field {
     display: flex;
     flex-direction: column;
@@ -71,8 +76,6 @@
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
-    padding-left: 1.375rem;
-    padding-right: 1.375rem;
     /* border-radius: 8px;
     border: 1px solid var(--gray-light); */
   }
@@ -107,6 +110,11 @@
     cursor: pointer;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin-bottom: 0px;
+    margin-bottom: 0px;
   }
 
   .checkbox__input {

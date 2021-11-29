@@ -3,7 +3,7 @@
 
   ## Create a Form with validation.
 
-  Bubbles makes forms practicle, but if this use case does not fit your needs, you can create your own form elements.
+  Bubbles makes forms easy to use, but if this use case does not fit your needs, you can create your own form elements.
 
   ---
   #### Concept
@@ -189,7 +189,7 @@
       label: "Submit Form" //The label for the submit button,
       onsubmit: (event) => {
         //you can also use the onclick, if it's on a submit button Bubbles will look for the onsubmit event
-        import { validateInputs, getFormData, showToast, showLoading, hideLoading } from "bubbles" //You should do this at the top of your file
+        import { validateInputs, getFormData, showToast, showLoading, hideLoading } from "bubbles-ui" //You should do this at the top of your file
 
         const errors = validateInputs(inputs).errors  //check for errors
 

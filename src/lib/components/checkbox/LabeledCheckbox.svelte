@@ -62,8 +62,6 @@
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
-    padding-left: 1.375rem;
-    padding-right: 1.375rem;
     /* border-radius: 8px;
     border: 1px solid var(--gray-light); */
   }
@@ -88,7 +86,14 @@
     line-height: 1.33333;
     color: var(--gray);
     margin-left: 0.5rem;
+    margin-bottom: 0px;
   }
+
+  p {
+    margin-bottom: 0px;
+    margin-bottom: 0px;
+  }
+
   .checkbox {
     display: inline-block;
     position: relative;

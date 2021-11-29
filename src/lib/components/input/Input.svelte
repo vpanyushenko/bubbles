@@ -10,8 +10,8 @@
   export let error = "An error occured";
   export let type = "text";
   export let desc;
-  export let margin = false;
   export let value = null;
+  export let margin = false;
   export let bounds = null;
   export let validation = null;
   export let rows = 5;

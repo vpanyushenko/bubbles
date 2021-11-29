@@ -3,7 +3,7 @@ component: button
 ---
 
 ```js
-import { Button, pageStore } from "bubbles-ui";
+import { Button, showLoading, hideLoading } from "bubbles-ui";
 
 const props = {
   id: "123",
@@ -14,7 +14,16 @@ const props = {
 
     console.log(`Button ${id} clicked`);
 
-    $pageStore.loading.push(id);
+    showLoading(id); //will show the loading state
+
+    //hide the loading button after a promise resolves
+    fetch("/")
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        hideLoading(id);
+      });
   },
   wide: true,
 };

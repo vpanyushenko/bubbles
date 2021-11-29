@@ -73,15 +73,15 @@
 
   export let header = {};
   export let footer = {};
-  export let my = 0.625;
-  export let mx = 2;
+  export let py = 0.625;
+  export let px = 2;
   export let color = "white";
   export let shadow = true;
   export let border = null;
   export let height100 = false;
 
-  let y = `${my}rem`;
-  let x = `${mx}rem`;
+  let y = `${py}rem`;
+  let x = `${px}rem`;
   let background = null;
 
   if (color) {
