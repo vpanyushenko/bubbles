@@ -25,7 +25,7 @@
 </script>
 
 <div class="form__field__container" {id}>
-  <div class="field">
+  <div class="field style__indent">
     <div class="text">
       <p class="error" class:hidden={!is_error}>{error}</p>
       <p class="label" class:hidden={is_error}>{_label}</p>
@@ -90,8 +90,7 @@
   }
 
   p {
-    margin-bottom: 0px;
-    margin-bottom: 0px;
+    margin: 0px;
   }
 
   .checkbox {

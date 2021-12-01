@@ -26,7 +26,7 @@
 </script>
 
 <div class="form__field__container" {id}>
-  <div class="field js-field">
+  <div class="field style__indent">
     <span>
       <p class="error" class:hidden={!is_error}>{error}</p>
       <p class="label" class:hidden={is_error}>{_label}</p>
@@ -38,13 +38,7 @@
     <div class="options">
       {#each options as option}
         <label class="radio">
-          <input
-            type="radio"
-            name={id}
-            checked={value === option.value ? true : false}
-            value={option.value}
-            bind:group={value}
-          />
+          <input type="radio" name={id} value={option.value} bind:group={value} />
           <span class="radio__in">
             <span class="radio__tick" />
             <span class="radio__text">{option.label}</span>
@@ -71,8 +65,8 @@
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
-    padding-left: 1.375rem;
-    padding-right: 1.375rem;
+    /* padding-left: 1.375rem;
+    padding-right: 1.375rem; */
     /* border-radius: 8px;
     border: 1px solid var(--gray-light); */
   }
@@ -155,6 +149,10 @@
     letter-spacing: 0.9px;
     text-transform: uppercase;
     color: var(--gray);
+  }
+
+  p {
+    margin: 0px;
   }
 
   input:checked + .radio__in .radio__tick:before {

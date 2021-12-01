@@ -8,6 +8,8 @@
   export let label = "";
   export let disabled = false;
   export let onclick = null;
+  export let onselect = null;
+  export let onchange = null;
   export let validation = null;
   export let value = null;
 
@@ -30,7 +32,7 @@
 </script>
 
 <div class="form__field__container" {id}>
-  <div class="field js-field">
+  <div class="field style__indent">
     <span>
       <p class="error" class:hidden={!is_error}>{error}</p>
       <p class="label" class:hidden={is_error}>{_label}</p>
@@ -39,7 +41,7 @@
       {/if}
     </span>
 
-    <Switch {disabled} {onclick} bind:value />
+    <Switch {disabled} {onclick} {onselect} {onchange} {id} bind:value />
   </div>
 </div>
 
@@ -61,8 +63,8 @@
     -o-transition: all 0.25s;
     transition: all 0.25s;
     height: 5rem;
-    padding-left: 1.375rem;
-    padding-right: 1.375rem;
+    /* padding-left: 1.375rem;
+    padding-right: 1.375rem; */
     /* border-radius: 8px;
     border: 1px solid var(--gray-light); */
   }
@@ -78,5 +80,9 @@
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);
+  }
+
+  p {
+    margin: 0px;
   }
 </style>
