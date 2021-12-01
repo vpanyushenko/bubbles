@@ -29,8 +29,12 @@
 
   sections.forEach((section, index) => {
     if (!section.id) {
-      section.id = index + 1;
+      section.id = `sidebar_${index + 1}`;
     }
+
+    let _id = section.id;
+
+    $pageStore.sidebar.notifications[_id] = section.notifications ? section.notifications : 0;
 
     if (!activeSection) {
       if (path === section.href.split("/").filter(Boolean)[0]) {
@@ -56,6 +60,8 @@
     section = section;
     sectionsWithTitles[section.section].push(section);
   });
+
+  //make sure notifications cannot be below 0
 
   function sidebarItemSelected(obj) {
     $pageStore.sidebar.active_item = obj.id;
@@ -136,9 +142,9 @@
                     </div>
                   {/if}
 
-                  <div class="sidebar__text">{obj.title}</div>
-                  {#if obj.notifications}
-                    <div class="sidebar__counter">{obj.notifications}</div>
+                  <div class="sidebar__text">{obj.label}</div>
+                  {#if $pageStore.sidebar.notifications[obj.id]}
+                    <div class="sidebar__counter">{$pageStore.sidebar.notifications[obj.id]}</div>
                   {/if}
                 </a>
               {/each}
