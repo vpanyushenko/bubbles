@@ -1,4 +1,5 @@
 <script>
+  import { browser } from "$app/env";
   import { v4 as uuid } from "@lukeed/uuid";
   import { fly, fade } from "svelte/transition";
   import { modalStore } from "$lib/stores/modal.store";
@@ -20,9 +21,14 @@
 
   $: if ($modalStore.form && $modalStore.form.length) {
     setTimeout(() => {
-      console.log(document.getElementById(id).querySelector(".field__input"));
       document.getElementById(id).querySelector(".field__input").focus();
     }, 0);
+  }
+
+  $: if ($modalStore.active && browser) {
+    document.body.classList.add("noscroll");
+  } else if (browser) {
+    document.body.classList.remove("noscroll");
   }
 </script>
 
@@ -75,6 +81,7 @@
 
   .modal {
     z-index: 9999;
+    overflow-y: auto;
   }
 
   .container {
