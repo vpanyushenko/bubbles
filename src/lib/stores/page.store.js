@@ -6,7 +6,7 @@ export const pageStore = writable({
   sidebar: {
     is_toggled: false,
     active_item: null,
-    notifications: [],
+    notifications: {},
   },
   select: null,
   dropdown: null,
