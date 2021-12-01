@@ -26,7 +26,7 @@
   }
 </script>
 
-<label class="switch" class:active class:disabled>
+<label class="switch" class:active class:disabled={disabled || is_loading}>
   <input
     type="checkbox"
     on:change={toggleSwitch}
