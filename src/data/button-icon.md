@@ -5,7 +5,7 @@ component: icon-buttons
 ```js
 import { IconButton } from "bubbles-ui";
 
-const props = {
+const propsForDropdown = {
   icon: "more", //select premade icon or add your own svg
   options: [
     {
@@ -21,5 +21,14 @@ const props = {
       href: "/#buttons",
     },
   ],
+};
+
+const singleActionButton = {
+  icon: "add",
+  href: "/new",
+  // onclick: () => {
+  //custom logic here like:
+  //showModal() ...
+  // },
 };
 ```
