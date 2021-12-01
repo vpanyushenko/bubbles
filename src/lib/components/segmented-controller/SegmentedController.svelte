@@ -2,40 +2,16 @@
   import Select from "$lib/components/select/Select.svelte";
 
   export let segments = [];
-  let expanded = true;
 
-  // const segments = [
-  //   {
-  //     label: "Info",
-  //     href: "/info",
-  //     hidden: false,
-  //   },
-  //   {
-  //     label: "Communication",
-  //     href: "/communication",
-  //     hidden: false,
-  //   },
-  //   {
-  //     label: "Tasks",
-  //     href: "/tasks",
-  //     hidden: false,
-  //   },
-  //   {
-  //     label: "Calendar",
-  //     href: "/calender",
-  //     hidden: true,
-  //   },
-  //   {
-  //     label: "Billing",
-  //     href: "/billing",
-  //     hidden: false,
-  //   },
-  //   {
-  //     label: "Expenses",
-  //     href: "/expenses",
-  //     hidden: false,
-  //   },
-  // ];
+  const selectOptions = segments.map((segment) => {
+    return {
+      label: segment.label,
+      onselect: segment.onclick,
+      value: segment.label,
+    };
+  });
+
+  let expanded = true;
 
   let items = [];
   let selected = 0;
@@ -47,7 +23,7 @@
 
   let pageWidth = 0;
 
-  $: if (segments.filter((a) => a.hidden === false).length * 120 <= pageWidth) {
+  $: if (segments.length * 190 <= pageWidth) {
     expanded = true;
   } else {
     expanded = false;
@@ -60,13 +36,18 @@
   {#if expanded}
     <div bind:this={wrapper} class="wrapper" style="--left: {left}px; --width: {width}px;">
       {#each segments as segment, i}
-        <button class:active={i === selected} on:click={() => (selected = i)} bind:this={items[i]}
-          >{segment.label}</button
+        <button
+          class:active={i === selected}
+          on:click={() => (selected = i)}
+          bind:this={items[i]}
+          on:click={segment.onclick}
         >
+          {segment.label}
+        </button>
       {/each}
     </div>
   {:else}
-    <Select options={segments} label="Navigation" />
+    <Select options={selectOptions} label="Navigation" value={selectedItem ? selectedItem : selectOptions[0].value} />
   {/if}
 </nav>
 
@@ -79,7 +60,7 @@
     background: transparent;
     text-align: center;
     z-index: 1;
-    height: 42px;
+    height: 2.625rem;
     border-radius: 0.625rem;
     min-width: 11.25rem;
     font-weight: bolder;
@@ -94,9 +75,9 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    height: 50px;
+    height: 3.125rem;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     overflow: hidden;
     position: relative;
     width: max-content;
@@ -119,7 +100,7 @@
     transition: left 0.3s;
     width: var(--width);
     z-index: -1;
-    height: 42px;
+    height: 2.625rem;
     top: 4px;
   }
 </style>
