@@ -113,9 +113,9 @@
                 on:click={() => ($pageStore.is_fetching = true)}
               >
                 <div class="icon__btn__details">
-                  <h6 class="">{option.label}</h6>
+                  <p class="font-lg font-bold">{option.label}</p>
                   {#if option.caption}
-                    <p class="icon__btn__text caption-sm">{option.caption}</p>
+                    <p class="icon__btn__text caption">{option.caption}</p>
                   {/if}
                 </div>
                 <img src={arrowRight} alt="Arrow Right" />
@@ -128,9 +128,9 @@
                 on:click={iconClick}
               >
                 <div class="icon__btn__details">
-                  <h6 class="">{option.label}</h6>
+                  <p class="font-lg font-bold">{option.label}</p>
                   {#if option.caption}
-                    <p class="icon__btn__text caption-sm">{option.caption}</p>
+                    <p class="icon__btn__text caption">{option.caption}</p>
                   {/if}
                 </div>
                 <img src={arrowRight} alt="Arrow Right" />
@@ -263,7 +263,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 1rem 28px 1rem 1.25rem;
+    padding: 1rem 1.75rem 1rem 1.25rem;
     border-radius: 12px;
     background: transparent;
     cursor: pointer;
@@ -346,7 +346,7 @@
   }
 
   .icon__btn__text {
-    margin-top: 6px;
+    /* margin-top: 6px; */
     padding-right: 0.625rem;
   }
 
