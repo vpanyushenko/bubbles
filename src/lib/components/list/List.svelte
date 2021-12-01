@@ -1,18 +1,23 @@
 <script>
   import ListItem from "./ListItem.svelte";
+  import ListItemTimeline from "./ListItemTimeline.svelte";
 
   export let items = [];
-  export let type = "list";
+  export let type = "standard";
   export let empty = "There nothing here yet";
-
-  console.log(type);
 </script>
 
 <div class="list" class:timeline={type === "timeline"}>
   {#if items.length > 0}
-    {#each items as item}
-      <ListItem {...item} timeline={type === "timeline" ? true : false} />
-    {/each}
+    {#if type === "standard"}
+      {#each items as item}
+        <ListItem {...item} />
+      {/each}
+    {:else}
+      {#each items as item}
+        <ListItemTimeline {...item} />
+      {/each}
+    {/if}
   {:else}
     <slot>{empty}</slot>
   {/if}
