@@ -3,7 +3,7 @@ component: card-header
 ---
 
 ```js
-import { Card, CardHeader, CardFooter, showModal } from "bubbles-ui";
+import { Card, CardHeader, showModal } from "bubbles-ui";
 
 const header1 = {
   title: "Title",
@@ -29,7 +29,9 @@ const headerWithActions = {
         },
         {
           label: "Delete Account",
-          onclick: showModal(), //add modal options
+          onclick: () => {
+            showModal(), //add modal options
+          }
         },
       ],
     },
@@ -39,10 +41,32 @@ const headerWithActions = {
 const headerWithFilters = {
   filters: [
     {
-      //TODO:
-    },
-  ],
-};
+        id: "filter", //this will be the id for the query param
+        label: "Filter",
+        options: [
+          {
+            label: "Filter 1",
+            value: "filter1",
+            caption: "Most popular",
+            onselect = (event) => {
+              //you can add your own filter logic here.
+              //or you can omit the onselect and Bubbles
+              //will update the query params for you
+            }
+          },
+          "break", //Add a line break if you want
+          {
+            label: "Filter 2",
+            value: "filter2",
+          },
+          {
+            label: "Filter 3",
+            value: "filter3",
+          },
+        ]
+    }
+  ]
+}
 
 <Card>
   <CardHeader {...header1} />
