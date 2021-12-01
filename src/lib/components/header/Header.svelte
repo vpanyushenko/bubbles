@@ -59,8 +59,6 @@
 
   let y; //TODO: Add options to sticky headers
 
-  $: console.log(y);
-
   if (title) {
     $pageStore.title = title;
   }
