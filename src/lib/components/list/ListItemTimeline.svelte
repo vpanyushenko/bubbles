@@ -2,6 +2,18 @@
   import { pageStore } from "$lib/stores/page.store";
   import { v4 as uuid } from "@lukeed/uuid";
 
+  import copy from "./copy.svg";
+  import download from "./download.svg";
+  import edit from "./edit.svg";
+  import trash from "./trash.svg";
+
+  const icons = {
+    copy: copy,
+    download: download,
+    edit: edit,
+    trash: trash,
+  };
+
   export let label = "";
   export let text = "";
   export let href = null;
@@ -9,7 +21,6 @@
   export let new_page = true;
   export let onclick = null;
   export let id = uuid();
-  export let timeline_color = "gray";
   export let active = false;
   export let pulse = true;
 
@@ -44,7 +55,7 @@
           class="icon"
           class:hidden={$pageStore.is_fetching || $pageStore.clicked === id}
           on:click={onclick}
-          src={icon}
+          src={icons[icon] || icon}
           alt="Icon"
         />
       </div>
@@ -108,12 +119,11 @@
   }
   .icon__container img {
     font-size: 1.25rem;
-    fill: var(--dark);
     opacity: 0.4;
     flex-shrink: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: 0;
+    width: 1rem;
+    height: 1rem;
+    fill: var(--black);
   }
 
   .spinner {
@@ -122,7 +132,7 @@
 
   .icon__container img:hover {
     cursor: pointer;
-    filter: invert(44%) sepia(7%) saturate(6567%) hue-rotate(212deg) brightness(89%) contrast(90%);
+    filter: var(--sidebar-hover-filter);
     opacity: 1;
   }
 
