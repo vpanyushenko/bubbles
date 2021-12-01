@@ -16,6 +16,7 @@
   export let validation = null;
   export let rows = 5;
   export let typeahead = null;
+  export let autocomplete = true;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
 
@@ -59,7 +60,19 @@
         .then((options) => {
           is_loading = false;
           if (options && options.length) {
-            typeahead_options = options;
+            //check if the typeahead options that were passed were strings and format them correctly
+            typeahead_options = options.map((option) => {
+              if (typeof option === "string") {
+                const obj = {
+                  label: option,
+                  value: option,
+                };
+
+                return obj;
+              } else {
+                return option;
+              }
+            });
           } else {
             typeahead_options = [];
           }
@@ -179,6 +192,7 @@
           class="field__input"
           class:error={is_error}
           type="text"
+          autocomplete={autocomplete ? "on" : "nope"}
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}
@@ -226,6 +240,7 @@
         <input
           class="field__input"
           class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
           type="email"
           bind:value
           on:focus={inputFocused}
@@ -248,6 +263,7 @@
         <input
           class="field__input"
           class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
           type="password"
           bind:value
           on:focus={inputFocused}
@@ -270,6 +286,7 @@
         <input
           class="field__input"
           class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
           type="text"
           bind:value
           on:focus={inputFocused}
@@ -294,6 +311,7 @@
         <input
           class="field__input"
           class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
           type="number"
           bind:value
           on:focus={inputFocused}
@@ -320,6 +338,7 @@
           class="field__textarea"
           {rows}
           class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
           on:focus={inputFocused}
           on:blur={inputBlured}
           on:input={typeaheadOnInput}
@@ -367,6 +386,7 @@
         <input
           class="field__input"
           class:error={is_error}
+          autocomplete={autocomplete === true ? "on" : "nope"}
           type="text"
           bind:value
           on:focus={inputFocused}
