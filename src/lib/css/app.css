@@ -380,7 +380,7 @@ h6 {
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 3.5px;
   line-height: 1.14286;
 }
 
@@ -411,7 +411,7 @@ h6 {
 }
 
 p {
-	color: var(--gray)
+	color: var(--gray);
 }
 
 .caption {
