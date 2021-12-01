@@ -1,6 +1,7 @@
 <script>
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Select from "$lib/components/select/Select.svelte";
+  import { addQueryParam } from "$lib/utils/url";
 
   export let filters = [];
   export let title = "";
@@ -8,6 +9,22 @@
   export let buttons = [];
   export let center = false;
   export let border = true;
+
+  filters.forEach((filter) => {
+    //check if each fitler has an onselect property
+    //if it doesn't then we will add the default function to
+    //update the query param
+
+    filter.options.forEach((option) => {
+      if (option === "break" || option.onselect) {
+        return option;
+      } else {
+        option.onselect = () => {
+          addQueryParam(filter.id, option.value);
+        };
+      }
+    });
+  });
 </script>
 
 {#if filters.length || title || caption || buttons.length}
@@ -89,6 +106,7 @@
 
   p {
     color: var(--gray);
+    margin-bottom: 0px;
   }
 
   h6 + p {
