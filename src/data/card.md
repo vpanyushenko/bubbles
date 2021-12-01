@@ -3,7 +3,7 @@ component: card
 ---
 
 ```js
-import { Card, CardHeader, CardFooter } from "bubbles-ui";
+import { Card } from "bubbles-ui";
 
 const props = {
   color: "white", //add any color variable
@@ -20,6 +20,4 @@ const props = {
     pagination: false, //TODO:
   },
 };
-
-<Card {...props}>Add whatever content into the card</Card>;
 ```
