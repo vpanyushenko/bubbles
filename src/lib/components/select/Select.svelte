@@ -177,8 +177,19 @@
         }
         case "Enter": {
           event.preventDefault();
-          value = filteredOptions[selected_index].value;
+          const option = filteredOptions[selected_index];
+
+          value = option.value;
+
+          //select the option for the element
+          if (option.onselect) {
+            setTimeout(() => {
+              option.onselect();
+            }, 10);
+          }
+
           is_list_open = false;
+
           break;
         }
         case "Backspace": {
