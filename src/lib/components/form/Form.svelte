@@ -324,9 +324,9 @@
         {/if}
 
         {#if input.type === "button"}
-          <Button {...input} />
+          <Button {...input} wide={true} />
         {:else if input.type === "submit"}
-          <Button {...input} />
+          <Button {...input} wide={true} />
         {/if}
 
         {#if input.type === "divider"}
@@ -359,6 +359,11 @@
 <style>
   :global(.form .select) {
     width: 100%;
+  }
+
+  :global(.form .style__indent) {
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
   }
   span {
     display: flex;
