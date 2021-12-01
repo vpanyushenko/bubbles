@@ -379,6 +379,18 @@
     opacity: 1;
   }
 
+  p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  a,
+  a:visited,
+  a:hover,
+  a:active {
+    color: var(--black);
+  }
+
   @media only screen and (max-width: 767px) {
     .icon__btn {
       position: static;
