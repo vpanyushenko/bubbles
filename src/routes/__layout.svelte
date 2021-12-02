@@ -120,6 +120,12 @@
         section: "Components",
       },
       {
+        label: "Pagination",
+        id: "pagination",
+        href: "#pagination",
+        section: "Components",
+      },
+      {
         label: "Radio",
         id: "radio",
         href: "#radio",
