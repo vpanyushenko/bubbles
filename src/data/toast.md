@@ -6,19 +6,17 @@ component: toast
 <script>
   //__layout.svelte
 
-  import {Toast, toastStore} from "bubbles-ui"
+  import {ToastContainer} from "bubbles-ui"
 </script>
 
-{#each $toastStore as toast}
-<Toast {...toast} />
-{/each}
+<ToastContainer/>
 
 <script>
   //index.svelte or whatever page you're on
 
   import { Form, showToast } from "bubbles-ui";
 
-      const toastExampleFormInputs = [
+  const toastExampleFormInputs = [
     {
       type: "radio",
       id: "toast_example_color",
@@ -85,6 +83,7 @@ component: toast
         showToast(data.toast_example_message, data.toast_example_color);
       },
     },
+  ]
 
 </script>
 

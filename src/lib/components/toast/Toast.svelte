@@ -16,7 +16,6 @@
   }
 
   $: index = $toastStore.findIndex((toast) => toast.id === id);
-  $: top = `${20 + 60 * index}px`;
 
   setTimeout(() => {
     toastStore.update((toasts) => {
@@ -36,7 +35,6 @@
 
 {#if active}
   <div
-    class="toast"
     class:primary={color === "primary"}
     class:secondary={color === "secondary"}
     class:error={color === "error"}
@@ -47,7 +45,7 @@
     class:dark={color === "dark"}
     {id}
     style="top: {top}"
-    in:fly={{ duration: 300, y: -100 }}
+    in:fly={{ duration: 300, y: -250 }}
     out:fade={{ duration: 300 }}
   >
     <span>{message}</span>
@@ -56,22 +54,20 @@
 {/if}
 
 <style>
-  .toast {
-    padding: 12px 1.25rem;
-    color: #ffffff;
+  div {
+    padding: 0.75rem 1.25rem;
+    color: var(--white);
     display: inline-block;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    position: fixed;
     transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
     border-radius: 2px;
     cursor: pointer;
     text-decoration: none;
-    max-width: calc(50% - 1.25rem);
     z-index: 2147483647;
-    right: 15px;
-    /* top: 30px; */
     display: flex;
     border-radius: 8px;
+    margin: 1rem 1rem 0rem 0rem;
+    align-self: flex-end;
   }
 
   img {

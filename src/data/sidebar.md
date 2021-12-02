@@ -5,7 +5,7 @@ component: sidebar
 ```svelte
 <!-- __layout.svelte -->
 <script>
-  import { Sidebar, SidebarPageWrapper, Modal, Toast, toastStore } from "$lib/stores/stores";
+  import { Sidebar, SidebarPageWrapper, Modal, ToastContainer } from "$lib/stores/stores";
 
   const sidebarConfig = {
     logo: "/logo.svg",
@@ -213,9 +213,7 @@ component: sidebar
   };
 </script>
 
-{#each $toastStore as toast}
-  <Toast {...toast} />
-{/each}
+<ToastContainer />
 
 <Sidebar {...sidebarConfig} />
 <SidebarPageWrapper>
