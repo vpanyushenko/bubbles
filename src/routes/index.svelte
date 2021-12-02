@@ -1272,8 +1272,6 @@
         </span>
       </Card>
     </Column50>
-
-    \
   </Row>
   <Row>
     <Column>
