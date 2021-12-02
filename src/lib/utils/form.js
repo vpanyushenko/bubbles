@@ -173,7 +173,7 @@ const _validation = {
   },
 
   numeric: function (val, req) {
-    var num;
+    let num;
 
     num = Number(val); // tries to convert value to a number. useful if value is coming from form element
 
