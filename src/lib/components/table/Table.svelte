@@ -137,7 +137,7 @@
 
 <div class="table" class:mobile={is_mobile === true} bind:clientWidth={w}>
   {#if header && header.length}
-    <TableHeader {header} {mobile_transform} />
+    <TableHeader cells={header} />
   {/if}
 
   {#if rows && rows.length}
