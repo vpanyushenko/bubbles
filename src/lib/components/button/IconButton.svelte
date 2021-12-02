@@ -36,6 +36,10 @@
   export let href = "";
   export let transparent = true;
 
+  if (icon === "edit--") {
+    console.log(transparent);
+  }
+
   const dropdown = options.length ? true : false;
 
   let src = icons[icon] ? icons[icon] : more;
@@ -94,7 +98,7 @@
 
 {#if href}
   <a class="icon__btn" {id} sveltekit:prefetch {href} on:click={back}>
-    <button class:disabled={is_loading}>
+    <button class:disabled={is_loading} class:background={!transparent}>
       <span class="spinner" class:hidden={!is_loading} />
       {#if icon}
         <img class="icon icon-main" {src} class:hidden={is_loading} alt="icon" />

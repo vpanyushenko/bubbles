@@ -76,7 +76,7 @@
     }
   }
 
-  $: fomatted_rows_per_page =
+  $: formatted_rows_per_page =
     rows_per_page && rows_per_page.length
       ? rows_per_page.map((row) => {
           if (typeof row === "string" || typeof row === "number") {
@@ -143,7 +143,7 @@
   {#if rows_per_page && rows_per_page.length}
     <div class="rows">
       <p>Rows per page:</p>
-      <span><Select value={limit} {id} options={fomatted_rows_per_page} /></span>
+      <span><Select value={limit} {id} options={formatted_rows_per_page} /></span>
     </div>
   {/if}
 

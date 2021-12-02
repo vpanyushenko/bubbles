@@ -16,3 +16,9 @@ export function importMarkdown() {
   // You could also load a single file with: const natttModule = (await import('../data/work/nattt.md')).default;
   return importAll(imports);
 }
+
+export function importMarkdownChangelog() {
+  const imports = import.meta.globEager("../data/changelog/*.{svx,md}");
+  // You could also load a single file with: const natttModule = (await import('../data/work/nattt.md')).default;
+  return importAll(imports);
+}
