@@ -5,8 +5,7 @@
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
   import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
   import Modal from "$lib/components/modal/Modal.svelte";
-  import Toast from "$lib/components/toast/Toast.svelte";
-  import { toastStore } from "$lib/stores/stores";
+  import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
 
   const sidebarConfig = {
     logo: "/logo.svg",
@@ -198,6 +197,12 @@
         section: "Utils",
       },
       {
+        label: "showToast",
+        id: "showToast",
+        href: "#showToast",
+        section: "Utils",
+      },
+      {
         label: "showModal",
         id: "showModal",
         href: "#showModal",
@@ -209,19 +214,11 @@
         href: "#hideModal",
         section: "Utils",
       },
-      {
-        label: "showToast",
-        id: "showToast",
-        href: "#showToast",
-        section: "Utils",
-      },
     ],
   };
 </script>
 
-{#each $toastStore as toast}
-  <Toast {...toast} />
-{/each}
+<ToastContainer />
 
 <Sidebar {...sidebarConfig} />
 <SidebarPageWrapper>
