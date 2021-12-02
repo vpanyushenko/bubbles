@@ -108,8 +108,8 @@
     margin-right: 1rem;
   }
   .btn {
-    min-width: 166px;
-    height: 56px;
+    min-width: 10rem;
+    height: 3.5rem;
     padding: 0 1.25rem;
     border-radius: 1rem/1rem;
     font-family: "Inter", sans-serif;
