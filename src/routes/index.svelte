@@ -442,7 +442,15 @@
   <title>Bubbles UI Kit</title>
 </svelte:head>
 
-<Header />
+<Header
+  buttons={[
+    {
+      icon: "edit",
+      href: "/changelog",
+      transparent: false,
+    },
+  ]}
+/>
 
 <Section id="/">
   <Row>
@@ -968,6 +976,13 @@
               >If this button will taking a user to a different page, use href instead of directing them to the page
               with onclick. This will prefetch the data on hover to make the navigation faster,</TableCell
             >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">transparent</span></TableCell>
+            <TableCell
+              >Normally the button is transparent, but you can set this to <code>false</code> to make the button standout
+              with a slight gray background.
+            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">options</span></TableCell>
