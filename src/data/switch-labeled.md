@@ -3,7 +3,7 @@ component: labeled-switch
 ---
 
 ```svelte
-import {LabledSwitch} from "bubbles-ui";
+import {LabeledSwitch} from "bubbles-ui";
 
 <LabeledSwitch
   label="Marketing Notifications"

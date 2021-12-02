@@ -10,7 +10,7 @@ const formInputs = [
   {
     type: "text", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
     id: "name", //the id will be the key when you call the getFormData function. If you add a "." in the id, it will return the item as a nested object. For example, if your `id` value is `name.last`, the getFormData function will return that as {name: {last: ""}}
-    label: "Your Name", //The label is what we'll initally show for the input, it should explain what is required. Keep this short like "First Name"
+    label: "Your Name", //The label is what we'll initially show for the input, it should explain what is required. Keep this short like "First Name"
     value: null, //You can add a value to the input
     desc: "You'll be able to change this name later", //This will add text below the input to explain in more detail what is needed from the user. Optional.
     error: "A name is required", //this is the text that will appear if this input fails validation
@@ -38,7 +38,7 @@ const formInputs = [
     validation: "required|date", //date validator is built in
   },
   {
-    type: "textarea", //the textarea / fieldfield input
+    type: "textarea", //the textarea / text field input
     id: "description",
     label: "Your Address",
     value: "",
@@ -54,7 +54,7 @@ const formInputs = [
     desc: null,
     error: "Your role is required",
     validation: "required", //since you're adding the options, you can just set it to required
-    search: false, //By default, if your select has more than 5 options, it will turn on fuzzy search unles you explictly turn it off
+    search: false, //By default, if your select has more than 5 options, it will turn on fuzzy search unless you explicitly turn it off
     //an array of options for your input
     options: [
       {
@@ -81,7 +81,7 @@ const formInputs = [
     desc: null,
     error: "This is required",
     validation: "required", //since you're adding the options, you can just set it to required
-    search: false, //By default, if your select has more than 5 options, it will turn on fuzzy search unles you explictly turn it off
+    search: false, //By default, if your select has more than 5 options, it will turn on fuzzy search unless you explicitly turn it off
     //an array of options for your input
     options: [
       {

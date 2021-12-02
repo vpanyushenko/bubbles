@@ -19,10 +19,10 @@ $configStore.validate_on_blur = true;
 // If something is marked as required as one of the
 // validation requirements you can have bubbles add a "*"
 // to the end of the input label. This is better UX for
-// required fields. The defualt for this is true
+// required fields. The default for this is true
 
 // How long to delay a toast notification before it
-// automatically hides in miliseconds
+// automatically hides in milliseconds
 $configStore.toast_delay = 5500;
 
 // How long to show input error states until it goes

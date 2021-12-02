@@ -4,7 +4,7 @@
   export async function load({ page, fetch, session, stuff }) {
     const articles = importMarkdown();
 
-    //initally there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
+    //initially there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
     const limit = page.query.get("limit") ? page.query.get("limit") : 10;
 
     //same process with the page, since if the page is undefined the user is on the first one
@@ -496,7 +496,7 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="Default Config" border={false} />
         <p>
-          You can import a store called <code>configStore</code> into your inital <code>__layout.svelte</code> file to set
+          You can import a store called <code>configStore</code> into your initial <code>__layout.svelte</code> file to set
           some default behaviors for Bubbles. You can view the table below for all of the default options:
         </p>
 
@@ -522,7 +522,7 @@
           <TableRow>
             <TableCell><code>toast_delay</code></TableCell>
             <TableCell
-              >How long a toast notification will stay on screen in miliseconds until it is automatically hidden.</TableCell
+              >How long a toast notification will stay on screen in milliseconds until it is automatically hidden.</TableCell
             >
             <TableCell><code>5500</code></TableCell>
           </TableRow>
@@ -800,7 +800,7 @@
         <CardHeader title="Options" border={false} />
         <p>
           An easy way to center items on a page. Add the <code>Center</code> component to center everything without including
-          any columns. This is usefuil for making something like a Auth section.
+          any columns. This is useful for making something like a Auth section.
         </p>
 
         <Table>
@@ -877,8 +877,8 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">href</span></TableCell>
             <TableCell
-              >If this button will taking a user to a different page, use href insead of directing them to the page with
-              onclick. This will prefetch the data on hover to make the navigation faster.</TableCell
+              >If this button will taking a user to a different page, use href instead of directing them to the page
+              with onclick. This will prefetch the data on hover to make the navigation faster.</TableCell
             >
           </TableRow>
           <TableRow>
@@ -893,7 +893,7 @@
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">mb</span></TableCell>
-            <TableCell>The bottom margin. Ideally set it in rem vaues</TableCell>
+            <TableCell>The bottom margin. Ideally set it in rem values</TableCell>
           </TableRow>
         </Table>
       </Card>
@@ -965,8 +965,8 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">href</span></TableCell>
             <TableCell
-              >If this button will taking a user to a different page, use href insead of directing them to the page with
-              onclick. This will prefetch the data on hover to make the navigation faster,</TableCell
+              >If this button will taking a user to a different page, use href instead of directing them to the page
+              with onclick. This will prefetch the data on hover to make the navigation faster,</TableCell
             >
           </TableRow>
           <TableRow>
@@ -990,8 +990,8 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">option.href</span></TableCell>
             <TableCell
-              >If this button will taking a user to a different page, use href insead of directing them to the page with
-              onclick. This will prefetch the data on hover to make the navigation faster.</TableCell
+              >If this button will taking a user to a different page, use href instead of directing them to the page
+              with onclick. This will prefetch the data on hover to make the navigation faster.</TableCell
             >
           </TableRow>
         </Table>
@@ -1058,7 +1058,7 @@
           knowledgebase are made of cards.
         </p>
         <p>
-          The card will take some properties to figure out it's visual appearence. The main content of the <code
+          The card will take some properties to figure out it's visual appearance. The main content of the <code
             >Card</code
           >
           typically a <code>Form</code> or <code>Table</code> will be added as a
@@ -1106,14 +1106,14 @@
             <TableCell><span style="font-weight: 700">header</span></TableCell>
             <TableCell
               >You are able to set the card header as a prop instead of adding it as a component into the slot. See the
-              example for shwo this works, but this is useful if you're adding dynamic cards to the page.</TableCell
+              example for how this works, but this is useful if you're adding dynamic cards to the page.</TableCell
             >
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">footer</span></TableCell>
             <TableCell
               >You are able to set the card footer as a prop instead of adding it as a component into the slot. See the
-              example for shwo this works, but this is useful if you're adding dynamic cards to the page.</TableCell
+              example for how this works, but this is useful if you're adding dynamic cards to the page.</TableCell
             >
           </TableRow>
         </Table>
@@ -1156,7 +1156,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">title</span></TableCell>
             <TableCell
-              >The main prop that you will usually include in your card. This will be the title that descibes the
+              >The main prop that you will usually include in your card. This will be the title that describes the
               content of the card.</TableCell
             >
           </TableRow>
@@ -1172,7 +1172,7 @@
             <TableCell><span style="font-weight: 700">border</span></TableCell>
             <TableCell
               >By default, the header has a bottom border to divide it from the rest of the content. This can be removed
-              by passing <code>false</code> to thsi propery.
+              by passing <code>false</code> to this property.
             </TableCell>
           </TableRow>
           <TableRow>
@@ -1189,7 +1189,7 @@
             >
           </TableRow>
           <TableRow>
-            <TableCell><span style="font-weight: 700">fitlers</span></TableCell>
+            <TableCell><span style="font-weight: 700">filters</span></TableCell>
             <TableCell
               >An array of filters that should be used if you have a <code>Table</code> inside of you card and want to
               filter the data. The Filters are a special type of <code>Select</code> that will modify urls query params,
@@ -1458,7 +1458,7 @@
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">error</span></TableCell>
-            <TableCell>The error text you want to shwo if this item fails validation</TableCell>
+            <TableCell>The error text you want to show if this item fails validation</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">validation</span></TableCell>
@@ -1494,7 +1494,7 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="Divider" border={false} />
         <p>
-          The divider is just a horizontal line the divders content. This component also allows you to add text to the
+          The divider is just a horizontal line the divides content. This component also allows you to add text to the
           line.
         </p>
 
@@ -1533,7 +1533,7 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="Form" border={false} />
         <p>
-          Your form data is probably a mix of some JS Objects / JSON and an inital fetch request to get existing data
+          Your form data is probably a mix of some JS Objects / JSON and an initial fetch request to get existing data
           from your users. As a result, Bubbles uses an array of objects to create your form.
         </p>
         <p>
@@ -1557,7 +1557,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">inputs</span></TableCell>
             <TableCell
-              >An array of input values that you want to add. See the individal articles for inputs like <code
+              >An array of input values that you want to add. See the individual articles for inputs like <code
                 >Input</code
               >, <code>Select</code>, and <code>Button</code> to understand what kind of properties to add to each.</TableCell
             >
@@ -1653,7 +1653,7 @@
         </p>
 
         <p>
-          With Bubbles, you'll normally never actually import any <code>Input</code> components, you'll just programatically
+          With Bubbles, you'll normally never actually import any <code>Input</code> components, you'll just programmatically
           add them directly to the Form.
         </p>
 
@@ -1682,7 +1682,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">label</span></TableCell>
             <TableCell
-              >The label that will descible what information needs to be entered. Will float up when the input is in
+              >The label that will describe what information needs to be entered. Will float up when the input is in
               focus. Best to keep this as short as possible</TableCell
             >
           </TableRow>
@@ -1711,16 +1711,16 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">desc</span></TableCell>
             <TableCell
-              >This will be the small text below the input to describle it in more detail. It supports html so you can
+              >This will be the small text below the input to describe it in more detail. It supports html so you can
               add anchor tags that will get rendered correctly.</TableCell
             >
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">value</span></TableCell>
-            <TableCell>The value for this input it you want to prefill it.</TableCell>
+            <TableCell>The value for this input it you want to pre-fill it.</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell><span style="font-weight: 700">autocompelte</span></TableCell>
+            <TableCell><span style="font-weight: 700">autocomplete</span></TableCell>
             <TableCell
               >If you want to browser to autocomplete fields for the user. Disable this by passing <code>false</code>,
               by default this is turned on.</TableCell
@@ -1740,7 +1740,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">rows</span></TableCell>
             <TableCell
-              >Specifiies the height in rows to be used. It's used only with the <code>textarea</code> input type.</TableCell
+              >Specifies the height in rows to be used. It's used only with the <code>textarea</code> input type.</TableCell
             >
           </TableRow>
           <TableRow>
@@ -2362,7 +2362,7 @@
             <TableCell
               >This is an array of integers to be able to change the limit of how many options that pagination will
               request. The default values are 10, 25, 50, and 100. You can change these by adding your own array or
-              choose to not give users this options by passing in <code>null</code> or an emprt array</TableCell
+              choose to not give users this options by passing in <code>null</code> or an empty array</TableCell
             >
           </TableRow>
           <TableRow>
@@ -2402,21 +2402,21 @@
             <TableCell><span style="font-weight: 700">has_more</span></TableCell>
             <TableCell
               >If you don't provide a <code>count</code>, you should provide a boolean value to share if there is
-              another page in your naviation. If your API or database does not provide this data, you can query the
-              database for the pagiation limit + 1 to check if there are more documents, and then respond with just the
+              another page in your navigation. If your API or database does not provide this data, you can query the
+              database for the pagination limit + 1 to check if there are more documents, and then respond with just the
               pagination limit number of documents.
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">page_query_name</span></TableCell>
             <TableCell
-              >Updates the name of the query paramiter that gets added for the page query. The default name is "page"
+              >Updates the name of the query parameter that gets added for the page query. The default name is "page"
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">limit_query_name</span></TableCell>
             <TableCell
-              >Updates the name of the query paramiter that gets added for the limit query. The default name is "limit"
+              >Updates the name of the query parameter that gets added for the limit query. The default name is "limit"
             </TableCell>
           </TableRow>
         </Table>
@@ -2474,7 +2474,7 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="Properties" border={false} />
         <p>
-          Like a <code>Checkbox</code> a radio let's a user chose from one of multiple options. Fundementally you get the
+          Like a <code>Checkbox</code> a radio let's a user chose from one of multiple options. Fundamentally you get the
           same results using Bubbles with the radio and select elements.
         </p>
 
@@ -2504,7 +2504,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">desc</span></TableCell>
             <TableCell
-              >A longer, detailed explaination of the options that this user has. Supports parsing html elements in the
+              >A longer, detailed explanation of the options that this user has. Supports parsing html elements in the
               string.</TableCell
             >
           </TableRow>
@@ -2734,7 +2734,7 @@
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">options</span></TableCell>
-            <TableCell>An array of options for the user to choose froms</TableCell>
+            <TableCell>An array of options for the user to choose from</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">option.label</span></TableCell>
@@ -2746,7 +2746,7 @@
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">option.value</span></TableCell>
-            <TableCell>The actual value that will be seleted.</TableCell>
+            <TableCell>The actual value that will be selected.</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">option.onselect</span></TableCell>
@@ -2788,18 +2788,18 @@
             },
             {
               label: "Polygon",
-              value: "polygon",
+              value: "poly",
               onselect: () => {
                 console.log("Whoa, you like polygons?");
               },
             },
             {
               label: "Triangle",
-              value: "triange",
+              value: "tri",
             },
             {
               label: "Hexagon",
-              value: "hexagon",
+              value: "hex",
             },
           ]}
         />
@@ -2837,7 +2837,7 @@
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">sections</span></TableCell>
-            <TableCell>An array of Objects that will be the sections you want to include in your Sidbar.</TableCell>
+            <TableCell>An array of Objects that will be the sections you want to include in your Sidebar.</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">section.icon</span></TableCell>
@@ -2876,7 +2876,7 @@
             <TableCell><span style="font-weight: 700">section.href_aliases</span></TableCell>
             <TableCell
               >There can be times when you have pages with multiple hrefs. For example, it's common that <code>/</code>
-              and <code>/dashboard</code> might be the same page. As a result, if the inital href is set to
+              and <code>/dashboard</code> might be the same page. As a result, if the initial href is set to
               <code>/dashboard</code>
               and the user navigates to <code>/</code>, the correct section will not be shown as active. Add an array of
               string here that share that href here to correct this behavior.</TableCell
@@ -2885,7 +2885,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">section.notifications</span></TableCell>
             <TableCell
-              >If you want to set an inital value for notifications when the component mounts you can do so here.
+              >If you want to set an initial value for notifications when the component mounts you can do so here.
               Otherwise, you'll update notifications counts using the <code>pageStore</code></TableCell
             >
           </TableRow>
@@ -2943,7 +2943,7 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="User Experience" border={false} />
         <p>
-          The Switch is fundementally the same element as the checkbox, but a better user experience for settings and
+          The Switch is fundamentally the same element as the checkbox, but a better user experience for settings and
           preferences that a user should set.
         </p>
         <p>
@@ -3051,12 +3051,12 @@
             <TableCell><span style="font-weight: 700">desc</span></TableCell>
             <TableCell
               >The description can be added to provide more context about this element. It can render inline html
-              elements liek anchor tags.</TableCell
+              elements like anchor tags.</TableCell
             >
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">error</span></TableCell>
-            <TableCell>The error text to display if this fielf fails validation</TableCell>
+            <TableCell>The error text to display if this field fails validation</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">validation</span></TableCell>
@@ -3108,7 +3108,7 @@
         <CardHeader title="User Experience" border={false} />
         <p>
           The table is the main way to present data in Bubbles. Tables can be created with individual components,
-          meaning you'll import <code>TableRow</code> and <code>TableCell</code>, or programcatically, meaning all of
+          meaning you'll import <code>TableRow</code> and <code>TableCell</code>, or programmatically, meaning all of
           the data will be passed as a prop into the <code>Table</code>
         </p>
 
@@ -3324,7 +3324,7 @@
                       href: poke.species.url,
                     },
                     {
-                      label: "Shinky Sprite",
+                      label: "Shiny Sprite",
                       href: poke.sprites.front_shiny,
                     },
                   ],
@@ -3378,7 +3378,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">margin</span></TableCell>
             <TableCell
-              >You can set margins for the tag using the css shorthand method. By defaut the top, right, bottom, and
+              >You can set margins for the tag using the css shorthand method. By default the top, right, bottom, and
               left values are set to <code>0 0 0 0</code>.</TableCell
             >
           </TableRow>
@@ -3459,11 +3459,11 @@
         <CardHeader title="Properties" border={false} />
         <p>
           The toast is used to notify a user that some action took place. It's shown above all content and will persist
-          page navigations.
+          a page navigation.
         </p>
         <p>The toasts can be dismissed by the user or will just gracefully fade away.</p>
         <p>
-          Because toast messages can be inititated from just about any page or component, Bubbles recommends adding the <code
+          Because toast messages can be initiated from just about any page or component, Bubbles recommends adding the <code
             >ToastContainer</code
           >
           component on the <code>__layout.svelte</code> page, and adding new toasts using the <code>showToast</code> utility
@@ -3532,7 +3532,7 @@
             <TableCell><span style="font-weight: 700">inputs</span></TableCell>
             <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
             <TableCell
-              >The array of inputs you want to validate. These inputs should be declated in your <code>script</code> tag
+              >The array of inputs you want to validate. These inputs should be declared in your <code>script</code> tag
               and passed into the <code>Form</code> element as a prop. The validation will look at the
               <code>validation</code> property of each input. Will return an Object with one property called
               <code>errors</code> which will be an array of input ID's that failed validation.</TableCell
@@ -3554,7 +3554,7 @@
         </p>
 
         <p>
-          All of the vaidations are written as a string with a pipe separating all of the options you want to check.
+          All of the validations are written as a string with a pipe separating all of the options you want to check.
         </p>
         <p>
           This was heavily inspired by the great library called <code>validatorjs</code>.
@@ -3658,7 +3658,7 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="Properties" border={false} />
         <p>
-          After running <code>validateInputs</code> you will most likey want to get the data to end to and endpoint.
+          After running <code>validateInputs</code> you will most likely want to get the data to end to and endpoint.
           <code>getFormData</code>
           will make an object with the same inputs that you passed into <code>validateInputs</code>.
         </p>
@@ -3786,13 +3786,13 @@
         <CardHeader title="Properties" border={false} />
         <p>
           The toast is used to notify a user that some action took place. It's shown above all content and will persist
-          page navigations.
+          a page navigation.
         </p>
 
         <p>The toasts can be dismissed by the user or will just gracefully fade away.</p>
 
         <p>
-          Because toast messages can be inititated from just about any page or component, Bubbles recommends adding the <code
+          Because toast messages can be initiated from just about any page or component, Bubbles recommends adding the <code
             >ToastContainer</code
           >
           component on the <code>__layout.svelte</code> page, and adding new toasts using the <code>showToast</code> utility
@@ -3844,10 +3844,10 @@
         </p>
 
         <p>
-          Modals are set programatically. Add the <code>Modal</code> component to your <code>__layout.svelte</code>
+          Modals are set programmatically. Add the <code>Modal</code> component to your <code>__layout.svelte</code>
           file, and then use the helper functions <code>showModal</code> to bring up the modal. The
           <code>showModal</code> function will add the required components to a the <code>modalStore</code>. You can
-          also programatically hide the modal using the <code>hideModal</code> function.
+          also programmatically hide the modal using the <code>hideModal</code> function.
         </p>
 
         <p>Generally, your modal will display a form or a message to the user with some buttons.</p>
@@ -3911,7 +3911,8 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="Properties" border={false} />
         <p>
-          Because there can only be one <code>Modal</code> at a time, you can call the <code>hideModal</code> function from anywhere and it will hide the currently active modal.
+          Because there can only be one <code>Modal</code> at a time, you can call the <code>hideModal</code> function from
+          anywhere and it will hide the currently active modal.
         </p>
       </Card>
     </Column>

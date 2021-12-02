@@ -6,7 +6,7 @@ component: icon-buttons
 import { IconButton } from "bubbles-ui";
 
 const propsForDropdown = {
-  icon: "more", //select premade icon or add your own svg
+  icon: "more", //select pre made icon or add your own svg
   options: [
     {
       label: "Option 1",

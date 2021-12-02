@@ -14,10 +14,10 @@ const props = {
   py: 2,
   header: {
     title: "Card Title",
-    border: false, //remove the botto border from the header
+    border: false, //remove the bottom border from the header
   },
   footer: {
-    pagination: false, //TODO:
+    pagination: false,
   },
 };
 ```

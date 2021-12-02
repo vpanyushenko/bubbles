@@ -6,12 +6,12 @@ component: radio-group
 import { RadioGroup } from "bubbles-ui";
 
 <RadioGroup
-  id="sandwitch.type"
+  id="sandwich.type"
   value="burger"
   error="Please select an option"
-  label="Choose sandwitch"
+  label="Choose sandwich"
   validation="required|string"
-  desc="This is the longer description for the RadioGroup if you think it needs more explaination. You can add html elements like <a href='https://google.com' target='blank'>links</a>."
+  desc="This is the longer description for the RadioGroup if you think it needs more explanation. You can add html elements like <a href='https://google.com' target='blank'>links</a>."
   options={[
     {
       label: "Burger",

@@ -7,7 +7,7 @@ component: table-complex
   export async function load({ page, fetch, session, stuff }) {
     //when the use will use the pagination to navigate, Bubbles will make svelte re-run the load function to fetch new data
 
-    //initally there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
+    //initially there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
     const limit = page.query.get("limit") ? page.query.get("limit") : 10;
 
     //same process with the page, since if the page is undefined the user is on the first one
