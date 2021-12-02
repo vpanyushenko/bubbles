@@ -1,10 +1,10 @@
 <script>
-  export let header = [];
+  export let cells = [];
   export let mobile_transform = true;
 </script>
 
 <div class="row header" class:mobile-transform={mobile_transform}>
-  {#each header as cell}
+  {#each cells as cell}
     <div class="cell" class:right={cell.align === "right" || cell.align === "end"}>
       {#if cell.label}
         {cell.label}
