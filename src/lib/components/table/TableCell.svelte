@@ -92,7 +92,7 @@
 {/if}
 
 {#if _type === "tag"}
-  <div class="cell" class:right={align === "right"}>
+  <div class="cell" class:right={align === "right" || align === "end"}>
     <Tag {...tag} />
   </div>
 {/if}
@@ -201,6 +201,7 @@
 
   p {
     display: inline-block;
+    margin: 0;
   }
 
   a + a,
