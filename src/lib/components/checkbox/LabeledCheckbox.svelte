@@ -15,12 +15,9 @@
 
   $: if (is_error) {
     setTimeout(() => {
-      const index = $pageStore?.errors?.findIndex((item) => item === id);
-      if (index > -1) {
-        $pageStore.errors.splice(index, 1);
-      }
+      $pageStore.errors = $pageStore.errors.filter((a) => a !== id);
       is_error = false;
-    }, 5000);
+    }, $configStore.error_delay);
   }
 </script>
 
@@ -33,7 +30,17 @@
 
     <div class="input">
       <label class="checkbox">
-        <input class="checkbox__input" type="checkbox" bind:checked={value} />
+        <input
+          class="checkbox__input"
+          type="checkbox"
+          bind:checked={value}
+          on:click={() => {
+            const index = $pageStore.errors.findIndex((item) => item === id);
+            if (index > -1) {
+              $pageStore.errors.splice(index, 1);
+            }
+          }}
+        />
         <span class="checkbox__in">
           <span class="checkbox__tick" />
         </span>

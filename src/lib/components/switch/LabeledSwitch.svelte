@@ -20,12 +20,9 @@
 
   $: if (is_error) {
     setTimeout(() => {
-      const index = $pageStore?.errors?.findIndex((item) => item === id);
-      if (index > -1) {
-        $pageStore.errors.splice(index, 1);
-      }
+      $pageStore.errors = $pageStore.errors.filter((a) => a !== id);
       is_error = false;
-    }, 5000);
+    }, $configStore.error_delay);
   }
 
   $: is_loading = false;

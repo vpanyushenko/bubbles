@@ -38,12 +38,11 @@
   $: filteredOptions = !search_value ? options : fuse.search(search_value).map((obj) => obj.item);
 
   $: if (is_error) {
+    console.log("hide error");
     setTimeout(() => {
-      const index = $pageStore.errors.findIndex((item) => item === id);
-      if (index > -1) {
-        $pageStore.errors.splice(index, 1);
-      }
-    }, 4500);
+      console.log("hide error");
+      hideError();
+    }, $configStore.error_delay);
   }
 
   $: if (value !== null || value !== undefined) {
@@ -60,11 +59,12 @@
     selected_index = 0;
   }
 
+  $: if (is_focused) {
+    hideError();
+  }
+
   function hideError() {
-    const index = $pageStore.errors.findIndex((item) => item === id);
-    if (index > -1) {
-      $pageStore.errors.splice(index, 1);
-    }
+    $pageStore.errors = $pageStore.errors.filter((a) => a !== id);
   }
 
   function toggleSelectWithClick(event) {
