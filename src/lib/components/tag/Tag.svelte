@@ -8,31 +8,48 @@
   export let label = "";
   export let color = "primary";
   export let small = false;
-  export let min_width = true;
+  export let min_width = 3;
+  export let margin = "0 0 0 0";
+
+  let _mw = min_width;
+
+  if (typeof _mw !== "number") {
+    _mw = 3;
+  }
 </script>
 
-{#if label}
-  <span
-    class:primary={color === "primary"}
-    class:secondary={color === "secondary"}
-    class:error={color === "error"}
-    class:warning={color === "warning"}
-    class:success={color === "success"}
-    class:info={color === "info"}
-    class:gray={color === "gray"}
-    class:dark={color === "dark"}
-    class:primary-light={color === "primary-light"}
-    class:secondary-light={color === "secondary-light"}
-    class:error-light={color === "error-light"}
-    class:warning-light={color === "warning-light"}
-    class:success-light={color === "success-light"}
-    class:info-light={color === "info-light"}
-    class:gray-light={color === "gray-light"}
-    class:dark-light={color === "dark-light"}
-    class:small
-    class:min_width>{label}</span
-  >
-{/if}
+<span
+  style="min-width:{min_width}rem; margin:{margin};"
+  class:primary={color === "primary"}
+  class:secondary={color === "secondary"}
+  class:error={color === "error"}
+  class:warning={color === "warning"}
+  class:success={color === "success"}
+  class:info={color === "info"}
+  class:gray={color === "gray"}
+  class:dark={color === "dark"}
+  class:primary-light={color === "primary-light"}
+  class:secondary-light={color === "secondary-light"}
+  class:error-light={color === "error-light"}
+  class:warning-light={color === "warning-light"}
+  class:success-light={color === "success-light"}
+  class:info-light={color === "info-light"}
+  class:gray-light={color === "gray-light"}
+  class:dark-light={color === "dark-light"}
+  class:primary-border={color === "primary-border"}
+  class:secondary-border={color === "secondary-border"}
+  class:error-border={color === "error-border"}
+  class:warning-border={color === "warning-border"}
+  class:success-border={color === "success-border"}
+  class:info-border={color === "info-border"}
+  class:gray-border={color === "gray-border"}
+  class:dark-border={color === "dark-border"}
+  class:small
+>
+  <slot>
+    {label}
+  </slot>
+</span>
 
 <style>
   @import "@fontsource/fira-mono/700.css";
@@ -58,7 +75,12 @@
 
   .primary-light {
     background: var(--primary-lightest);
-    color: var(--primary-darkest);
+    color: var(--primary-darker);
+  }
+
+  .primary-border {
+    color: var(--primary);
+    border: 2px solid var(--primary);
   }
 
   .secondary {
@@ -68,7 +90,12 @@
 
   .secondary-light {
     background: var(--secondary-lightest);
-    color: var(--secondary-darkest);
+    color: var(--secondary-darker);
+  }
+
+  .secondary-border {
+    color: var(--secondary);
+    border: 2px solid var(--secondary);
   }
 
   .error {
@@ -78,7 +105,12 @@
 
   .error-light {
     background: var(--error-lightest);
-    color: var(--error-darkest);
+    color: var(--error-darker);
+  }
+
+  .error-border {
+    color: var(--error);
+    border: 2px solid var(--error);
   }
 
   .warning {
@@ -88,7 +120,12 @@
 
   .warning-light {
     background: var(--warning-lightest);
-    color: var(--warning-darkest);
+    color: var(--warning-darker);
+  }
+
+  .warning-border {
+    color: var(--warning);
+    border: 2px solid var(--warning);
   }
 
   .success {
@@ -98,7 +135,12 @@
 
   .success-light {
     background: var(--success-lightest);
-    color: var(--success-darkest);
+    color: var(--success-darker);
+  }
+
+  .success-border {
+    color: var(--success);
+    border: 2px solid var(--success);
   }
 
   .info {
@@ -108,7 +150,12 @@
 
   .info-light {
     background: var(--info-lightest);
-    color: var(--info-darkest);
+    color: var(--info-darker);
+  }
+
+  .info-border {
+    color: var(--info);
+    border: 2px solid var(--info);
   }
 
   .dark {
@@ -118,7 +165,12 @@
 
   .dark-light {
     background: var(--dark-lightest);
-    color: var(--dark-darkest);
+    color: var(--dark-darker);
+  }
+
+  .dark-border {
+    color: var(--dark);
+    border: 2px solid var(--dark);
   }
 
   .gray {
@@ -131,11 +183,12 @@
     color: var(--gray-grayest);
   }
 
-  .min_width {
-    min-width: 50px;
+  .gray-border {
+    color: var(--gray);
+    border: 2px solid var(--gray);
   }
 
   .small {
-    font-size: 9px;
+    font-size: 0.6rem;
   }
 </style>
