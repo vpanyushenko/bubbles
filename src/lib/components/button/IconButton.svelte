@@ -4,7 +4,9 @@
   import LabeledSwitch from "$lib/components/switch/LabeledSwitch.svelte";
   import { navigating } from "$app/stores";
   import arrowLeft from "./arrow-left.svg";
+  import arrowLeftDouble from "./arrow-left-double.svg";
   import arrowRight from "./arrow-right.svg";
+  import arrowRightDouble from "./arrow-right-double.svg";
   import more from "./more.svg";
   import add from "./add.svg";
   import close from "./close.svg";
@@ -15,7 +17,9 @@
 
   const icons = {
     arrowLeft: arrowLeft,
+    arrowLeftDouble: arrowLeftDouble,
     arrowRight: arrowRight,
+    arrowRightDouble: arrowRightDouble,
     more: more,
     add: add,
     close: close,
@@ -26,17 +30,21 @@
   };
 
   export let id = uuid();
-  export let icon;
+  export let icon = more;
   export let onclick = null;
   export let options = [];
   export let href = "";
+  export let transparent = true;
 
   const dropdown = options.length ? true : false;
 
   let src = icons[icon] ? icons[icon] : more;
 
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
-  $: loading = ($pageStore.clicked === id && $navigating) || ($pageStore.clicked === id && $pageStore.is_fetching);
+  $: is_loading =
+    ($pageStore.clicked === id && $navigating) ||
+    ($pageStore.clicked === id && $pageStore.is_fetching) ||
+    $pageStore.loading.includes(id); //TODO: Clean Up
 
   function iconClick(event) {
     let iconElement = event.currentTarget;
@@ -86,22 +94,34 @@
 
 {#if href}
   <a class="icon__btn" {id} sveltekit:prefetch {href} on:click={back}>
-    <button>
-      <span class="spinner" class:hidden={!loading} />
-      <img class="icon icon-main" {src} class:hidden={loading} alt="icon" />
+    <button class:disabled={is_loading}>
+      <span class="spinner" class:hidden={!is_loading} />
+      {#if icon}
+        <img class="icon icon-main" {src} class:hidden={is_loading} alt="icon" />
+      {:else}
+        <span class:hidden={is_loading}>
+          <slot />
+        </span>
+      {/if}
     </button>
   </a>
 {:else}
   <div class="icon__btn" {id} class:active={dropdown && active} on:click={iconClick} on:click={onclick}>
-    <button>
-      <span class="spinner" class:hidden={!loading} />
-      <img class="icon icon-main" {src} class:hidden={loading} alt="icon" />
+    <button class:background={!transparent}>
+      <span class="spinner" class:hidden={!is_loading} />
+      <span class:hidden={is_loading}>
+        <slot>
+          <img class="icon icon-main" {src} class:hidden={is_loading} alt="icon" />
+        </slot>
+      </span>
     </button>
     {#if dropdown}
       <div class="icon__btn__dropdown">
         <div class="icon__btn__options">
           {#each options as option}
-            {#if option.type === "switch"}
+            {#if option === "break"}
+              <hr tabindex="-99" />
+            {:else if option.type === "switch"}
               <LabeledSwitch {...option} />
             {:else if option.href}
               <a
@@ -118,7 +138,7 @@
                     <p class="icon__btn__text caption">{option.caption}</p>
                   {/if}
                 </div>
-                <img src={arrowRight} alt="Arrow Right" />
+                <img class="dropdown__arrow" src={arrowRight} alt="Arrow Right" />
               </a>
             {:else}
               <div
@@ -133,7 +153,7 @@
                     <p class="icon__btn__text caption">{option.caption}</p>
                   {/if}
                 </div>
-                <img src={arrowRight} alt="Arrow Right" />
+                <img class="dropdown__arrow" src={arrowRight} alt="Arrow Right" />
               </div>
             {/if}
           {/each}
@@ -177,7 +197,6 @@
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    font-size: 0;
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
@@ -185,6 +204,16 @@
     place-content: center;
     align-items: center;
     justify-items: center;
+  }
+
+  .background {
+    /* border: 2px solid transparent; */
+    background: rgba(228, 228, 228, 0.3);
+    border-radius: 50%;
+  }
+
+  .disabled {
+    cursor: not-allowed;
   }
 
   button .icon {
@@ -245,6 +274,10 @@
     border: 1px solid rgba(227, 230, 236, 0.8);
     max-height: 600px;
     overflow-y: auto;
+  }
+
+  .dropdown__arrow {
+    width: 1rem;
   }
 
   .icon__btn__info {
@@ -389,6 +422,14 @@
   a:hover,
   a:active {
     color: var(--black);
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    color: var(--gray-light);
+    background-color: var(--gray-light);
+    margin: 1rem;
   }
 
   @media only screen and (max-width: 767px) {
