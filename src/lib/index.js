@@ -9,6 +9,7 @@ import Sidebar from "./components/sidebar/Sidebar.svelte";
 import Form from "./components/form/Form.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
+import ToastContainer from "./components/toast/ToastContainer.svelte";
 import Tag from "./components/tag/Tag.svelte";
 import Chart from "./components/chart/Chart.svelte";
 
@@ -23,6 +24,7 @@ export {
   Sidebar,
   Modal,
   Toast,
+  ToastContainer,
   Form,
   Tag,
   Chart,
@@ -32,6 +34,7 @@ export {
 import Button from "./components/button/Button.svelte";
 import Input from "./components/input/Input.svelte";
 import Select from "./components/select/Select.svelte";
+import BasicSelect from "./components/select/BasicSelect.svelte";
 import Switch from "./components/switch/Switch.svelte";
 import LabeledSwitch from "./components/switch/LabeledSwitch.svelte";
 import Checkbox from "./components/checkbox/Checkbox.svelte";
@@ -39,14 +42,26 @@ import LabeledCheckbox from "./components/checkbox/LabeledCheckbox.svelte";
 import CheckboxGroup from "./components/checkbox/CheckboxGroup.svelte";
 import RadioGroup from "./components/radio/RadioGroup.svelte";
 
-export { Button, Input, Select, Switch, LabeledSwitch, Checkbox, CheckboxGroup, LabeledCheckbox, RadioGroup };
+export {
+  Button,
+  Input,
+  Select,
+  BasicSelect,
+  Switch,
+  LabeledSwitch,
+  Checkbox,
+  CheckboxGroup,
+  LabeledCheckbox,
+  RadioGroup,
+};
 
 //tables
 import Table from "./components/table/Table.svelte";
 import TableRow from "./components/table/TableRow.svelte";
 import TableHeader from "./components/table/TableHeader.svelte";
 import TableCell from "./components/table/TableCell.svelte";
-export { Table, TableCell, TableHeader, TableRow };
+import Pagination from "./components/pagination/Pagination.svelte";
+export { Table, TableCell, TableHeader, TableRow, Pagination };
 
 //layouts
 import SidebarPageWrapper from "./layouts/SidebarPageWrapper.svelte";
