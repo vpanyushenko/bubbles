@@ -188,6 +188,7 @@
             }, 10);
           }
 
+          hideError();
           is_list_open = false;
 
           break;
@@ -245,7 +246,9 @@
 >
   <!-- <div> -->
   <div class="head" class:is_loading class:error={is_error} on:click={toggleSelectWithClick}>
-    <div class="label" class:hidden={is_error}>{_label}</div>
+    {#if label}
+      <div class="label" class:hidden={is_error}>{_label}</div>
+    {/if}
     <div class="label error" class:hidden={!is_error}>{error}</div>
     <span class="value">{title}</span>
   </div>
@@ -269,7 +272,7 @@
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     {#each filteredOptions as option, index}
       {#if option === "break"}
-        <hr />
+        <hr tabindex="-99" />
       {:else}
         <div
           class="option"
@@ -319,7 +322,7 @@
     -ms-flex-align: center;
     display: block;
     height: 5rem;
-    padding: 0 46px 0 1.25rem;
+    padding: 0 2.875rem 0 1.25rem;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
     border-radius: 1rem;
