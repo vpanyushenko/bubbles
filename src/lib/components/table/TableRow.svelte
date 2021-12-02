@@ -1,14 +1,14 @@
 <script>
   import TableCell from "./TableCell.svelte";
 
-  export let cursor_pointer = false;
+  export let id = "";
   export let href = null;
   export let onclick = null;
   export let cells = [];
 </script>
 
 {#if href}
-  <a class="row" class:cursor-pointer={cursor_pointer === true} sveltekit:prefetch {href}>
+  <a class="row" sveltekit:prefetch {href} {id}>
     {#if cells && cells.length}
       {#each cells as cell}
         <TableCell {...cell} />
@@ -18,7 +18,7 @@
     {/if}
   </a>
 {:else}
-  <div class="row" class:cursor-pointer={cursor_pointer === true} on:click={onclick}>
+  <div class="row" on:click={onclick} {id}>
     {#if cells && cells.length}
       {#each cells as cell}
         <TableCell {...cell} />
