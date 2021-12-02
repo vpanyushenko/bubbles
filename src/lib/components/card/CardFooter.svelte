@@ -1,5 +1,7 @@
 <script>
-  export let pagination = false;
+  import Pagination from "$lib/components/pagination/Pagination.svelte";
+
+  export let pagination = null;
   export let align = "middle";
 </script>
 
@@ -10,7 +12,7 @@
   class:start={align === "left" || align === "start"}
 >
   {#if pagination}
-    <p>Pagination is not completed yet, please create a custom element</p>
+    <Pagination {...pagination} />
   {:else}
     <slot>No footer props provided</slot>
   {/if}
