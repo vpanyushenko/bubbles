@@ -7,7 +7,7 @@ import { now } from "svelte/internal";
  * @param {String} [message="An error occured"] - The message that will be shown in the toast
  * @param {String} [color="error"] - The color of toast this is. Default is error, otherwise use success
  */
-const showToast = (message = "An error occured", color = "error") => {
+const showToast = (message = "An error occurred", color = "error") => {
   const id = uuid();
 
   toastStore.update((data) => {
