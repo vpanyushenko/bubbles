@@ -21,9 +21,9 @@ const config = {
   kit: {
     target: "#svelte",
     adapter: vercel(),
-    prerender: {
-      enabled: true,
-    },
+    // prerender: {
+    //   enabled: true,
+    // },
     vite: {
       resolve: {
         alias: {
