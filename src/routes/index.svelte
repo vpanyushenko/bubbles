@@ -501,7 +501,7 @@
         </p>
 
         <Table>
-          <TableHeader header={[{ label: "Property" }, { label: "Description" }, { label: "Default" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }, { label: "Default" }]} />
           <TableRow>
             <TableCell><code>validate_on_blur</code></TableCell>
             <TableCell
@@ -603,7 +603,7 @@
         </p>
 
         <Table>
-          <TableHeader header={[{ label: "Variable" }, { label: "Description" }, { label: "Default" }]} />
+          <TableHeader cells={[{ label: "Variable" }, { label: "Description" }, { label: "Default" }]} />
           <TableRow>
             <TableCell>Primary</TableCell>
             <TableCell>The main color for buttons, hover states, sidebar, etc</TableCell>
@@ -679,7 +679,7 @@
         <p>Below of a table of all layout components, and what they do.</p>
 
         <Table>
-          <TableHeader labels={[{ label: "Component" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Component" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">SidebarPageWrapper</span></TableCell>
             <TableCell
@@ -715,7 +715,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Component" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Component" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">Row</span></TableCell>
             <TableCell
@@ -754,7 +754,7 @@
         <p>All of the column types will respond to mobile sizes.</p>
 
         <Table>
-          <TableHeader labels={[{ label: "Component" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Component" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">Column</span></TableCell>
             <TableCell
@@ -804,7 +804,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Component" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Component" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">Column</span></TableCell>
             <TableCell
@@ -843,7 +843,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -943,7 +943,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -1066,7 +1066,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">color</span></TableCell>
             <TableCell>This is the background color of the card. It defaults to <code>white</code>.</TableCell>
@@ -1152,7 +1152,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">title</span></TableCell>
             <TableCell
@@ -1286,7 +1286,7 @@
         <p><strong>The CardFooter component is not yet completed.</strong></p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">pagination</span></TableCell>
             <TableCell
@@ -1315,7 +1315,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">value</span></TableCell>
             <TableCell>add a boolean value, either <code>true</code>true or <code>false</code></TableCell>
@@ -1360,7 +1360,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -1423,7 +1423,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -1499,7 +1499,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">label</span></TableCell>
             <TableCell>If you add a label, text will show up nicely in the middle of the line.</TableCell>
@@ -1553,7 +1553,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">inputs</span></TableCell>
             <TableCell
@@ -1600,7 +1600,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">title</span></TableCell>
             <TableCell
@@ -1663,7 +1663,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -2105,7 +2105,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">type</span></TableCell>
             <TableCell
@@ -2356,7 +2356,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">rows_per_page</span></TableCell>
             <TableCell
@@ -2481,7 +2481,7 @@
         <p>The best practice if to use the radio in forms and times when the user has less options to choose from.</p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -2582,7 +2582,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">segments</span></TableCell>
             <TableCell>This is an array of options for all of the buttons to include</TableCell>
@@ -2674,7 +2674,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -2830,7 +2830,7 @@
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">logo</span></TableCell>
             <TableCell>Pass a reference in for your logo that will be included at the top of the sidebar</TableCell>
@@ -2958,7 +2958,7 @@
           for a switch for a form, you're better off using a <code>LabeledSwitch</code>
         </p>
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -2971,7 +2971,7 @@
             <TableCell>A boolean if this switch should be disabled or not</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell><span style="font-weight: 700">onclick, onselect, onchanged</span></TableCell>
+            <TableCell><span style="font-weight: 700">onclick, onselect, onchange</span></TableCell>
             <TableCell
               >Bubbles will treat all of these the same. Write the function you want to occur when the switch is
               clicked.</TableCell
@@ -3020,7 +3020,7 @@
           is for.
         </p>
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell
@@ -3033,7 +3033,7 @@
             <TableCell>A boolean if this switch should be disabled or not</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell><span style="font-weight: 700">onclick, onselect, onchanged</span></TableCell>
+            <TableCell><span style="font-weight: 700">onclick, onselect, onchange</span></TableCell>
             <TableCell
               >Bubbles will treat all of these the same. Write the function you want to occur when the switch is
               clicked.</TableCell
@@ -3126,7 +3126,7 @@
         <CardHeader title="TableHeader" border={false} />
         <p>This is the top of the Table that explain what each of the column are.</p>
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">cells</span></TableCell>
             <TableCell
@@ -3160,7 +3160,7 @@
           or by passing in an array to the <code>cells</code> property of the TableRow
         </p>
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">id</span></TableCell>
             <TableCell>You can set an ID for the row to reference it later</TableCell>
@@ -3200,7 +3200,7 @@
           data as props, or slot your own UI into the component.
         </p>
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">text</span></TableCell>
             <TableCell>This will add a string of text to the cell</TableCell>
@@ -3349,7 +3349,7 @@
         <p>The tag is a good way to accent what would be a text element. For example the status of something.</p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">label</span></TableCell>
             <TableCell>The text inside of that tag that the user will see</TableCell>
@@ -3444,6 +3444,18 @@
   <Row>
     <Column>
       <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Toast Container" border={false} />
+        <p>
+          The <code>ToastContainer</code> makes it easy to include <code>Toast</code>s in your app. Include the
+          container in you <code>__layout.svelte</code> file, and then use the utility function
+          <code>showToast<code> to add toasts to the page. </code></code>
+        </p>
+        <p>The container has no properties and will already show toasts at the top right of the screen.</p>
+      </Card>
+    </Column>
+
+    <Column>
+      <Card color={null} shadow={false} border={true}>
         <CardHeader title="Properties" border={false} />
         <p>
           The toast is used to notify a user that some action took place. It's shown above all content and will persist
@@ -3452,14 +3464,14 @@
         <p>The toasts can be dismissed by the user or will just gracefully fade away.</p>
         <p>
           Because toast messages can be inititated from just about any page or component, Bubbles recommends adding the <code
-            >Toast</code
+            >ToastContainer</code
           >
           component on the <code>__layout.svelte</code> page, and adding new toasts using the <code>showToast</code> utility
           function.
         </p>
 
         <Table>
-          <TableHeader labels={[{ label: "Property" }, { label: "Description" }]} />
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">message</span></TableCell>
             <TableCell>The text that the user will see.</TableCell>
@@ -3490,6 +3502,427 @@
         <Form inputs={toastExampleFormInputs} />
       </Card>
     </Column50>
+  </Row>
+</Section>
+
+<Section id="validateInputs" title="validateInputs">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          Some form elements have options to validate the inputs when blurred but other, like a checkbox, don't have a
+          that. After a user submits a form, but before the request is made to your endpoint, you'll want to validate
+          the inputs again to catch any errors.
+        </p>
+        <p>
+          <strong
+            >Front end validation is done for user experience, you should incorporate server side validation for the
+            actual check, and never trust the data coming from a client.</strong
+          >
+        </p>
+
+        <p>Error states will automatically be shown for any component that fails validation.</p>
+
+        <Table>
+          <TableHeader
+            cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }, { label: "Response" }]}
+          />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">inputs</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
+            <TableCell
+              >The array of inputs you want to validate. These inputs should be declated in your <code>script</code> tag
+              and passed into the <code>Form</code> element as a prop. The validation will look at the
+              <code>validation</code> property of each input. Will return an Object with one property called
+              <code>errors</code> which will be an array of input ID's that failed validation.</TableCell
+            >
+            <TableCell><span style="font-weight: 700"><code>Object.errors</code></span></TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "validate-inputs")]} />
+      </Card>
+
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Validation Properties" border={false} />
+        <p>
+          You can see the validation properties that Bubbles supports. These are basic common validations but you're
+          expected to have more sophisticated options server side.
+        </p>
+
+        <p>
+          All of the vaidations are written as a string with a pipe separating all of the options you want to check.
+        </p>
+        <p>
+          This was heavily inspired by the great library called <code>validatorjs</code>.
+          <a href="https://www.npmjs.com/package/validatorjs">View here</a>. The one built into Bubbles is not as
+          powerful, but is a much smaller size. Using <code>validatorjs</code> server side would be very easy as the validation
+          strings are identical.
+        </p>
+
+        <Table>
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">required</span></TableCell>
+            <TableCell>Makes the field required to be validated, meaning it must have a value.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">boolean</span></TableCell>
+            <TableCell>The value must be a falsy or truthy value to pass validation.</TableCell>
+          </TableRow>
+
+          <TableRow>
+            <TableCell><span style="font-weight: 700">string</span></TableCell>
+            <TableCell>The value must be a string</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">min</span></TableCell>
+            <TableCell
+              >The value must have a minimum value. If the value is a number is will make sure that number is greater
+              than or equal to the min number. If the value is a string, it will check the length of the string. Set the
+              value for min using a colon. To check a string with a minimum length of 8, such as for a password use <code
+                >min:8</code
+              >.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">max</span></TableCell>
+            <TableCell
+              >The same as min just for max values for numbers and strings. Set the same way using <code>max:100</code
+              ></TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">email</span></TableCell>
+            <TableCell>Check that the value being validated is an email.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">numeric</span></TableCell>
+            <TableCell
+              >Will accept a value that is numeric. It will accept string values that are numeric such as "99".</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">array</span></TableCell>
+            <TableCell>The value must be an array.</TableCell>
+          </TableRow>
+
+          <TableRow>
+            <TableCell><span style="font-weight: 700">url</span></TableCell>
+            <TableCell>The value must be a url.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">alpha</span></TableCell>
+            <TableCell>The value must only be alphabetic characters, a-z</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">alpha_dash</span></TableCell>
+            <TableCell>Accepts alphabetical characters with dashes, slashes, and underscores.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">alpha_num</span></TableCell>
+            <TableCell>The value must be alphabetical or numeric characters.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">accepted</span></TableCell>
+            <TableCell>The value must be truthy</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">integer</span></TableCell>
+            <TableCell>The value must be an integer</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">date</span></TableCell>
+            <TableCell>The value must be a date value</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">regex</span></TableCell>
+            <TableCell
+              >Enter your own regex to check a field. Just like min an max, enter your value with a colon. <code
+                >regex:/^(19|20)[\\d]{(2, 2)}$/</code
+              ></TableCell
+            >
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
+<Section id="getFormData" title="getFormData">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          After running <code>validateInputs</code> you will most likey want to get the data to end to and endpoint.
+          <code>getFormData</code>
+          will make an object with the same inputs that you passed into <code>validateInputs</code>.
+        </p>
+
+        <p>
+          The properties of the object will be the ID's that you passed into the input. If you separated any ID's with a
+          period, like <code>name.first</code> the property will be nested for you.
+        </p>
+
+        <Table>
+          <TableHeader
+            cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }, { label: "Response" }]}
+          />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">inputs</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
+            <TableCell
+              >The array of inputs you passed into the Form. You'll be calling with function within the <code
+                >onsubmit</code
+              > function of a button in the form.</TableCell
+            >
+            <TableCell><span style="font-weight: 700"><code>Object</code></span></TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column>
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "get-form-data")]} />
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
+<Section id="showLoading" title="showLoading">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          Whenever you use an <code>href</code> property, Bubbles will automatically show and hide loading states for
+          you. However when you use <code>onclick</code>, <code>onselect</code>, <code>onchange</code>, etc properties,
+          you need to tell bubbles what needs to show loading animations.
+        </p>
+        <p>
+          Bubbles makes loading states imperative, meaning you control when to start and stop the loading animation.
+          This is most commonly done because you are waiting for a promise, like when submitting a form.
+        </p>
+
+        <p>
+          Every element that the user can interact with can accept an ID property. Use the <code>showLoading</code> function
+          and pass in the ID of the element that needs to show a loading state.
+        </p>
+
+        <p>
+          When your promise resolves, use <code>hideLoading</code> to stop the loading state by passing in the ID for the
+          item that's loading.
+        </p>
+
+        <Table>
+          <TableHeader
+            cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }, { label: "Response" }]}
+          />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">id</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>string</code></span></TableCell>
+            <TableCell>The ID of the component that needs to show a loading state</TableCell>
+            <TableCell><span style="font-weight: 700"><code>--</code></span></TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column>
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "show-loading")]} />
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
+<Section id="hideLoading" title="hideLoading">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          Just like <code>showLoading</code>, this will hide the loading animation for a component. Best to use this
+          when your promise resolves.
+        </p>
+
+        <Table>
+          <TableHeader
+            cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }, { label: "Response" }]}
+          />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">id</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>string</code></span></TableCell>
+            <TableCell>The ID of the component you wish to stop loading</TableCell>
+            <TableCell><span style="font-weight: 700"><code>--</code></span></TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column>
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "hide-loading")]} />
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
+<Section id="showToast" title="showToast">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          The toast is used to notify a user that some action took place. It's shown above all content and will persist
+          page navigations.
+        </p>
+
+        <p>The toasts can be dismissed by the user or will just gracefully fade away.</p>
+
+        <p>
+          Because toast messages can be inititated from just about any page or component, Bubbles recommends adding the <code
+            >ToastContainer</code
+          >
+          component on the <code>__layout.svelte</code> page, and adding new toasts using the <code>showToast</code> utility
+          function.
+        </p>
+
+        <p>The function will take two properties, the message you want to display and the color of the toast.</p>
+
+        <Table>
+          <TableHeader
+            cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }, { label: "Default" }]}
+          />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">message</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>string</code></span></TableCell>
+            <TableCell>The messages you want the toast to display</TableCell>
+            <TableCell>"An error occurred"</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">color</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>string</code></span></TableCell>
+            <TableCell
+              >The color of the message you want to show. For best results, use "success" and "error".</TableCell
+            >
+            <TableCell>"error"</TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column>
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "show-toast")]} />
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
+<Section id="showModal" title="showModal">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          A Modal is basically a card that will sit on top of all content. It should only be used for actions that to
+          user needs to take right now.
+        </p>
+
+        <p>
+          Modals are set programatically. Add the <code>Modal</code> component to your <code>__layout.svelte</code>
+          file, and then use the helper functions <code>showModal</code> to bring up the modal. The
+          <code>showModal</code> function will add the required components to a the <code>modalStore</code>. You can
+          also programatically hide the modal using the <code>hideModal</code> function.
+        </p>
+
+        <p>Generally, your modal will display a form or a message to the user with some buttons.</p>
+
+        <Table>
+          <TableHeader
+            cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }, { label: "Default" }]}
+          />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">title</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>string</code></span></TableCell>
+            <TableCell>The title of the modal</TableCell>
+            <TableCell><code>null</code></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">options</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>Object</code></span></TableCell>
+            <TableCell>Options that the user can add to their modal</TableCell>
+            <TableCell>--</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">options.message</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>string</code></span></TableCell>
+            <TableCell>The message you want the modal to display if any</TableCell>
+            <TableCell><code>null</code></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">options.form</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
+            <TableCell
+              >An array of inputs that you want the modal to have it the user is meant to add data to a form.</TableCell
+            >
+            <TableCell><code>[ ]</code></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">options.footer</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
+            <TableCell
+              >You may want to add buttons to your modal that will be locked to the bottom of your modal. You can add an
+              array of buttons here, either for the form or non form related buttons like ones to dismiss the modal.</TableCell
+            >
+            <TableCell><code>[ ]</code></TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column>
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "modal")]} />
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
+<Section id="hideModal" title="hideModal">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          Because there can only be one <code>Modal</code> at a time, you can call the <code>hideModal</code> function from anywhere and it will hide the currently active modal.
+        </p>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column>
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "modal")]} />
+      </Card>
+    </Column>
   </Row>
 </Section>
 
