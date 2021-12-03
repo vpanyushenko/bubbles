@@ -97,4 +97,5 @@ export { toastStore, modalStore, pageStore, noscrollStore, configStore } from ".
 import { getFormData, validateInputs } from "./utils/form";
 import { showLoading, hideLoading } from "./utils/loading";
 import { showModal, hideModal } from "./utils/modal";
-export { getFormData, validateInputs, showLoading, hideLoading, showModal, hideModal };
+import { showToast } from "./utils/toast";
+export { getFormData, validateInputs, showLoading, hideLoading, showModal, hideModal, showToast };
