@@ -133,17 +133,18 @@
         {#if subtitle}
           <h6>{@html subtitle}</h6>
         {/if}
+
+        {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+          <h6 class="breadcrumbs">
+            {#each _breadcrumbs as breadcrumb, index}
+              <a sveltekit:prefetch href={breadcrumb.href}>{breadcrumb.text}</a>
+              {#if index !== _breadcrumbs.length - 1}
+                <span> / </span>
+              {/if}
+            {/each}
+          </h6>
+        {/if}
       </div>
-      {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
-        <h6 class="breadcrumbs">
-          {#each _breadcrumbs as breadcrumb, index}
-            <a sveltekit:prefetch href={breadcrumb.href}>{breadcrumb.text}</a>
-            {#if index !== _breadcrumbs.length - 1}
-              <span> / </span>
-            {/if}
-          {/each}
-        </h6>
-      {/if}
     </div>
   </div>
   <div class="icons">
@@ -165,6 +166,7 @@
 
   :global(header .header__title .icon__btn) {
     margin-right: 8px;
+    padding-bottom: 1.6rem;
   }
 
   header {
@@ -199,7 +201,6 @@
   }
 
   .breadcrumbs {
-    margin-left: 60px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -378,12 +379,15 @@
       padding-top: 0;
     }
 
-    .breadcrumbs {
-      margin-left: 3rem;
-    }
-
     .header__burger {
       display: inline-block;
     }
+  }
+
+  @media only screen and (max-width: 767px) {
+  }
+
+  :global(header .header__title .icon__btn) {
+    padding-bottom: 1.7rem;
   }
 </style>
