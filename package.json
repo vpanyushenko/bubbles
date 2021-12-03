@@ -1,6 +1,7 @@
 {
   "name": "bubbles-ui",
-  "version": "0.0.5",
+  "version": "0.0.7",
+  "description": "Opinionated svelte UI Kit",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -33,5 +34,14 @@
     "@lukeed/uuid": "^2.0.0",
     "@sveltejs/pancake": "^0.0.18"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vpanyushenko/bubbles.git"
+  },
+  "author": "Valentin Panyushenko",
+  "bugs": {
+    "url": "https://github.com/vpanyushenko/bubbles/issues"
+  },
+  "homepage": "https://bubbles-pied.vercel.app/"
 }
