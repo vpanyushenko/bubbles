@@ -1,5 +1,6 @@
 {
   "cSpell.enableFiletypes": ["svelte"],
   "spellright.language": ["en"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext"]
+  "spellright.documentTypes": ["markdown", "latex", "plaintext"],
+  "cSpell.words": ["keydown"]
 }
