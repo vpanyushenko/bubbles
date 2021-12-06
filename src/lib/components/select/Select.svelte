@@ -309,12 +309,6 @@
 </div>
 
 <style>
-  @keyframes spinner {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   .select {
     position: relative;
     min-width: 250px;
