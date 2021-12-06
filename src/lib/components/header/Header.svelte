@@ -54,6 +54,7 @@
   export let title = "";
   export let subtitle = "";
   export let breadcrumbs = true;
+  export let breadcrumb_labels = [];
   export let buttons = [];
   export let sticky = true;
 
@@ -104,6 +105,10 @@
 
         if (pathArray.length - 1 === index && $pageStore.title) {
           crumb = $pageStore.title;
+        }
+
+        if (breadcrumb_labels && breadcrumb_labels.length >= index) {
+          crumb = breadcrumb_labels[index];
         }
 
         const obj = {
