@@ -1,4 +1,5 @@
 <script>
+  import { v4 as uuid } from "@lukeed/uuid";
   import { fade } from "svelte/transition";
   import { onDestroy, onMount } from "svelte";
   import { browser } from "$app/env";
@@ -6,6 +7,7 @@
   export let solid = false;
   export let transition_duration = 0;
   export let onclick = null;
+  export let id = uuid();
 
   onMount(() => {
     if (browser) {
@@ -21,7 +23,7 @@
   });
 </script>
 
-<div class="overlay" class:solid on:click={onclick} transition:fade={{ duration: transition_duration }}>
+<div class="overlay" class:solid on:click={onclick} transition:fade={{ duration: transition_duration }} {id}>
   <section class="overlay__content">
     <slot />
   </section>
