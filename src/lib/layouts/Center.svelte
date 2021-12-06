@@ -1,8 +1,8 @@
 <script>
-  export let vh100 = true;
+  export let height100 = true;
 </script>
 
-<div class:vh100>
+<div class:height100>
   <slot />
 </div>
 
@@ -14,7 +14,7 @@
     align-items: center;
   }
 
-  .vh100 {
+  .height100 {
     min-height: 100vh;
   }
 </style>
