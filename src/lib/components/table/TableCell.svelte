@@ -1,5 +1,6 @@
 <script>
   import { pageStore } from "$lib/stores/stores";
+  import { navigating } from "$app/stores";
   import Tag from "$lib/components/tag/Tag.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
 
@@ -33,9 +34,14 @@
 
 {#if _type === "text"}
   <div class="cell">
-    <div class="d-flex align-items-center">
+    <div class="flex align-items-center">
       {#if href}
-        <a class:h6={large} class:bold sveltekit:prefetch {href}>{text}</a>
+        <span class="href-container">
+          {#if $navigating && $navigating?.to?.path === href}
+            <span class="spinner" />
+          {/if}
+          <a class:h6={large} class:bold sveltekit:prefetch {href}>{text}</a>
+        </span>
       {:else}
         <p class:h6={large} class:bold>{text}</p>
       {/if}
@@ -110,6 +116,19 @@
 {/if}
 
 <style>
+  .flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .href-container {
+    display: flex;
+  }
+
+  .spinner {
+    margin-right: 0.5rem;
+  }
   .cell {
     display: table-cell;
     vertical-align: middle;
