@@ -35,6 +35,12 @@
         section: "Getting Started",
       },
       {
+        label: "Errors",
+        id: "errors",
+        href: "/#errors",
+        section: "Getting Started",
+      },
+      {
         label: "Page Wrappers",
         id: "page-wrappers",
         href: "/#page-wrappers",
@@ -89,6 +95,12 @@
         section: "Components",
       },
       {
+        label: "Error",
+        id: "error",
+        href: "/#error",
+        section: "Components",
+      },
+      {
         label: "Form",
         id: "form",
         href: "/#form",
@@ -119,6 +131,12 @@
         section: "Components",
       },
       {
+        label: "Overlay",
+        id: "overlay",
+        href: "/#overlay",
+        section: "Components",
+      },
+      {
         label: "Pagination",
         id: "pagination",
         href: "/#pagination",
@@ -146,6 +164,12 @@
         label: "Sidebar",
         id: "sidebar",
         href: "/#sidebar",
+        section: "Components",
+      },
+      {
+        label: "Spinner",
+        id: "spinner",
+        href: "/#spinner",
         section: "Components",
       },
       {

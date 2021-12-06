@@ -11,34 +11,17 @@
 </script>
 
 <script>
-  import { browser } from "$app/env";
-
-  import { pageStore } from "$lib/stores/stores";
   import Error from "$lib/components/error/Error.svelte";
 
-  //   $: if ($modalStore.active && browser) {
-  //     document.body.classList.add("noscroll");
-  //   } else if (browser) {
-  //     document.body.classList.remove("noscroll");
-  //   }
+  export let status;
+  export let message;
+  export let title;
 
-  export let status = 500;
-  export let message = "An error occurred";
-  export let title = "";
-
-  pageStore.update((data) => {
-    data.title = `Error code ${status}`;
-    return data;
-  });
-
-  console.log(title);
-  console.log(message);
+  const props = {
+    status,
+    message,
+    title,
+  };
 </script>
 
-<Error />
-
-<style>
-  h3 {
-    color: var(--red);
-  }
-</style>
+<Error {...props} />

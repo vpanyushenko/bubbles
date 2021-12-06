@@ -96,6 +96,8 @@
   import LabeledSwitch from "$lib/components/switch/LabeledSwitch.svelte";
   import Pagination from "$lib/components/pagination/Pagination.svelte";
   import Tag from "$lib/components/tag/Tag.svelte";
+  import Overlay from "$lib/components/overlay/Overlay.svelte";
+  import Spinner from "$lib/components/spinner/Spinner.svelte";
 
   import { pageStore } from "$lib/stores/page.store";
   import { showLoading, hideLoading } from "$lib/utils/loading";
@@ -435,6 +437,8 @@
 
   $: _pokemon = pokemon;
 
+  let overlayToggle = false;
+
   $pageStore.title = "Welcome";
 </script>
 
@@ -678,6 +682,29 @@
           a
           <code>PNG</code> and get the same effect.
         </p>
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
+<Section id="errors" title="Errors">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Svelte Errors" border={false} />
+        <p>
+          To handle errors in Svelte, the <code>load</code> function at the top of each page can return an error
+          <code>status</code> code (4xx and 5xx) and an <code>error</code> Object to describe the error. That will be
+          passed to a page called <code>__error.svelte</code> which will display the error.
+        </p>
+        <p>
+          Bubbles makes styling the page easy by exporting a component called <code>Error</code> which will style the
+          error page for you. Import it in your <code>__error</code> page and pass in the props from your load function.
+        </p>
+      </Card>
+
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "errors")]} />
       </Card>
     </Column>
   </Row>
@@ -1552,6 +1579,66 @@
   </Row>
 </Section>
 
+<Section id="error" title="Error">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Description" border={false} />
+        <p>
+          To handle errors in Svelte, the <code>load</code> function at the top of each page can return an error status
+          code (4xx and 5xx) and an <code>error</code> Object to describe the error. That will be passed to a page
+          called <code>__error.svelte</code> which will display the error.
+        </p>
+        <p>
+          Bubbles makes styling the page easy by exporting a component called <code>Error</code> which will style the
+          error page for you. Import it in your <code>__error</code> page and pass in the props from your load function.
+        </p>
+
+        <Table>
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">code</span></TableCell>
+            <TableCell
+              >The error code (4xx) or (5xx). If you don't provide a title or message, the error code will be used to
+              generate a generic message.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">title</span></TableCell>
+            <TableCell
+              >This should describe the error code. For example: "Not Found" for a 404 message. You can leave this blank
+              and the Error component will fill this in for you.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">message</span></TableCell>
+            <TableCell
+              >A message that you want to include for the user that will describe what happened to the end user.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">img</span></TableCell>
+            <TableCell
+              >An image you want to include in your error page. There's a default image that is provided for you.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">button</span></TableCell>
+            <TableCell
+              >The default action sends the user back to the index page but you can override this by passing in props to
+              your own <code>Button</code> component.</TableCell
+            >
+          </TableRow>
+        </Table>
+      </Card>
+
+      <Card color="dark" px={0} py={0}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "errors")]} />
+      </Card>
+    </Column>
+  </Row>
+</Section>
+
 <Section id="form" title="Form">
   <Row>
     <Column>
@@ -2379,6 +2466,80 @@
   </Row>
 </Section>
 
+<Section id="overlay" title="Overlay">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          The overlay puts a page overtop of the whole page. It's useful if you want to temporarily block the current
+          page content without navigating to a new page.
+        </p>
+
+        <p>
+          For example, the <code>Error</code> and <code>Modal</code> components use overlays to show content without navigating
+          to a new page.
+        </p>
+
+        <p>
+          You'll want to include functionality to hide an show the Overlay, otherwise it will block all content on the
+          screen.
+        </p>
+
+        <Table>
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">solid</span></TableCell>
+            <TableCell
+              >Normally the overlay is a transparent black background, but you can force it to be a solid background by
+              passing in <code>true</code> to this field.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">transition_duration</span></TableCell>
+            <TableCell>Add the time in milliseconds that you want the overlay to fade in.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">onclick</span></TableCell>
+            <TableCell>An function that will be fired when the overlay is clicked on</TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column50>
+      <Card color="dark" px={0} py={0} height100={true}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "overlay")]} />
+      </Card>
+    </Column50>
+    <Column50>
+      <Card>
+        <CardHeader title="Overlay Demo" border={false} />
+
+        {#if overlayToggle}
+          <Overlay solid={true} transition_duration={500} onclick={() => (overlayToggle = false)}>
+            <Center>
+              <Spinner size={5} color="primary" />
+              <p>Loading Your Data (Click anywhere to close the overlay)</p>
+            </Center>
+          </Overlay>
+        {/if}
+
+        <Button
+          label="Show Overlay"
+          wide={true}
+          mb={true}
+          onclick={() => {
+            overlayToggle = true;
+          }}
+        />
+      </Card>
+    </Column50>
+  </Row>
+</Section>
+
 <Section id="pagination" title="Pagination">
   <Row>
     <Column>
@@ -2973,6 +3134,56 @@
             }
           }}
         />
+      </Card>
+    </Column50>
+  </Row>
+</Section>
+
+<Section id="spinner" title="Spinner">
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          A Spinner shows that something is loading when you do not know how long th last will take to complete, or when
+          the task will take a short enough time where a progress bar would be distracting.
+        </p>
+
+        <Table>
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">size</span></TableCell>
+            <TableCell>Will set the length and width of the spinner in <code>REMs</code>. Defaults to 1.25</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">color</span></TableCell>
+            <TableCell
+              >The default color for the spinner is a light gray, but you can change this by passing in one of your
+              color variables</TableCell
+            >
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column50>
+      <Card color="dark" px={0} py={0} height100={true}>
+        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "spinner")]} />
+      </Card>
+    </Column50>
+    <Column50>
+      <Card height100={true}>
+        <CardHeader title="Spinner Demo" border={false} />
+
+        <div>
+          <Spinner />
+          <Spinner size={2} color="primary" />
+          <Spinner size={3} color="error" />
+          <Spinner size={4} color="success" />
+          <Spinner size={5} color="info" />
+        </div>
       </Card>
     </Column50>
   </Row>
