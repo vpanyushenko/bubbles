@@ -2,6 +2,7 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Select from "$lib/components/select/Select.svelte";
   import { addQueryParam } from "$lib/utils/url";
+  import { page } from "$app/stores";
 
   export let filters = [];
   export let title = "";
@@ -10,17 +11,23 @@
   export let center = false;
   export let border = true;
 
+  const filterIds = filters.map((filter) => {
+    return filter.id;
+  });
+
   filters.forEach((filter) => {
-    //check if each fitler has an onselect property
-    //if it doesn't then we will add the default function to
-    //update the query param
+    const query_value = $page.query.get(filter.id);
+
+    if (query_value) {
+      filter.value = query_value;
+    }
 
     filter.options.forEach((option) => {
       if (option === "break" || option.onselect) {
         return option;
       } else {
         option.onselect = () => {
-          addQueryParam(filter.id, option.value);
+          addQueryParam(filter.id, option.value, { show_loading: filter.id, keep_only: filterIds });
         };
       }
     });
