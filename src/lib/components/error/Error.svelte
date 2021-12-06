@@ -2,6 +2,7 @@
   import Overlay from "$lib/components/overlay/Overlay.svelte";
   import Center from "$lib/layouts/Center.svelte";
   import Button from "$lib/components/button/Button.svelte";
+  import { pageStore } from "$lib/stores/stores";
 
   import webp from "./error.webp";
   import png from "./error.png";
@@ -10,6 +11,7 @@
   export let message = "";
   export let code = 404;
   export let button = null;
+  export let img = null;
 
   switch (code) {
     case 400: {
@@ -78,14 +80,22 @@
           "There was an issue with the response received from the server. If refreshing or trying the request again doesn't solve the problem, you found a bug!";
     }
   }
+
+  $pageStore.title = title;
 </script>
 
 <Overlay solid={true}>
   <Center>
-    <picture>
-      <source type="image/webp" srcset={webp} />
-      <img src={png} alt="Error" />
-    </picture>
+    {#if img}
+      <picture>
+        <img src={img} alt="Error" />
+      </picture>
+    {:else}
+      <picture>
+        <source type="image/webp" srcset={webp} />
+        <img src={png} alt="Error" />
+      </picture>
+    {/if}
 
     <h2>{code}: {title}</h2>
     <h5>{message}</h5>
