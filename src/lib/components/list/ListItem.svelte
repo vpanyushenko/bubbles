@@ -23,6 +23,8 @@
   export let id = uuid();
   export let timeline = false;
 
+  $: is_loading = $pageStore.loading.includes(id);
+
   const target = new_page === true ? "_blank" : "self";
 </script>
 
@@ -46,14 +48,8 @@
     </div>
     {#if icon}
       <div class="icon__container">
-        <span class="spinner" class:hidden={!$pageStore.is_fetching && $pageStore.clicked !== id} />
-        <img
-          class="icon"
-          class:hidden={$pageStore.is_fetching || $pageStore.clicked === id}
-          on:click={onclick}
-          src={icons[icon] || icon}
-          alt="Icon"
-        />
+        <span class="spinner" class:hidden={!is_loading} />
+        <img class="icon" class:hidden={is_loading} on:click={onclick} src={icons[icon] || icon} alt="Icon" {id} />
       </div>
     {/if}
   {:else}
