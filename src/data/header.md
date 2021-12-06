@@ -7,7 +7,8 @@ import { Header } from "bubbles-ui";
 
  const props = {
     title: "Page Title",
-    breadcrumbs: false,
+    breadcrumbs: true, //default
+    breadcrumb_labels: ["Hello", "World"] //pass labels if you want to set your breadcrumbs manually. Generally only required if you have two dynamic IDs in your URLs next to each other
     buttons: [
       {
         icon: "add" //use one of the bundled icons or pass in your own svg

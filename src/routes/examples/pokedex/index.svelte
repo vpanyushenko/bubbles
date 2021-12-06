@@ -1,0 +1,225 @@
+<script context="module">
+  export async function load({ page, fetch, session, stuff }) {
+    //initially there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
+    const limit = page.query.get("limit") ? page.query.get("limit") : 10;
+
+    //same process with the page, since if the page is undefined the user is on the first one
+    const _page = page.query.get("page") ? Number(page.query.get("page")) : 1;
+
+    //this api needs an offset number we we can calc it using the page and limit
+    const offset = Number(limit) * (_page - 1);
+
+    const pagination = {
+      limit: Number(limit),
+      page: _page,
+      offset: Number(page.query.get("limit")) * (Number(page.query.get("page")) - 1),
+      count: null,
+      first_last_arrow: true,
+    };
+
+    const type = page.query.get("type") ? page.query.get("type") : "all";
+
+    if (type === "all") {
+      return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          // pagination.has_more = res.next ? true : false;
+          pagination.count = res.count;
+
+          const pokemon = res.results.map((poke) => {
+            return fetch(poke.url)
+              .then((res) => {
+                return res.json();
+              })
+              .then((res) => {
+                return res;
+              });
+          });
+
+          return Promise.all(pokemon);
+        })
+        .then((pokemon) => {
+          return {
+            props: {
+              pokemon: pokemon,
+              pagination: pagination,
+            },
+          };
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      return fetch(`https://pokeapi.co/api/v2/type/${type}/?limit=${limit}&offset=${offset}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          //in this case, everything gets returned so we can show pagination ourselves
+          const count = res.pokemon.length;
+
+          const filtered = res.pokemon.filter((item, index) => index >= offset && index < offset + limit);
+
+          pagination.count = count;
+
+          const pokemon = filtered.map((poke) => {
+            return fetch(poke.pokemon.url)
+              .then((res) => {
+                return res.json();
+              })
+              .then((res) => {
+                return res;
+              });
+          });
+
+          return Promise.all(pokemon);
+        })
+        .then((pokemon) => {
+          return {
+            props: {
+              pokemon: pokemon,
+              pagination: pagination,
+            },
+          };
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+</script>
+
+<script>
+  export let pokemon;
+  export let pagination;
+
+  import Header from "$lib/components/header/Header.svelte";
+  import Row from "$lib/layouts/Row.svelte";
+  import Center from "$lib/layouts/Center.svelte";
+  import Column from "$lib/layouts/Column100.svelte";
+  import Column50 from "$lib/layouts/Column50.svelte";
+  import Card from "$lib/components/card/Card.svelte";
+  import CardHeader from "$lib/components/card/CardHeader.svelte";
+  import CardFooter from "$lib/components/card/CardFooter.svelte";
+  import Pagination from "$lib/components/pagination/Pagination.svelte";
+  import Table from "$lib/components/table/Table.svelte";
+  import TableHeader from "$lib/components/table/TableHeader.svelte";
+  import TableRow from "$lib/components/table/TableRow.svelte";
+  import TableCell from "$lib/components/table/TableCell.svelte";
+  import Column100 from "$lib/layouts/Column100.svelte";
+  import ListItem from "$lib/components/list/ListItem.svelte";
+  import ListItemTimeline from "$lib/components/list/ListItemTimeline.svelte";
+
+  const types = [
+    "All",
+    "break",
+    "Normal",
+    "Fire",
+    "Water",
+    "Grass",
+    "Electric",
+    "Ice",
+    "Fighting",
+    "Poison",
+    "Ground",
+    "Flying",
+    "Psychic",
+    "Bug",
+    "Rock",
+    "Ghost",
+    "Dark",
+    "Dragon",
+    "Steel",
+    "Fairy",
+  ];
+</script>
+
+<Header title="Pokedex" breadcrumbs={false} />
+
+<Row>
+  <Column100>
+    <Card>
+      <CardHeader
+        border={false}
+        filters={[
+          {
+            id: "type",
+            label: "Type",
+            value: "all",
+            options: types.map((type) => {
+              if (type === "break") {
+                return "break";
+              }
+
+              return {
+                label: type,
+                value: type.toLowerCase(),
+              };
+            }),
+          },
+        ]}
+      />
+      <Table
+        header={[
+          { label: null },
+          { label: "Name" },
+          { label: "Weight" },
+          { label: "Type(s)" },
+          { label: "Possible Moves", align: "end" },
+          { label: null, align: "end" },
+        ]}
+      >
+        {#each pokemon as poke}
+          <TableRow>
+            <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} />
+            <TableCell
+              text={poke.name}
+              href={`/pokedex/${poke.name}`}
+              caption={`Pokedex Number: ${poke.id}`}
+              bold={true}
+            />
+            <TableCell text={`${poke.weight} lbs`} />
+            <TableCell rows={[[{ text: poke?.types[0]?.type?.name }, { text: poke?.types[1]?.type?.name }]]} />
+            <TableCell tag={{ label: poke.moves.length, color: "primary", min_width: 2.75 }} align="right" />
+            <TableCell
+              button={{
+                icon: "more",
+                options: [
+                  {
+                    label: "Encounters",
+                    href: poke.location_area_encounters,
+                    caption: "Areas you can find this pokemon",
+                  },
+                  "break",
+                  {
+                    label: "View JSON",
+                    href: poke.species.url,
+                  },
+                  {
+                    label: "Shiny Sprite",
+                    href: poke.sprites.front_shiny,
+                  },
+                ],
+              }}
+            />
+          </TableRow>
+        {/each}
+      </Table>
+      <CardFooter>
+        <Pagination {...pagination} />
+      </CardFooter>
+    </Card>
+  </Column100>
+</Row>

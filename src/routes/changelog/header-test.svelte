@@ -25,7 +25,7 @@
   import Column100 from "$lib/layouts/Column100.svelte";
   export let articles;
 
-  console.log(articles);
+
 </script>
 
 <Header title="Header Test" buttons={[{ icon: "more", href: "/changelog", transparent: false }]} />

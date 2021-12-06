@@ -445,14 +445,26 @@
 <Header
   buttons={[
     {
-      icon: "edit",
-      href: "/changelog",
+      icon: "more",
       transparent: false,
+      options: [
+        {
+          label: "Changelog",
+          href: "/changelog",
+          new_page: true,
+        },
+        {
+          label: "Examples",
+          caption: "Tables, Auth, Errors, etc",
+          href: "/examples",
+          new_page: true,
+        },
+      ],
     },
   ]}
 />
 
-<Section id="/">
+<Section>
   <Row>
     <Column>
       <Card color={null} shadow={false} border={true}>
@@ -1612,6 +1624,18 @@
           if needed, and breadcrumbs. If you need any action items, you can add those too.
         </p>
 
+        <p>
+          Bubbles will calculate the labels from the breadcrumbs using the path if you set <code>breadcrumbs</code>
+          to <code>true</code>. For the last breadcrumb it will use the page title that you set in the Header. For
+          example, a settings page path of <code>/settings/profile</code> would give breadcrumbs of "Settings /
+          Profile". Sometimes it's common to add the ID of an element in the href, such as
+          <code>/invoices/inv_09384oisejfk</code>. In this case, the breadcrumb will look for the title for the last
+          element and show something like "Invoices / 23" (or whatever the title of the page is in the Header.). In an
+          scenario where your page has two dynamic links such as <code>/pokedex/[pokemon_id]/[move_id]</code> you may
+          want to pass in more human readable labels to the breadcrumbs using the <code>breadcrumb_labels</code>
+          property.
+        </p>
+
         <Table>
           <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
@@ -1634,6 +1658,10 @@
               >This is a boolean option if you want breadcrumbs enabled. Bubbles will automatically calculate
               breadcrumbs for you.</TableCell
             >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">breadcrumb_labels</span></TableCell>
+            <TableCell>An array of string to overwrite the labels for breadcrumbs</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">buttons</span></TableCell>
