@@ -7,7 +7,6 @@
 
   export let sections = [];
   export let logo = null;
-  export let hide_with_esc = true;
 
   onMount(() => {
     const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
@@ -65,6 +64,7 @@
 
   function sidebarItemSelected(obj) {
     $pageStore.sidebar.active_item = obj.id;
+    $pageStore.clicked = obj.id;
   }
 
   function formatSidebar(sections, pageStore) {
@@ -91,22 +91,7 @@
   function toggleSidebar(event) {
     $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
-
-  function keydown(event) {
-    // console.log(event);
-    // console.log(event.key);
-    // console.log($pageStore.sidebar.is_toggled);
-    // console.log(hide_with_esc);
-
-    //TODO: This is not working
-
-    if (event.key === "Escape" && $pageStore.sidebar.is_toggled && hide_with_esc) {
-      $pageStore.sidebar.is_toggled = false;
-    }
-  }
 </script>
-
-<svelte:window on:keydown={keydown} />
 
 <nav class="sidebar" class:active={$pageStore.sidebar.is_toggled}>
   <section class="top">
@@ -121,10 +106,13 @@
       <div class="sidebar__list">
         {#each Object.keys(_sections) as section}
           <div class="sidebar__group">
-            <div class="caption">{section}</div>
+            {#if section !== "undefined"}
+              <div class="caption">{section}</div>
+            {/if}
             <div class="sidebar__menu">
               {#each _sections[section] as obj}
                 <a
+                  id={obj.id}
                   class="sidebar__item cursor-pointer"
                   class:active={obj.active}
                   sveltekit:prefetch
@@ -136,10 +124,17 @@
                 >
                   {#if obj.icon}
                     <div class="sidebar__icon">
-                      <!-- <Icon src={obj.icon} href={obj.href} /> -->
-                      <span class="spinner" class:hidden={!$navigating || $navigating.to.path !== obj.href} />
-                      <img class:hidden={$navigating && $navigating.to.path === obj.href} src={obj.icon} alt="Icon" />
+                      {#if !$navigating && $navigating?.to?.path !== obj.href && $pageStore.clicked !== obj.id}
+                        <!-- Hide the icon when the page is navigating and the to path and href are the same -->
+                        <img src={obj.icon} alt="Icon" />
+                      {:else if $navigating && $navigating?.to?.path === obj.href && $pageStore.clicked === obj.id}
+                        <span class="spinner" />
+                      {:else}
+                        <img src={obj.icon} alt="Icon" />
+                      {/if}
                     </div>
+                  {:else if $navigating && $navigating?.to?.path === obj.href && $pageStore.clicked === obj.id}
+                    <span class="spinner" />
                   {/if}
 
                   <div class="sidebar__text">{obj.label}</div>
@@ -335,6 +330,10 @@
     font-size: 0;
   }
 
+  .spinner {
+    margin-right: 1rem;
+  }
+
   .sidebar__item.active .sidebar__icon img {
     opacity: 1;
     filter: invert(1);
@@ -345,13 +344,13 @@
     opacity: 1;
   }
 
-  .sidebar__text {
-    margin-right: auto;
+  .sidebar__icon + .sidebar__text {
     margin-left: 1.25rem;
   }
 
-  .sidebar__icon + .sidebar__text {
-    margin-left: 0rem;
+  .sidebar__text {
+    margin-right: auto;
+    transition: all 0.25s;
   }
 
   .sidebar__bottom {
@@ -653,7 +652,7 @@
       left: 1.25rem;
       right: 1.25rem;
     }
-    .caption {
+    /* .caption {
       padding-left: 1.25rem;
       text-align: left;
     }
@@ -670,6 +669,15 @@
       -o-transition: margin 0.25s;
       transition: margin 0.25s;
     }
+
+    .sidebar__icon + .sidebar__text {
+      margin-left: 1.25rem;
+    }
+
+    .sidebar__text {
+      margin-right: auto;
+      transition: all 0.25s;
+    } */
     .sidebar__counter {
       -webkit-transition: all 0.25s;
       -o-transition: all 0.25s;
@@ -686,9 +694,9 @@
       -ms-transform: translateX(0);
       transform: translateX(0);
     }
-    .sidebar.active .sidebar__item {
+    /* .sidebar.active .sidebar__item {
       padding-left: 0;
-    }
+    } */
 
     .sidebar.active .caption {
       text-align: left;
