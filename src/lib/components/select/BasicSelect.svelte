@@ -2,9 +2,11 @@
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/page.store";
 
+  const _uuid = uuid();
+
   export let value = null;
   export let options = [];
-  export let id = uuid();
+  export let id = _uuid;
 
   let timestamp = 0;
   let selected_index = 0;
@@ -50,6 +52,7 @@
   function selectFocused(event) {
     timestamp = event.timeStamp;
     is_focused = true;
+    $pageStore.clicked = _uuid;
 
     //if the search was open, the focus would be lost but we force the list open
     //so when we focus back, we want to close the list
@@ -102,6 +105,10 @@
             selected_index = 0;
           } else {
             selected_index++;
+
+            if (filteredOptions[selected_index] === "break") {
+              selected_index++;
+            }
           }
           break;
         }
@@ -112,6 +119,10 @@
             selected_index = options.length - 1;
           } else {
             selected_index--;
+
+            if (filteredOptions[selected_index] === "break") {
+              selected_index--;
+            }
           }
           break;
         }

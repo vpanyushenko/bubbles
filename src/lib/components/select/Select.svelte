@@ -5,12 +5,14 @@
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
 
+  const _uuid = uuid();
+
   export let label = "Select an option";
-  export let error = "An error occured";
+  export let error = "An error occurred";
   export let value = null;
   export let options = [];
   export let desc = null;
-  export let id = uuid();
+  export let id = _uuid;
   export let search = options.length > 5 ? true : false;
   export let type = "select";
   export let validation = null;
@@ -26,21 +28,19 @@
 
   const _label = configLabel(label, validation);
   let is_search_focused = false;
-  let is_loading = false;
   let timestamp = 0;
   let selected_index = 0;
   let title = "Select an option";
   let is_focused = false;
   let is_list_open = false;
 
+  $: is_loading = $pageStore.loading.includes(id);
   $: search_value = "";
   $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
   $: filteredOptions = !search_value ? options : fuse.search(search_value).map((obj) => obj.item);
 
   $: if (is_error) {
-    console.log("hide error");
     setTimeout(() => {
-      console.log("hide error");
       hideError();
     }, $configStore.error_delay);
   }
@@ -87,6 +87,7 @@
   }
 
   function selectFocused(event) {
+    $pageStore.clicked = _uuid;
     timestamp = event.timeStamp;
     is_focused = true;
 
@@ -162,6 +163,10 @@
             selected_index = 0;
           } else {
             selected_index++;
+
+            if (filteredOptions[selected_index] === "break") {
+              selected_index++;
+            }
           }
           break;
         }
@@ -172,6 +177,10 @@
             selected_index = options.length - 1;
           } else {
             selected_index--;
+
+            if (filteredOptions[selected_index] === "break") {
+              selected_index--;
+            }
           }
           break;
         }
@@ -272,14 +281,14 @@
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     {#each filteredOptions as option, index}
       {#if option === "break"}
-        <hr tabindex="-99" />
+        <hr tabindex="-1" />
       {:else}
         <div
           class="option"
           on:mousedown={selectOption}
           on:click={option.onselect}
           on:mouseover={hoverOption}
-          tabindex="-1"
+          tabindex="0"
           class:selected={option.value === value}
           class:focused={selected_index === index}
         >
