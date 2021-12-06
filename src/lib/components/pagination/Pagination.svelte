@@ -28,21 +28,6 @@
 
   $: active_page = $page.query.get(page_query_name) ? Number($page.query.get(page_query_name)) : 1;
 
-  function countToArray(int) {
-    const number = Number(int);
-    const array = [];
-
-    for (let i = number; i <= number + max_buttons - 1; i++) {
-      array.push(i);
-    }
-
-    if (total_pages < max_buttons) {
-      array.length = total_pages;
-    }
-
-    return array;
-  }
-
   $: if (active_page) {
     if (count) {
       //we need to figure out what pages to show in case the total buttons is larger
@@ -114,29 +99,52 @@
     limit = rows_per_page && rows_per_page.length ? rows_per_page[0] : 10;
   }
 
-  $: formattedButtons = buttons.map((button) => {
-    if (typeof button === "string" || typeof button === "number") {
-      return {
-        label: button,
-        onclick: () => {
+  $: formattedButtons = formatNumberButtons();
+
+  $: if (active_page) {
+    formattedButtons = formatNumberButtons();
+  }
+
+  function countToArray(int) {
+    const number = Number(int);
+    const array = [];
+
+    for (let i = number; i <= number + max_buttons - 1; i++) {
+      array.push(i);
+    }
+
+    if (total_pages < max_buttons) {
+      array.length = total_pages;
+    }
+
+    return array;
+  }
+
+  function formatNumberButtons() {
+    return buttons.map((button) => {
+      if (typeof button === "string" || typeof button === "number") {
+        return {
+          label: button,
+          onclick: () => {
+            addQueryParam(limit_query_name, limit, { goto: false });
+            addQueryParam(page_query_name, button);
+          },
+          transparent: active_page.toString() !== button.toString(),
+        };
+      } else {
+        const _onclick = () => {
           addQueryParam(limit_query_name, limit, { goto: false });
           addQueryParam(page_query_name, button);
-        },
-        transparent: active_page.toString() !== button.toString(),
-      };
-    } else {
-      const _onclick = () => {
-        addQueryParam(limit_query_name, limit, { goto: false });
-        addQueryParam(page_query_name, button);
-      };
+        };
 
-      return {
-        label: button.label,
-        onclick: button.onclick ? button.onclick : _onclick,
-        transparent: active_page.toString() !== button.label.toString(),
-      };
-    }
-  });
+        return {
+          label: button.label,
+          onclick: button.onclick ? button.onclick : _onclick,
+          transparent: active_page.toString() !== button.label.toString(),
+        };
+      }
+    });
+  }
 </script>
 
 <div class="pagination">
@@ -158,7 +166,7 @@
       />
     {/if}
 
-    {#if arrows}
+    {#if arrows && (has_more || formattedButtons.length > 1)}
       <IconButton
         icon="arrowLeft"
         id={_prev}
@@ -173,15 +181,19 @@
       />
     {/if}
 
-    {#each formattedButtons as button}
-      <IconButton onclick={button.onclick} bind:transparent={button.transparent}>{button.label}</IconButton>
-    {/each}
+    {#if formattedButtons.length > 1}
+      {#each formattedButtons as button}
+        <IconButton onclick={button.onclick} bind:transparent={button.transparent}>{button.label}</IconButton>
+      {/each}
+    {:else if count}
+      <p class="viewing__page">Viewing page: 1 of 1</p>
+    {/if}
 
-    {#if !count}
+    {#if !count && !formattedButtons}
       <p class="viewing__page">Viewing page: {active_page}</p>
     {/if}
 
-    {#if arrows}
+    {#if arrows && (has_more || formattedButtons.length > 1)}
       <IconButton
         icon="arrowRight"
         id={_next}
