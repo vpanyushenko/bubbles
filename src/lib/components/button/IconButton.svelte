@@ -34,21 +34,15 @@
   export let onclick = null;
   export let options = [];
   export let href = "";
+  export let new_page = false;
   export let transparent = true;
-
-  if (icon === "edit--") {
-    console.log(transparent);
-  }
 
   const dropdown = options.length ? true : false;
 
   let src = icons[icon] ? icons[icon] : more;
 
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
-  $: is_loading =
-    ($pageStore.clicked === id && $navigating) ||
-    ($pageStore.clicked === id && $pageStore.is_fetching) ||
-    $pageStore.loading.includes(id); //TODO: Clean Up
+  $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
 
   function iconClick(event) {
     let iconElement = event.currentTarget;
@@ -77,10 +71,6 @@
   }
 
   function dropdownSelect(event) {
-    const option = event.currentTarget;
-
-    // title = option.querySelector(".title").textContent;
-    // value = option.querySelector("input").value;
     active = false;
     $pageStore.dropdown = null;
   }
@@ -97,7 +87,17 @@
 <svelte:window on:click={windowClick} />
 
 {#if href}
-  <a class="icon__btn" {id} sveltekit:prefetch {href} on:click={back}>
+  <a
+    on:click={() => {
+      $pageStore.clicked = id;
+    }}
+    class="icon__btn"
+    {id}
+    sveltekit:prefetch
+    target={new_page ? "_blank" : "_self"}
+    {href}
+    on:click={back}
+  >
     <button class:disabled={is_loading} class:background={!transparent}>
       <span class="spinner" class:hidden={!is_loading} />
       {#if icon}
@@ -124,7 +124,7 @@
         <div class="icon__btn__options">
           {#each options as option}
             {#if option === "break"}
-              <hr tabindex="-99" />
+              <hr />
             {:else if option.type === "switch"}
               <LabeledSwitch {...option} />
             {:else if option.href}
@@ -132,6 +132,7 @@
                 class="icon__btn__item"
                 on:click|stopPropagation={dropdownSelect}
                 href={option.href}
+                target={option.new_page ? "_blank" : "_self"}
                 sveltekit:prefetch
                 on:click={iconClick}
                 on:click={() => ($pageStore.is_fetching = true)}
