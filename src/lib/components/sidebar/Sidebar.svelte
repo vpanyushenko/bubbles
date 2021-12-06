@@ -65,6 +65,7 @@
   function sidebarItemSelected(obj) {
     $pageStore.sidebar.active_item = obj.id;
     $pageStore.clicked = obj.id;
+    $pageStore.sidebar.is_toggled = false;
   }
 
   function formatSidebar(sections, pageStore) {
@@ -112,12 +113,10 @@
             <div class="sidebar__menu">
               {#each _sections[section] as obj}
                 <a
-                  id={obj.id}
                   class="sidebar__item cursor-pointer"
                   class:active={obj.active}
                   sveltekit:prefetch
                   href={obj.href}
-                  on:click={() => ($pageStore.sidebar.is_toggled = false)}
                   on:click={() => {
                     sidebarItemSelected(obj);
                   }}
