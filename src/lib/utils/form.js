@@ -1,4 +1,5 @@
 import { pageStore } from "$lib/stores/page.store";
+import merge from "$lib/utils/merge";
 
 const _getSize = (value) => {
   if (value instanceof Array) {
@@ -281,7 +282,8 @@ const getFormData = (inputs) => {
       if (id) {
         let array = id.split(".").filter(Boolean);
         let obj = array.reduceRight((obj, elem) => ({ [elem]: obj }), value);
-        data = Object.assign(data, obj);
+
+        data = merge(data, obj);
       }
     }
   });
