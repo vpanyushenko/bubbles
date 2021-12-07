@@ -57,10 +57,7 @@
   });
 </script>
 
-<Header
-  title={data.name.charAt(0).toUpperCase() + data.name.slice(1)}
-  breadcrumb_labels={["hello", "GOODBYE", "Bowser"]}
-/>
+<Header title={data.name.charAt(0).toUpperCase() + data.name.slice(1)} />
 
 <Row>
   <Column50>

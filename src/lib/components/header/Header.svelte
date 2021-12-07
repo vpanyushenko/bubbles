@@ -51,6 +51,7 @@
   import { page } from "$app/stores";
   import { browser } from "$app/env";
   import IconButton from "$lib/components/button/IconButton.svelte";
+  import { onMount } from "svelte";
 
   export let title = "";
   export let subtitle = "";
@@ -60,8 +61,59 @@
   export let sticky = true;
 
   const icon_id = uuid();
+  const header_id = uuid();
 
-  let y; //TODO: Add options to sticky headers
+  let y = 0; //TODO: Add options to sticky headers
+
+  $: intersection_ratio = 1;
+
+  // onMount(() => {
+  //   if (sticky) {
+  //     const header = document.getElementById(header_id);
+
+  //     function buildThresholdList() {
+  //       let thresholds = [];
+  //       let numSteps = 100;
+
+  //       for (let i = 1.0; i <= numSteps; i++) {
+  //         let ratio = i / numSteps;
+  //         thresholds.push(ratio);
+  //       }
+
+  //       thresholds.push(0);
+  //       return thresholds;
+  //     }
+
+  //     console.log(buildThresholdList());
+
+  //     function handleIntersect(entries, observer) {
+  //       entries.forEach((entry) => {
+  //         // console.log(entry);
+
+  //         if (entry.intersectionRatio < 0.33) {
+  //           intersection_ratio = entry.intersectionRatio;
+  //         } else {
+  //           intersection_ratio = 1;
+  //         }
+
+  //         // if (entry.intersectionRatio > prevRatio) {
+  //         //   entry.target.style.backgroundColor = increasingColor.replace("ratio", entry.intersectionRatio);
+  //         // } else {
+  //         //   entry.target.style.backgroundColor = decreasingColor.replace("ratio", entry.intersectionRatio);
+  //         // }
+
+  //         // prevRatio = entry.intersectionRatio;
+  //       });
+  //     }
+
+  //     const observer = new IntersectionObserver(handleIntersect, {
+  //       threshold: buildThresholdList(),
+  //       rootMargin: "-100px",
+  //     });
+
+  //     observer.observe(header);
+  //   }
+  // });
 
   if (title) {
     $pageStore.title = title;
@@ -126,9 +178,10 @@
   }
 </script>
 
-<!-- <svelte:window bind:scrollY={y} /> -->
+<svelte:window bind:scrollY={y} />
 
-<header class:sticky={sticky && y > 40}>
+<!-- {#if intersection_ratio !== 0} -->
+<header id={header_id} style="opacity: {intersection_ratio * 3}">
   <div class="text">
     <div class="header__title">
       {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
@@ -169,6 +222,50 @@
   </div>
 </header>
 
+<!-- {#if sticky && intersection_ratio <= 0.5}
+  <header class="sticky" style="opacity: .2">
+    <div class="text">
+      <div class="header__title">
+        {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+          <IconButton icon="arrowLeft" href={back} id={icon_id} />
+        {/if}
+
+        <div class="header__text">
+          <h2>{$pageStore.title}</h2>
+
+          {#if subtitle}
+            <h6>{@html subtitle}</h6>
+          {/if}
+
+          {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+            <h6 class="breadcrumbs">
+              {#each _breadcrumbs as breadcrumb, index}
+                <a sveltekit:prefetch href={breadcrumb.href} on:click={() => ($pageStore.clicked = icon_id)}
+                  >{breadcrumb.text}</a
+                >
+                {#if index !== _breadcrumbs.length - 1}
+                  <span> / </span>
+                {/if}
+              {/each}
+            </h6>
+          {/if}
+        </div>
+      </div>
+    </div>
+    <div class="icons">
+      <div class="header">
+        <button class="header__burger" on:click={toggleSidebar} />
+        <div class="header__buttons">
+          {#each buttons as button}
+            <IconButton {...button} />
+          {/each}
+        </div>
+      </div>
+    </div>
+  </header>
+{/if} -->
+
+<!-- {/if} -->
 <style>
   :global(header .icon__btn:not(:last-child)) {
     margin-right: 1rem;
@@ -179,6 +276,18 @@
     padding-bottom: 1.6rem;
   }
 
+  .sticky {
+    /* position: -webkit-sticky; */
+    position: fixed;
+    top: 0;
+    align-self: flex-start;
+    background-color: red;
+    z-index: 10;
+    /* left: 0;
+    right: 0; */
+    /* width: 100%; */
+  }
+
   header {
     display: flex;
     justify-content: space-between;
@@ -187,12 +296,8 @@
     padding: 3rem 4rem 2.75rem;
   }
 
-  .sticky {
-    position: sticky;
-    top: 0;
-    height: 60px;
-    background-color: red;
-    z-index: 10;
+  header.sticky {
+    padding: 1rem 4rem 1rem;
   }
 
   .header__text {
