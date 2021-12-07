@@ -11,7 +11,6 @@
 
   onMount(() => {
     if (browser) {
-      console.log(transition_duration);
       document.body.classList.add("noscroll");
     }
   });
