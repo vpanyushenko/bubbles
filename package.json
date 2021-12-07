@@ -1,6 +1,6 @@
 {
   "name": "bubbles-ui",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Opinionated svelte UI Kit",
   "scripts": {
     "dev": "svelte-kit dev",
@@ -13,10 +13,6 @@
     "deploy": "node ./gh-pages.js"
   },
   "devDependencies": {
-    "@fontsource/fira-mono": "^4.5.0",
-    "@fontsource/inter": "^4.5.1",
-    "@fontsource/poppins": "^4.5.0",
-    "@lukeed/uuid": "^2.0.0",
     "@sveltejs/adapter-vercel": "^1.0.0-next.31",
     "@sveltejs/kit": "next",
     "@sveltejs/pancake": "^0.0.18",
@@ -41,5 +37,11 @@
   "bugs": {
     "url": "https://github.com/vpanyushenko/bubbles/issues"
   },
-  "homepage": "https://bubbles-pied.vercel.app/"
+  "homepage": "https://bubbles-pied.vercel.app/",
+  "dependencies": {
+    "@fontsource/fira-mono": "^4.5.0",
+    "@fontsource/inter": "^4.5.1",
+    "@fontsource/poppins": "^4.5.0",
+    "@lukeed/uuid": "^2.0.0"
+  }
 }
