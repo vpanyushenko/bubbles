@@ -162,7 +162,7 @@
           crumb = $pageStore.title;
         }
 
-        if (breadcrumb_labels && breadcrumb_labels.length >= index) {
+        if (breadcrumb_labels && breadcrumb_labels.length > 0 && breadcrumb_labels[index]) {
           crumb = breadcrumb_labels[index];
         }
 
@@ -176,7 +176,13 @@
       return breadcrumbs;
     }
   }
+
+  // $: console.log(_breadcrumbs);
 </script>
+
+<svelte:head>
+  <title>{$pageStore.title}</title>
+</svelte:head>
 
 <svelte:window bind:scrollY={y} />
 
