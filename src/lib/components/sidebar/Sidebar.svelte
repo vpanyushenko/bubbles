@@ -150,7 +150,9 @@
                       {/if}
                     </div>
                   {:else if $navigating && obj.href_aliases.includes($navigating?.to?.path) && $pageStore.clicked === obj.id}
-                    <Spinner />
+                    <span class="loading">
+                      <Spinner />
+                    </span>
                   {/if}
 
                   <div class="sidebar__text">{obj.label}</div>
@@ -334,7 +336,7 @@
     flex-shrink: 0;
     width: 1.5rem;
     height: 1.5rem;
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
     font-size: 0;
   }
   .sidebar__icon img {
@@ -360,8 +362,14 @@
     opacity: 1;
   }
 
+  .loading + .sidebar__text,
   .sidebar__icon + .sidebar__text {
     margin-left: 1.25rem;
+  }
+
+  .loading {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   .sidebar__text {
