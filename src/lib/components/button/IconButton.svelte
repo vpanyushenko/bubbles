@@ -14,6 +14,7 @@
   import edit from "./edit.svg";
   import trash from "./trash.svg";
   import filter from "./filter.svg";
+  import Spinner from "$lib/components/spinner/Spinner.svelte";
 
   const icons = {
     arrowLeft: arrowLeft,
@@ -65,11 +66,6 @@
     }
   }
 
-  function back(event) {
-    id = event.currentTarget.id;
-    $pageStore.clicked = id;
-  }
-
   function dropdownSelect(event) {
     active = false;
     $pageStore.dropdown = null;
@@ -94,12 +90,13 @@
     class="icon__btn"
     {id}
     sveltekit:prefetch
-    target={new_page ? "_blank" : "_self"}
+    target={new_page ? "_blank" : ""}
     {href}
-    on:click={back}
   >
     <button class:disabled={is_loading} class:background={!transparent}>
-      <span class="spinner" class:hidden={!is_loading} />
+      {#if is_loading}
+        <Spinner />
+      {/if}
       {#if icon}
         <img class="icon icon-main" {src} class:hidden={is_loading} alt="icon" />
       {:else}
@@ -112,7 +109,9 @@
 {:else}
   <div class="icon__btn" {id} class:active={dropdown && active} on:click={iconClick} on:click={onclick}>
     <button class:background={!transparent}>
-      <span class="spinner" class:hidden={!is_loading} />
+      {#if is_loading}
+        <Spinner />
+      {/if}
       <span class:hidden={is_loading}>
         <slot>
           <img class="icon icon-main" {src} class:hidden={is_loading} alt="icon" />
@@ -132,7 +131,7 @@
                 class="icon__btn__item"
                 on:click|stopPropagation={dropdownSelect}
                 href={option.href}
-                target={option.new_page ? "_blank" : "_self"}
+                target={option.new_page ? "_blank" : ""}
                 sveltekit:prefetch
                 on:click={iconClick}
                 on:click={() => ($pageStore.is_fetching = true)}
@@ -169,23 +168,6 @@
 {/if}
 
 <style>
-  @keyframes spinner {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .spinner {
-    content: "";
-    box-sizing: border-box;
-    width: 1.25rem;
-    height: 1.25rem;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    border-top-color: #fff;
-    animation: spinner 0.6s linear infinite;
-  }
-
   .icon-main {
     width: 0.92em;
     height: 1em;
