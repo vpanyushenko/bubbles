@@ -137,7 +137,7 @@
                 on:click={() => ($pageStore.is_fetching = true)}
               >
                 <div class="icon__btn__details">
-                  <p class="font-lg font-bold">{option.label}</p>
+                  <p class="font-lg font-bold label">{option.label}</p>
                   {#if option.caption}
                     <p class="icon__btn__text caption">{option.caption}</p>
                   {/if}
@@ -152,7 +152,7 @@
                 on:click={iconClick}
               >
                 <div class="icon__btn__details">
-                  <p class="font-lg font-bold">{option.label}</p>
+                  <p class="font-lg font-bold label">{option.label}</p>
                   {#if option.caption}
                     <p class="icon__btn__text caption">{option.caption}</p>
                   {/if}
@@ -402,6 +402,10 @@
   p {
     margin-top: 0px;
     margin-bottom: 0px;
+  }
+
+  .label {
+    color: var(--black);
   }
 
   a,
