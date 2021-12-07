@@ -46,6 +46,7 @@
   ---
 -->
 <script>
+  import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/stores";
   import { page } from "$app/stores";
   import { browser } from "$app/env";
@@ -57,6 +58,8 @@
   export let breadcrumb_labels = [];
   export let buttons = [];
   export let sticky = true;
+
+  const icon_id = uuid();
 
   let y; //TODO: Add options to sticky headers
 
@@ -129,7 +132,7 @@
   <div class="text">
     <div class="header__title">
       {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
-        <IconButton icon="arrowLeft" href={back} />
+        <IconButton icon="arrowLeft" href={back} id={icon_id} />
       {/if}
 
       <div class="header__text">
@@ -142,7 +145,9 @@
         {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
           <h6 class="breadcrumbs">
             {#each _breadcrumbs as breadcrumb, index}
-              <a sveltekit:prefetch href={breadcrumb.href}>{breadcrumb.text}</a>
+              <a sveltekit:prefetch href={breadcrumb.href} on:click={() => ($pageStore.clicked = icon_id)}
+                >{breadcrumb.text}</a
+              >
               {#if index !== _breadcrumbs.length - 1}
                 <span> / </span>
               {/if}
