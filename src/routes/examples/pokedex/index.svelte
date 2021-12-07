@@ -186,7 +186,7 @@
             <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} />
             <TableCell
               text={poke.name}
-              href={`/pokedex/${poke.name}`}
+              href={`/examples/pokedex/${poke.name}`}
               caption={`Pokedex Number: ${poke.id}`}
               bold={true}
             />

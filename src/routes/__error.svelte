@@ -4,7 +4,6 @@
       props: {
         status: status,
         message: error.message,
-        title: `${status}: ${error.message}`,
       },
     };
   }
@@ -24,4 +23,4 @@
   };
 </script>
 
-<Error {...props} />
+<Error {...props} button={{ href: "/examples", mt: true, label: "Go Back" }} />

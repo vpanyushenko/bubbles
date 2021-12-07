@@ -4,6 +4,7 @@
   import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
   import { hexToRgb, getColorFilter } from "$lib/utils/colors";
+  import Spinner from "$lib/components/spinner/Spinner.svelte";
 
   export let sections = [];
   export let logo = null;
@@ -23,8 +24,8 @@
   });
 
   const sectionsWithTitles = {};
-  const path = $page.path.split("/").filter(Boolean)[0];
-  let activeSection = sections.find((a) => a.active === true);
+  const path = $page.path;
+  let activeSection = false;
 
   sections.forEach((section, index) => {
     if (!section.id) {
@@ -36,21 +37,14 @@
     $pageStore.sidebar.notifications[_id] = section.notifications ? section.notifications : 0;
 
     if (!activeSection) {
-      if (path === section.href.split("/").filter(Boolean)[0]) {
-        activeSection = true;
-
-        $pageStore.sidebar.active_item = section.id;
-      } else if (section.href_aliases) {
-        const urls = section.href_aliases.map((href) => href.split("/").filter(Boolean)[0]);
-        const aliasActiveSection = urls.find((a) => a === path);
-
-        if (aliasActiveSection) {
-          activeSection = true;
-
-          $pageStore.sidebar.active_item = section.id;
-        }
-      }
+      activeSection = isActiveSection(section);
     }
+
+    if (!section.href_aliases) {
+      section.href_aliases = [];
+    }
+
+    section.href_aliases.push(section.href);
 
     if (!sectionsWithTitles[section.section]) {
       sectionsWithTitles[section.section] = [];
@@ -61,7 +55,6 @@
   });
 
   //make sure notifications cannot be below 0
-
   function sidebarItemSelected(obj) {
     $pageStore.sidebar.active_item = obj.id;
     $pageStore.clicked = obj.id;
@@ -83,6 +76,30 @@
     });
 
     return sections;
+  }
+
+  function isActiveSection(obj) {
+    //first check if we can find the path from the url
+    if (path === obj.href || (obj.href_aliases && obj.href_aliases.length > 0 && obj.href_aliases.includes(path))) {
+      $pageStore.sidebar.active_item = obj.id;
+      return true;
+    }
+
+    //if not, we can check remove one of the paths sections until we find a match
+    if (path === obj.href.split("/").filter(Boolean)[0]) {
+      $pageStore.sidebar.active_item = obj.id;
+      return true;
+    }
+
+    if (obj.href_aliases) {
+      const urls = obj.href_aliases.map((href) => href.split("/").filter(Boolean)[0]);
+      const aliasActiveSection = urls.find((a) => a === path);
+
+      if (aliasActiveSection) {
+        $pageStore.sidebar.active_item = obj.id;
+        return true;
+      }
+    }
   }
 
   $: _sections = formatSidebar(sectionsWithTitles, $pageStore);
@@ -123,17 +140,17 @@
                 >
                   {#if obj.icon}
                     <div class="sidebar__icon">
-                      {#if !$navigating && $navigating?.to?.path !== obj.href && $pageStore.clicked !== obj.id}
+                      {#if !$navigating && !obj.href_aliases.includes($navigating?.to?.path) && $pageStore.clicked !== obj.id}
                         <!-- Hide the icon when the page is navigating and the to path and href are the same -->
                         <img src={obj.icon} alt="Icon" />
-                      {:else if $navigating && $navigating?.to?.path === obj.href && $pageStore.clicked === obj.id}
-                        <span class="spinner" />
+                      {:else if $navigating && obj.href_aliases.includes($navigating?.to?.path) && $pageStore.clicked === obj.id}
+                        <Spinner />
                       {:else}
                         <img src={obj.icon} alt="Icon" />
                       {/if}
                     </div>
-                  {:else if $navigating && $navigating?.to?.path === obj.href && $pageStore.clicked === obj.id}
-                    <span class="spinner" />
+                  {:else if $navigating && obj.href_aliases.includes($navigating?.to?.path) && $pageStore.clicked === obj.id}
+                    <Spinner />
                   {/if}
 
                   <div class="sidebar__text">{obj.label}</div>

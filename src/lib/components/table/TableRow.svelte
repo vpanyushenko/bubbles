@@ -8,7 +8,7 @@
 </script>
 
 {#if href}
-  <a class="row" sveltekit:prefetch {href} {id}>
+  <a class="row" sveltekit:prefetch {href} {id} on:click={onclick}>
     {#if cells && cells.length}
       {#each cells as cell}
         <TableCell {...cell} />

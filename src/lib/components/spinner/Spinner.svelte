@@ -1,17 +1,18 @@
 <script>
   export let size = 1.25;
   export let color = "white";
+  export let style;
 
-  let style;
+  let colors;
 
   if (color === "white") {
-    style = `border-color: var(--gray-light); border-top-color: var(--gray-lightest);`;
+    colors = `border-color: var(--gray-light); border-top-color: var(--gray-lightest);`;
   } else if (color) {
-    style = `border-color: var(--${color}); border-top-color: var(--${color}-lightest);`;
+    colors = `border-color: var(--${color}); border-top-color: var(--${color}-lightest);`;
   }
 </script>
 
-<span class="spinner" style="width: {size}rem; height: {size}rem; {style}" />
+<span class="spinner" style="width: {size}rem; height: {size}rem; {colors} {style}" />
 
 <style>
   @keyframes spinner {

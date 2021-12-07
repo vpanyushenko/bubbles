@@ -98,4 +98,5 @@ import { getFormData, validateInputs } from "./utils/form";
 import { showLoading, hideLoading } from "./utils/loading";
 import { showModal, hideModal } from "./utils/modal";
 import { showToast } from "./utils/toast";
-export { getFormData, validateInputs, showLoading, hideLoading, showModal, hideModal, showToast };
+import { v4 as uuid } from "@lukeed/uuid";
+export { getFormData, validateInputs, showLoading, hideLoading, showModal, hideModal, showToast, uuid };

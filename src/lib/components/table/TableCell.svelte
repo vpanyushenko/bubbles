@@ -3,6 +3,7 @@
   import { navigating } from "$app/stores";
   import Tag from "$lib/components/tag/Tag.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
+  import Spinner from "$lib/components/spinner/Spinner.svelte";
 
   export let href = null;
   export let text = "";
@@ -38,7 +39,7 @@
       {#if href}
         <span class="href-container">
           {#if $navigating && $navigating?.to?.path === href}
-            <span class="spinner" />
+            <Spinner style="margin: 0 0.5rem 0 0" />
           {/if}
           <a class:h6={large} class:bold sveltekit:prefetch {href}>{text}</a>
         </span>

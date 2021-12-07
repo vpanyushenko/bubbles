@@ -11,21 +11,25 @@
     logo: "/logo.svg",
     sections: [
       {
-        label: "Pokedex (Table Example)",
-        href: "/pokedex",
+        label: "Pokedex",
+        href: "/examples",
         href_aliases: ["/examples/pokedex"],
+        icon: "/favicon.png",
       },
       {
-        label: "Settings Page Example",
-        href: "/settings",
+        label: "Settings",
+        href: "/examples/settings",
+        icon: "/favicon.png",
       },
       {
-        label: "Auth Page Example",
-        href: "/auth",
+        label: "Auth",
+        href: "/examples/auth",
+        icon: "/favicon.png",
       },
       {
         label: "Error",
-        href: "/error",
+        href: "/examples/error",
+        icon: "/favicon.png",
       },
     ],
   };

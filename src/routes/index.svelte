@@ -3162,6 +3162,10 @@
               color variables</TableCell
             >
           </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">style</span></TableCell>
+            <TableCell>Add any valid inline <code>CSS</code></TableCell>
+          </TableRow>
         </Table>
       </Card>
     </Column>
