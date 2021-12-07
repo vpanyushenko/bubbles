@@ -14,22 +14,22 @@
         label: "Pokedex",
         href: "/examples",
         href_aliases: ["/examples/pokedex"],
-        // icon: "/favicon.png",
+        icon: "/favicon.png",
       },
       {
         label: "Settings",
         href: "/examples/settings",
-        // icon: "/favicon.png",
+        icon: "/favicon.png",
       },
       {
         label: "Auth",
         href: "/examples/auth",
-        // icon: "/favicon.png",
+        icon: "/favicon.png",
       },
       {
         label: "Error",
         href: "/examples/error",
-        // icon: "/favicon.png",
+        icon: "/favicon.png",
       },
     ],
   };
