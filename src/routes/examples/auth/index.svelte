@@ -66,7 +66,7 @@
       type: "button",
       label: "Go Back",
       color: "info-light",
-      href: "/examples",
+      href: "/examples/pokedex",
     },
   ];
 </script>
