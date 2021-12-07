@@ -12,6 +12,9 @@ import Toast from "./components/toast/Toast.svelte";
 import ToastContainer from "./components/toast/ToastContainer.svelte";
 import Tag from "./components/tag/Tag.svelte";
 import Chart from "./components/chart/Chart.svelte";
+import Error from "./components/error/Error.svelte";
+import Overlay from "./components/overlay/Overlay.svelte";
+import Spinner from "./components/spinner/Spinner.svelte";
 
 export {
   Header,
@@ -28,10 +31,14 @@ export {
   Form,
   Tag,
   Chart,
+  Error,
+  Overlay,
+  Spinner,
 };
 
 //Inputs
 import Button from "./components/button/Button.svelte";
+import IconButton from "./components/button/IconButton.svelte";
 import Input from "./components/input/Input.svelte";
 import Select from "./components/select/Select.svelte";
 import BasicSelect from "./components/select/BasicSelect.svelte";
@@ -44,6 +51,7 @@ import RadioGroup from "./components/radio/RadioGroup.svelte";
 
 export {
   Button,
+  IconButton,
   Input,
   Select,
   BasicSelect,
@@ -99,4 +107,5 @@ import { showLoading, hideLoading } from "./utils/loading";
 import { showModal, hideModal } from "./utils/modal";
 import { showToast } from "./utils/toast";
 import { v4 as uuid } from "@lukeed/uuid";
-export { getFormData, validateInputs, showLoading, hideLoading, showModal, hideModal, showToast, uuid };
+import { addQueryParam } from "./utils/url";
+export { getFormData, validateInputs, showLoading, hideLoading, showModal, hideModal, showToast, uuid, addQueryParam };
