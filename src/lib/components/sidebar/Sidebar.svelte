@@ -21,6 +21,8 @@
 
       document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
     }
+
+    //TODO: find the currently active section
   });
 
   const sectionsWithTitles = {};
@@ -34,7 +36,9 @@
 
     let _id = section.id;
 
-    $pageStore.sidebar.notifications[_id] = section.notifications ? section.notifications : 0;
+    if ($pageStore.sidebar?.notifications) {
+      $pageStore.sidebar.notifications[_id] = section.notifications ? section.notifications : 0;
+    }
 
     if (!activeSection) {
       activeSection = isActiveSection(section);
