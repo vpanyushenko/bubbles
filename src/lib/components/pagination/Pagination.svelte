@@ -6,7 +6,6 @@
   import { page } from "$app/stores";
 
   export let id = uuid();
-
   export let rows_per_page = [10, 25, 50, 100];
   export let limit = rows_per_page ? rows_per_page[0] : 10;
   export let count = null;
@@ -17,6 +16,9 @@
   export let page_query_name = "page";
   export let limit_query_name = "limit";
 
+  $: current_page = Number($page.query.get(page_query_name)) || 1;
+  $: current_limit = Number($page.query.get(limit_query_name)) || limit;
+
   const _first = uuid();
   const _prev = uuid();
   const _next = uuid();
@@ -26,9 +28,7 @@
 
   $: total_pages = count ? Math.ceil(count / limit) : null;
 
-  $: active_page = $page.query.get(page_query_name) ? Number($page.query.get(page_query_name)) : 1;
-
-  $: if (active_page) {
+  $: if (current_page) {
     if (count) {
       //we need to figure out what pages to show in case the total buttons is larger
       //than max buttons. Also we need to figure out which pages to show. If the user
@@ -44,8 +44,8 @@
         //and going up to the limit
         //so we need to calc the starting point and make sure that we don't go over the total count
 
-        const left_pages = active_page - Math.floor(max_buttons / 2);
-        const right_pages = active_page + Math.floor(max_buttons / 2);
+        const left_pages = current_page - Math.floor(max_buttons / 2);
+        const right_pages = current_page + Math.floor(max_buttons / 2);
 
         //if the pages on the left begin in the negative, just start with 1
         if (left_pages < 0) {
@@ -101,7 +101,7 @@
 
   $: formattedButtons = formatNumberButtons();
 
-  $: if (active_page) {
+  $: if (current_page) {
     formattedButtons = formatNumberButtons();
   }
 
@@ -129,7 +129,7 @@
             addQueryParam(limit_query_name, limit, { goto: false });
             addQueryParam(page_query_name, button);
           },
-          transparent: active_page.toString() !== button.toString(),
+          transparent: current_page.toString() !== button.toString(),
         };
       } else {
         const _onclick = () => {
@@ -140,7 +140,7 @@
         return {
           label: button.label,
           onclick: button.onclick ? button.onclick : _onclick,
-          transparent: active_page.toString() !== button.label.toString(),
+          transparent: current_page.toString() !== button.label.toString(),
         };
       }
     });
@@ -166,13 +166,13 @@
       />
     {/if}
 
-    {#if arrows && (has_more || formattedButtons.length > 1)}
+    {#if arrows && (has_more || formattedButtons.length > 1 || current_page > 1)}
       <IconButton
         icon="arrowLeft"
         id={_prev}
         onclick={() => {
-          if (active_page > 1) {
-            addQueryParam(page_query_name, Number($page.query.get(page_query_name)) - 1, {
+          if (current_page > 1) {
+            addQueryParam(page_query_name, Number(current_page) - 1, {
               show_loading: _prev,
               goto: true,
             });
@@ -187,19 +187,21 @@
       {/each}
     {:else if count}
       <p class="viewing__page">Viewing page: 1 of 1</p>
+    {:else if has_more || current_page > 1}
+      <p class="viewing__page">Viewing page: {current_page}</p>
     {/if}
 
     {#if !count && !formattedButtons}
-      <p class="viewing__page">Viewing page: {active_page}</p>
+      <p class="viewing__page">Viewing page: {current_page}</p>
     {/if}
 
-    {#if arrows && (has_more || formattedButtons.length > 1)}
+    {#if arrows && (has_more || formattedButtons.length > 1 || current_page > 1)}
       <IconButton
         icon="arrowRight"
         id={_next}
         onclick={(event) => {
-          if (active_page < total_pages || has_more) {
-            addQueryParam(page_query_name, Number($page.query.get(page_query_name)) + 1, {
+          if (current_page < total_pages || has_more) {
+            addQueryParam(page_query_name, Number(current_page) + 1, {
               show_loading: _next,
               goto: true,
             });

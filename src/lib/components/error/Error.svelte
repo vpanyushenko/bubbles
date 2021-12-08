@@ -4,9 +4,6 @@
   import Button from "$lib/components/button/Button.svelte";
   import { pageStore } from "$lib/stores/stores";
 
-  import webp from "./error.webp";
-  import png from "./error.png";
-
   export let title = "";
   export let message = "";
   export let code = 404;
@@ -89,11 +86,6 @@
     {#if img}
       <picture>
         <img src={img} alt="Error" />
-      </picture>
-    {:else}
-      <picture>
-        <source type="image/webp" srcset={webp} />
-        <img src={png} alt="Error" />
       </picture>
     {/if}
 

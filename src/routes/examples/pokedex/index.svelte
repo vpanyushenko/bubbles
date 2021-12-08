@@ -165,7 +165,7 @@
 
               return {
                 label: type,
-                value: type.toLowerCase(),
+                value: type === "All" ? "" : type.toLowerCase(),
               };
             }),
           },
