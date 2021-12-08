@@ -107,5 +107,16 @@ import { showLoading, hideLoading } from "./utils/loading";
 import { showModal, hideModal } from "./utils/modal";
 import { showToast } from "./utils/toast";
 import { v4 as uuid } from "@lukeed/uuid";
-import { addQueryParam } from "./utils/url";
-export { getFormData, validateInputs, showLoading, hideLoading, showModal, hideModal, showToast, uuid, addQueryParam };
+import { addQueryParam, getQueryParam } from "./utils/url";
+export {
+  getFormData,
+  validateInputs,
+  showLoading,
+  hideLoading,
+  showModal,
+  hideModal,
+  showToast,
+  uuid,
+  addQueryParam,
+  getQueryParam,
+};

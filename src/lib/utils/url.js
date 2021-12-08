@@ -20,7 +20,13 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
 
   if (browser) {
     const queryParams = new URLSearchParams(window.location.search);
-    queryParams.set(key, value);
+
+    if (value === "" || value === null || value === undefined) {
+      queryParams.delete(key);
+    } else {
+      queryParams.set(key, value);
+    }
+
     history.replaceState(null, null, "?" + queryParams.toString());
 
     if (_options?.keep_only && _options.keep_only.length > 0) {
@@ -52,5 +58,23 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
     }
   }
 };
+/**
+ * Will return an object with all of the query parameters for a url. Can only be used on the client.
+ * @param {String} [key=null] - if you pass a key, you'll get the query param for that key
+ * @returns {String|Object} - If you pass in a key, the return will be the value of the param. Without a key, an Object is returned
+ */
+const getQueryParam = (key = null) => {
+  if (browser) {
+    const query_params = new URLSearchParams(window.location.search);
+    const all_query_params = Object.fromEntries(query_params.entries());
+    const param_keys = Object.keys(all_query_params);
 
-export { addQueryParam };
+    if (key && param_keys && param_keys.length) {
+      return all_query_params[key];
+    }
+
+    return all_query_params;
+  }
+};
+
+export { addQueryParam, getQueryParam };
