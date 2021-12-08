@@ -59,22 +59,29 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
   }
 };
 /**
- * Will return an object with all of the query parameters for a url. Can only be used on the client.
+ * Will return an object with all of the query parameters for a url. Works on server and client
+ * @param {Object} page - pass the svelte kit page store
  * @param {String} [key=null] - if you pass a key, you'll get the query param for that key
- * @returns {String|Object} - If you pass in a key, the return will be the value of the param. Without a key, an Object is returned
+ * @returns {String|Object} - If you pass in a key, the return will be the value of the param. Without a key, an Object is returned for all of the query params
  */
-const getQueryParam = (key = null) => {
-  if (browser) {
-    const query_params = new URLSearchParams(window.location.search);
-    const all_query_params = Object.fromEntries(query_params.entries());
-    const param_keys = Object.keys(all_query_params);
+const getQueryParam = (page, key = null) => {
+  const query_params = page.query;
+  const all_query_params = Object.fromEntries(query_params.entries());
+  const param_keys = Object.keys(all_query_params);
 
-    if (key && param_keys && param_keys.length) {
-      return all_query_params[key];
-    }
-
-    return all_query_params;
+  if (key && param_keys && param_keys.length) {
+    return all_query_params[key];
   }
+
+  if (key) {
+    return null;
+  }
+
+  if (!all_query_params) {
+    return {};
+  }
+
+  return all_query_params;
 };
 
 export { addQueryParam, getQueryParam };
