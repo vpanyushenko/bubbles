@@ -1,17 +1,15 @@
 import vercel from "@sveltejs/adapter-vercel";
 import autoprefixer from "autoprefixer";
-import sveltePreprocess from "svelte-preprocess";
+import preprocess from "svelte-preprocess";
 import path from "path";
 import { mdsvex } from "mdsvex";
-import mdsvexConfig from "./mdsvex.config.cjs";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  extensions: [".svelte", ...mdsvexConfig.extensions],
+  extensions: [".svelte", ".md", ".svelte.md"],
   preprocess: [
-    // see https://github.com/sveltejs/svelte-preprocess
-    mdsvex(mdsvexConfig),
-    sveltePreprocess({
+    mdsvex({ extensions: [".svelte.md", ".md", ".svx"] }),
+    preprocess({
       lang: "css",
       postcss: {
         plugins: [autoprefixer],

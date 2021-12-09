@@ -107,6 +107,10 @@
   import fuzzySearch from "$lib/utils/fuzzy-search";
   import CardFooter from "$lib/components/card/CardFooter.svelte";
 
+  import Section01 from "$misc/sections/01-intro.svelte";
+  import Section02 from "$misc/sections/02-installation.svelte";
+  import Section03 from "$misc/sections/03-usage.svelte";
+
   const codeCard = {
     px: 0,
     py: 0,
@@ -443,6 +447,7 @@
 </script>
 
 <svelte:head>
+
   <title>Bubbles UI Kit</title>
 </svelte:head>
 
@@ -468,107 +473,9 @@
   ]}
 />
 
-<Section>
-  <Row>
-    <Column>
-      <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Who should and shouldn't use Bubbles" border={false} />
-        <p>
-          Bubbles is an opinionated component library build for Svelte. It's has a specific structure and style that it
-          follows. If the overall structure of it's layouts and components don't fit your needs, you're most likely
-          better of using a more flexible component framework like Material UI, Tailwind, or writing your own.
-        </p>
-        <p>
-          Bubbles is mostly set up to construct dashboards NOT landing pages and marketing sites. It has not's of
-          dashboard specific components like <code>Sidebars</code> and <code>Tables</code> that are usually overkill and/or
-          are too restrictive for marketing sites.
-        </p>
-      </Card>
-    </Column>
-  </Row>
-</Section>
-
-<Section id="installation" title="Installation">
-  <Row>
-    <Column>
-      <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Download from NPM" border={false} />
-        <p>
-          Install Bubbles into your project using <code>npm install bubbles-ui</code>. When you're doing your final
-          build, any components that you are not using will not be included in your bundle.
-        </p>
-      </Card>
-    </Column>
-  </Row>
-</Section>
-
-<Section id="usage" title="Usage">
-  <Row>
-    <Column100>
-      <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Components and Utilities" border={false} />
-        <p>
-          All of the components and utility functions can be imported directly from <code>bubbles-ui</code>. The only
-          caveat is a global css module that you'll want to import either in a global <code>__layout.svelte</code> file
-          or reference in the root <code>app.html</code> which is imported from <code>bubbles-ui/css/app.css</code>
-        </p>
-      </Card>
-    </Column100>
-  </Row>
-  <Row>
-    <Column50>
-      <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Default Config" border={false} />
-        <p>
-          You can import a store called <code>configStore</code> into your initial <code>__layout.svelte</code> file to set
-          some default behaviors for Bubbles. You can view the table below for all of the default options:
-        </p>
-
-        <Table>
-          <TableHeader cells={[{ label: "Property" }, { label: "Description" }, { label: "Default" }]} />
-          <TableRow>
-            <TableCell><code>validate_on_blur</code></TableCell>
-            <TableCell
-              >This will run validation anytime an input has lost focus. If there is an error, it will show the error
-              message. You're able to set this globally, but you can also set this property by passing it as a component
-              prop.</TableCell
-            >
-            <TableCell><code>true</code></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><code>show_required</code></TableCell>
-            <TableCell
-              >If set to true, any input that has <code>required</code> in it's validation property will automatically get
-              a "*" symbol at the end of the input label to indicate that the field is required.</TableCell
-            >
-            <TableCell><code>false</code></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><code>toast_delay</code></TableCell>
-            <TableCell
-              >How long a toast notification will stay on screen in milliseconds until it is automatically hidden.</TableCell
-            >
-            <TableCell><code>5500</code></TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><code>error_delay</code></TableCell>
-            <TableCell
-              >How long an error state will last on an input that has failed validation until it goes back to it's
-              normal state - unless the user interacts with it as it will go back to it's normal state then as well.</TableCell
-            >
-            <TableCell><code>4500</code></TableCell>
-          </TableRow>
-        </Table>
-      </Card>
-    </Column50>
-
-    <Column50>
-      <Card color="dark" px={0} py={0} height100={true}>
-        <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "default-config")]} />
-      </Card>
-    </Column50>
-  </Row>`
-</Section>
+<Section01 />
+<Section02 />
+<Section03 />
 
 <Section id="colors" title="Colors">
   <Row>
@@ -684,9 +591,10 @@
         </p>
       </Card>
     </Column>
+
   </Row>
 </Section>
-`
+
 <Section id="errors" title="Errors">
   <Row>
     <Column>
@@ -707,6 +615,7 @@
         <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "errors")]} />
       </Card>
     </Column>
+
   </Row>
 </Section>
 
@@ -747,6 +656,7 @@
         <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "page-wrappers")]} />
       </Card>
     </Column>
+
   </Row>
 </Section>
 
@@ -786,6 +696,7 @@
         <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "page-rows")]} />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -826,6 +737,7 @@
         <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "page-columns")]} />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -876,6 +788,7 @@
         <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "page-center")]} />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -952,6 +865,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
   <Row>
     <Column50>
@@ -1058,6 +972,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
   <Row>
     <Column50>
@@ -1180,6 +1095,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -1202,6 +1118,7 @@
         <p class="d-flex" style="color: white">This is a card with a color property of primary and no background.</p>
       </Card>
     </Column50>
+
   </Row>
   <Row>
     <Column>
@@ -1260,6 +1177,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
   <Row>
     <Column50>
@@ -1333,6 +1251,7 @@
         </span>
       </Card>
     </Column50>
+
   </Row>
   <Row>
     <Column>
@@ -1360,6 +1279,7 @@
         <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "card-footer")]} />
       </Card>
     </Column>
+
   </Row>
 </Section>
 
@@ -1386,6 +1306,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -1456,6 +1377,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -1529,6 +1451,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -1544,6 +1467,7 @@
         <CheckboxGroup {...checkboxGroup} />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -1566,6 +1490,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -1583,6 +1508,7 @@
         </div>
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -1643,6 +1569,7 @@
         <svelte:component this={data.markdown[data.metadata.findIndex((a) => a?.component === "errors")]} />
       </Card>
     </Column>
+
   </Row>
 </Section>
 
@@ -1688,6 +1615,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -1705,6 +1633,7 @@
         </div>
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -1766,6 +1695,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -1890,6 +1820,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -2219,6 +2150,7 @@
         </div>
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -2305,6 +2237,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -2386,6 +2319,7 @@
         />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -2410,6 +2344,7 @@
         <p>Generally, your modal will display a form or a message to the user with some buttons.</p>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -2471,6 +2406,7 @@
         />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -2514,6 +2450,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -2545,6 +2482,7 @@
         />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -2632,6 +2570,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -2737,6 +2676,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -2773,6 +2713,7 @@
         />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -2811,6 +2752,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -2868,6 +2810,7 @@
         </Card>
       </div>
     </Column>
+
   </Row>
 </Section>
 
@@ -2965,6 +2908,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -3102,6 +3046,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -3177,6 +3122,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -3198,6 +3144,7 @@
         </div>
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -3273,6 +3220,7 @@
         </div>
       </Card>
     </Column50>
+
   </Row>
 
   <Row>
@@ -3362,6 +3310,7 @@
         />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -3516,6 +3465,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -3602,6 +3552,7 @@
         </CardFooter>
       </Card>
     </Column>
+
   </Row>
 </Section>
 
@@ -3649,6 +3600,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -3701,6 +3653,7 @@
         </div>
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -3750,6 +3703,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -3766,6 +3720,7 @@
         <Form inputs={toastExampleFormInputs} />
       </Card>
     </Column50>
+
   </Row>
 </Section>
 
@@ -3913,6 +3868,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 </Section>
 
@@ -3949,6 +3905,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -3998,6 +3955,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -4032,6 +3990,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -4086,6 +4045,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
@@ -4158,6 +4118,7 @@
         </Table>
       </Card>
     </Column>
+
   </Row>
 
   <Row>
