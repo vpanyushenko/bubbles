@@ -686,7 +686,7 @@
     </Column>
   </Row>
 </Section>
-
+`
 <Section id="errors" title="Errors">
   <Row>
     <Column>
@@ -929,9 +929,15 @@
             >
           </TableRow>
           <TableRow>
+            <TableCell><span style="font-weight: 700">new_page</span></TableCell>
+            <TableCell
+              >Pass <code>true</code> if you want this button to open the page contents in a new page.</TableCell
+            >
+          </TableRow>
+          <TableRow>
             <TableCell><span style="font-weight: 700">wide</span></TableCell>
             <TableCell
-              >Pass <code>true</code> if you want the button to take the full width of it's parent container</TableCell
+              >Pass <code>true</code> if you want the button to take the full width of it's parent container. Defaults to <code>true</code></TableCell
             >
           </TableRow>
           <TableRow>
@@ -1225,8 +1231,8 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">border</span></TableCell>
             <TableCell
-              >By default, the header has a bottom border to divide it from the rest of the content. This can be removed
-              by passing <code>false</code> to this property.
+              >By default, the header has a bottom border to divide it from the rest of the content. This can be added
+              by passing <code>true</code> to this property.
             </TableCell>
           </TableRow>
           <TableRow>
@@ -2421,6 +2427,7 @@
           mb={true}
           onclick={() =>
             showModal("Message Modal", {
+              img: "/favicon.png",
               message: "This is a message modal. Good for things like confirming an undoable action for the user",
               footer: [
                 {

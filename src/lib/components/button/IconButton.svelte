@@ -15,6 +15,7 @@
   import trash from "./trash.svg";
   import filter from "./filter.svg";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
+  import { showLoading } from "$lib/utils/loading";
 
   const icons = {
     arrowLeft: arrowLeft,
@@ -46,23 +47,23 @@
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
 
   function iconClick(event) {
+    $pageStore.clicked = id;
+
     let iconElement = event.currentTarget;
 
     if (!event.currentTarget.classList.contains("icon__btn")) {
       iconElement = iconElement.closest(".icon__btn");
     }
-    id = iconElement.id;
-    $pageStore.clicked = id;
 
     if (dropdown && active) {
       active = false;
       $pageStore.dropdown = null;
     } else if (dropdown) {
       active = true;
-      $pageStore.dropdown = event.currentTarget.id;
+      $pageStore.dropdown = id;
     } else {
       active = true;
-      $pageStore.dropdown = event.currentTarget.id;
+      $pageStore.dropdown = id;
     }
   }
 
@@ -83,16 +84,7 @@
 <svelte:window on:click={windowClick} />
 
 {#if href}
-  <a
-    on:click={() => {
-      $pageStore.clicked = id;
-    }}
-    class="icon__btn"
-    {id}
-    sveltekit:prefetch
-    target={new_page ? "_blank" : ""}
-    {href}
-  >
+  <a class="icon__btn" {id} sveltekit:prefetch target={new_page ? "_blank" : ""} {href} on:click={iconClick}>
     <button class:disabled={is_loading} class:background={!transparent}>
       {#if is_loading}
         <Spinner />
@@ -107,8 +99,8 @@
     </button>
   </a>
 {:else}
-  <div class="icon__btn" {id} class:active={dropdown && active} on:click={iconClick} on:click={onclick}>
-    <button class:background={!transparent}>
+  <div class="icon__btn" {id} class:active={dropdown && active}>
+    <button class:background={!transparent} on:click={iconClick} on:click={onclick}>
       {#if is_loading}
         <Spinner />
       {/if}

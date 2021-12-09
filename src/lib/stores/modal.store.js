@@ -1,3 +1,3 @@
 import { writable } from "svelte/store";
 
-export const modalStore = writable({ title: "", active: false, form: [], message: "", footer: [] });
+export const modalStore = writable({ title: "", active: false, form: [], message: "", img: null, footer: [] });

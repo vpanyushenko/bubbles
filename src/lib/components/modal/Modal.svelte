@@ -44,6 +44,12 @@
         </header>
 
         <main>
+          {#if $modalStore.img}
+            <div class="image__container">
+              <img src={$modalStore.img} alt="Modal" />
+            </div>
+          {/if}
+
           {#if $modalStore.message}
             <p>{$modalStore.message}</p>
           {/if}
@@ -129,6 +135,18 @@
     overflow: scroll;
   }
 
+  .image__container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  main img {
+    max-width: 50%;
+    justify-content: center;
+  }
+
   p {
     margin-bottom: 1.5rem;
   }
@@ -142,45 +160,6 @@
 
   :global(.modal__footer button + button) {
     margin-top: 1rem;
-  }
-
-  /**************************\
-    Demo Animation Style
-  \**************************/
-  @keyframes mmfadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes mmfadeOut {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-
-  @keyframes mmslideIn {
-    from {
-      transform: translateY(15%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes mmslideOut {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(15%);
-    }
   }
 
   @media only screen and (max-width: 767px) {

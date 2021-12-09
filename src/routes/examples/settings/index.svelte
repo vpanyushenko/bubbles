@@ -33,7 +33,7 @@
   <Column100>
     <Card>
       <Table>
-        <TableRow href="/examples/pokedex" onclick={() => ($pageStore.clicked = icon2)}>
+        <TableRow href="/examples/pokedex" onclick={() => ($pageStore.clicked = icon1)}>
           <TableCell text="Profile" large={true} bold={true} caption="Edit your profile and update your photo" />
           <TableCell button={{ icon: "arrowRight", href: "/examples/pokedex", id: icon1 }} />
         </TableRow>

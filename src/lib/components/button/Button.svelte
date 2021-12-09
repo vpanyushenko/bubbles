@@ -1,8 +1,8 @@
 <script>
-  import { goto } from "$app/navigation";
   import { pageStore } from "$lib/stores/page.store";
   import { v4 as uuid } from "@lukeed/uuid";
-  import { showLoading, hideLoading } from "$lib/utils/loading";
+  import { navigating } from "$app/stores";
+  import Spinner from "$lib/components/spinner/Spinner.svelte";
 
   export let id = uuid();
   export let label = "Submit";
@@ -11,91 +11,110 @@
   export let color = "primary";
   export let mt = false;
   export let mb = false;
-  export let wide = false;
+  export let wide = true;
+  export let new_page = false;
   export let href;
   export let style;
 
-  $: loading = $pageStore.loading.includes(id);
-
-  function buttonClicked(event) {
-    const id = event.currentTarget.id;
-
-    if (href) {
-      showLoading(id);
-      goto(href)
-        .then(() => {
-          setTimeout(() => {
-            hideLoading(id);
-          }, 300);
-        })
-        .catch((err) => {
-          console.error(err);
-          hideLoading(id);
-        });
-    }
-  }
+  $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
 </script>
 
-<button
-  {id}
-  class="btn"
-  class:primary={color === "primary"}
-  class:secondary={color === "secondary"}
-  class:error={color === "error"}
-  class:warning={color === "warning"}
-  class:success={color === "success"}
-  class:info={color === "info"}
-  class:gray={color === "gray"}
-  class:dark={color === "dark"}
-  class:primary-light={color === "primary-light"}
-  class:secondary-light={color === "secondary-light"}
-  class:error-light={color === "error-light"}
-  class:warning-light={color === "warning-light"}
-  class:success-light={color === "success-light"}
-  class:info-light={color === "info-light"}
-  class:gray-light={color === "gray-light"}
-  class:dark-light={color === "dark-light"}
-  class:primary-border={color === "primary-border"}
-  class:secondary-border={color === "secondary-border"}
-  class:error-border={color === "error-border"}
-  class:warning-border={color === "warning-border"}
-  class:success-border={color === "success-border"}
-  class:info-border={color === "info-border"}
-  class:gray-border={color === "gray-border"}
-  class:dark-border={color === "dark-border"}
-  class:mb
-  class:mt
-  class:wide
-  {style}
-  on:click={buttonClicked}
-  on:click={onclick}
-  on:click={onsubmit}
->
-  <div class="d-flex">
-    <span class="spinner mr-1 hidden" class:hidden={!loading} />
-    <span style="vertical-align: middle;">{label}</span>
-  </div>
-</button>
+{#if href}
+  <a
+    class:wide
+    {href}
+    sveltekit:prefetch
+    target={new_page ? "_blank" : ""}
+    on:click={() => {
+      $pageStore.clicked = id;
+    }}
+    on:click={onclick}
+    on:click={onsubmit}
+  >
+    <button
+      {id}
+      class="btn"
+      class:primary={color === "primary"}
+      class:secondary={color === "secondary"}
+      class:error={color === "error"}
+      class:warning={color === "warning"}
+      class:success={color === "success"}
+      class:info={color === "info"}
+      class:gray={color === "gray"}
+      class:dark={color === "dark"}
+      class:primary-light={color === "primary-light"}
+      class:secondary-light={color === "secondary-light"}
+      class:error-light={color === "error-light"}
+      class:warning-light={color === "warning-light"}
+      class:success-light={color === "success-light"}
+      class:info-light={color === "info-light"}
+      class:gray-light={color === "gray-light"}
+      class:dark-light={color === "dark-light"}
+      class:primary-border={color === "primary-border"}
+      class:secondary-border={color === "secondary-border"}
+      class:error-border={color === "error-border"}
+      class:warning-border={color === "warning-border"}
+      class:success-border={color === "success-border"}
+      class:info-border={color === "info-border"}
+      class:gray-border={color === "gray-border"}
+      class:dark-border={color === "dark-border"}
+      class:mb
+      class:mt
+      class:wide
+      {style}
+    >
+      <div class="flex">
+        <span class="loading" class:hidden={!is_loading}><Spinner /></span>
+        <span style="vertical-align: middle;">{label}</span>
+      </div>
+    </button>
+  </a>
+{:else}
+  <button
+    on:click={() => {
+      $pageStore.clicked = id;
+    }}
+    on:click={onclick}
+    on:click={onsubmit}
+    {id}
+    class="btn"
+    class:primary={color === "primary"}
+    class:secondary={color === "secondary"}
+    class:error={color === "error"}
+    class:warning={color === "warning"}
+    class:success={color === "success"}
+    class:info={color === "info"}
+    class:gray={color === "gray"}
+    class:dark={color === "dark"}
+    class:primary-light={color === "primary-light"}
+    class:secondary-light={color === "secondary-light"}
+    class:error-light={color === "error-light"}
+    class:warning-light={color === "warning-light"}
+    class:success-light={color === "success-light"}
+    class:info-light={color === "info-light"}
+    class:gray-light={color === "gray-light"}
+    class:dark-light={color === "dark-light"}
+    class:primary-border={color === "primary-border"}
+    class:secondary-border={color === "secondary-border"}
+    class:error-border={color === "error-border"}
+    class:warning-border={color === "warning-border"}
+    class:success-border={color === "success-border"}
+    class:info-border={color === "info-border"}
+    class:gray-border={color === "gray-border"}
+    class:dark-border={color === "dark-border"}
+    class:mb
+    class:mt
+    class:wide
+    {style}
+  >
+    <div class="flex">
+      <span class:hidden={!is_loading}><Spinner style="margin: 0 0.5rem 0 0" /></span>
+      <span style="vertical-align: middle;">{label}</span>
+    </div>
+  </button>
+{/if}
 
 <style>
-  @keyframes loading {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .spinner {
-    content: "";
-    box-sizing: border-box;
-    width: 1.25rem;
-    height: 1.25rem;
-    border-radius: 50%;
-    border: 0.15rem solid #ccc;
-    border-top-color: #fff;
-    animation: loading 0.6s linear infinite;
-    display: inline-block;
-    vertical-align: bottom;
-  }
   .mb {
     margin-bottom: 1rem;
   }
@@ -122,6 +141,17 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
+
+  .loading {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
   }
 
   .primary {

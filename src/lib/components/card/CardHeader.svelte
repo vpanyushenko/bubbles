@@ -9,7 +9,7 @@
   export let caption = "";
   export let buttons = [];
   export let center = false;
-  export let border = true;
+  export let border = false;
 
   const filterIds = filters.map((filter) => {
     return filter.id;

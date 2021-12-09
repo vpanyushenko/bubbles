@@ -1,7 +1,7 @@
 <script context="module">
   export async function load({ page, fetch, session, stuff }) {
     //initially there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
-    const limit = page.query.get("limit") ? page.query.get("limit") : 10;
+    const limit = page.query.get("limit") ? Number(page.query.get("limit")) : 10;
 
     //same process with the page, since if the page is undefined the user is on the first one
     const _page = page.query.get("page") ? Number(page.query.get("page")) : 1;
