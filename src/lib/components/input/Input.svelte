@@ -585,13 +585,8 @@
     color: #6c5dd3;
   }
 
-  .border .option:hover,
   .option.focused {
     background-color: var(--gray-lightest);
     border-radius: 12px;
-  }
-
-  .option.border-bottom {
-    padding: 0px;
   }
 </style>

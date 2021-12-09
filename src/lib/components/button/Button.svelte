@@ -123,9 +123,6 @@
     margin-top: 1rem;
   }
 
-  .mr-1 {
-    margin-right: 1rem;
-  }
   .btn {
     min-width: 10rem;
     height: 3.5rem;
@@ -397,11 +394,6 @@
 
   .wide {
     min-width: 100%;
-  }
-
-  .small {
-    width: 5rem;
-    min-width: auto;
   }
 
   .btn:disabled {

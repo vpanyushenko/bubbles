@@ -51,19 +51,6 @@
     border-bottom: none;
   }
 
-  .cell__img {
-    width: 3rem;
-    height: 3rem;
-  }
-  /* Utility Styles */
-  .text-gray {
-    color: var(--gray);
-  }
-
-  .cursor-pointer {
-    cursor: pointer;
-  }
-
   @media only screen and (max-width: 1179px) {
     .cell {
       padding-left: 15px;

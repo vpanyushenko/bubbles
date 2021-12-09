@@ -124,7 +124,7 @@
   export let header = [];
   export let rows = [];
   export let empty = "Nothing here yet.";
-  export let mobile_transform = true;
+  // export let mobile_transform = true;
 
   let w;
 
@@ -166,10 +166,10 @@
     border-bottom: none;
   }
 
-  @media only screen and (max-width: 767px) {
+  /* @media only screen and (max-width: 767px) {
     .table.mobile-transform {
       display: flex;
       flex-direction: column;
     }
-  }
+  } */
 </style>

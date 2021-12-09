@@ -937,7 +937,8 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">wide</span></TableCell>
             <TableCell
-              >Pass <code>true</code> if you want the button to take the full width of it's parent container. Defaults to <code>true</code></TableCell
+              >Pass <code>true</code> if you want the button to take the full width of it's parent container. Defaults
+              to <code>true</code></TableCell
             >
           </TableRow>
           <TableRow>
@@ -4191,17 +4192,9 @@
 </Section>
 
 <style>
-  h2 {
-    margin-bottom: 1rem;
-  }
-  h6,
   p {
     margin-bottom: 1rem;
     color: var(--gray-darker);
-  }
-
-  section p:first-of-type {
-    margin-top: 2rem;
   }
 
   .d-flex {
@@ -4209,9 +4202,5 @@
     align-items: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
-  }
-
-  .margin > * {
-    margin-bottom: 0.75rem;
   }
 </style>

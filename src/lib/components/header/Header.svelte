@@ -58,7 +58,7 @@
   export let breadcrumbs = true;
   export let breadcrumb_labels = [];
   export let buttons = [];
-  export let sticky = true;
+  // export let sticky = true;
 
   const icon_id = uuid();
   const header_id = uuid();
@@ -282,18 +282,6 @@
     padding-bottom: 1.6rem;
   }
 
-  .sticky {
-    /* position: -webkit-sticky; */
-    position: fixed;
-    top: 0;
-    align-self: flex-start;
-    background-color: red;
-    z-index: 10;
-    /* left: 0;
-    right: 0; */
-    /* width: 100%; */
-  }
-
   header {
     display: flex;
     justify-content: space-between;
@@ -302,9 +290,9 @@
     padding: 3rem 4rem 2.75rem;
   }
 
-  header.sticky {
+  /* header.sticky {
     padding: 1rem 4rem 1rem;
-  }
+  } */
 
   .header__text {
     display: flex;
@@ -342,12 +330,6 @@
     align-items: center;
   }
 
-  .page__row {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-
   .header {
     position: relative;
     z-index: 10;
@@ -362,20 +344,20 @@
     justify-content: flex-end;
   }
 
-  .header__user {
+  /* .header__user {
     display: none;
     -ms-flex-negative: 0;
     flex-shrink: 0;
     width: 2.5rem;
     height: 2.5rem;
     font-size: 0;
-  }
+  } */
 
-  .header__pic {
+  /* .header__pic {
     width: 100%;
     min-height: 100%;
     border-radius: 50%;
-  }
+  } */
 
   .header__burger {
     display: none;
@@ -408,9 +390,9 @@
     margin-right: 1rem;
   } */
 
-  .header__buttons > .icon__btn:last-child {
+  /* .header__buttons > .icon__btn:last-child {
     margin-right: 0rem;
-  }
+  } */
 
   .breadcrumbs a:hover {
     color: var(--gray) !important;

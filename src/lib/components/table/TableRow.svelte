@@ -34,10 +34,6 @@
     display: table-row;
   }
 
-  .cursor-pointer {
-    cursor: pointer;
-  }
-
   :global(.row:last-child .cell) {
     border-bottom: none !important;
   }

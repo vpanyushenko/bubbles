@@ -376,13 +376,13 @@
     animation: spinner 0.6s linear infinite;
   }
 
-  .head.disabled {
+  /* .head.disabled {
     cursor: not-allowed;
   }
 
   .head.disabled:before {
     content: none;
-  }
+  } */
 
   .label {
     margin-bottom: 0 !important;
@@ -515,15 +515,15 @@
     color: #6c5dd3;
   }
 
-  .border .option:hover,
+  /* .border .option:hover, */
   .option.focused {
     background-color: var(--gray-lightest);
     border-radius: 12px;
   }
 
-  .option.border-bottom {
+  /* .option.border-bottom {
     padding: 0px;
-  }
+  } */
 
   .select.is_list_open .head {
     border-color: var(--primary);

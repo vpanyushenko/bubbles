@@ -279,14 +279,14 @@
     border-top-color: #fff;
     animation: spinner 0.6s linear infinite;
   }
-
+  /* 
   .head.disabled {
     cursor: not-allowed;
   }
 
   .head.disabled:before {
     content: none;
-  }
+  } */
 
   .value {
     color: var(--black);
@@ -381,15 +381,15 @@
     color: #6c5dd3;
   }
 
-  .border .option:hover,
+  /* .border .option:hover, */
   .option.focused {
     background-color: var(--gray-lightest);
     border-radius: 12px;
   }
 
-  .option.border-bottom {
+  /* .option.border-bottom {
     padding: 0px;
-  }
+  } */
 
   .select.is_list_open .head {
     border-color: var(--primary);
@@ -412,19 +412,19 @@
     color: var(--black);
   }
 
-  .search {
+  /* .search {
     height: 60px;
     padding: 0rem 1rem !important;
     margin-bottom: 1.5rem;
-  }
+  } */
 
-  .field__desc {
+  /* .field__desc {
     padding: 0.625rem 1.375rem 0 !important;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);
-  }
+  } */
 
   @media only screen and (max-width: 1179px) {
     .options {

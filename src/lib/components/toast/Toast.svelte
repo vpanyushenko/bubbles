@@ -44,7 +44,6 @@
     class:gray={color === "gray"}
     class:dark={color === "dark"}
     {id}
-    style="top: {top}"
     in:fly={{ duration: 300, y: -250 }}
     out:fade={{ duration: 300 }}
   >
@@ -74,25 +73,6 @@
     opacity: 0.4;
     padding: 0 5px;
     margin-left: 0.625rem;
-  }
-
-  .toast-rounded {
-    border-radius: 25px;
-  }
-
-  .toast-avatar {
-    width: 1.5em;
-    height: 1.5em;
-    margin: 0 5px;
-    border-radius: 2px;
-  }
-
-  .toast-center {
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    max-width: fit-content;
   }
 
   .primary {
@@ -140,11 +120,6 @@
     background: var(--success-dark);
   }
 
-  .success-light {
-    background: var(--success-lightest);
-    color: var(--success-darkest);
-  }
-
   .info {
     background: var(--info);
     color: var(--white);
@@ -169,15 +144,5 @@
 
   .gray:hover {
     background: var(--gray-dark);
-  }
-
-  @media only screen and (max-width: 500px) {
-    .toast {
-      margin-left: auto;
-      margin-right: 0.625rem;
-      left: 0;
-      right: 0;
-      max-width: fit-content;
-    }
   }
 </style>

@@ -127,9 +127,6 @@
     display: flex;
   }
 
-  .spinner {
-    margin-right: 0.5rem;
-  }
   .cell {
     display: table-cell;
     vertical-align: middle;
@@ -153,7 +150,7 @@
     padding-left: 0px;
   }
 
-  .cell.thin {
+  /* .cell.thin {
     padding-top: 1rem;
     padding-bottom: 1rem;
   }
@@ -161,13 +158,13 @@
   .cell.thinnest {
     padding-top: 8px;
     padding-bottom: 8px;
-  }
+  } */
 
-  .cell.icon {
+  /* .cell.icon {
     width: 1.25rem;
     padding: 0;
     font-size: 0;
-  }
+  } */
 
   .cell picture {
     position: relative;
@@ -202,10 +199,6 @@
   /* Utility Styles */
   .text-gray {
     color: var(--gray);
-  }
-
-  .cursor-pointer {
-    cursor: pointer;
   }
 
   .h6 {

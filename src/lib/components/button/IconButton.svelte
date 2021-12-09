@@ -219,7 +219,7 @@
     box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6) !important;
   }
 
-  .icon__btn__counter {
+  /* .icon__btn__counter {
     position: absolute;
     top: 0;
     right: -12px;
@@ -231,7 +231,7 @@
     font-size: 12px;
     font-weight: 600;
     color: #ffffff;
-  }
+  } */
 
   .icon__btn__dropdown {
     position: absolute;
@@ -259,11 +259,6 @@
     width: 1rem;
   }
 
-  .icon__btn__info {
-    margin-bottom: 0px;
-    padding: 0 1.5rem;
-  }
-
   .icon__btn__options {
     margin-bottom: 0px;
   }
@@ -284,23 +279,6 @@
     transition: background 0.25s;
   }
 
-  .icon__btn__table__row {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 1rem 1rem 1rem 1.25rem;
-    background: transparent;
-    flex-grow: 1;
-  }
-
-  .icon__btn__table__row .table__cell {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
   .icon__btn__item:hover {
     background: var(--input-bg);
   }
@@ -318,37 +296,6 @@
     width: 100%;
   }
 
-  .icon__btn__line {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    /* margin-bottom: 6px; */
-  }
-
-  .icon__btn__title {
-    font-size: 17px;
-    margin-right: auto;
-    padding-left: 1.25rem;
-    color: var(--black);
-    -webkit-transition: color 0.25s;
-    -o-transition: color 0.25s;
-    transition: color 0.25s;
-  }
-
-  .icon__btn__options .icon__btn__title:not(:first-child) {
-    margin-top: 2rem;
-  }
-
-  .icon__btn__header {
-    font-size: 17px;
-    margin-right: auto;
-    color: var(--black);
-    -webkit-transition: color 0.25s;
-    -o-transition: color 0.25s;
-    transition: color 0.25s;
-  }
-
-  .icon__btn__time,
   .icon__btn__text {
     color: #b2b3bd;
     text-align: left;
@@ -360,20 +307,6 @@
   .icon__btn__text {
     /* margin-top: 6px; */
     padding-right: 0.625rem;
-  }
-
-  .icon__btn__time {
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    margin-left: 1.25rem;
-  }
-
-  .icon__btn__btns {
-    text-align: center;
-  }
-
-  .icon__btn__btn {
-    min-width: 230px;
   }
 
   .icon__btn.active button {
@@ -429,15 +362,14 @@
     button .icon {
       font-size: 1.25rem;
     }
-    .icon__btn__counter {
+    /* .icon__btn__counter {
       top: 5px;
       right: 5px;
       min-width: 12px;
       height: 12px;
       font-size: 0;
-    }
+    } */
     .icon__btn__dropdown {
-      /* top: calc(100% + 1px); */
       right: 0;
       left: 0;
       width: auto;
@@ -445,13 +377,7 @@
       -webkit-box-shadow: 0px 30px 30px rgba(27, 29, 33, 0.3);
       box-shadow: 0px 30px 30px rgba(27, 29, 33, 0.3);
     }
-    .icon__btn__info {
-      margin-bottom: 1rem;
-      padding: 0;
-    }
-    /* .icon__btn__options {
-    margin-bottom: 1.5rem;
-  } */
+
     .icon__btn__item {
       padding: 8px 1rem;
     }
@@ -461,9 +387,6 @@
     }
     .icon__btn__item:not(:last-child) {
       margin-bottom: 1.25rem;
-    }
-    .icon__btn__ava {
-      margin-right: 1rem;
     }
   }
 </style>
