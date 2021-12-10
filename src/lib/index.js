@@ -108,6 +108,7 @@ import { showModal, hideModal } from "./utils/modal";
 import { showToast } from "./utils/toast";
 import { v4 as uuid } from "@lukeed/uuid";
 import { addQueryParam, getQueryParam } from "./utils/url";
+import fuzzySearch from "$lib/utils/fuzzy-search";
 export {
   getFormData,
   validateInputs,
@@ -119,4 +120,5 @@ export {
   uuid,
   addQueryParam,
   getQueryParam,
+  fuzzySearch,
 };

@@ -26,7 +26,7 @@
   });
 
   const sectionsWithTitles = {};
-  const path = $page.path;
+  let path = $page.path;
   let activeSection = false;
 
   sections.forEach((section, index) => {

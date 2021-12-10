@@ -6,7 +6,7 @@
   export let title;
 </script>
 
-<section {id}>
+<section {id} class="scroller">
   {#if title}
     <Row>
       <Column>
@@ -14,6 +14,7 @@
       </Column>
     </Row>
   {/if}
+
   <slot />
 </section>
 

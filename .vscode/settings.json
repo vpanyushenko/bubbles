@@ -2,5 +2,22 @@
   "cSpell.enableFiletypes": ["svelte"],
   "spellright.language": ["en"],
   "spellright.documentTypes": ["markdown", "latex", "plaintext"],
-  "cSpell.words": ["keydown"]
+  "cSpell.words": [
+    "atrule",
+    "fira",
+    "flexbox",
+    "fontsource",
+    "hexcode",
+    "keepfocus",
+    "keydown",
+    "lukeed",
+    "mdsvex",
+    "nattt",
+    "noscroll",
+    "nowrap",
+    "Panyushenko",
+    "primaryhex",
+    "Scroller",
+    "vite"
+  ]
 }

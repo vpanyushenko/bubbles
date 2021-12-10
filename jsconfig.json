@@ -4,7 +4,6 @@
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
-      "$markdown/*": ["src/markdown/*"],
       "$misc/*": ["src/misc/*"]
     }
   },

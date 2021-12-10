@@ -5,4 +5,6 @@ export const configStore = writable({
   show_required: false,
   toast_delay: 5500,
   error_delay: 4500,
+  debug: true,
+  goto: null,
 });

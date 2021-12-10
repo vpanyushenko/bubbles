@@ -1,22 +1,26 @@
 import { browser } from "$app/env";
-// import { goto as bubbles_goto } from "$app/navigation";
 import { showLoading, hideLoading } from "$lib/utils/loading";
+import { configStore } from "$lib/stores/config.store";
+import { get } from "svelte/store";
 
 /**
  * Adds a url query param based on a key value pair
  * @param {String} key - The key for the url param you want to add
  * @param {String} value - The value for the key
  * @param {Object} options - Additional options
- * @param {Boolean} [options.reload=true] - Will rerun the svelte load function after the query param is added
+ * @param {Function} [options.goto=true] - the imported svelte kit goto function. Passing this will indicate that you want to load function to be rerun
  * @param {String} [options.show_loading] - The ID of an element you want to shoe the animation for. The loading state will automatically stop when the load function completes it's promise.
  * @param {Array<String>} [options.keep_only=[]] - An array of query parameter strings that you want to keep. If the array is empty, then no query parameters will be deleted
  */
-const addQueryParam = (key, value, options = { reload: true, show_loading: "", keep_only: [] }) => {
+const addQueryParam = (key, value, options = { goto: false, show_loading: "", keep_only: [] }) => {
   const _options = {
-    reload: !options?.reload ? false : true,
+    goto: !options?.goto ? false : true,
     show_loading: options?.show_loading ? options.show_loading : "",
     keep_only: options?.keep_only ? options.keep_only : [],
   };
+
+  const svelteGoto = get(configStore).goto;
+  const debug = get(configStore).debug;
 
   if (browser) {
     const queryParams = new URLSearchParams(window.location.search);
@@ -45,18 +49,26 @@ const addQueryParam = (key, value, options = { reload: true, show_loading: "", k
       }
     }
 
-    if (_options?.reload || _options?.show_loading) {
+    if (_options?.goto || _options?.show_loading) {
       if (_options?.show_loading) {
         showLoading(_options.show_loading);
       }
 
-      window.location.replace(window.location.href);
-      //goto(window.location.href, { keepfocus: true, replaceState: true, noscroll: true });
-      // .then(() => {
-      //   if (_options.show_loading) {
-      //     hideLoading(_options.show_loading);
-      //   }
-      // });
+      if (svelteGoto) {
+        svelteGoto(window.location.href, { keepfocus: true, replaceState: true, noscroll: true }).then(() => {
+          if (_options.show_loading) {
+            hideLoading(_options.show_loading);
+          }
+        });
+      } else {
+        if (debug) {
+          console.log(
+            "[Bubbles] You did not pass the Svelte Kit goto function to the Bubbles configStore so the load function is being rerun using browser window APIs."
+          );
+        }
+
+        window.location.replace(window.location.href);
+      }
     }
   }
 };

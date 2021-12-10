@@ -6,19 +6,19 @@ export function importAll(imports) {
   const markdown = modules.map((item) => {
     return item.default;
   });
-  // This is the frontmatter in the Markdown file, parsed by mdsvex automagically as 'metadata'
+  // This is the frontmatter in the Markdown file, parsed by mdsvex automatically as 'metadata'
   const metadata = modules.map((wi) => wi.metadata);
   return { metadata, markdown };
 }
 
-export function importMarkdown() {
-  const imports = import.meta.globEager("../data/*.{svx,md}");
-  // You could also load a single file with: const natttModule = (await import('../data/work/nattt.md')).default;
-  return importAll(imports);
-}
+// export function importMarkdown() {
+//   const imports = import.meta.globEager("../data/*.{svx,md}");
+//   // You could also load a single file with: const natttModule = (await import('../data/work/nattt.md')).default;
+//   return importAll(imports);
+// }
 
 export function importMarkdownChangelog() {
-  const imports = import.meta.globEager("../data/changelog/*.{svx,md}");
+  const imports = import.meta.globEager("../misc/changelog/*.{svx,md}");
   // You could also load a single file with: const natttModule = (await import('../data/work/nattt.md')).default;
   return importAll(imports);
 }

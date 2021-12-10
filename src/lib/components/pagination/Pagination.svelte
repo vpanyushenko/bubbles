@@ -69,14 +69,14 @@
               label: row,
               value: row,
               onselect: (event) => {
-                addQueryParam(page_query_name, 1, { reload: false });
-                addQueryParam(limit_query_name, row, { show_loading: id, reload: true });
+                addQueryParam(page_query_name, 1, { goto: false });
+                addQueryParam(limit_query_name, row, { show_loading: id, goto: true });
               },
             };
           } else {
             const _onselect = (event) => {
-              addQueryParam(page_query_name, "1", { reload: false });
-              addQueryParam(limit_query_name, row.value, { show_loading: id, reload: true });
+              addQueryParam(page_query_name, "1", { goto: false });
+              addQueryParam(limit_query_name, row.value, { show_loading: id, goto: true });
             };
 
             return {
@@ -129,15 +129,15 @@
           id: id,
           label: button,
           onclick: () => {
-            addQueryParam(limit_query_name, limit, { reload: false });
-            addQueryParam(page_query_name, button, { show_loading: id });
+            addQueryParam(limit_query_name, limit, { goto: false });
+            addQueryParam(page_query_name, button, { show_loading: id, goto: true });
           },
           transparent: current_page.toString() !== button.toString(),
         };
       } else {
         const _onclick = () => {
-          addQueryParam(limit_query_name, limit, { reload: false });
-          addQueryParam(page_query_name, button, { show_loading: id });
+          addQueryParam(limit_query_name, limit, { goto: false });
+          addQueryParam(page_query_name, button, { show_loading: id, goto: true });
         };
 
         return {
@@ -165,7 +165,7 @@
         icon="arrowLeftDouble"
         id={_first}
         onclick={() => {
-          addQueryParam(page_query_name, 1, { show_loading: _first, reload: true });
+          addQueryParam(page_query_name, 1, { show_loading: _first, goto: true });
         }}
       />
     {/if}
@@ -178,7 +178,7 @@
           if (current_page > 1) {
             addQueryParam(page_query_name, Number(current_page) - 1, {
               show_loading: _prev,
-              reload: true,
+              goto: true,
             });
           }
         }}
@@ -209,7 +209,7 @@
           if (current_page < total_pages || has_more) {
             addQueryParam(page_query_name, Number(current_page) + 1, {
               show_loading: _next,
-              reload: true,
+              goto: true,
             });
           }
         }}
@@ -221,7 +221,7 @@
         icon="arrowRightDouble"
         id={_last}
         onclick={() => {
-          addQueryParam(page_query_name, total_pages, { show_loading: _last, reload: true });
+          addQueryParam(page_query_name, total_pages, { show_loading: _last, goto: true });
         }}
       />
     {/if}

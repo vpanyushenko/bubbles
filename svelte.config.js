@@ -6,7 +6,7 @@ import { mdsvex } from "mdsvex";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  extensions: [".svelte", ".md", ".svelte.md"],
+  extensions: [".svelte", ".md", ".svelte.md", ".svx"],
   preprocess: [
     mdsvex({ extensions: [".svelte.md", ".md", ".svx"] }),
     preprocess({

@@ -1,6 +1,6 @@
 <script>
   import Select from "$lib/components/select/Select.svelte";
-
+  import { v4 as uuid } from "@lukeed/uuid";
   export let segments = [];
 
   const selectOptions = segments.map((segment) => {
@@ -11,8 +11,9 @@
     };
   });
 
-  let expanded = true;
+  const id = uuid();
 
+  let expanded = true;
   let items = [];
   let selected = 0;
   let wrapper;
@@ -41,6 +42,7 @@
           on:click={() => (selected = i)}
           bind:this={items[i]}
           on:click={segment.onclick}
+          id={segment.id ? segment.id : `${id}_${i}`}
         >
           {segment.label}
         </button>

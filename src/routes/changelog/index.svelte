@@ -33,7 +33,7 @@
     {#each articles.metadata as metadata, index}
       <Card>
         <CardHeader title={metadata.title} />
-        <div>
+        <div class="markdown">
           <svelte:component this={articles.markdown[index]} />
         </div>
       </Card>
@@ -45,5 +45,14 @@
   div {
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+
+  :global(.markdown ul) {
+    list-style-type: disc;
+  }
+
+  :global(.markdown p) {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
   }
 </style>

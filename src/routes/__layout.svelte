@@ -1,11 +1,18 @@
 <script>
   import "$lib/css/app.css";
-  import "../code.css";
+  import "../oceanic.css";
+
+  import store from "$misc/store";
+
+  import { goto } from "$app/navigation";
 
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
   import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
   import Modal from "$lib/components/modal/Modal.svelte";
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
+  import { pageStore, configStore } from "$lib/stores/stores";
+
+  $configStore.goto = goto;
 
   const sidebarConfig = {
     logo: "/logo.svg",
@@ -41,27 +48,27 @@
         section: "Getting Started",
       },
       {
-        label: "Page Wrappers",
-        id: "page-wrappers",
-        href: "/#page-wrappers",
+        label: "Page Wrapper",
+        id: "page-wrapper",
+        href: "/#page-wrapper",
         section: "Layouts",
       },
       {
-        label: "Page Rows",
-        id: "page-rows",
-        href: "/#page-rows",
+        label: "Page Row",
+        id: "page-row",
+        href: "/#page-row",
         section: "Layouts",
       },
       {
-        label: "Page Columns",
-        id: "page-columns",
-        href: "/#page-columns",
+        label: "Page Column",
+        id: "page-column",
+        href: "/#page-column",
         section: "Layouts",
       },
       {
-        label: "Page Grids",
-        id: "page-grids",
-        href: "/#page-grids",
+        label: "Page Grid",
+        id: "page-grid",
+        href: "/#page-grid",
         section: "Layouts",
       },
       {
@@ -71,21 +78,21 @@
         section: "Layouts",
       },
       {
-        label: "Buttons",
-        id: "buttons",
-        href: "/#buttons",
+        label: "Button",
+        id: "button",
+        href: "/#button",
         section: "Components",
       },
       {
-        label: "Cards",
-        id: "cards",
-        href: "/#cards",
+        label: "Card",
+        id: "card",
+        href: "/#card",
         section: "Components",
       },
       {
-        label: "Checkboxes",
-        id: "checkboxes",
-        href: "/#checkboxes",
+        label: "Checkbox",
+        id: "checkbox",
+        href: "/#checkbox",
         section: "Components",
       },
       {
@@ -238,20 +245,14 @@
         href: "/#hideModal",
         section: "Utils",
       },
-      // {
-      //   label: "Change Log",
-      //   id: "changelog",
-      //   href: "/changelog",
-      //   section: "Links",
-      // },
-      // {
-      //   label: "Pokedex",
-      //   id: "pokedex",
-      //   href: "/pokedex",
-      //   section: "Links",
-      // },
     ],
   };
+
+  $: if ($store.sidebar_index) {
+    setTimeout(() => {
+      $pageStore.sidebar.active_item = sidebarConfig.sections[$store.sidebar_index].id;
+    }, 500);
+  }
 </script>
 
 <ToastContainer />
