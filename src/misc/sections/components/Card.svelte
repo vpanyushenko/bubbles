@@ -62,7 +62,7 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">px</span></TableCell>
             <TableCell
-              >The horisontal padding on the card in <code>rem</code> values. It defaults to
+              >The horizontal padding on the card in <code>rem</code> values. It defaults to
               <code>0.065</code>.</TableCell
             >
           </TableRow>

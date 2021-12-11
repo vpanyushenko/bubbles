@@ -14,12 +14,12 @@ component: checkbox-group
         value: "pepperoni",
       },
       {
-        label: "Chedder Cheese",
+        label: "Cheddar Cheese",
         value: "cheese",
       },
       {
         label: "Small Mushrooms",
-        value: "mushroons",
+        value: "mushrooms",
       },
     ],
     value: ["pepperoni"],
