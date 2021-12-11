@@ -82,6 +82,8 @@ import Column50 from "./layouts/Column50.svelte";
 import Column100 from "./layouts/Column100.svelte";
 import Center from "./layouts/Center.svelte";
 import PageTransitionWrapper from "./layouts/PageTransitionWrapper.svelte";
+import Grid from "./layouts/Grid.svelte";
+import GridItem from "./layouts/GridItem.svelte";
 
 //TODO: Add grid layouts
 
@@ -96,6 +98,8 @@ export {
   Column100,
   Center,
   PageTransitionWrapper,
+  Grid,
+  GridItem,
 };
 
 //Stores
