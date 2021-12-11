@@ -16,24 +16,20 @@
   let expanded = true;
   let items = [];
   let selected = 0;
-  let wrapper;
+  let wrapper, dom_component_width;
 
   $: selectedItem = items[selected];
   $: left = selectedItem?.getBoundingClientRect().left - wrapper?.getBoundingClientRect().left + 4;
   $: width = selectedItem?.getBoundingClientRect().width - 8;
 
-  let pageWidth = 0;
-
-  $: if (segments.length * 190 <= pageWidth) {
+  $: if (segments.length * 190 <= dom_component_width) {
     expanded = true;
   } else {
     expanded = false;
   }
 </script>
 
-<svelte:window bind:innerWidth={pageWidth} />
-
-<nav>
+<nav bind:clientWidth={dom_component_width}>
   {#if expanded}
     <div bind:this={wrapper} class="wrapper" style="--left: {left}px; --width: {width}px;">
       {#each segments as segment, i}

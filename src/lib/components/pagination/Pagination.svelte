@@ -16,6 +16,8 @@
   export let page_query_name = "page";
   export let limit_query_name = "limit";
 
+  let dom_component_width, dom_component_is_small, _max_buttons;
+
   $: current_page = Number($page.query.get(page_query_name)) || 1;
   $: current_limit = Number($page.query.get(limit_query_name)) || limit;
 
@@ -35,7 +37,7 @@
       //is on page 20 of 100, we should show 15 - 25.
 
       //if we can fix all of the buttons
-      if (total_pages < max_buttons) {
+      if (total_pages < _max_buttons) {
         buttons = countToArray(1);
       } else {
         let pagination_start_page = 1;
@@ -44,8 +46,8 @@
         //and going up to the limit
         //so we need to calc the starting point and make sure that we don't go over the total count
 
-        const left_pages = current_page - Math.floor(max_buttons / 2);
-        const right_pages = current_page + Math.floor(max_buttons / 2);
+        const left_pages = current_page - Math.floor(_max_buttons / 2);
+        const right_pages = current_page + Math.floor(_max_buttons / 2);
 
         //if the pages on the left begin in the negative, just start with 1
         if (left_pages < 0) {
@@ -53,7 +55,7 @@
         } else if (right_pages > total_pages) {
           //if the right pages go over the total pages amount, we need to start with an even
           //lower value
-          buttons = countToArray(total_pages - max_buttons + 1);
+          buttons = countToArray(total_pages - _max_buttons + 1);
         } else {
           buttons = countToArray((pagination_start_page += left_pages));
         }
@@ -105,15 +107,37 @@
     formattedButtons = formatNumberButtons();
   }
 
+  $: if (_max_buttons) {
+    formattedButtons = formatNumberButtons();
+  }
+
+  dom_component_is_small = true;
+  $: dom_component_width <= 600 ? (dom_component_is_small = true) : (dom_component_is_small = false);
+
+  $: if (dom_component_width <= 1000) {
+    let total_buttons = arrows ? 2 : 0;
+
+    if (first_last_arrows) {
+      total_buttons += 2;
+    }
+
+    _max_buttons =
+      Math.floor(dom_component_width / 100) > 3 + total_buttons
+        ? Math.floor(dom_component_width / 100)
+        : 7 - total_buttons;
+  } else {
+    _max_buttons = max_buttons;
+  }
+
   function countToArray(int) {
     const number = Number(int);
     const array = [];
 
-    for (let i = number; i <= number + max_buttons - 1; i++) {
+    for (let i = number; i <= number + _max_buttons - 1; i++) {
       array.push(i);
     }
 
-    if (total_pages < max_buttons) {
+    if (total_pages < _max_buttons) {
       array.length = total_pages;
     }
 
@@ -151,7 +175,7 @@
   }
 </script>
 
-<div class="pagination">
+<div class="pagination" class:is_small={dom_component_is_small === true} bind:clientWidth={dom_component_width}>
   {#if rows_per_page && rows_per_page.length}
     <div class="rows">
       <p>Rows per page:</p>
@@ -236,6 +260,10 @@
     width: 100%;
   }
 
+  .pagination.is_small {
+    flex-direction: column;
+  }
+
   .center {
     width: 100%;
     justify-content: center;
@@ -245,6 +273,17 @@
   .buttons {
     display: flex;
     align-items: center;
+  }
+
+  .is_small .rows {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .is_small .buttons {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .rows span {
