@@ -199,7 +199,7 @@
 </Scroller>
 
 <style>
-  /* .bg {
-    height: 100vh;
-  } */
+  :global(p) {
+    margin-bottom: 1rem;
+  }
 </style>
