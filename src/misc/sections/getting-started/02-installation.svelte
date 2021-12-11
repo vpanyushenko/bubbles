@@ -13,8 +13,8 @@
       <Card color={null} shadow={false} border={true}>
         <CardHeader title="Download from NPM" border={false} />
         <p>
-          Install Bubbles into your project using <code>npm install bubbles-ui</code>. When you're doing your final
-          build, any components that you are not using will not be included in your bundle.
+          Install Bubbles into your project using <code>npm install --save-dev bubbles-ui</code>. When you're doing your
+          final build, any components that you are not using will not be included in your bundle.
         </p>
       </Card>
     </Column>
