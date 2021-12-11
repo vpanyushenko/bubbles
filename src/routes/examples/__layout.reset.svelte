@@ -31,6 +31,11 @@
         href: "/examples/error",
         icon: "/favicon.png",
       },
+      {
+        label: "Grid",
+        href: "/examples/grid",
+        icon: "/favicon.png",
+      },
     ],
   };
 </script>

@@ -67,8 +67,8 @@
       },
       {
         label: "Page Grid",
-        id: "page-grid",
-        href: "/#page-grid",
+        id: "grid",
+        href: "/#grid",
         section: "Layouts",
       },
       {
@@ -251,7 +251,7 @@
   $: if ($store.sidebar_index) {
     setTimeout(() => {
       $pageStore.sidebar.active_item = sidebarConfig.sections[$store.sidebar_index].id;
-    }, 500);
+    }, 750);
   }
 </script>
 
