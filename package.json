@@ -1,6 +1,6 @@
 {
   "name": "bubbles-ui",
-  "version": "0.0.40",
+  "version": "0.1.0",
   "description": "Opinionated svelte UI Kit",
   "scripts": {
     "dev": "svelte-kit dev",
