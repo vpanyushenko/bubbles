@@ -30,16 +30,16 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">Row</span></TableCell>
             <TableCell
-              >The most basic row that you can have. You'll normally use this with a 100% width column or a 50% width
-              column.</TableCell
+              >The most basic row that you can have. You'll normally use this with a 100% width column or two 50% width
+              columns.</TableCell
             >
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">RowBorder</span></TableCell>
             <TableCell
               >This will add a vertical border between two rows. It will make the first column within it 2x wider than
-              the second column.</TableCell
-            >
+              the second column.
+            </TableCell>
           </TableRow>
         </Table>
       </Card>

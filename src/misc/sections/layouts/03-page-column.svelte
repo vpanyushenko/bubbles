@@ -31,7 +31,7 @@
             <TableCell><span style="font-weight: 700">Column</span></TableCell>
             <TableCell
               >This column will be dynamic. The first column will be 66% of the width, with the second column being 33%.
-              You should not use this for more than two columns.</TableCell
+              <strong>You should not use this for more than two columns.</strong></TableCell
             >
           </TableRow>
           <TableRow>
