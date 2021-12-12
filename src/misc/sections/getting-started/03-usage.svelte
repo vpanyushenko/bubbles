@@ -28,8 +28,8 @@
         <p>
           <strong
             >There is a current limitation with svelte kit that the <code>goto</code> function from
-            <code>app/navigation</code> cannot be bundled into the UI Kit. You will need to pass a reference to this function
-            here.</strong
+            <code>app/navigation</code> cannot be bundled into the UI Kit. You will need to pass a reference to this
+            function to the <code>configStore</code>.</strong
           >
         </p>
       </Card>
@@ -86,7 +86,9 @@
           <TableRow>
             <TableCell><span><code>goto</code></span></TableCell>
             <TableCell
-              ><span>This accept the <code>goto</code> function imported from <code>app/navigation</code>.</span
+              ><span
+                >This accepts the <code>goto</code> function imported from <code>app/navigation</code>. See the example
+                for details.</span
               ></TableCell
             >
             <TableCell><span><code>null</code></span></TableCell>
