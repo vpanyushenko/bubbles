@@ -65,7 +65,7 @@
     >
       <div class="flex">
         <span class="loading" class:hidden={!is_loading}><Spinner /></span>
-        <span style="vertical-align: middle;">{label}</span>
+        <span>{label}</span>
       </div>
     </button>
   </a>
@@ -108,8 +108,8 @@
     {style}
   >
     <div class="flex">
-      <span class:hidden={!is_loading}><Spinner style="margin: 0 0.5rem 0 0" /></span>
-      <span style="vertical-align: middle;">{label}</span>
+      <span class="loading" class:hidden={!is_loading}><Spinner style="margin: 0 0.5rem 0 0" /></span>
+      <span>{label}</span>
     </div>
   </button>
 {/if}
@@ -143,6 +143,7 @@
   .flex {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   .loading {

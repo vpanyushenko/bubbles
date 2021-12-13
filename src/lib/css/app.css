@@ -412,7 +412,7 @@ h6 {
 }
 
 p {
-	color: var(--gray);
+	color: var(--gray-darker);
 }
 
 .caption {

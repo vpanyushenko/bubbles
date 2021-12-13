@@ -113,6 +113,7 @@ import { showToast } from "./utils/toast";
 import { v4 as uuid } from "@lukeed/uuid";
 import { addQueryParam, getQueryParam } from "./utils/url";
 import fuzzySearch from "$lib/utils/fuzzy-search";
+import merge from "$lib/utils/merge";
 export {
   getFormData,
   validateInputs,
@@ -125,4 +126,5 @@ export {
   addQueryParam,
   getQueryParam,
   fuzzySearch,
+  merge,
 };
