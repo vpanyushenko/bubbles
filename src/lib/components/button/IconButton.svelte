@@ -41,7 +41,7 @@
 
   const dropdown = options.length ? true : false;
 
-  let src = icons[icon] ? icons[icon] : more;
+  let src = icons[icon] ? icons[icon] : icon;
 
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);

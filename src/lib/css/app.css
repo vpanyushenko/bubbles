@@ -412,7 +412,8 @@ h6 {
 }
 
 p {
-	color: var(--gray-darker);
+	/* color: var(--gray-darker); */
+	color: var(--gray-dark);
 }
 
 .caption {
