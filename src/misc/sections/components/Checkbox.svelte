@@ -142,6 +142,10 @@
               more info.</TableCell
             >
           </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">form_indent</span></TableCell>
+            <TableCell>By default this is <code>true</code> which will cause this element to be indented.</TableCell>
+          </TableRow>
         </Table>
       </Card>
     </Column>
@@ -214,6 +218,10 @@
               >The validation string you want to use for this form. See the validation article in the Utils section for
               more info.</TableCell
             >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">form_indent</span></TableCell>
+            <TableCell>By default this is <code>true</code> which will cause this element to be indented.</TableCell>
           </TableRow>
         </Table>
       </Card>

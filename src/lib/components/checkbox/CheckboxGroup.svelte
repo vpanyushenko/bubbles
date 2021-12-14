@@ -8,6 +8,7 @@
   export let label = "";
   export let desc = "";
   export let validation = null;
+  export let form_indent = true;
 
   const _label =
     $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
@@ -23,7 +24,7 @@
 </script>
 
 <div class="form__field__container" {id}>
-  <div class="field style__indent">
+  <div class="field" class:style__indent={form_indent}>
     <span>
       <p class="error" class:hidden={!is_error}>{error}</p>
       <p class="label" class:hidden={is_error}>{_label}</p>

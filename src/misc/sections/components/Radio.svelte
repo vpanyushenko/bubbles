@@ -61,6 +61,10 @@
             <TableCell>Add the required validation</TableCell>
           </TableRow>
           <TableRow>
+            <TableCell><span style="font-weight: 700">form_indent</span></TableCell>
+            <TableCell>By default this is <code>true</code> which will cause this element to be indented.</TableCell>
+          </TableRow>
+          <TableRow>
             <TableCell><span style="font-weight: 700">options</span></TableCell>
             <TableCell>An array of options the user can chose from</TableCell>
           </TableRow>

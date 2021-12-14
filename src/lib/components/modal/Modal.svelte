@@ -51,7 +51,7 @@
           {/if}
 
           {#if $modalStore.message}
-            <p>{$modalStore.message}</p>
+            <p>{@html $modalStore.message}</p>
           {/if}
 
           {#if $modalStore.form}
