@@ -84,8 +84,8 @@
 <svelte:window on:click={windowClick} />
 
 {#if href}
-  <a class="icon__btn" {id} sveltekit:prefetch target={new_page ? "_blank" : ""} {href} on:click={iconClick}>
-    <button class:disabled={is_loading} class:background={!transparent}>
+  <a class="icon__btn" sveltekit:prefetch target={new_page ? "_blank" : ""} {href} on:click={iconClick}>
+    <button class:disabled={is_loading} class:background={!transparent} {id}>
       {#if is_loading}
         <Spinner />
       {/if}
@@ -99,8 +99,8 @@
     </button>
   </a>
 {:else}
-  <div class="icon__btn" {id} class:active={dropdown && active}>
-    <button class:background={!transparent} on:click={iconClick} on:click={onclick}>
+  <div class="icon__btn" class:active={dropdown && active}>
+    <button class:background={!transparent} on:click={iconClick} on:click={onclick} {id}>
       {#if is_loading}
         <Spinner />
       {/if}
@@ -125,7 +125,6 @@
                 href={option.href}
                 target={option.new_page ? "_blank" : ""}
                 sveltekit:prefetch
-                on:click={iconClick}
                 on:click={() => ($pageStore.is_fetching = true)}
               >
                 <div class="icon__btn__details">
@@ -137,12 +136,7 @@
                 <img class="dropdown__arrow" src={arrowRight} alt="Arrow Right" />
               </a>
             {:else}
-              <div
-                class="icon__btn__item"
-                on:click|stopPropagation={dropdownSelect}
-                on:click={option.onclick}
-                on:click={iconClick}
-              >
+              <div class="icon__btn__item" on:click|stopPropagation={dropdownSelect} on:click={option.onclick}>
                 <div class="icon__btn__details">
                   <p class="font-lg font-bold label">{option.label}</p>
                   {#if option.caption}

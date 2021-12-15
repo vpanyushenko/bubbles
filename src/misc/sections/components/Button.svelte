@@ -32,8 +32,14 @@
     {
       label: "Option 1",
       caption: "onclick example",
-      onclick: () => {
-        alert("Option 1 clicked");
+      onclick: (event) => {
+        const icon_button_id = event.currentTarget.parentElement.parentElement.parentElement.querySelector("button").id;
+
+        showLoading(icon_button_id);
+
+        setTimeout(() => {
+          hideLoading(icon_button_id);
+        }, 2000);
       },
     },
     {
@@ -42,6 +48,17 @@
       href: "/#button",
     },
   ];
+
+  const onclick = (event) => {
+    //here the click event is the actual button click
+    //so we can get the id for the button from the event
+    const id = event.currentTarget.id;
+    showLoading(id);
+
+    setTimeout(() => {
+      hideLoading(id);
+    }, 2000);
+  };
 </script>
 
 <Section id="button" title="Button">
@@ -230,6 +247,7 @@
         <CodeCard2 />
       </Card>
     </Column50>
+
     <Column50>
       <Card height100={true}>
         <CardHeader title="Bundled Icon Options" border={false} />
@@ -242,11 +260,11 @@
           <code>add</code>
         </div>
         <div class="flex">
-          <IconButton icon="arrowLeft" options={iconButtonOptions} />
+          <IconButton icon="arrowLeft" {onclick} />
           <code>arrowLeft</code>
         </div>
         <div class="flex">
-          <IconButton icon="arrowRight" options={iconButtonOptions} />
+          <IconButton icon="arrowRight" {onclick} />
           <code>arrowRight</code>
         </div>
         <div class="flex">
