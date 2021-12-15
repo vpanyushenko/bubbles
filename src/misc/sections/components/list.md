@@ -93,6 +93,26 @@ component: list
       text: "List test",
       icon: "edit",
       active: true,
+      pulse: false, //no pulsing
+      color: "dark", //changed color
+    },
+    {
+      label: "Label",
+      text: "List test",
+      icon: "edit",
+      active: true,
+    },
+    {
+      label: "Label",
+      text: "List test",
+      active: true,
+      color: "primary",
+    },
+    {
+      label: "Label",
+      text: "List test",
+      active: true,
+      color: "error",
     },
   ]}
 />

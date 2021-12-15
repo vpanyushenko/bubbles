@@ -23,6 +23,7 @@
   export let id = uuid();
   export let active = false;
   export let pulse = true;
+  export let color = "success";
 
   $: is_loading = $pageStore.loading.includes(id);
 
@@ -33,9 +34,9 @@
   <span class="timeline__bubble">
     <div class="timeline__bubble__container">
       {#if active}
-        <div class="active__circle" />
+        <div class="active__circle" style="background-color: var(--{color});" />
         {#if pulse}
-          <div class="pulse" />
+          <div class="pulse" style="border: 3px solid var(--{color});" />
         {/if}
       {/if}
     </div>
