@@ -62,6 +62,19 @@ component: list
         alert("List clicked");
       },
     },
+    {
+      label: "Tag Label",
+      tag: {
+        label: "Tag Example",
+        color: "primary",
+      },
+    },
+    {
+      tag: {
+        label: "Tags Can Be Used Without Labels",
+        color: "error",
+      },
+    },
   ]}
 />
 

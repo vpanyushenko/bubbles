@@ -58,8 +58,14 @@
   <div class="cell">
     <div class="d-flex align-items-center">
       {#each rows as nested_row}
-        <div>
+        <div class="nested__row">
           {#each nested_row as nested_cell}
+            {#if nested_cell.tag}
+              <span class="tag">
+                <Tag {...nested_cell.tag} small={true} margin="0 .25rem 0 0" />
+              </span>
+            {/if}
+
             {#if nested_cell.text}
               <!-- <span class="block__text"> -->
               {#if nested_cell.href}
@@ -70,9 +76,9 @@
               <!-- </span> -->
             {/if}
 
-            {#if nested_cell.tag === "tag"}
+            {#if nested_cell.tag && (nested_cell.tag?.align === "right" || nested_cell.tag?.align === "end")}
               <span class="tag">
-                <Tag {...nested_cell.tag} small={true} />
+                <Tag {...nested_cell.tag} small={true} margin="0 0 0 .25rem" />
               </span>
             {/if}
           {/each}
@@ -222,6 +228,11 @@
   p + p,
   a + span + a {
     display: flex;
+  }
+
+  .nested__row {
+    display: flex;
+    align-items: center;
   }
 
   @media only screen and (max-width: 1179px) {

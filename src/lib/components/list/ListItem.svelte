@@ -1,6 +1,7 @@
 <script>
   import { pageStore } from "$lib/stores/page.store";
   import { v4 as uuid } from "@lukeed/uuid";
+  import Tag from "$lib/components/tag/Tag.svelte";
 
   import copy from "./copy.svg";
   import download from "./download.svg";
@@ -18,6 +19,7 @@
   export let text = "";
   export let href = null;
   export let icon = null;
+  export let tag = null;
   export let new_page = true;
   export let onclick = null;
   export let id = uuid();
@@ -37,13 +39,17 @@
       </div>
     </span>
   {/if}
-  {#if label || text}
+  {#if label}
     <div class="content">
       <div class="label">{label}</div>
-      {#if href}
-        <a {href} {target}>{text}</a>
-      {:else}
-        <span>{text}</span>
+      {#if text}
+        {#if href}
+          <a {href} {target}>{text}</a>
+        {:else}
+          <span>{text}</span>
+        {/if}
+      {:else if tag}
+        <Tag {...tag} />
       {/if}
     </div>
     {#if icon}
@@ -52,8 +58,12 @@
         <img class="icon" class:hidden={is_loading} on:click={onclick} src={icons[icon] || icon} alt="Icon" {id} />
       </div>
     {/if}
+  {:else if tag}
+    <div class="center">
+      <Tag {...tag} />
+    </div>
   {:else}
-    <div class="content">
+    <div class="center">
       <slot />
     </div>
   {/if}
@@ -126,5 +136,9 @@
     cursor: pointer;
     filter: var(--sidebar-hover-filter);
     opacity: 1;
+  }
+
+  .center {
+    align-self: center;
   }
 </style>
