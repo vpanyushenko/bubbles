@@ -36,7 +36,64 @@
           All of the text based inputs are housed under one <code>Input</code> component. You can specify the type of
           input that you want to use using the <code>type</code> property.
         </p>
+      </Card>
 
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Inputs Types" border={false} />
+        <Table>
+          <TableHeader cells={[{ label: "Type" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>text</code></span></TableCell>
+            <TableCell>The general purpose text input you'll use for the majority of your forms.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>email</code></span></TableCell>
+            <TableCell
+              >While this will not automatically check for emails, you'll still want to add the email string under
+              validation, this will enable devices like mobile phones to suggest emails for the user to enter.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>tel</code> <code>phone</code></span></TableCell>
+            <TableCell
+              >Entering any of these types will get you the "tel" input, which will suggest phone numbers for the user.
+              <br />
+              <strong style="color: var(--primary);"
+                >In a future update, this input will also have properties to let the user select their country code via
+                dropdown, but that is on the roadmap.</strong
+              >
+              <br />
+              <a href="https://github.com/vpanyushenko/bubbles/issues/33" target="_blank"
+                >https://github.com/vpanyushenko/bubbles/issues/33</a
+              >
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>password</code></span></TableCell>
+            <TableCell>Standard password input. Browsers will let users autofill these passwords.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>date</code></span></TableCell>
+            <TableCell
+              >The date input is <strong>NOT</strong> a calendar input. Bubbles has an opinion that entering a date is
+              just easier by typing it in rather than selecting from a calendar. This will let the user enter the date
+              in mm/dd/yyyy format.
+              <strong style="color: var(--primary);">This still needs to be localized.</strong></TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>number</code></span></TableCell>
+            <TableCell>This will render a number input.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>textarea</code></span></TableCell>
+            <TableCell>This will render a textarea element.</TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
         <Table>
           <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
@@ -184,6 +241,16 @@
             desc="Type a number between 13 and 150"
             margin={true}
             bounds="{[13, 150]},"
+          />
+
+          <Input
+            id="phone"
+            type="tel"
+            label="Enter your phone number"
+            error="Enter your phone number"
+            validation="required"
+            desc="Enter your phone number. If your country code is not +1, enter your country code first."
+            margin={true}
           />
 
           <Input

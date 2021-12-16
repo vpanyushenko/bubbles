@@ -54,6 +54,16 @@ component: inputs
 />
 
 <Input
+  id="phone"
+  type="tel"
+  label="Enter your phone number"
+  error="Enter your phone number"
+  validation="required"
+  desc="Enter your phone number. If your country code is not +1, enter your country code first."
+  margin={true}
+/>
+
+<Input
   id="address"
   type="textarea"
   label="Enter your address"

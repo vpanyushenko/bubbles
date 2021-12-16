@@ -1,13 +1,14 @@
 <script>
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
-  import { hideLoading, showLoading } from "$lib/utils/loading";
+  // import { hideLoading, showLoading } from "$lib/utils/loading";
   import { configLabel } from "$lib/utils/config";
   import { v4 as uuid } from "@lukeed/uuid";
+  // import Select from "$lib/components/select/BasicSelect.svelte";
 
   export let id;
   export let label;
-  export let error = "An error occured";
+  export let error = "An error occurred";
   export let type = "text";
   export let desc;
   export let value = null;
@@ -239,6 +240,29 @@
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
           type="email"
+          bind:value
+          on:focus={inputFocused}
+          on:blur={inputBlured}
+        />
+      </div>
+      {#if desc}
+        <p class="field__desc">{@html desc}</p>
+      {/if}
+    </div>
+  </div>
+{:else if type === "tel" || type === "phone"}
+  <div class="form__field__container" {id} class:mb-2={margin}>
+    <div class="field" class:active={focused || value}>
+      <div class="field__label">
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
+      </div>
+      <div class="field__wrap">
+        <input
+          class="field__input"
+          class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
+          type="tel"
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlured}

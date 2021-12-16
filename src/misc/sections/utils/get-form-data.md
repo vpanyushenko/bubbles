@@ -54,6 +54,11 @@ component: get-form-data
         }
 
         const data = getFormData(formInputs);
+
+        //example if you want to include hidden inputs
+        //Not recommended
+        //const data = getFormData(formInputs, { include_hidden_props: true, hidden_prop_values: null });
+
         // {
         //   name: {
         //     first: "Jamie",

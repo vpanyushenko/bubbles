@@ -262,20 +262,35 @@ const _inputTypes = [
 /**
  * Gets an Object of input keys and their entered values
  * @param {Array} inputs - pass in the array of input values
+ * @param {Object} [options] - options you can pass
+ * @param {Boolean} [options.include_hidden_props = false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
+ * @param {String|Number|Boolean|null} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
  * @returns {Object} key value pairs of your inputs and their values
  */
-const getFormData = (inputs) => {
+const getFormData = (inputs, options = { include_hidden_props: false, hidden_prop_values: null }) => {
+  const _options = {
+    include_hidden_props: options.include_hidden_props === true ? true : false,
+    hidden_prop_values: options.hidden_prop_values === undefined ? null : options.hidden_prop_values,
+  };
+
   let data = {};
 
-  inputs.forEach((input) => {
+  //remove inputs from data if the use does not want to input hidden items
+  const filtered_inputs = !_options.include_hidden_props ? inputs.filter((input) => input.is_hidden === false) : inputs;
+
+  filtered_inputs.forEach((input) => {
     const type = input.type;
+
+    //if there were any inputs that were hidden, we need to check what the user wants to do with them
 
     if (_inputTypes.includes(type)) {
       let id = input.id;
 
       let value = input.value;
 
-      if (type === "number") {
+      if (input.is_hidden && _options.hidden_prop_values !== "**") {
+        value = _options.hidden_prop_values;
+      } else if (type === "number") {
         value = Number(value);
       }
 
@@ -327,7 +342,7 @@ const isValidInput = (value, validation) => {
 };
 
 /**
- * Will validate the inputs based on the validation paramiters you entered and add any errors to the page store.
+ * Will validate the inputs based on the validation parameters you entered and add any errors to the page store.
  * @param {Array} inputs - The array of input objects you passed to the form
  * @returns {Promise<Array>} Returns an array of errors
  */
@@ -346,7 +361,10 @@ const validateInputs = (inputs) => {
   const errors = [];
 
   _inputs.forEach((input) => {
-    if (!isValidInput(input.value, input.validation)) {
+    // Some inputs may be dependent on others. If any dependant inputs were removed from the dom,
+    // we should not validate them
+
+    if (!input.is_hidden && !isValidInput(input.value, input.validation)) {
       errors.push(input.id);
     }
 

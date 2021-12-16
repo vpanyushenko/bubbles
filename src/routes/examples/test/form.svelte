@@ -1,8 +1,6 @@
 <script>
   import Section from "$misc/components/section.svelte";
 
-  import CodeCard1 from "./form.md";
-
   import Row from "$lib/layouts/Row.svelte";
   import Column from "$lib/layouts/Column100.svelte";
   import Column50 from "$lib/layouts/Column50.svelte";
@@ -29,6 +27,7 @@
       validation: "string|required|min:3", // See the validation section for more details, but this adds what validation you need. In This case, it must be a string, it's required, with a min length of 3
       validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
       vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
+      value: "Jamie",
     },
     {
       type: "number", //Will ensure that getFormData will return this as a number
@@ -39,6 +38,7 @@
       error: "You must be at least 13 years old",
       validation: "numeric|required|min:13",
       bounds: [0, 120], //Set the min and max values for this input. If you only want the min or max, you can do something like: [0, null]
+      value: 16,
     },
     {
       type: "date",
@@ -48,6 +48,7 @@
       desc: null,
       error: "Add your Date of Birth",
       validation: "required|date", //date validator is built in
+      value: "11/12/1991",
     },
     {
       type: "textarea", //the textarea / text field input
@@ -57,12 +58,14 @@
       desc: "Type your address",
       rows: 8, //specify how many rows you want. Defaults to 5
       validation: "required",
+      hidden_if: [{ id: "number-form-example", value: 1 }],
+      value: null,
     },
     {
       type: "select",
       id: "role-form-example",
       label: "Select Your Role",
-      value: null, //You can add a value to the input
+      value: "owner", //You can add a value to the input
       desc: null,
       error: "Your role is required",
       validation: "required", //since you're adding the options, you can just set it to required
@@ -89,7 +92,7 @@
       type: "select-number", //This is a special type of select in case you need to select only from number elements. Use this if all values in a select need to be numbers (Floats or Integers)
       id: "number-form-example",
       label: "Select Your Number",
-      value: null, //You can add a value to the input
+      value: 1, //You can add a value to the input
       desc: null,
       error: "This is required",
       validation: "required", //since you're adding the options, you can just set it to required
@@ -97,11 +100,11 @@
       //an array of options for your input
       options: [
         {
-          label: "One", //The label is the main option the user is picking,
+          label: "Zero", //The label is the main option the user is picking,
           value: 0, //This is the actual value the user is selecting
         },
         {
-          label: "Two", //The label is the main option the user is picking,
+          label: "One", //The label is the main option the user is picking,
           value: 1, //This is the actual value the user is selecting
         },
         {
@@ -114,22 +117,11 @@
       type: "switch", //will render a switch component
       id: "preferences.email",
       label: "Email Updates",
-      value: false, //value should be a boolean
+      value: true, //value should be a boolean
       desc: "Let us know if you want to receive email updates",
       disabled: false,
       error: "An error occurred",
       validation: "accepted", //best UX is to not make switches mandatory, use a checkbox instead if you need
-    },
-    {
-      type: "email",
-      id: "email_required_id",
-      label: "Your Email",
-      value: null,
-      desc: "You'll be able to change this name later",
-      error: "A name is required",
-      validation: "string|required|min:3",
-      vob: true,
-      hidden_if: [{ id: "preferences.email", value: false }],
     },
     {
       type: "radio", //a group of radio buttons
@@ -158,7 +150,7 @@
       type: "checkbox-group", //This will give a group of checkboxes, here the user can select multiple options
       id: "toppings",
       label: "Select Your Toppings",
-      value: [], //Will need an array because you can select multiple
+      value: ["beans", "lettuce"], //Will need an array because you can select multiple
       desc: "Select as many toppings as you'd like",
       error: "Something went wrong",
       validation: null,
@@ -181,7 +173,7 @@
       type: "checkbox", //a single checkbox, like for accepting terms and conditions
       id: "terms",
       label: "Terms and conditions",
-      value: false, //You can add a value to the input
+      value: true, //You can add a value to the input
       desc: "By submitting this form you agree to our terms. <a href='https://google.com' target='_blank'>View Terms</a>.", //you can add html into the description
       error: "You must accept the terms and conditions",
       validation: "required|accepted",
@@ -200,6 +192,7 @@
         }
 
         const data = getFormData(formInputs);
+        //const data = getFormData(formInputs, { include_hidden_props: true, hidden_prop_values: null });
 
         //the onsubmit and onclick function on buttons, will give you the event param
         //if you want to toggle the loading state on your button while doing a networking request
@@ -209,7 +202,7 @@
         const button_id = event.currentTarget.id;
         showLoading(button_id);
 
-        alert(JSON.stringify(data));
+        console.log(data);
 
         setTimeout(() => {
           hideLoading(button_id);
@@ -222,83 +215,12 @@
 <Section id="form" title="Form">
   <Row>
     <Column>
-      <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Form" border={false} />
-        <p>
-          Your form data is probably a mix of some JS Objects / JSON and an initial fetch request to get existing data
-          from your users. As a result, Bubbles uses an array of objects to create your form.
-        </p>
-        <p>
-          Basically, to use forms, you'll pass in your objects indicating the type of input you want. One of your button
-          inputs, whichever you choose to be your submit button, will have an `onsubmit` handler that will deal with
-          your form submission.
-        </p>
-        <p>
-          Bubbles provides two utility functions called <code>getFormData</code>, which will give you an
-          <code>object</code> of your data and <code>validateInputs</code> which will validate the inputs based on the validation
-          params that you supply to each of the inputs.
-        </p>
-        <p>
-          All of the inputs that you provide to the form should have an <code>id</code> property. This will end up being
-          the property name on the JSON object. If your <code>id</code> includes any periods in it like
-          <code>profile.name</code>, the "name" will be nested under "profile".
-        </p>
-
-        <Table>
-          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
-          <TableRow>
-            <TableCell><span style="font-weight: 700">id</span></TableCell>
-            <TableCell>You can set an ID for the form, otherwise an unique ID will automatically be applied.</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell><span style="font-weight: 700">inputs</span></TableCell>
-            <TableCell
-              >An array of input values that you want to add. See the individual articles for inputs like <code
-                >Input</code
-              >, <code>Select</code>, and <code>Button</code> to understand what kind of properties to add to each.</TableCell
-            >
-          </TableRow>
-          <TableRow>
-            <TableCell><span style="font-weight: 700">input.hidden_if</span></TableCell>
-            <TableCell>
-              When used with a form, each <strong style="color: var(--success)">input</strong> has a special property
-              called <code>hidden_if</code>, which contains logic for when to remove from the DOM, if
-              <strong style="color: var(--error)">another input</strong>
-              in this form has a specific value. <code>hidden_if</code> expects an array of objects, with each object
-              providing an <code>id</code>, of the that should be referenced, and a
-              <code>value</code> property, which is the value the
-              <strong style="color: var(--error)">other input</strong>
-              will have that will hide <strong style="color: var(--success)">this input</strong>.
-              <br />
-              <br />
-              See the example below for more details. From a UX point of view, <code>hidden_if</code> is best used with
-              Select, Radio, and Switch elements.
-              <br />
-              <br />
-              <strong style="color: var(--primary)"
-                >This property is still experimental and may change in a future release.</strong
-              >
-            </TableCell>
-          </TableRow>
-        </Table>
-      </Card>
-    </Column>
-  </Row>
-
-  <Row>
-    <Column50>
-      <Card color="dark" px={0} py={0}>
-        <CodeCard1 />
-      </Card>
-    </Column50>
-
-    <Column50>
       <Card>
         <CardHeader title="Demo" border={false} />
         <div>
           <Form inputs={formInputs} />
         </div>
       </Card>
-    </Column50>
+    </Column>
   </Row>
 </Section>

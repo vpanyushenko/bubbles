@@ -265,6 +265,8 @@
 
 -->
 <script>
+  import { scale, fade } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/stores";
   import Switch from "$lib/components/switch/LabeledSwitch.svelte";
@@ -305,13 +307,52 @@
       }
     }
   }
+
+  //determine if any inputs are dependent on other inputs
+  $: formatted_inputs = inputs.map((input) => {
+    if (!input.hidden_if) {
+      input.hidden_if = [];
+    }
+
+    const hidden = input.hidden_if.map((obj) => {
+      const matched_input = inputs.find((input) => input.id === obj.id);
+
+      if (matched_input && matched_input.value === obj.value) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    input.is_hidden = false;
+
+    if (hidden.filter(Boolean).length > 0) {
+      input.is_hidden = true;
+    }
+
+    return input;
+  });
 </script>
 
 <div class="form" {id}>
-  {#each inputs as input}
-    {#if !input.hidden}
-      <span class="row">
-        {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number" || input.type === "textarea"}
+  {#each formatted_inputs as input}
+    {#if !input.is_hidden}
+      <span
+        class="row"
+        in:scale={{
+          duration: 750,
+          opacity: 0,
+          start: 0.5,
+          easing: quintOut,
+        }}
+        out:scale={{
+          duration: 750,
+          opacity: 0,
+          start: 0,
+          easing: quintOut,
+        }}
+      >
+        {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number" || input.type === "textarea" || input.type === "tel" || input.type === "phone"}
           <Input {...input} bind:value={input.value} />
         {/if}
 
