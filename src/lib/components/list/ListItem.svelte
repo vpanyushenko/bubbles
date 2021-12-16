@@ -86,7 +86,6 @@
 
   .label {
     margin-bottom: 0 !important;
-    padding-top: 16px;
     padding-bottom: 4px;
     pointer-events: none;
     font-size: 10px;
@@ -100,6 +99,8 @@
 
   .content {
     flex-basis: max-content;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .icon__container {
