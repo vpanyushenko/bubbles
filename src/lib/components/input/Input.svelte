@@ -1,10 +1,12 @@
 <script>
+  import { loadStripe } from "@stripe/stripe-js";
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
-  // import { hideLoading, showLoading } from "$lib/utils/loading";
   import { configLabel } from "$lib/utils/config";
   import { v4 as uuid } from "@lukeed/uuid";
-  // import Select from "$lib/components/select/BasicSelect.svelte";
+  import { onMount } from "svelte";
+  import { dev } from "$app/env";
+  import Spinner from "$lib/components/spinner/Spinner.svelte";
 
   export let id;
   export let label;
@@ -20,11 +22,13 @@
   export let autocomplete = true;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
+  export let stripe_key_name = "VITE_STRIPE_PUBLIC_KEY";
 
   const _uuid = uuid();
   const _label = configLabel(label, validation);
   let focused = false;
   let selectedIndex = 0;
+  let stripe, card;
   $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
 
   $: if (is_error) {
@@ -33,6 +37,55 @@
       is_error = false;
     }, $configStore.error_delay);
   }
+
+  //options for typeahead inside of input or textarea elements
+  $: typeahead_options = [];
+  $: is_loading = false;
+
+  //will show a loading screen for the stripe card while it mounts
+  $: stripe_card_loading = false;
+  $: stripe_card_error = false;
+
+  onMount(async () => {
+    if (type === "stripe" || type === "stripe-card") {
+      stripe_card_loading = true;
+      console.log("Dev?", dev);
+      console.log("Dev?", dev);
+      console.log(import.meta.env[`${stripe_key_name}`]);
+      console.log(import.meta.env[`${stripe_key_name}`]);
+      console.log(import.meta.env[`${stripe_key_name}`]);
+      console.log(import.meta.env[`${stripe_key_name}`]);
+      console.log(import.meta.env[`${stripe_key_name}`]);
+
+      try {
+        stripe = await loadStripe(import.meta.env[`${stripe_key_name}`]);
+
+        const elements = stripe.elements();
+
+        const style = {
+          base: {
+            fontFamily: '"Inter", sans-serif',
+            fontSize: "14px",
+            fontWeight: 600,
+            color: "var(--black)",
+          },
+          invalid: {
+            color: "var(--error)",
+            iconColor: "var(--error)",
+          },
+        };
+
+        card = elements.create("card", { style: style });
+
+        card.mount("#__stripe__card__element");
+
+        stripe_card_loading = false;
+      } catch (error) {
+        stripe_card_loading = false;
+        stripe_card_error = true;
+      }
+    }
+  });
 
   function dateFieldFocused(event) {
     event.currentTarget.type = "date";
@@ -43,11 +96,6 @@
       event.currentTarget.type = "text";
     }
   }
-
-  //options for typeahead inside of input or textarea elements
-
-  $: typeahead_options = [];
-  $: is_loading = false;
 
   function typeaheadOnInput(event) {
     const value = event.target.value;
@@ -396,6 +444,40 @@
       {/if}
     </div>
   </div>
+{:else if type === "stripe-card"}
+  <div class="form__field__container" {id} class:mb-2={margin}>
+    <div class="field">
+      <!-- <div class="field__label">
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
+      </div> -->
+      <div class="field__wrap">
+        <!-- <input
+          id="__stripe_card_element"
+          class="field__input"
+          class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
+          type="text"
+          bind:value
+          on:focus={inputFocused}
+          on:blur={inputBlured}
+        /> -->
+        <div class="field__input field__input__stripe">
+          {#if stripe_card_loading}
+            <Spinner />
+          {/if}
+
+          {#if stripe_card_error}
+            <p class="stripe__error">There was an issue loading Stripe</p>
+          {/if}
+          <div id="__stripe__card__element" style="width: 100%;" />
+        </div>
+      </div>
+      {#if desc}
+        <p class="field__desc">{@html desc}</p>
+      {/if}
+    </div>
+  </div>
 {:else}
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
@@ -444,7 +526,7 @@
     text-align: left;
   }
 
-  .field__input,
+  /* .field__input,
   .field__textarea {
     width: 100%;
     border-radius: 8px;
@@ -457,12 +539,12 @@
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
-  }
+  } */
 
-  .field__input {
+  /* .field__input {
     height: 56px;
     padding: 0 23px;
-  }
+  } */
 
   .field__textarea {
     padding: 15px 23px;
@@ -492,7 +574,7 @@
   .field__input {
     width: 100%;
     height: 5rem;
-    padding: 1.125rem 1.375rem 0 !important;
+    padding: 1.125rem 1.375rem 0;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
@@ -505,7 +587,7 @@
 
   .field__textarea {
     width: 100%;
-    padding: 2.5rem 1.375rem 0 !important;
+    padding: 2.5rem 1.375rem 0;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
@@ -517,6 +599,19 @@
     height: 157px;
     padding: 15px 23px;
     resize: none;
+  }
+
+  .field__input__stripe {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    align-items: center;
+    display: flex;
+  }
+
+  .stripe__error {
+    flex: none;
+    margin-bottom: 0px;
+    color: var(--error);
   }
 
   .field__textarea:focus,

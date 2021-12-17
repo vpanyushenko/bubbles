@@ -523,6 +523,14 @@
               return Promise.resolve(fuse.search(input).map((obj) => obj.item.name));
             }}
           />
+
+          <Input
+            id="stripe"
+            type="stripe-card"
+            desc="Enter your stripe payment information"
+            margin={true}
+            stripe_key_name="VITE_STRIPE_PUBLIC_KEY"
+          />
         </div>
       </Card>
     </Column50>
