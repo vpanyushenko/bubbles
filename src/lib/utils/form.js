@@ -257,7 +257,35 @@ const _inputTypes = [
   "url",
   "number",
   "hidden",
+  "stripe",
+  "stripe-card",
 ];
+
+/**
+ * Creates a stripe token from a card input
+ * @param {Object} stripe - the reference to stripe that created the card
+ * @param {Object} card - the card that was created by stripe
+ */
+const createStripeToken = (stripe, card) => {
+  return new Promise((resolve, reject) => {
+    stripe
+      .createToken(card, {
+        name: "Jamie Jones",
+      })
+      .then((result) => {
+        if (result.error) {
+          const err = {};
+          err.message = result.error.message;
+          throw err;
+        }
+
+        resolve(result.token);
+      })
+      .catch((err) => {
+        return reject(err);
+      });
+  });
+};
 
 /**
  * Gets an Object of input keys and their entered values
@@ -278,32 +306,51 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
   //remove inputs from data if the use does not want to input hidden items
   const filtered_inputs = !_options.include_hidden_props ? inputs.filter((input) => input.is_hidden === false) : inputs;
 
-  filtered_inputs.forEach((input) => {
-    const type = input.type;
+  const promises = filtered_inputs.map((input) => {
+    return new Promise(async (resolve, reject) => {
+      const type = input.type;
 
-    //if there were any inputs that were hidden, we need to check what the user wants to do with them
+      //if there were any inputs that were hidden, we need to check what the user wants to do with them
 
-    if (_inputTypes.includes(type)) {
-      let id = input.id;
+      if (_inputTypes.includes(type)) {
+        let id = input.id;
 
-      let value = input.value;
+        let value = input.value;
 
-      if (input.is_hidden && _options.hidden_prop_values !== "**") {
-        value = _options.hidden_prop_values;
-      } else if (type === "number") {
-        value = Number(value);
+        if (input.is_hidden && _options.hidden_prop_values !== "**") {
+          value = _options.hidden_prop_values;
+        } else if (type === "number") {
+          value = Number(value);
+        } else if (type === "stripe" || type === "stripe-card") {
+          //We'll need to find the stripe element that was created in the dom and get the token for the user
+          try {
+            value = await createStripeToken(input.__stripe, input.__stripe_card);
+          } catch (err) {
+            return reject(err);
+          }
+        }
+
+        if (id) {
+          let array = id.split(".").filter(Boolean);
+          let obj = array.reduceRight((obj, elem) => ({ [elem]: obj }), value);
+
+          data = merge(data, obj);
+          resolve();
+        }
+      } else {
+        resolve();
       }
-
-      if (id) {
-        let array = id.split(".").filter(Boolean);
-        let obj = array.reduceRight((obj, elem) => ({ [elem]: obj }), value);
-
-        data = merge(data, obj);
-      }
-    }
+    });
   });
 
-  return data;
+  return Promise.all(promises)
+    .then(() => {
+      return data;
+    })
+    .catch((err) => {
+      console.error(err);
+      return err;
+    });
 };
 
 const getValidationRequirements = (validation) => {
@@ -321,7 +368,7 @@ const isValidInput = (value, validation) => {
     //check each requirement property against the value and see if the condition is met
     requirement = requirement.toLowerCase();
 
-    //sonme of the requirements have a value like min:3 so we'll just check for the "min"
+    //some of the requirements have a value like min:3 so we'll just check for the "min"
     const req = requirement.split(":")[0];
 
     if (_validation[req]) {
@@ -347,46 +394,74 @@ const isValidInput = (value, validation) => {
  * @returns {Promise<Array>} Returns an array of errors
  */
 const validateInputs = (inputs) => {
-  const _inputs = [];
+  return new Promise((resolve, reject) => {
+    const _inputs = [];
 
-  //make sure we only validate the inputs what are field and not buttons
-  inputs.forEach((input) => {
-    const type = input.type;
+    //make sure we only validate the inputs what are field and not buttons
+    inputs.forEach((input) => {
+      const type = input.type;
 
-    if (_inputTypes.includes(type)) {
-      _inputs.push(input);
-    }
-  });
-
-  const errors = [];
-
-  _inputs.forEach((input) => {
-    // Some inputs may be dependent on others. If any dependant inputs were removed from the dom,
-    // we should not validate them
-
-    if (!input.is_hidden && !isValidInput(input.value, input.validation)) {
-      errors.push(input.id);
-    }
-
-    return input;
-  });
-
-  //show the error indicator for all inputs with issues
-  if (errors.length) {
-    pageStore.update((obj) => {
-      if (obj.errors === undefined || obj.errors === null) {
-        obj.errors = [];
+      if (_inputTypes.includes(type)) {
+        _inputs.push(input);
       }
-
-      errors.forEach((error) => {
-        obj.errors.push(error);
-      });
-
-      return obj;
     });
-  }
 
-  return { errors: errors };
+    const errors = [];
+
+    const promises = _inputs.map((input) => {
+      return new Promise(async (resolve, reject) => {
+        // Some inputs may be dependent on others. If any dependant inputs were removed from the dom,
+        // we should not validate them
+        if (!input.is_hidden) {
+          if (input.type === "stripe" || input.type === "stripe-card") {
+            //We'll need to find the stripe element that was created in the dom and get the token for the user
+            try {
+              const value = await createStripeToken(input.__stripe, input.__stripe_card);
+              input.value = value;
+              return resolve();
+            } catch (err) {
+              errors.push(input.id);
+              return reject(input.id);
+            }
+          } else if (!isValidInput(input.value, input.validation)) {
+            errors.push(input.id);
+            return reject(input.id);
+          } else {
+            resolve();
+          }
+        } else {
+          resolve();
+        }
+      });
+    });
+
+    Promise.all(promises)
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => {
+        //show the error indicator for all inputs with issues
+        if (errors.length) {
+          pageStore.update((obj) => {
+            if (obj.errors === undefined || obj.errors === null) {
+              obj.errors = [];
+            }
+
+            errors.forEach((error) => {
+              obj.errors.push(error);
+            });
+
+            return obj;
+          });
+        }
+
+        reject({
+          errors: errors,
+          failed_validation: true,
+          message: "Please make sure all inputs are filled in correctly",
+        });
+      });
+  });
 };
 
 export { getFormData, getValidationRequirements, isValidInput, validateInputs };

@@ -335,7 +335,7 @@ body {
 	min-width: 375px;
 	font-family: "Inter", sans-serif;
 	font-size: 0.875rem;
-	line-height: 1.5;
+	line-height: 1.25rem;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	color: var(--black);

@@ -1,5 +1,5 @@
 <script>
-  import { loadStripe } from "@stripe/stripe-js";
+  // import { loadStripe } from "@stripe/stripe-js";
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
@@ -23,12 +23,14 @@
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
   export let stripe_key_name = "VITE_STRIPE_PUBLIC_KEY";
+  export let __stripe_card;
+  export let __stripe;
 
   const _uuid = uuid();
-  const _label = configLabel(label, validation);
+  let _label = configLabel(label, validation);
   let focused = false;
   let selectedIndex = 0;
-  let stripe, card;
+
   $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
 
   $: if (is_error) {
@@ -42,42 +44,56 @@
   $: typeahead_options = [];
   $: is_loading = false;
 
-  //will show a loading screen for the stripe card while it mounts
-  $: stripe_card_loading = false;
-  $: stripe_card_error = false;
+  //Stripe specific variables
+  let stripe_card_loading, stripe_card_error;
+  if (type === "stripe" || type === "stripe-card") {
+    stripe_card_loading = true;
+
+    if (!label) {
+      _label = "Credit Card Details";
+    }
+  }
 
   onMount(async () => {
     if (type === "stripe" || type === "stripe-card") {
-      stripe_card_loading = true;
-      console.log("Dev?", dev);
-      console.log("Dev?", dev);
-      console.log(import.meta.env[`${stripe_key_name}`]);
-      console.log(import.meta.env[`${stripe_key_name}`]);
-      console.log(import.meta.env[`${stripe_key_name}`]);
-      console.log(import.meta.env[`${stripe_key_name}`]);
-      console.log(import.meta.env[`${stripe_key_name}`]);
+      const { loadStripe } = await import("@stripe/stripe-js");
 
       try {
-        stripe = await loadStripe(import.meta.env[`${stripe_key_name}`]);
+        __stripe = await loadStripe(import.meta.env[`${stripe_key_name}`]);
 
-        const elements = stripe.elements();
+        const elements = __stripe.elements();
 
         const style = {
           base: {
             fontFamily: '"Inter", sans-serif',
             fontSize: "14px",
-            fontWeight: 600,
+            fontWeight: 500,
             color: "var(--black)",
           },
           invalid: {
-            color: "var(--error)",
-            iconColor: "var(--error)",
+            color: "#FF6628",
+            iconColor: "FF6628",
           },
         };
 
-        card = elements.create("card", { style: style });
+        __stripe_card = elements.create("card", { style: style });
 
-        card.mount("#__stripe__card__element");
+        __stripe_card.mount("#__stripe__card__element");
+
+        __stripe_card.on("change", (event) => {
+          // const display_error = document.getElementById("card-errors");
+          if (event.error) {
+            console.log(event.error.message);
+            error = event.error.message;
+            pageStore.update((data) => {
+              data.errors.push(id);
+              return data;
+            });
+            // $pageStore.errors.push(id);
+          } else {
+            $pageStore.errors = $pageStore.errors.filter((a) => a !== id);
+          }
+        });
 
         stripe_card_loading = false;
       } catch (error) {
@@ -446,31 +462,23 @@
   </div>
 {:else if type === "stripe-card"}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field">
-      <!-- <div class="field__label">
-        <span class:hidden={is_error}>{_label}</span>
-        <span class="error hidden" class:hidden={!is_error}>{error}</span>
-      </div> -->
+    <div class="field active">
+      {#if !stripe_card_loading}
+        <div class="field__label">
+          <span class:hidden={is_error}>{_label}</span>
+          <span class="error hidden" class:hidden={!is_error}>{error}</span>
+        </div>
+      {/if}
       <div class="field__wrap">
-        <!-- <input
-          id="__stripe_card_element"
-          class="field__input"
-          class:error={is_error}
-          autocomplete={autocomplete ? "on" : "nope"}
-          type="text"
-          bind:value
-          on:focus={inputFocused}
-          on:blur={inputBlured}
-        /> -->
-        <div class="field__input field__input__stripe">
+        <div class="field__input">
           {#if stripe_card_loading}
-            <Spinner />
+            <Spinner style="margin-top: 0.75rem" color="gray" />
           {/if}
 
           {#if stripe_card_error}
             <p class="stripe__error">There was an issue loading Stripe</p>
           {/if}
-          <div id="__stripe__card__element" style="width: 100%;" />
+          <div id="__stripe__card__element" class="stripe" />
         </div>
       </div>
       {#if desc}
@@ -606,6 +614,11 @@
     padding-bottom: 0rem;
     align-items: center;
     display: flex;
+  }
+
+  .stripe {
+    padding-top: 1.35rem;
+    width: 100%;
   }
 
   .stripe__error {

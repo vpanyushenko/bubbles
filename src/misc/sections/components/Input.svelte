@@ -89,6 +89,14 @@
             <TableCell><span style="font-weight: 700"><code>textarea</code></span></TableCell>
             <TableCell>This will render a textarea element.</TableCell>
           </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700"><code>stripe-card</code></span></TableCell>
+            <TableCell
+              >This will render a stripe elements input get get credit card information from the user. You'll need to
+              have a stripe account set up. View the second demo in the <a href="/#form">form section</a> section about specifically
+              setting up Stripe.
+            </TableCell>
+          </TableRow>
         </Table>
       </Card>
 
@@ -527,7 +535,7 @@
           <Input
             id="stripe"
             type="stripe-card"
-            desc="Enter your stripe payment information"
+            desc="Enter your credit card information. Stripe will load completely asynchronously when you request the component, after everything else mounts. You do not have to worry about performance issues.<br><br><strong>You will always end up using stripe in a <code>Form</code> component instead of using this input directly. See more details in the form section about using Stripe with Bubbles.</strong>"
             margin={true}
             stripe_key_name="VITE_STRIPE_PUBLIC_KEY"
           />

@@ -265,6 +265,7 @@
 
 -->
 <script>
+  import { dev } from "$app/env";
   import { scale, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import { v4 as uuid } from "@lukeed/uuid";
@@ -277,6 +278,7 @@
   import RadioGroup from "$lib/components/radio/RadioGroup.svelte";
   import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
+  import { onMount } from "svelte";
 
   export let inputs = [];
   export let id = uuid();
@@ -309,29 +311,45 @@
   }
 
   //determine if any inputs are dependent on other inputs
-  $: formatted_inputs = inputs.map((input) => {
-    if (!input.hidden_if) {
-      input.hidden_if = [];
-    }
+  $: formatted_inputs = formatInputs(inputs);
 
-    const hidden = input.hidden_if.map((obj) => {
-      const matched_input = inputs.find((input) => input.id === obj.id);
-
-      if (matched_input && matched_input.value === obj.value) {
-        return true;
-      } else {
-        return false;
+  function formatInputs(inputs) {
+    return inputs.map((input) => {
+      if (dev && input?.hidden_if && input.hidden_if.length && input?.hidden_unless && input.hidden_unless.length) {
+        console.log("There may negative side effects when using both hidden_if and hidden_unless on the same input");
       }
+
+      if (!input.hidden_if) {
+        input.hidden_if = [];
+      }
+
+      if (!input.hidden_unless) {
+        input.hidden_unless = [];
+      }
+
+      input.is_hidden = false;
+
+      input.hidden_if.forEach((obj) => {
+        const matched_input = inputs.find((input) => input.id === obj.id);
+
+        if (matched_input && matched_input.value === obj.value) {
+          console.log("hidden");
+          input.is_hidden = true;
+        }
+      });
+
+      input.hidden_unless.forEach((obj) => {
+        const matched_input = inputs.find((input) => input.id === obj.id);
+
+        if (matched_input && matched_input.value !== obj.value) {
+          input.is_hidden = true;
+          console.log("hidden");
+        }
+      });
+
+      return input;
     });
-
-    input.is_hidden = false;
-
-    if (hidden.filter(Boolean).length > 0) {
-      input.is_hidden = true;
-    }
-
-    return input;
-  });
+  }
 </script>
 
 <div class="form" {id}>
@@ -354,6 +372,15 @@
       >
         {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number" || input.type === "textarea" || input.type === "tel" || input.type === "phone"}
           <Input {...input} bind:value={input.value} />
+        {/if}
+
+        {#if input.type === "stripe" || input.type === "stripe-card"}
+          <Input
+            {...input}
+            bind:value={input.value}
+            bind:__stripe_card={input.__stripe_card}
+            bind:__stripe={input.__stripe}
+          />
         {/if}
 
         {#if input.type === "switch"}
