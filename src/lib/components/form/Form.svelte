@@ -350,6 +350,22 @@
       return input;
     });
   }
+
+  // onMount(() => {
+  //   const ro = new ResizeObserver((entries) => {
+  //     for (let entry of entries) {
+  //       const cr = entry.contentRect;
+  //       console.log(`Element size: ${cr.width}px x ${cr.height}px`);
+  //     }
+  //   });
+
+  //   const testing = document.getElementById(id);
+
+  //   console.log(testing);
+
+  //   // Observe one or multiple elements
+  //   ro.observe(testing);
+  // });
 </script>
 
 <div class="form" {id}>
