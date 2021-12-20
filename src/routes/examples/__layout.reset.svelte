@@ -36,6 +36,11 @@
         href: "/examples/grid",
         icon: "/favicon.png",
       },
+      {
+        label: "Form",
+        href: "/examples/form",
+        icon: "/favicon.png",
+      },
     ],
   };
 </script>

@@ -7,7 +7,6 @@
 
   const _uuid = uuid();
 
-  export let __form_id = null;
   export let label = "Select an option";
   export let error = "An error occurred";
   export let value = null;
@@ -19,6 +18,7 @@
   export let validation = null;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
+  export let min_width = true;
 
   const fuse = new Fuse(options, {
     shouldSort: false,
@@ -46,7 +46,7 @@
     }, $configStore.error_delay);
   }
 
-  $: if (value !== null || value !== undefined) {
+  $: if (value !== undefined) {
     const option = options.find((item) => item.value === value);
 
     if (option?.label) {
@@ -127,10 +127,14 @@
     hideError();
 
     const option = event.currentTarget;
+
+    console.log(option);
+    console.log(option.querySelector("input").value);
+
     if (type === "select-number") {
       value = Number(option.querySelector("input").value);
     } else {
-      value = option.querySelector("input").value;
+      value = option.querySelector("input").value || null;
     }
 
     is_focused = true;
@@ -250,6 +254,7 @@
 <div
   class="form__field__container select"
   class:is_list_open
+  class:min__width={min_width}
   {id}
   tabindex="0"
   on:focus={selectFocused}
@@ -313,8 +318,11 @@
 <style>
   .select {
     position: relative;
-    min-width: 250px;
     cursor: pointer;
+  }
+
+  .min__width {
+    min-width: 15.625rem;
   }
 
   .select:focus .head {

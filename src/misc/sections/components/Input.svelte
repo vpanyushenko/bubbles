@@ -14,6 +14,7 @@
   import TableCell from "$lib/components/table/TableCell.svelte";
 
   import Input from "$lib/components/input/Input.svelte";
+  import StripeInput from "$lib/components/stripe/StripeCardInput.svelte";
   import fuzzySearch from "$lib/utils/fuzzy-search";
 </script>
 
@@ -532,7 +533,7 @@
             }}
           />
 
-          <Input
+          <StripeInput
             id="stripe"
             type="stripe-card"
             desc="Enter your credit card information. Stripe will load completely asynchronously when you request the component, after everything else mounts. You do not have to worry about performance issues.<br><br><strong>You will always end up using stripe in a <code>Form</code> component instead of using this input directly. See more details in the form section about using Stripe with Bubbles.</strong>"

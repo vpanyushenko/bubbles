@@ -75,7 +75,7 @@
     border-radius: 16px;
     font-weight: 600;
     padding: 0 1.25rem 0 1.25rem;
-    min-height: 5rem;
+    min-height: 4rem;
     margin-bottom: 1.5rem;
   }
 

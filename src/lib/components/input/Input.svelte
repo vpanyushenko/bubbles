@@ -443,7 +443,7 @@
   }
 
   .field__textarea {
-    padding: 15px 23px;
+    /* padding: 15px 23px; */
     resize: none;
   }
 
@@ -483,7 +483,7 @@
 
   .field__textarea {
     width: 100%;
-    padding: 2.5rem 1.375rem 0;
+    padding: 2.5rem 1.375rem 0 !important;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
