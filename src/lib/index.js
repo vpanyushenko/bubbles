@@ -15,6 +15,7 @@ import Chart from "./components/chart/Chart.svelte";
 import Error from "./components/error/Error.svelte";
 import Overlay from "./components/overlay/Overlay.svelte";
 import Spinner from "./components/spinner/Spinner.svelte";
+import Divider from "./components/divider/Divider.svelte";
 
 export {
   Header,
@@ -34,6 +35,7 @@ export {
   Error,
   Overlay,
   Spinner,
+  Divider,
 };
 
 //Inputs
@@ -48,6 +50,7 @@ import Checkbox from "./components/checkbox/Checkbox.svelte";
 import LabeledCheckbox from "./components/checkbox/LabeledCheckbox.svelte";
 import CheckboxGroup from "./components/checkbox/CheckboxGroup.svelte";
 import RadioGroup from "./components/radio/RadioGroup.svelte";
+import StripeCard from "./components/stripe/StripeCardInput.svelte";
 
 export {
   Button,
@@ -61,6 +64,7 @@ export {
   CheckboxGroup,
   LabeledCheckbox,
   RadioGroup,
+  StripeCard,
 };
 
 //tables
@@ -84,8 +88,6 @@ import Center from "./layouts/Center.svelte";
 import PageTransitionWrapper from "./layouts/PageTransitionWrapper.svelte";
 import Grid from "./layouts/Grid.svelte";
 import GridItem from "./layouts/GridItem.svelte";
-
-//TODO: Add grid layouts
 
 export {
   SidebarPageWrapper,
