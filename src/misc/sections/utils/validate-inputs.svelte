@@ -25,6 +25,10 @@
           the inputs again to catch any errors.
         </p>
         <p>
+          Any elements that have been removed from a <code>Form</code> using the <code>hidden_if</code> property will not
+          be included in the validation.
+        </p>
+        <p>
           <strong
             >Front end validation is done for user experience, you should incorporate server side validation for the
             actual check, and never trust the data coming from a client.</strong
@@ -40,6 +44,17 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">inputs</span></TableCell>
             <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
+            <TableCell
+              >The array of inputs you want to validate. These inputs should be declared in your <code>script</code> tag
+              and passed into the <code>Form</code> element as a prop. The validation will look at the
+              <code>validation</code> property of each input. Will return an Object with one property called
+              <code>errors</code> which will be an array of input ID's that failed validation.</TableCell
+            >
+            <TableCell><span style="font-weight: 700"><code>Object.errors</code></span></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">options</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>Object</code></span></TableCell>
             <TableCell
               >The array of inputs you want to validate. These inputs should be declared in your <code>script</code> tag
               and passed into the <code>Form</code> element as a prop. The validation will look at the

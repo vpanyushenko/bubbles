@@ -31,9 +31,7 @@
         </p>
 
         <Table>
-          <TableHeader
-            cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }, { label: "Response" }]}
-          />
+          <TableHeader cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }]} />
           <TableRow>
             <TableCell><span style="font-weight: 700">inputs</span></TableCell>
             <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
@@ -42,7 +40,34 @@
                 >onsubmit</code
               > function of a button in the form.</TableCell
             >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">options?</span></TableCell>
             <TableCell><span style="font-weight: 700"><code>Object</code></span></TableCell>
+            <TableCell>Options you can pass to this function. All are optional.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">option.include_hidden_props</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>Boolean.</code></span></TableCell>
+            <TableCell>
+              Defaults to <code>false</code>. If you want to include hidden inputs in the form data. Hidden inputs are
+              only those that were removed from the DOM using the <code>hidden_if</code> property on the
+              <code>Form</code></TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">option.hidden_prop_values</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>String|Number|Boolean</code></span></TableCell>
+            <TableCell>
+              Defaults to <code>null</code>. If you do want to include hidden inputs in your data (which you normally
+              should not since your backend would normally take care of those cases) you can specify what value you want
+              the input to have.
+              <br />
+              <br />
+              By default, the value will be <code>null</code> but you can change it to whatever you'd like. If you want
+              to value to be set to whatever value the input currently has (not recommended), you can set this property
+              to <code>"**"</code>.
+            </TableCell>
           </TableRow>
         </Table>
       </Card>

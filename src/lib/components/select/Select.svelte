@@ -7,6 +7,7 @@
 
   const _uuid = uuid();
 
+  export let __form_id = null;
   export let label = "Select an option";
   export let error = "An error occurred";
   export let value = null;
@@ -124,6 +125,7 @@
 
   function selectOption(event) {
     hideError();
+
     const option = event.currentTarget;
     if (type === "select-number") {
       value = Number(option.querySelector("input").value);

@@ -43,18 +43,7 @@ component: hide-loading
     {
       type: "submit",
       label: "Submit Form",
-      onsubmit: (event) => {
-        //if there are any errors, calling validateInputs will automatically show error states for
-        //all components that have failed validation
-        const errors = validateInputs(formInputs).errors;
-
-        if (errors.length) {
-          showToast("Please fill in all required inputs", "error");
-          return;
-        }
-
-        const data = getFormData(formInputs);
-
+      onsubmit: async (event) => {
         //the onsubmit and onclick function on buttons will give you the event param
         //if you want to toggle the loading state on your button while doing a networking request
         //just use showLoading() and pass in the id
@@ -63,27 +52,27 @@ component: hide-loading
         const button_id = event.currentTarget.id;
         showLoading(button_id);
 
-        fetch("/api/your-endpoint", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", //if using ssr
-          body: JSON.stringify(data),
-        })
-          .then((res) => {
-            return res.json();
-          })
-          .then((res) => {
-            //handle your api response
+        try {
+          //if there are any errors, calling validateInputs will automatically show error states for
+          //all components that have failed validation
 
-            showToast("Your account was successfully updated", "success");
-            hideLoading(button_id);
-          })
-          .catch((err) => {
-            showToast("Something went wrong, please try again", "error");
-            hideLoading(button_id);
+          await validateInputs(toastExampleFormInputs); //if any inputs fail validation, the promise will be rejected
+          const data = await getFormData(toastExampleFormInputs);
+          const res = await fetch("/api/your-endpoint", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include", //if using ssr
+            body: JSON.stringify(data),
           });
+          const data = await res.json();
+          showToast("Your account was successfully updated", "success");
+        } catch (error) {
+          showToast(error.message, "error");
+        } finally {
+          hideLoading(button_id);
+        }
       },
     },
   ];

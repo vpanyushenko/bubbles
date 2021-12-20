@@ -1,11 +1,20 @@
----
-component: form
----
-
-```svelte
 <script>
-  import { Form } from "bubbles-ui";
-  import { validateInputs, getFormData, showToast, showLoading, hideLoading } from "bubbles-ui";
+  import Section from "$misc/components/section.svelte";
+
+  import Row from "$lib/layouts/Row.svelte";
+  import Column from "$lib/layouts/Column100.svelte";
+  import Column50 from "$lib/layouts/Column50.svelte";
+  import Card from "$lib/components/card/Card.svelte";
+  import CardHeader from "$lib/components/card/CardHeader.svelte";
+  import Table from "$lib/components/table/Table.svelte";
+  import TableHeader from "$lib/components/table/TableHeader.svelte";
+  import TableRow from "$lib/components/table/TableRow.svelte";
+  import TableCell from "$lib/components/table/TableCell.svelte";
+
+  import Form from "$lib/components/form/Form.svelte";
+  import { validateInputs, getFormData } from "$lib/utils/form";
+  import { showLoading, hideLoading } from "$lib/utils/loading";
+  import { showToast } from "$lib/utils/toast";
 
   const formInputs = [
     {
@@ -18,6 +27,7 @@ component: form
       validation: "string|required|min:3", // See the validation section for more details, but this adds what validation you need. In This case, it must be a string, it's required, with a min length of 3
       validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
       vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
+      value: "Jamie",
     },
     {
       type: "number", //Will ensure that getFormData will return this as a number
@@ -28,6 +38,7 @@ component: form
       error: "You must be at least 13 years old",
       validation: "numeric|required|min:13",
       bounds: [0, 120], //Set the min and max values for this input. If you only want the min or max, you can do something like: [0, null]
+      value: 16,
     },
     {
       type: "date",
@@ -37,6 +48,7 @@ component: form
       desc: null,
       error: "Add your Date of Birth",
       validation: "required|date", //date validator is built in
+      value: "11/12/1991",
     },
     {
       type: "textarea", //the textarea / text field input
@@ -46,12 +58,14 @@ component: form
       desc: "Type your address",
       rows: 8, //specify how many rows you want. Defaults to 5
       validation: "required",
+      hidden_if: [{ id: "number-form-example", value: 1 }],
+      value: null,
     },
     {
       type: "select",
-      id: "role",
+      id: "role-form-example",
       label: "Select Your Role",
-      value: null, //You can add a value to the input
+      value: "owner", //You can add a value to the input
       desc: null,
       error: "Your role is required",
       validation: "required", //since you're adding the options, you can just set it to required
@@ -75,10 +89,10 @@ component: form
       ],
     },
     {
-      type: "select-number", //This is a special type of select in case you need to select only from number elements. Use this if all values in a select need to be numbers (Floats or integers)
-      id: "number",
+      type: "select-number", //This is a special type of select in case you need to select only from number elements. Use this if all values in a select need to be numbers (Floats or Integers)
+      id: "number-form-example",
       label: "Select Your Number",
-      value: null, //You can add a value to the input
+      value: 1, //You can add a value to the input
       desc: null,
       error: "This is required",
       validation: "required", //since you're adding the options, you can just set it to required
@@ -86,11 +100,11 @@ component: form
       //an array of options for your input
       options: [
         {
-          label: "One", //The label is the main option the user is picking,
+          label: "Zero", //The label is the main option the user is picking,
           value: 0, //This is the actual value the user is selecting
         },
         {
-          label: "Two", //The label is the main option the user is picking,
+          label: "One", //The label is the main option the user is picking,
           value: 1, //This is the actual value the user is selecting
         },
         {
@@ -136,7 +150,7 @@ component: form
       type: "checkbox-group", //This will give a group of checkboxes, here the user can select multiple options
       id: "toppings",
       label: "Select Your Toppings",
-      value: [], //Will need an array because you can select multiple
+      value: ["beans", "lettuce"], //Will need an array because you can select multiple
       desc: "Select as many toppings as you'd like",
       error: "Something went wrong",
       validation: null,
@@ -159,7 +173,7 @@ component: form
       type: "checkbox", //a single checkbox, like for accepting terms and conditions
       id: "terms",
       label: "Terms and conditions",
-      value: false, //You can add a value to the input
+      value: true, //You can add a value to the input
       desc: "By submitting this form you agree to our terms. <a href='https://google.com' target='_blank'>View Terms</a>.", //you can add html into the description
       error: "You must accept the terms and conditions",
       validation: "required|accepted",
@@ -167,7 +181,19 @@ component: form
     {
       type: "submit", //The form must have a submit button
       label: "Submit Form", //The label for the submit button,
-      onsubmit: async (event) => {
+      onsubmit: (event) => {
+        //you can also use the onclick, if it's on a submit button Bubbles will look for the onsubmit event
+
+        const errors = validateInputs(formInputs).errors; //check for errors
+
+        if (errors.length) {
+          showToast("Please fill in all required inputs", "error");
+          return;
+        }
+
+        const data = getFormData(formInputs);
+        //const data = getFormData(formInputs, { include_hidden_props: true, hidden_prop_values: null });
+
         //the onsubmit and onclick function on buttons, will give you the event param
         //if you want to toggle the loading state on your button while doing a networking request
         //just use showLoading() and pass in the id
@@ -176,21 +202,25 @@ component: form
         const button_id = event.currentTarget.id;
         showLoading(button_id);
 
-        try {
-          await validateInputs(formInputs);
-          const data = await getFormData(formInputs);
-          console.log(data);
-        } catch (error) {
-          showToast(error.message);
-        } finally {
-          setTimeout(() => {
-            hideLoading(button_id);
-          }, 2000);
-        }
+        console.log(data);
+
+        setTimeout(() => {
+          hideLoading(button_id);
+        }, 2000);
       },
     },
   ];
 </script>
 
-<Form inputs={formInputs} />
-```
+<Section id="form" title="Form">
+  <Row>
+    <Column>
+      <Card>
+        <CardHeader title="Demo" border={false} />
+        <div>
+          <Form inputs={formInputs} />
+        </div>
+      </Card>
+    </Column>
+  </Row>
+</Section>

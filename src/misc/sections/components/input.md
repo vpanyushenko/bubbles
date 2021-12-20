@@ -54,6 +54,16 @@ component: inputs
 />
 
 <Input
+  id="phone"
+  type="tel"
+  label="Enter your phone number"
+  error="Enter your phone number"
+  validation="required"
+  desc="Enter your phone number. If your country code is not +1, enter your country code first."
+  margin={true}
+/>
+
+<Input
   id="address"
   type="textarea"
   label="Enter your address"
@@ -100,4 +110,12 @@ component: inputs
     return Promise.resolve(fuse.search(input).map((obj) => obj.item.name));
   }}
 />
+
+<Input
+    id="stripe"
+    type="stripe-card"
+    desc="Enter your credit card information. Stripe will load completely asynchronously when you request the component, after everything else mounts. You don't have to worry about performance issues."
+    margin={true}
+    stripe_key_name="VITE_STRIPE_PUBLIC_KEY"
+  />
 ```

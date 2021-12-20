@@ -1,13 +1,12 @@
 <script>
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
-  import { hideLoading, showLoading } from "$lib/utils/loading";
   import { configLabel } from "$lib/utils/config";
   import { v4 as uuid } from "@lukeed/uuid";
 
   export let id;
   export let label;
-  export let error = "An error occured";
+  export let error = "An error occurred";
   export let type = "text";
   export let desc;
   export let value = null;
@@ -21,9 +20,10 @@
   export let vob = $configStore.validate_on_blur;
 
   const _uuid = uuid();
-  const _label = configLabel(label, validation);
+  let _label = configLabel(label, validation);
   let focused = false;
   let selectedIndex = 0;
+
   $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
 
   $: if (is_error) {
@@ -32,6 +32,10 @@
       is_error = false;
     }, $configStore.error_delay);
   }
+
+  //options for typeahead inside of input or textarea elements
+  $: typeahead_options = [];
+  $: is_loading = false;
 
   function dateFieldFocused(event) {
     event.currentTarget.type = "date";
@@ -42,11 +46,6 @@
       event.currentTarget.type = "text";
     }
   }
-
-  //options for typeahead inside of input or textarea elements
-
-  $: typeahead_options = [];
-  $: is_loading = false;
 
   function typeaheadOnInput(event) {
     const value = event.target.value;
@@ -145,7 +144,7 @@
     is_error = false;
   }
 
-  function inputBlured() {
+  function inputBlurred() {
     focused = false;
 
     if (type === "number" && value === 0) {
@@ -192,7 +191,7 @@
           autocomplete={autocomplete ? "on" : "nope"}
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           on:input={typeaheadOnInput}
         />
         {#if is_loading}
@@ -241,7 +240,30 @@
           type="email"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
+        />
+      </div>
+      {#if desc}
+        <p class="field__desc">{@html desc}</p>
+      {/if}
+    </div>
+  </div>
+{:else if type === "tel" || type === "phone"}
+  <div class="form__field__container" {id} class:mb-2={margin}>
+    <div class="field" class:active={focused || value}>
+      <div class="field__label">
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
+      </div>
+      <div class="field__wrap">
+        <input
+          class="field__input"
+          class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
+          type="tel"
+          bind:value
+          on:focus={inputFocused}
+          on:blur={inputBlurred}
         />
       </div>
       {#if desc}
@@ -264,7 +286,7 @@
           type="password"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
         />
       </div>
       {#if desc}
@@ -288,7 +310,7 @@
           bind:value
           on:focus={inputFocused}
           on:focus={dateFieldFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           on:blur={dateFieldBlurred}
         />
       </div>
@@ -312,7 +334,7 @@
           type="number"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           min={bounds ? bounds[0] : null}
           max={bounds ? bounds[1] : null}
         />
@@ -337,7 +359,7 @@
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           on:input={typeaheadOnInput}
           bind:value
         />
@@ -387,7 +409,7 @@
           type="text"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
         />
       </div>
       {#if desc}
@@ -420,26 +442,6 @@
     text-align: left;
   }
 
-  .field__input,
-  .field__textarea {
-    width: 100%;
-    border-radius: 8px;
-    background: rgba(228, 228, 228, 0.3);
-    border: 2px solid transparent;
-    font-family: "Inter", sans-serif;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--black);
-    -webkit-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
-  }
-
-  .field__input {
-    height: 56px;
-    padding: 0 23px;
-  }
-
   .field__textarea {
     padding: 15px 23px;
     resize: none;
@@ -468,7 +470,7 @@
   .field__input {
     width: 100%;
     height: 5rem;
-    padding: 1.125rem 1.375rem 0 !important;
+    padding: 1.125rem 1.375rem 0;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
@@ -481,7 +483,7 @@
 
   .field__textarea {
     width: 100%;
-    padding: 2.5rem 1.375rem 0 !important;
+    padding: 2.5rem 1.375rem 0;
     border-radius: 12px;
     border: 2px solid transparent;
     background: rgba(228, 228, 228, 0.3);
