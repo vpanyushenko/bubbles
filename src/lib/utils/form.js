@@ -52,7 +52,7 @@ const _checkFalsePositiveDates = (dateString = "") => {
         }
       }
     }
-    return true; // we are not in feburary, proceed
+    return true; // we are not in february, proceed
   }
   return true; // we are not testing formatted date, proceed to rest of validation
 };
@@ -263,21 +263,44 @@ const _inputTypes = [
 
 /**
  * Creates a stripe token from a card input
- * @param {Object} stripe - the reference to stripe that created the card
- * @param {Object} card - the card that was created by stripe
+ * @param {Object} stripe_input - the input that has the stripe element data
+ * @param {Object} inputs - the rest of the inputs from the form
  */
-const createStripeToken = (stripe, card) => {
+const createStripeToken = (stripe_input, inputs) => {
   return new Promise((resolve, reject) => {
+    //we should check if there is a card token already here. This could happen if the card was created
+    //during data validation, and then this function is called again when getting the form data since
+    //some users may forgo doing data validation on the front end.
+
+    if (stripe_input?.value?.card?.id) {
+      return resolve(stripe_input?.value);
+    }
+
+    const stripe = stripe_input.__stripe;
+    const card = stripe_input.__stripe_card;
+
+    //we need to find any other inputs that the user wanted to
+    //add to the stripe token, usually the name
+    const dictionary = stripe_input.stripe_token_values;
+    const keys = Object.values(dictionary);
+    const options = {};
+
+    keys.forEach((key) => {
+      const input = inputs.find((a) => a.id === key);
+      const stripe_key = Object.keys(dictionary).find((a) => dictionary[a] === key);
+      options[`${stripe_key}`] = input.value;
+    });
+
     stripe
-      .createToken(card, {
-        name: "Jamie Jones",
-      })
+      .createToken(card, options)
       .then((result) => {
         if (result.error) {
           const err = {};
           err.message = result.error.message;
           throw err;
         }
+
+        console.log(result.token);
 
         resolve(result.token);
       })
@@ -324,7 +347,7 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
         } else if (type === "stripe" || type === "stripe-card") {
           //We'll need to find the stripe element that was created in the dom and get the token for the user
           try {
-            value = await createStripeToken(input.__stripe, input.__stripe_card);
+            value = await createStripeToken(input, filtered_inputs);
           } catch (err) {
             return reject(err);
           }
@@ -414,9 +437,10 @@ const validateInputs = (inputs) => {
         // we should not validate them
         if (!input.is_hidden) {
           if (input.type === "stripe" || input.type === "stripe-card") {
+            console.log("validate stripe");
             //We'll need to find the stripe element that was created in the dom and get the token for the user
             try {
-              const value = await createStripeToken(input.__stripe, input.__stripe_card);
+              const value = await createStripeToken(input, _inputs);
               input.value = value;
               return resolve();
             } catch (err) {
