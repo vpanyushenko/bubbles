@@ -333,6 +333,15 @@
           </TableRow>
 
           <TableRow>
+            <TableCell><span style="font-weight: 700">input.width</span></TableCell>
+            <TableCell
+              >You can add inputs next to each other instead of inline simply by passing the width as a percentage. If
+              you wanted two inputs side by side, you would passing <code>50</code> as the width for both of them. If
+              you wanted three inputs all in one row, you would pass in <code>33</code> as the width for all of the inputs.</TableCell
+            >
+          </TableRow>
+
+          <TableRow>
             <TableCell><span style="font-weight: 700">input.hidden_if</span></TableCell>
             <TableCell>
               When used with a form, each <strong style="color: var(--success)">input</strong> has a special property
