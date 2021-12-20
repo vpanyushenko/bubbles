@@ -10,6 +10,7 @@
   import TableHeader from "$lib/components/table/TableHeader.svelte";
   import TableRow from "$lib/components/table/TableRow.svelte";
   import TableCell from "$lib/components/table/TableCell.svelte";
+  import Header from "$lib/components/header/Header.svelte";
 
   import Form from "$lib/components/form/Form.svelte";
   import { validateInputs, getFormData } from "$lib/utils/form";
@@ -28,7 +29,7 @@
       validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
       vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
       value: "Jamie",
-      width: 50,
+      width: 40,
     },
     {
       type: "text", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
@@ -41,7 +42,37 @@
       validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
       vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
       value: "Jones",
-      width: 50,
+      width: 40,
+    },
+    {
+      type: "select",
+      id: "name.prefix",
+      label: "Name Prefix",
+      value: "owner", //You can add a value to the input
+      desc: null,
+      error: "Your role is required",
+      //an array of options for your input
+      options: [
+        {
+          label: "No Prefix", //The label is the main option the user is picking,
+          caption: "Most common", //This is optional to add more context to the option,
+          value: null, //This is the actual value the user is selecting
+        },
+        "break", //if you pass a string that says break, Bubbles will add a line break between these options for you
+        {
+          label: "Empty String", //The label is the main option the user is picking,
+          value: "", //This is the actual value the user is selecting
+        },
+        {
+          label: "Jr.", //The label is the main option the user is picking,
+          value: "jr", //This is the actual value the user is selecting
+        },
+        {
+          label: "Sr.",
+          value: "Senior",
+        },
+      ],
+      width: 20,
     },
     {
       type: "number", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
@@ -66,16 +97,6 @@
       value: null, //You can add a value to the input
       desc: "You'll be able to change this name later", //This will add text below the input to explain in more detail what is needed from the user. Optional.
       width: 33,
-    },
-    {
-      type: "date",
-      id: "dob",
-      label: "Date Of Birth",
-      value: null, //You can add a value to the input
-      desc: null,
-      error: "Add your Date of Birth",
-      validation: "required|date", //date validator is built in
-      value: "11/12/1991",
     },
     {
       type: "number", //Will ensure that getFormData will return this as a number
@@ -172,6 +193,17 @@
       validation: "accepted", //best UX is to not make switches mandatory, use a checkbox instead if you need
     },
     {
+      type: "email", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
+      id: "email", //the id will be the key when you call the getFormData function. If you add a "." in the id, it will return the item as a nested object. For example, if your `id` value is `name.last`, the getFormData function will return that as {name: {last: ""}}
+      label: "Email", //The label is what we'll initially show for the input, it should explain what is required. Keep this short like "First Name"
+      value: null, //You can add a value to the input
+      error: "A name is required", //this is the text that will appear if this input fails validation
+      validation: "string|required|min:3", // See the validation section for more details, but this adds what validation you need. In This case, it must be a string, it's required, with a min length of 3
+      validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
+      vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
+      hidden_if: [{ id: "preferences.email", value: false }],
+    },
+    {
       type: "radio", //a group of radio buttons
       id: "radio",
       label: "Select your bread",
@@ -226,6 +258,7 @@
       error: "You must accept the terms and conditions",
       validation: "required|accepted",
     },
+
     {
       type: "button",
       width: 10,
@@ -245,12 +278,12 @@
           await validateInputs(formInputs);
           const data = await getFormData(formInputs);
           console.log(data);
-
+        } catch (err) {
+          showToast("Please fill in all required inputs", "error");
+        } finally {
           setTimeout(() => {
             hideLoading(button_id);
           }, 2000);
-        } catch (err) {
-          showToast("Please fill in all required inputs", "error");
         }
       },
       width: 90,
@@ -258,15 +291,15 @@
   ];
 </script>
 
-<Section id="form" title="Form">
-  <Row>
-    <Column>
-      <Card>
-        <CardHeader title="Demo" border={false} />
-        <div>
-          <Form inputs={formInputs} />
-        </div>
-      </Card>
-    </Column>
-  </Row>
-</Section>
+<Header title="Form" breadcrumbs={false} />
+
+<Row>
+  <Column>
+    <Card>
+      <CardHeader title="Demo" border={false} />
+      <div>
+        <Form inputs={formInputs} />
+      </div>
+    </Card>
+  </Column>
+</Row>
