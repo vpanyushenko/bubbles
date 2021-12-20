@@ -14,10 +14,6 @@
   import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
   import { onMount } from "svelte";
-  import { navigating } from "$app/stores";
-  // import { navigating } from "@sveltejs/kit/assets/runtime/app/stores.js";
-
-  $: console.log($navigating);
 
   export let inputs = [];
   export let id = uuid();
