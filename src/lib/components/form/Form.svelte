@@ -14,9 +14,14 @@
   import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
   import { onMount } from "svelte";
+  import { navigating } from "$app/stores";
+  // import { navigating } from "@sveltejs/kit/assets/runtime/app/stores.js";
+
+  $: console.log($navigating);
 
   export let inputs = [];
   export let id = uuid();
+  let row_width = 0;
 
   const submitButton = inputs.find((a) => a.type === "submit");
 
@@ -62,6 +67,20 @@
         input.hidden_unless = [];
       }
 
+      //calculate row widths in case the user wants to use nested inputs
+      if (!input.width) {
+        input.width = 100;
+      } else if (input.width === 33) {
+        input.width = 33.333333;
+      }
+
+      row_width += input.width;
+
+      if (row_width >= 98) {
+        row_width = 0;
+        input.last_row = true;
+      }
+
       input.is_hidden = false;
 
       input.hidden_if.forEach((obj) => {
@@ -99,23 +118,35 @@
   //   // Observe one or multiple elements
   //   ro.observe(testing);
   // });
+
+  // in:scale={{
+  //         duration: 750,
+  //         opacity: 0,
+  //         start: 0.5,
+  //         easing: quintOut,
+  //       }}
+  //       out:scale={{
+  //         duration: 750,
+  //         opacity: 0,
+  //         start: 0,
+  //         easing: quintOut,
+  //       }}
 </script>
 
 <div class="form" {id}>
   {#each formatted_inputs as input}
     {#if !input.is_hidden}
       <span
-        class="row"
-        in:scale={{
-          duration: 750,
-          opacity: 0,
-          start: 0.5,
+        class="form__row"
+        class:form__row__inline={input.width !== 100 ? true : false}
+        class:form__row__inline__last__row={input.last_row}
+        style="width: {input.width}%"
+        in:fade={{
+          duration: 500,
           easing: quintOut,
         }}
-        out:scale={{
-          duration: 750,
-          opacity: 0,
-          start: 0,
+        out:fade={{
+          duration: 500,
           easing: quintOut,
         }}
       >
@@ -137,7 +168,7 @@
         {/if}
 
         {#if input.type === "select" || input.type === "select-number"}
-          <Select {...input} bind:value={input.value} />
+          <Select {...input} bind:value={input.value} min_width={false} />
         {/if}
 
         {#if input.type === "button"}
@@ -182,9 +213,26 @@
     padding-left: 1.375rem;
     padding-right: 1.375rem;
   }
+  .form .form__row__inline.form__row__inline__last__row + .form__row__inline,
+  .form .form__row__inline {
+    padding-left: 0rem;
+    padding-right: 1rem;
+  }
+
+  .form .form__row__inline + .form__row__inline {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .form .form__row__inline.form__row__inline__last__row {
+    padding-right: 0rem;
+    padding-left: 1rem;
+  }
+
   span {
-    display: flex;
+    display: inline-flex;
     width: 100%;
     align-items: center;
+    vertical-align: top;
   }
 </style>
