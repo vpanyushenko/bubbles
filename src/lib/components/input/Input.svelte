@@ -1,12 +1,8 @@
 <script>
-  // import { loadStripe } from "@stripe/stripe-js";
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
   import { v4 as uuid } from "@lukeed/uuid";
-  import { onMount } from "svelte";
-  import { dev } from "$app/env";
-  import Spinner from "$lib/components/spinner/Spinner.svelte";
 
   export let id;
   export let label;
@@ -22,9 +18,6 @@
   export let autocomplete = true;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
-  export let stripe_key_name = "VITE_STRIPE_PUBLIC_KEY";
-  export let __stripe_card;
-  export let __stripe;
 
   const _uuid = uuid();
   let _label = configLabel(label, validation);
@@ -43,65 +36,6 @@
   //options for typeahead inside of input or textarea elements
   $: typeahead_options = [];
   $: is_loading = false;
-
-  //Stripe specific variables
-  let stripe_card_loading, stripe_card_error;
-  if (type === "stripe" || type === "stripe-card") {
-    stripe_card_loading = true;
-
-    if (!label) {
-      _label = "Credit Card Details";
-    }
-  }
-
-  onMount(async () => {
-    if (type === "stripe" || type === "stripe-card") {
-      const { loadStripe } = await import("@stripe/stripe-js");
-
-      try {
-        __stripe = await loadStripe(import.meta.env[`${stripe_key_name}`]);
-
-        const elements = __stripe.elements();
-
-        const style = {
-          base: {
-            fontFamily: '"Inter", sans-serif',
-            fontSize: "14px",
-            fontWeight: 500,
-            color: "var(--black)",
-          },
-          invalid: {
-            color: "#FF6628",
-            iconColor: "FF6628",
-          },
-        };
-
-        __stripe_card = elements.create("card", { style: style });
-
-        __stripe_card.mount("#__stripe__card__element");
-
-        __stripe_card.on("change", (event) => {
-          // const display_error = document.getElementById("card-errors");
-          if (event.error) {
-            console.log(event.error.message);
-            error = event.error.message;
-            pageStore.update((data) => {
-              data.errors.push(id);
-              return data;
-            });
-            // $pageStore.errors.push(id);
-          } else {
-            $pageStore.errors = $pageStore.errors.filter((a) => a !== id);
-          }
-        });
-
-        stripe_card_loading = false;
-      } catch (error) {
-        stripe_card_loading = false;
-        stripe_card_error = true;
-      }
-    }
-  });
 
   function dateFieldFocused(event) {
     event.currentTarget.type = "date";
@@ -210,7 +144,7 @@
     is_error = false;
   }
 
-  function inputBlured() {
+  function inputBlurred() {
     focused = false;
 
     if (type === "number" && value === 0) {
@@ -257,7 +191,7 @@
           autocomplete={autocomplete ? "on" : "nope"}
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           on:input={typeaheadOnInput}
         />
         {#if is_loading}
@@ -306,7 +240,7 @@
           type="email"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
         />
       </div>
       {#if desc}
@@ -329,7 +263,7 @@
           type="tel"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
         />
       </div>
       {#if desc}
@@ -352,7 +286,7 @@
           type="password"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
         />
       </div>
       {#if desc}
@@ -376,7 +310,7 @@
           bind:value
           on:focus={inputFocused}
           on:focus={dateFieldFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           on:blur={dateFieldBlurred}
         />
       </div>
@@ -400,7 +334,7 @@
           type="number"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           min={bounds ? bounds[0] : null}
           max={bounds ? bounds[1] : null}
         />
@@ -425,7 +359,7 @@
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
           on:input={typeaheadOnInput}
           bind:value
         />
@@ -460,32 +394,6 @@
       {/if}
     </div>
   </div>
-{:else if type === "stripe-card"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field active">
-      {#if !stripe_card_loading}
-        <div class="field__label">
-          <span class:hidden={is_error}>{_label}</span>
-          <span class="error hidden" class:hidden={!is_error}>{error}</span>
-        </div>
-      {/if}
-      <div class="field__wrap">
-        <div class="field__input">
-          {#if stripe_card_loading}
-            <Spinner style="margin-top: 0.75rem" color="gray" />
-          {/if}
-
-          {#if stripe_card_error}
-            <p class="stripe__error">There was an issue loading Stripe</p>
-          {/if}
-          <div id="__stripe__card__element" class="stripe" />
-        </div>
-      </div>
-      {#if desc}
-        <p class="field__desc">{@html desc}</p>
-      {/if}
-    </div>
-  </div>
 {:else}
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
@@ -501,7 +409,7 @@
           type="text"
           bind:value
           on:focus={inputFocused}
-          on:blur={inputBlured}
+          on:blur={inputBlurred}
         />
       </div>
       {#if desc}
@@ -533,26 +441,6 @@
     box-sizing: border-box;
     text-align: left;
   }
-
-  /* .field__input,
-  .field__textarea {
-    width: 100%;
-    border-radius: 8px;
-    background: rgba(228, 228, 228, 0.3);
-    border: 2px solid transparent;
-    font-family: "Inter", sans-serif;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--black);
-    -webkit-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
-  } */
-
-  /* .field__input {
-    height: 56px;
-    padding: 0 23px;
-  } */
 
   .field__textarea {
     padding: 15px 23px;
@@ -607,24 +495,6 @@
     height: 157px;
     padding: 15px 23px;
     resize: none;
-  }
-
-  .field__input__stripe {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-    align-items: center;
-    display: flex;
-  }
-
-  .stripe {
-    padding-top: 1.35rem;
-    width: 100%;
-  }
-
-  .stripe__error {
-    flex: none;
-    margin-bottom: 0px;
-    color: var(--error);
   }
 
   .field__textarea:focus,
