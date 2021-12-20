@@ -43,29 +43,28 @@ component: get-form-data
     {
       type: "submit",
       label: "Submit Form",
-      onsubmit: (event) => {
-        //if there are any errors, calling validateInputs will automatically show error states for
-        //all components that have failed validation
-        const errors = validateInputs(formInputs).errors;
+      onsubmit: async (event) => {
+        try {
+          //if there are any errors, calling validateInputs will automatically show error states for
+          //all components that have failed validation
 
-        if (errors.length) {
-          showToast("Please fill in all required inputs", "error");
-          return;
+          await validateInputs(toastExampleFormInputs); //if any inputs fail validation, the promise will be rejected
+          const data = await getFormData(toastExampleFormInputs);
+
+          //example if you want to include hidden inputs
+          //Not recommended
+          //const data = await getFormData(formInputs, { include_hidden_props: true, hidden_prop_values: null });
+
+          // {
+          //   name: {
+          //     first: "Jamie",
+          //     last: "Jones"
+          //   }
+          //   favorite_number: 5
+          // }
+        } catch (error) {
+          showToast(error.message);
         }
-
-        const data = getFormData(formInputs);
-
-        //example if you want to include hidden inputs
-        //Not recommended
-        //const data = getFormData(formInputs, { include_hidden_props: true, hidden_prop_values: null });
-
-        // {
-        //   name: {
-        //     first: "Jamie",
-        //     last: "Jones"
-        //   }
-        //   favorite_number: 5
-        // }
       },
     },
   ];

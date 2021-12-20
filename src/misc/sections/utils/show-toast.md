@@ -21,14 +21,11 @@ component: show-toast
     {
       type: "submit",
       label: "Submit Form",
-      onsubmit: (event) => {
-        //if there are any errors, calling validateInputs will automatically show error states for
-        //all components that have failed validation
-        const errors = validateInputs(formInputs).errors;
-
-        if (errors.length) {
-          showToast("Please fill in all required inputs", "error");
-          return;
+      onsubmit: async (event) => {
+        try {
+          await validateInputs(toastExampleFormInputs);
+        } catch (error) {
+          showToast(error.message); //shows the toast message, defaults to an error
         }
       },
     },

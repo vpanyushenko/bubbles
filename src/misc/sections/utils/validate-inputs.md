@@ -21,14 +21,14 @@ component: validate-inputs
     {
       type: "submit",
       label: "Submit Form",
-      onsubmit: (event) => {
-        //if there are any errors, calling validateInputs will automatically show error states for
-        //all components that have failed validation
-        const errors = validateInputs(formInputs).errors;
+      onsubmit: async (event) => {
+        try {
+          //if there are any errors, calling validateInputs will automatically show error states for
+          //all components that have failed validation
 
-        if (errors.length) {
-          showToast("Please fill in all required inputs", "error");
-          return;
+          await validateInputs(toastExampleFormInputs); //if any inputs fail validation, the promise will be rejected
+        } catch (error) {
+          showToast(error.message);
         }
       },
     },

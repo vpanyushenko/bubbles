@@ -70,18 +70,14 @@
     {
       type: "submit",
       label: "Show Toast",
-      onsubmit: (event) => {
-        //you can also use the onclick, if it's on a submit button Bubbles will look for the onsubmit event
-        const errors = validateInputs(toastExampleFormInputs).errors; //check for errors
-
-        if (errors.length) {
-          showToast("Please fill in all required inputs", "error");
-          return;
+      onsubmit: async () => {
+        try {
+          await validateInputs(toastExampleFormInputs);
+          const data = await getFormData(toastExampleFormInputs);
+          showToast(data.toast_example_message, data.toast_example_color);
+        } catch (error) {
+          showToast(error.message);
         }
-
-        const data = getFormData(toastExampleFormInputs);
-
-        showToast(data.toast_example_message, data.toast_example_color);
       },
     },
   ];

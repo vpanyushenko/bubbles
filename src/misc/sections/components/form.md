@@ -167,18 +167,7 @@ component: form
     {
       type: "submit", //The form must have a submit button
       label: "Submit Form", //The label for the submit button,
-      onsubmit: (event) => {
-        //you can also use the onclick, if it's on a submit button Bubbles will look for the onsubmit event
-
-        const errors = validateInputs(formInputs).errors; //check for errors
-
-        if (errors.length) {
-          showToast("Please fill in all required inputs", "error");
-          return;
-        }
-
-        const data = getFormData(formInputs);
-
+      onsubmit: async (event) => {
         //the onsubmit and onclick function on buttons, will give you the event param
         //if you want to toggle the loading state on your button while doing a networking request
         //just use showLoading() and pass in the id
@@ -187,11 +176,17 @@ component: form
         const button_id = event.currentTarget.id;
         showLoading(button_id);
 
-        alert(JSON.stringify(data));
-
-        setTimeout(() => {
-          hideLoading(button_id);
-        }, 2000);
+        try {
+          await validateInputs(formInputs);
+          const data = await getFormData(formInputs);
+          console.log(data);
+        } catch (error) {
+          showToast(error.message);
+        } finally {
+          setTimeout(() => {
+            hideLoading(button_id);
+          }, 2000);
+        }
       },
     },
   ];

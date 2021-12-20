@@ -2,6 +2,7 @@
   import Section from "$misc/components/section.svelte";
 
   import CodeCard1 from "./form.md";
+  import CodeCard2 from "./form-stripe.md";
 
   import Row from "$lib/layouts/Row.svelte";
   import Column from "$lib/layouts/Column100.svelte";
@@ -190,7 +191,11 @@
       type: "submit", //The form must have a submit button
       label: "Submit Form", //The label for the submit button,
       onsubmit: async (event) => {
-        //you can also use the onclick, if it's on a submit button Bubbles will look for the onsubmit event
+        //the onsubmit and onclick function on buttons, will give you the event param
+        //if you want to toggle the loading state on your button while doing a networking request
+        //just use showLoading() and pass in the id
+        //An id will automatically be assigned to the button for you
+
         const button_id = event.currentTarget.id;
         showLoading(button_id);
 
@@ -199,32 +204,12 @@
           const data = await getFormData(formInputs);
           console.log(data);
         } catch (error) {
+          showToast(error.message);
         } finally {
-          hideLoading(button_id);
+          setTimeout(() => {
+            hideLoading(button_id);
+          }, 2000);
         }
-
-        // const errors = validateInputs(formInputs).errors; //check for errors
-
-        // if (errors.length) {
-        //   showToast("Please fill in all required inputs", "error");
-        //   return;
-        // }
-
-        // const data = getFormData(formInputs);
-
-        // //the onsubmit and onclick function on buttons, will give you the event param
-        // //if you want to toggle the loading state on your button while doing a networking request
-        // //just use showLoading() and pass in the id
-        // //An id will automatically be assigned to the button for you
-
-        // const button_id = event.currentTarget.id;
-        // showLoading(button_id);
-
-        // alert(JSON.stringify(data));
-
-        // setTimeout(() => {
-        //   hideLoading(button_id);
-        // }, 2000);
       },
     },
   ];
@@ -260,10 +245,21 @@
       ],
     },
     {
+      type: "text",
+      id: "cardholder_name",
+      label: "Cardholder Name",
+      error: "Cardholder name is required",
+      validation: "string|required",
+      hidden_unless: [{ id: "payment_method", value: "" }],
+    },
+    {
       type: "stripe-card",
       id: "stripe_card_token",
       hidden_unless: [{ id: "payment_method", value: "" }],
       stripe_key_name: "VITE_STRIPE_PUBLIC_KEY",
+      stripe_token_values: {
+        name: "cardholder_name",
+      },
     },
     {
       type: "checkbox",
@@ -285,8 +281,8 @@
           await validateInputs(stripeFormInputs);
           const data = await getFormData(stripeFormInputs);
           console.log(data);
-        } catch (err) {
-          if (error) showToast(err.message);
+        } catch (error) {
+          showToast(error.message);
         } finally {
           hideLoading(button_id);
         }
@@ -395,11 +391,11 @@
   <Row>
     <Column>
       <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Stripe Demo" border={false} />
+        <CardHeader title="Stripe" border={false} />
         <p>
-          There are lots of ways to collect payments and at Bubbles, our preferred way to to process that actual payment
-          on the backend server instead of the front end. This gives us a lot more flexibility with things like the
-          <code>application_fee_amount</code> property.
+          There are many ways to collect payments. At Bubbles our preferred way to process payments is on the backend
+          server instead of the front end. This gives us a lot more flexibility with things like the
+          <code>application_fee_amount</code> property, which is a more common use case for dashboards and SaaS products.
         </p>
         <p>
           Therefore, the only thing that our <code>stripe-card</code> input does, is convert the user's credit card into
@@ -407,16 +403,68 @@
         </p>
         <p>
           The process for this is pretty simple. Like any bubbles <code>Form</code> component, you pass in the
-          <code>array</code>
-          of form inputs to the form component as a prop. In the <code>onsumbit</code> function of your button, you'll
-          pass in the reference to your array of inputs to the <code>getFormData</code> utility you imported. Bubbles
-          will automatically convert the card to the token, and the token will be part of the object returned. They key,
-          as always, being the <code>id</code> you passed to that input.
+          <code>array</code> of form inputs to the form component as a prop. In the <code>onsumbit</code> function of
+          your button, you'll pass in the reference to your array of inputs to the <code>getFormData</code> utility you
+          imported. Bubbles will automatically convert the card to the token, and the token will be part of the object
+          returned. They key, as always, being the <code>id</code> you passed to that input.
         </p>
         <p>
           Any StripeJS dependencies will only load client side after everything else mounts, so there will be no
           performance penalties for using this component.
         </p>
+      </Card>
+
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          While this input shares some common properties with other inputs, it also has enough unique properties that
+          it's worth reviewing them independently.
+        </p>
+
+        <Table>
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">id</span></TableCell>
+            <TableCell>This is the key that the Stripe token will have in the final data object.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">label</span></TableCell>
+            <TableCell>The label for the input. Defaults to "Credit Card Information"</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">desc</span></TableCell>
+            <TableCell
+              >A description you can add to the bottom of the input that supports rendering inline html strings.</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">error</span></TableCell>
+            <TableCell
+              >The default error text. This is optional and will be overwritten by any Stripe specific error messages
+              during validation</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">error</span></TableCell>
+            <TableCell
+              >The default error text. This is optional and will be overwritten by any Stripe specific error messages
+              during validation</TableCell
+            >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">margin</span></TableCell>
+            <TableCell>Adds margin to the input</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">stripe_key_name</span></TableCell>
+            <TableCell
+              >To initialize Stripe, you'll need to pass in your <code>stripe_public_key</code>. This variable is safe
+              to expose to front end code. Save it in your <code>.env</code> file, and pass in the name of the key. The
+              default key Bubbles will check for is <code>"VITE_STRIPE_PUBLIC_KEY"</code>. Remember, only keys prefixed
+              with VITE_ are exposed to the front end by default, unless you have made a change to this.
+            </TableCell>
+          </TableRow>
+        </Table>
       </Card>
     </Column>
   </Row>
@@ -424,7 +472,7 @@
   <Row>
     <Column50>
       <Card color="dark" px={0} py={0}>
-        <CodeCard1 />
+        <CodeCard2 />
       </Card>
     </Column50>
 
