@@ -189,9 +189,6 @@
   }
 </script>
 
-<!-- 
-<svelte:window bind:outerWidth={w}/> -->
-
 <Header title="Pokedex" breadcrumbs={false} />
 
 <Row>
