@@ -61,7 +61,7 @@
     padding: 3px 0.625rem;
     border-radius: 8px;
     color: #fff;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     vertical-align: middle;
@@ -190,5 +190,6 @@
 
   .small {
     font-size: 0.6rem;
+    padding: 0 0.25rem;
   }
 </style>
