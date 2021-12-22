@@ -11,6 +11,8 @@
   export let large = false;
   export let bold = false;
   export let align = "left";
+  export let mobile_width = "__default";
+  export let mobile_order = 0;
 
   //conditions passed for custom cell types
   export let rows = [];
@@ -31,10 +33,28 @@
   } else if (button) {
     _type = "button";
   }
+
+  //conditions for mobile layouts
+  let mobile_hide = false;
+  let style = "";
+
+  if (mobile_width && mobile_width !== "__default") {
+    style += `flex:${mobile_width}%;`;
+  }
+
+  if (!mobile_width) {
+    mobile_hide = true;
+  }
+
+  if (mobile_order) {
+    style += `order:${mobile_order};`;
+  }
+
+  console.log(style, _type);
 </script>
 
 {#if _type === "text"}
-  <div class="cell">
+  <div class="cell" class:mobile__hide={mobile_hide} {style}>
     <div class="flex align-items-center">
       {#if href}
         <span class="href-container">
@@ -55,14 +75,14 @@
 {/if}
 
 {#if _type === "stacked"}
-  <div class="cell">
+  <div class="cell" class:mobile__hide={mobile_hide} {style}>
     <div class="d-flex align-items-center">
       {#each rows as nested_row}
         <div class="nested__row">
           {#each nested_row as nested_cell}
-            {#if nested_cell.tag}
+            {#if nested_cell.tag?.label}
               <span class="tag">
-                <Tag {...nested_cell.tag} small={true} margin="0 .25rem 0 0" />
+                <Tag {...nested_cell.tag} small={true} margin=".2rem .25rem 0 0" />
               </span>
             {/if}
 
@@ -76,9 +96,9 @@
               <!-- </span> -->
             {/if}
 
-            {#if nested_cell.tag && (nested_cell.tag?.align === "right" || nested_cell.tag?.align === "end")}
+            {#if nested_cell.tag?.label && (nested_cell.tag?.align === "right" || nested_cell.tag?.align === "end")}
               <span class="tag">
-                <Tag {...nested_cell.tag} small={true} margin="0 0 0 .25rem" />
+                <Tag {...nested_cell.tag} small={true} margin="0 0 .2rem .25rem" />
               </span>
             {/if}
           {/each}
@@ -89,7 +109,7 @@
 {/if}
 
 {#if _type === "image"}
-  <div class="cell image">
+  <div class="cell image" class:mobile__hide={mobile_hide} {style}>
     {#if href}
       <a sveltekit:prefetch {href}>
         <picture>
@@ -105,19 +125,19 @@
 {/if}
 
 {#if _type === "tag"}
-  <div class="cell" class:right={align === "right" || align === "end"}>
+  <div class="cell" class:mobile__hide={mobile_hide} {style} class:right={align === "right" || align === "end"}>
     <Tag {...tag} />
   </div>
 {/if}
 
 {#if _type === "button" && !$pageStore.is_mobile}
-  <div class="cell right">
+  <div class="cell right" class:mobile__hide={mobile_hide} {style}>
     <IconButton icon="arrowRight" {...button} />
   </div>
 {/if}
 
 {#if !_type}
-  <div class="cell">
+  <div class="cell" class:mobile__hide={mobile_hide} {style}>
     <slot>--</slot>
   </div>
 {/if}
@@ -256,10 +276,15 @@
       justify-content: center;
       display: block;
       border: none;
+      flex-basis: content;
     }
 
     .cell picture {
       margin-right: 0px;
+    }
+
+    .mobile__hide {
+      display: none;
     }
   }
 </style>

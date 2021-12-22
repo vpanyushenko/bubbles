@@ -124,18 +124,9 @@
   export let header = [];
   export let rows = [];
   export let empty = "Nothing here yet.";
-  // export let mobile_transform = true;
-
-  let w;
-
-  $: is_mobile = w <= 500 ? true : false;
-
-  $: innerWidth = 0;
 </script>
 
-<svelte:window bind:innerWidth />
-
-<div class="table" class:mobile={is_mobile === true} bind:clientWidth={w}>
+<div class="table">
   {#if header && header.length}
     <TableHeader cells={header} />
   {/if}
