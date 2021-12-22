@@ -11,7 +11,7 @@
   <a class="row" sveltekit:prefetch {href} {id} on:click={onclick}>
     {#if cells && cells.length}
       {#each cells as cell}
-        <TableCell {...cell} __mobile={mobile} />
+        <TableCell {...cell} />
       {/each}
     {:else}
       <slot><TableCell><p>--</p></TableCell></slot>
@@ -21,7 +21,7 @@
   <div class="row" class:cursor-pointer={onclick} on:click={onclick} {id}>
     {#if cells && cells.length}
       {#each cells as cell}
-        <TableCell {...cell} __mobile={mobile} />
+        <TableCell {...cell} />
       {/each}
     {:else}
       <slot><TableCell><p>--</p></TableCell></slot>
