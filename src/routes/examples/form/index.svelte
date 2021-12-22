@@ -19,6 +19,11 @@
 
   const formInputs = [
     {
+      type: "hidden",
+      id: "hidden_input_id",
+      value: "Hello World",
+    },
+    {
       type: "text", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
       id: "name.first", //the id will be the key when you call the getFormData function. If you add a "." in the id, it will return the item as a nested object. For example, if your `id` value is `name.last`, the getFormData function will return that as {name: {last: ""}}
       label: "Your Name", //The label is what we'll initially show for the input, it should explain what is required. Keep this short like "First Name"
