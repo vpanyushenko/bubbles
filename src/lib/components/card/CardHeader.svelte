@@ -121,18 +121,22 @@
   }
 
   @media only screen and (max-width: 767px) {
-    .header.filters {
-      display: block;
+    .header {
+      padding-top: 1.25rem;
     }
 
-    .filters {
-      margin-bottom: 1rem;
+    .header.filters {
+      display: block;
     }
 
     .filters > .filter {
       margin-left: 0;
       margin-bottom: 1rem;
       width: 100%;
+    }
+
+    .filter:last-of-type {
+      margin-bottom: 0rem;
     }
   }
 </style>

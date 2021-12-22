@@ -15,30 +15,28 @@
   export let border = null;
   export let height100 = false;
 
-  let y = `${py}rem`;
-  let x = `${px}rem`;
+  let style = "";
+
+  if (px !== 2) {
+    style += `padding-left:${px}rem;padding-right:${px}rem;`;
+  }
+
+  if (py !== 0.625) {
+    style += `padding-top:${py}rem;padding-bottom:${py}rem;`;
+  }
+
   let background = null;
 
   if (color) {
-    background = `var(--${color})`;
+    style += `background:var(--${color});`;
+    background = ``;
   }
-
-  $: innerWidth = 0;
-  $pageStore.is_mobile = innerWidth < 767 ? true : false;
 
   // in:fly={{ y: -50, duration: 250, delay: 300 }}
   // out:fly={{ y: -50, duration: 250 }}
 </script>
 
-<svelte:window bind:innerWidth />
-
-<div
-  class="card"
-  class:shadow
-  class:border
-  class:height-100={height100}
-  style="padding-top:{y};padding-bottom:{y};padding-left:{x};padding-right:{x};background:{background}"
->
+<div class="card" class:shadow class:border class:height-100={height100} {style}>
   {#if header && Object.keys(header).length}
     <CardHeader {...header} />
   {/if}
@@ -71,5 +69,11 @@
 
   .height-100 {
     height: 100%;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .card {
+      padding: 1rem;
+    }
   }
 </style>

@@ -22,6 +22,72 @@
 
   $: pagination = $store?.pagination ? $store.pagination : {};
   $: pokemon = $store.pokemon ? $store.pokemon : [];
+
+  const types = [
+    "All",
+    "break",
+    "Normal",
+    "Fire",
+    "Water",
+    "Grass",
+    "Electric",
+    "Ice",
+    "Fighting",
+    "Poison",
+    "Ground",
+    "Flying",
+    "Psychic",
+    "Bug",
+    "Rock",
+    "Ghost",
+    "Dark",
+    "Dragon",
+    "Steel",
+    "Fairy",
+  ];
+
+  function typeColor(type) {
+    switch (type) {
+      case "normal":
+        return "gray-light";
+      case "fire":
+        return "error";
+      case "water":
+        return "info";
+      case "grass":
+        return "success";
+      case "electric":
+        return "warning";
+      case "ice":
+        return "info-light";
+      case "fighting":
+        return "error-light";
+      case "poison":
+        return "primary";
+      case "ground":
+        return "warning-light";
+      case "flying":
+        return "primary-light";
+      case "psychic":
+        return "secondary-light";
+      case "bug":
+        return "success-light";
+      case "rock":
+        return "dark-light";
+      case "ghost":
+        return "primary-border";
+      case "dark":
+        return "dark";
+      case "dragon":
+        return "primary-light";
+      case "steel":
+        return "gray";
+      case "fairy":
+        return "secondary";
+      default:
+        return "gray";
+    }
+  }
 </script>
 
 <Section id="table" title="Table">
@@ -122,6 +188,18 @@
           The cell that is inside of the <code>TableRow</code>. Like all of the other table components, you can add the
           data as props, or slot your own UI into the component.
         </p>
+
+        <p>
+          When a user is viewing your table on a mobile device, we'll need the table to be responsive. You can attempt
+          to make the whole table row overflow but that is a bad user experience. <strong
+            >Ideally, on a smaller screen, you'll want to present less information on your table, and let the user
+            navigate to a page with more details.</strong
+          >
+        </p>
+
+        <p>
+          There are specific mobile properties on for the <code>TableCell</code> to help you deal with small screen devices.
+        </p>
         <Table>
           <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
           <TableRow>
@@ -171,6 +249,20 @@
               >If you add a button property, Bubbles will assume you want to add an <code>IconButton</code> to that
               cell. See the props needed for an icon button <a href="#button">here</a></TableCell
             >
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">mobile_width</span></TableCell>
+            <TableCell
+              >Select the width this cell will take up on small screens. If you want to hide the cell on mobile, set the
+              value to <code>0</code>.
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">mobile_order</span></TableCell>
+            <TableCell
+              >This is the <code>order</code> css property. You can change the order or elements by passing in larger integers
+              and move them left in the stack by passing in larger negative integers.
+            </TableCell>
           </TableRow>
         </Table>
       </Card>
@@ -223,15 +315,49 @@
             { label: null, align: "end" },
           ]}
         >
-          <!-- {#if $store?.pokemon && $store.Pokemon.length} -->
           {#each pokemon as poke}
             <TableRow>
-              <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} />
-              <TableCell text={poke.name} caption={`Pokedex Number: ${poke.id}`} bold={true} />
-              <TableCell text={`${poke.weight} lbs`} />
-              <TableCell rows={[[{ text: poke?.types[0]?.type?.name }, { text: poke?.types[1]?.type?.name }]]} />
-              <TableCell tag={{ label: poke.moves.length, color: "primary", min_width: 2.75 }} align="right" />
+              <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} mobile_width={10} />
               <TableCell
+                text={poke.name}
+                href={`/examples/pokedex/${poke.name}`}
+                caption={`Pokedex Number: ${poke.id}`}
+                bold={true}
+                mobile_width={70}
+              />
+              <TableCell text={`${poke.weight} lbs`} mobile_width={0} />
+              <TableCell
+                mobile_width={0}
+                rows={[
+                  [
+                    {
+                      tag: {
+                        label: poke?.types[0]?.type?.name,
+                        color: typeColor(poke?.types[0]?.type?.name),
+                        margin: "0 0 .25rem 0",
+                      },
+                    },
+                  ],
+                  [
+                    {
+                      tag: {
+                        label: poke?.types[1]?.type?.name,
+                        color: typeColor(poke?.types[1]?.type?.name),
+                        margin: "0.25rem 0 0 0",
+                      },
+                    },
+                  ],
+                ]}
+              />
+
+              <TableCell
+                tag={{ label: poke.moves.length, color: "primary", min_width: 2.75 }}
+                align="right"
+                mobile_width={0}
+              />
+
+              <TableCell
+                mobile_width={10}
                 button={{
                   icon: "more",
                   options: [
@@ -254,7 +380,6 @@
               />
             </TableRow>
           {/each}
-          <!-- {/if} -->
         </Table>
         <CardFooter>
           <Pagination {...pagination} />

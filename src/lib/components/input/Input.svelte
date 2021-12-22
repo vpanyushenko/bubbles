@@ -394,6 +394,17 @@
       {/if}
     </div>
   </div>
+{:else if type === "hidden"}
+  <div class="form__field__container hidden" {id}>
+    <div class="field">
+      <div class="field__wrap">
+        <input class="field__input" type="hidden" bind:value />
+      </div>
+      {#if desc}
+        <p class="field__desc">{@html desc}</p>
+      {/if}
+    </div>
+  </div>
 {:else}
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>

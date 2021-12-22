@@ -11,17 +11,17 @@
   <a class="row" sveltekit:prefetch {href} {id} on:click={onclick}>
     {#if cells && cells.length}
       {#each cells as cell}
-        <TableCell {...cell} />
+        <TableCell {...cell} __mobile={mobile} />
       {/each}
     {:else}
       <slot><TableCell><p>--</p></TableCell></slot>
     {/if}
   </a>
 {:else}
-  <div class="row" on:click={onclick} {id}>
+  <div class="row" class:cursor-pointer={onclick} on:click={onclick} {id}>
     {#if cells && cells.length}
       {#each cells as cell}
-        <TableCell {...cell} />
+        <TableCell {...cell} __mobile={mobile} />
       {/each}
     {:else}
       <slot><TableCell><p>--</p></TableCell></slot>
@@ -34,14 +34,18 @@
     display: table-row;
   }
 
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
   :global(.row:last-child .cell) {
     border-bottom: none !important;
   }
 
-  :global(a.row:hover button) {
+  /* :global(a.row:hover button) {
     -webkit-box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
     box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
-  }
+  } */
 
   @media only screen and (max-width: 767px) {
     .row {

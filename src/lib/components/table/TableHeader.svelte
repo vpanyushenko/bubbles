@@ -1,9 +1,8 @@
 <script>
   export let cells = [];
-  export let mobile_transform = true;
 </script>
 
-<div class="row header" class:mobile-transform={mobile_transform}>
+<div class="row header">
   {#each cells as cell}
     <div class="cell" class:right={cell.align === "right" || cell.align === "end"}>
       {#if cell.label}
@@ -80,12 +79,11 @@
   }
 
   @media only screen and (max-width: 767px) {
-    .row.mobile-transform {
+    .row {
       display: none;
     }
 
-    .row {
-      display: flex;
+    /* .row {
       width: 100%;
       position: relative;
       padding: 2rem;
@@ -104,6 +102,6 @@
       padding: 0px;
       text-align: center;
       justify-content: center;
-    }
+    } */
   }
 </style>

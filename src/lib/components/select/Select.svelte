@@ -128,9 +128,6 @@
 
     const option = event.currentTarget;
 
-    console.log(option);
-    console.log(option.querySelector("input").value);
-
     if (type === "select-number") {
       value = Number(option.querySelector("input").value);
     } else {

@@ -3,13 +3,14 @@
   import "../oceanic.css";
 
   import store from "$misc/store";
+  import icon_arrow from "./arrow.svg";
 
   import { goto } from "$app/navigation";
-
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
   import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
   import Modal from "$lib/components/modal/Modal.svelte";
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
+  import IconButton from "$lib/components/button/IconButton.svelte";
   import { pageStore, configStore } from "$lib/stores/stores";
 
   $configStore.goto = goto;
@@ -253,7 +254,11 @@
       $pageStore.sidebar.active_item = sidebarConfig.sections[$store.sidebar_index].id;
     }, 750);
   }
+
+  let y = 0;
 </script>
+
+<svelte:window bind:scrollY={y} />
 
 <ToastContainer />
 
@@ -264,6 +269,12 @@
 
 <Modal />
 
+{#if y > 1000}
+  <div>
+    <IconButton icon={icon_arrow} transparent={false} onclick={() => (y = 0)} />
+  </div>
+{/if}
+
 <style>
   :global(p) {
     margin-bottom: 1rem;
@@ -272,5 +283,14 @@
 
   :global(.mt-2) {
     margin-top: 2rem;
+  }
+
+  div {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    z-index: 10;
   }
 </style>

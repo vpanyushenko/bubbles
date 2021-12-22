@@ -9,22 +9,6 @@
   export let sections = [];
   export let logo = null;
 
-  onMount(() => {
-    const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
-
-    if (primaryhex) {
-      const rgb = hexToRgb(`${primaryhex.trim()}`);
-
-      const iconFilter = getColorFilter(rgb);
-      let filter = iconFilter.filter.split("filter: ")[1];
-      filter = filter.substring(0, filter.length - 1);
-
-      document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
-    }
-
-    //TODO: find the currently active section
-  });
-
   const sectionsWithTitles = {};
   let path = $page.path;
   let activeSection = false;
@@ -40,15 +24,20 @@
       $pageStore.sidebar.notifications[_id] = section.notifications ? section.notifications : 0;
     }
 
-    if (!activeSection) {
-      activeSection = isActiveSection(section);
-    }
-
     if (!section.href_aliases) {
       section.href_aliases = [];
     }
 
     section.href_aliases.push(section.href);
+
+    if (path === "/" && section.href_aliases.includes("/")) {
+      activeSection = true;
+      $pageStore.sidebar.active_item = section.id;
+    }
+
+    if (!activeSection) {
+      activeSection = isActiveSection(section);
+    }
 
     if (!sectionsWithTitles[section.section]) {
       sectionsWithTitles[section.section] = [];
@@ -56,6 +45,20 @@
 
     section = section;
     sectionsWithTitles[section.section].push(section);
+  });
+
+  onMount(() => {
+    const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
+
+    if (primaryhex) {
+      const rgb = hexToRgb(`${primaryhex.trim()}`);
+
+      const iconFilter = getColorFilter(rgb);
+      let filter = iconFilter.filter.split("filter: ")[1];
+      filter = filter.substring(0, filter.length - 1);
+
+      document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
+    }
   });
 
   //make sure notifications cannot be below 0
@@ -83,27 +86,25 @@
   }
 
   function isActiveSection(obj) {
-    //first check if we can find the path from the url
-    if (path === obj.href || (obj.href_aliases && obj.href_aliases.length > 0 && obj.href_aliases.includes(path))) {
-      $pageStore.sidebar.active_item = obj.id;
-      return true;
+    if (!obj.href_aliases) {
+      obj.href_aliases = [];
     }
 
-    //if not, we can check remove one of the paths sections until we find a match
-    if (path === obj.href.split("/").filter(Boolean)[0]) {
-      $pageStore.sidebar.active_item = obj.id;
-      return true;
-    }
+    //we need to convert these possible links to all combinations from most specific to least specific and see if there is a match
+    const params = path.split("/").filter(Boolean);
 
-    if (obj.href_aliases) {
-      const urls = obj.href_aliases.map((href) => href.split("/").filter(Boolean)[0]);
-      const aliasActiveSection = urls.find((a) => a === path);
+    for (let i = params.length - 1; i > -1; i--) {
+      const param_path = `/${params.join("/")}`;
 
-      if (aliasActiveSection) {
+      if (param_path === path) {
         $pageStore.sidebar.active_item = obj.id;
         return true;
       }
+
+      params.pop();
     }
+
+    return false;
   }
 
   $: _sections = formatSidebar(sectionsWithTitles, $pageStore);

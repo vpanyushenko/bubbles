@@ -15,6 +15,8 @@
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
   import { onMount } from "svelte";
 
+  import { slide } from "svelte/transition";
+
   export let inputs = [];
   export let id = uuid();
   let row_width = 0;
@@ -134,15 +136,20 @@
     {#if !input.is_hidden}
       <span
         class="form__row"
+        class:hidden={input.type === "hidden"}
         class:form__row__inline={input.width !== 100 ? true : false}
         class:form__row__inline__last__row={input.last_row}
         style="width: {input.width}%"
-        in:fade={{
-          duration: 500,
+        in:scale|local={{
+          duration: 750,
+          opacity: 0,
+          start: 0.5,
           easing: quintOut,
         }}
-        out:fade={{
-          duration: 500,
+        out:scale|local={{
+          duration: 750,
+          opacity: 0,
+          start: 0,
           easing: quintOut,
         }}
       >
