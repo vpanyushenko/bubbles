@@ -300,8 +300,6 @@ const createStripeToken = (stripe_input, inputs) => {
           throw err;
         }
 
-        console.log(result.token);
-
         resolve(result.token);
       })
       .catch((err) => {
