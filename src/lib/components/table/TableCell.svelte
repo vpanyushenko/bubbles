@@ -49,8 +49,6 @@
   if (mobile_order) {
     style += `order:${mobile_order};`;
   }
-
-  console.log(style, _type);
 </script>
 
 {#if _type === "text"}
