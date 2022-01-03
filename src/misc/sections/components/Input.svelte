@@ -307,6 +307,7 @@
                 {
                   name: "California",
                   abbreviation: "CA",
+                  caption: "West coast, best coast",
                 },
                 {
                   name: "Colorado",
@@ -431,6 +432,7 @@
                 {
                   name: "New York",
                   abbreviation: "NY",
+                  caption: "I ❤️ New York",
                 },
                 {
                   name: "North Carolina",
@@ -529,7 +531,11 @@
                 threshold: 0.4,
               });
 
-              return Promise.resolve(fuse.search(input).map((obj) => obj.item.name));
+              return Promise.resolve(
+                fuse.search(input).map((obj) => {
+                  return { label: obj.item.name, value: obj.item.name, caption: obj.item?.caption };
+                })
+              );
             }}
           />
 

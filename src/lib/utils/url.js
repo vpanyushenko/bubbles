@@ -63,7 +63,7 @@ const addQueryParam = (key, value, options = { goto: false, show_loading: "", ke
       } else {
         if (debug) {
           console.log(
-            "[Bubbles] You did not pass the Svelte Kit goto function to the Bubbles configStore so the load function is being rerun using browser window APIs."
+            "[Bubbles]: You did not pass the Svelte Kit goto function to the Bubbles configStore so the load function is being rerun using browser window APIs."
           );
         }
 
@@ -79,8 +79,8 @@ const addQueryParam = (key, value, options = { goto: false, show_loading: "", ke
  * @param {String} [key=null] - if you pass a key, you'll get the query param for that key
  * @returns {String|Object} - If you pass in a key, the return will be the value of the param. Without a key, an Object is returned for all of the query params
  */
-const getQueryParam = (page, key = null) => {
-  const query_params = page.query;
+const getQueryParam = (url, key = null) => {
+  const query_params = url.searchParams;
   const all_query_params = Object.fromEntries(query_params.entries());
   const param_keys = Object.keys(all_query_params);
 

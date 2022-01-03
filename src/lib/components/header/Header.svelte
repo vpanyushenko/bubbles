@@ -125,7 +125,7 @@
       ? document.querySelector(".sidebar").classList.toggle("active", $pageStore.sidebar.is_toggled)
       : null;
 
-  $: _breadcrumbs = calcBreadcrumbs($page.path);
+  $: _breadcrumbs = calcBreadcrumbs($page.url.pathname);
   $: back = null;
 
   $: if (_breadcrumbs.length > 1) {

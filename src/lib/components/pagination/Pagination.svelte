@@ -18,8 +18,8 @@
 
   let dom_component_width, dom_component_is_small, _max_buttons;
 
-  $: current_page = Number($page.query.get(page_query_name)) || 1;
-  $: current_limit = Number($page.query.get(limit_query_name)) || limit;
+  $: current_page = Number($page.url.searchParams.get(page_query_name)) || 1;
+  $: current_limit = Number($page.url.searchParams.get(limit_query_name)) || limit;
 
   const _first = uuid();
   const _prev = uuid();
@@ -91,11 +91,11 @@
       : null;
 
   //make sure the limit is never 0
-  $: if ($page.query.get(limit_query_name)) {
-    if (Number($page.query.get(limit_query_name) === 0)) {
+  $: if ($page.url.searchParams.get(limit_query_name)) {
+    if (Number($page.url.searchParams.get(limit_query_name) === 0)) {
       limit = rows_per_page && rows_per_page.length ? rows_per_page[0] : 10;
     } else {
-      limit = Number($page.query.get(limit_query_name));
+      limit = Number($page.url.searchParams.get(limit_query_name));
     }
   } else {
     limit = rows_per_page && rows_per_page.length ? rows_per_page[0] : 10;

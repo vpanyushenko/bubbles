@@ -10,7 +10,7 @@
   export let logo = null;
 
   const sectionsWithTitles = {};
-  let path = $page.path;
+  let path = $page.url.pathname;
   let activeSection = false;
 
   sections.forEach((section, index) => {

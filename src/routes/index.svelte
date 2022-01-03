@@ -1,10 +1,10 @@
 <script context="module">
-  export async function load({ page, fetch, session, stuff }) {
+  export async function load({ url, params, fetch, session, stuff }) {
     //initially there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
-    const limit = page.query.get("limit") ? page.query.get("limit") : 10;
+    const limit = url.searchParams.get("limit") ? url.searchParams.get("limit") : 10;
 
     //same process with the page, since if the page is undefined the user is on the first one
-    const _page = page.query.get("page") ? Number(page.query.get("page")) : 1;
+    const _page = url.searchParams.get("page") ? Number(url.searchParams.get("page")) : 1;
 
     //this api needs an offset number we we can calc it using the page and limit
     const offset = Number(limit) * (_page - 1);
@@ -12,7 +12,7 @@
     const pagination = {
       limit: Number(limit),
       page: _page,
-      offset: Number(page.query.get("limit")) * (Number(page.query.get("page")) - 1),
+      offset: Number(url.searchParams.get("limit")) * (Number(url.searchParams.get("page")) - 1),
       count: null,
       first_last_arrow: true,
     };
@@ -62,6 +62,7 @@
   import Header from "$lib/components/header/Header.svelte";
   import Scroller from "@sveltejs/svelte-scroller";
 
+  import GSWarning from "$misc/sections/getting-started/00-warning.svelte";
   import GSIntro from "$misc/sections/getting-started/01-intro.svelte";
   import GSInstallation from "$misc/sections/getting-started/02-installation.svelte";
   import GSUsage from "$misc/sections/getting-started/03-usage.svelte";
@@ -154,6 +155,7 @@
   <div slot="background" class="bg" />
 
   <div slot="foreground">
+    <GSWarning />
     <GSIntro />
     <GSInstallation />
     <GSUsage />
