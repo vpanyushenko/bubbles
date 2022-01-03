@@ -1,6 +1,6 @@
 <script context="module">
-  export async function load({ page, fetch, session, stuff }) {
-    return fetch(`https://pokeapi.co/api/v2/pokemon/${page.params.pokemon}`, {
+  export async function load({ url, params, fetch, session, stuff }) {
+    return fetch(`https://pokeapi.co/api/v2/pokemon/${params.pokemon}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

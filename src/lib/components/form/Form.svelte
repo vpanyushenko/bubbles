@@ -13,9 +13,6 @@
   import RadioGroup from "$lib/components/radio/RadioGroup.svelte";
   import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
-  import { onMount } from "svelte";
-
-  import { slide } from "svelte/transition";
 
   export let inputs = [];
   export let id = uuid();
@@ -50,8 +47,9 @@
 
   //determine if any inputs are dependent on other inputs
   $: formatted_inputs = formatInputs(inputs);
+  // let dom_component_width, mobile;
 
-  function formatInputs(inputs) {
+  function formatInputs(inputs, mobile = false) {
     return inputs.map((input) => {
       if (dev && input?.hidden_if && input.hidden_if.length && input?.hidden_unless && input.hidden_unless.length) {
         console.log("There may negative side effects when using both hidden_if and hidden_unless on the same input");
@@ -66,6 +64,7 @@
       }
 
       //calculate row widths in case the user wants to use nested inputs
+
       if (!input.width) {
         input.width = 100;
       } else if (input.width === 33) {
@@ -73,6 +72,7 @@
       }
 
       row_width += input.width;
+      //row_width += mobile && input.mobile_width ? input.mobile_width : input.width;
 
       if (row_width >= 98) {
         row_width = 0;
@@ -101,6 +101,13 @@
     });
   }
 
+  // $: if (dom_component_width < 500) {
+  //   mobile = true;
+  // } else {
+  //   mobile = false;
+  // }
+
+  // $: console.log(formatted_inputs);
   // onMount(() => {
   //   const ro = new ResizeObserver((entries) => {
   //     for (let entry of entries) {

@@ -4,14 +4,14 @@ component: table-complex
 
 ```svelte
 <script context="module">
-  export async function load({ page, fetch, session, stuff }) {
+  export async function load({ url, params, fetch, session, stuff }) {
     //when the use will use the pagination to navigate, Bubbles will make svelte re-run the load function to fetch new data
 
     //initially there isn't a query param in the url so we can set the limit to whatever the default value of the pagination will be
-    const limit = page.query.get("limit") ? page.query.get("limit") : 10;
+    const limit = url.searchParams.get("limit") ? url.searchParams.get("limit") : 10;
 
     //same process with the page, since if the page is undefined the user is on the first one
-    const _page = page.query.get("page") ? Number(page.query.get("page")) : 1;
+    const _page = url.searchParams.get("page") ? Number(url.searchParams.get("page")) : 1;
 
     //this api needs an offset number we we can calc it using the page and limit
     const offset = Number(limit) * (_page - 1);

@@ -16,7 +16,7 @@
   });
 
   filters.forEach((filter) => {
-    const query_value = $page.query.get(filter.id);
+    const query_value = $page.url.searchParams.get(filter.id);
 
     if (query_value) {
       filter.value = query_value;

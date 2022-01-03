@@ -7,6 +7,10 @@
   import Modal from "$lib/components/modal/Modal.svelte";
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
 
+  import { goto } from "$app/navigation";
+  import { configStore } from "$lib/stores/stores";
+  $configStore.goto = goto;
+
   const sidebarConfig = {
     logo: "/logo.svg",
     sections: [

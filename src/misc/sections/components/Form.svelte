@@ -240,7 +240,7 @@
         "break",
         {
           label: "Add New Card",
-          value: "",
+          value: null,
         },
       ],
     },
@@ -250,12 +250,12 @@
       label: "Cardholder Name",
       error: "Cardholder name is required",
       validation: "string|required",
-      hidden_unless: [{ id: "payment_method", value: "" }],
+      hidden_unless: [{ id: "payment_method", value: null }],
     },
     {
       type: "stripe-card",
       id: "stripe_card_token",
-      hidden_unless: [{ id: "payment_method", value: "" }],
+      hidden_unless: [{ id: "payment_method", value: null }],
       stripe_key_name: "VITE_STRIPE_PUBLIC_KEY",
       stripe_token_values: {
         name: "cardholder_name",

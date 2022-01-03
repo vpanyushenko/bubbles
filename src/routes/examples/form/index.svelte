@@ -35,6 +35,7 @@
       vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
       value: "Jamie",
       width: 40,
+      mobile_width: 100,
     },
     {
       type: "text", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
@@ -48,6 +49,7 @@
       vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
       value: "Jones",
       width: 40,
+      mobile_width: 100,
     },
     {
       type: "select",
@@ -78,6 +80,7 @@
         },
       ],
       width: 20,
+      mobile_width: 100,
     },
     {
       type: "number", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
