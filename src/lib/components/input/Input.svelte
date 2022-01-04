@@ -47,6 +47,16 @@
     }
   }
 
+  function timeFieldFocused(event) {
+    event.currentTarget.type = "time";
+  }
+
+  function timeFieldBlurred(event) {
+    if (!event.currentTarget.value) {
+      event.currentTarget.type = "text";
+    }
+  }
+
   function typeaheadOnInput(event) {
     const value = event.target.value;
 
@@ -344,6 +354,31 @@
       {/if}
     </div>
   </div>
+{:else if type === "time"}
+  <div class="form__field__container" {id} class:mb-2={margin}>
+    <div class="field" class:active={focused || value || value === 0 || value === "0"}>
+      <div class="field__label">
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
+      </div>
+      <div class="field__wrap">
+        <input
+          class="field__input"
+          class:error={is_error}
+          autocomplete={autocomplete ? "on" : "nope"}
+          type="text"
+          bind:value
+          on:focus={inputFocused}
+          on:focus={timeFieldFocused}
+          on:blur={inputBlurred}
+          on:blur={timeFieldBlurred}
+        />
+      </div>
+      {#if desc}
+        <p class="field__desc">{@html desc}</p>
+      {/if}
+    </div>
+  </div>
 {:else if type === "textarea"}
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value || value === 0 || value === "0"}>
@@ -435,6 +470,10 @@
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+  :global(input[type="time"]::-webkit-calendar-picker-indicator) {
+    background: none;
+    display: none;
   }
 
   input[type="number"] {

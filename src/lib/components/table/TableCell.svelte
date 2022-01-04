@@ -56,7 +56,7 @@
     <div class="flex align-items-center">
       {#if href}
         <span class="href-container">
-          {#if $navigating && $navigating?.to?.path === href}
+          {#if $navigating && $navigating?.to?.pathname === href}
             <Spinner style="margin: 0 0.5rem 0 0" />
           {/if}
           <a class:h6={large} class:bold sveltekit:prefetch {href}>{text}</a>
@@ -129,7 +129,12 @@
 {/if}
 
 {#if _type === "button" && !$pageStore.is_mobile}
-  <div class="cell right" class:mobile__hide={mobile_hide} {style}>
+  <div
+    class="cell right"
+    class:mobile__hide={mobile_hide}
+    {style}
+    class:__clickable={button.icon === "arrowRight" || !button.icon}
+  >
     <IconButton icon="arrowRight" {...button} />
   </div>
 {/if}

@@ -1,3 +1,27 @@
+<!-- <script context="module">
+  const promise = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve();
+      }, 3000);
+    });
+  };
+
+  export async function load({ url, params, fetch, session, stuff }) {
+    console.log("loading...");
+    await promise();
+
+    return {
+      props: {
+        data: true,
+      },
+    };
+  }
+</script> -->
+<script context="module">
+  export const prerender = true;
+</script>
+
 <script>
   import Section from "$misc/components/section.svelte";
 
@@ -22,6 +46,32 @@
       type: "hidden",
       id: "hidden_input_id",
       value: "Hello World",
+    },
+    {
+      type: "time", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
+      id: "time.open", //the id will be the key when you call the getFormData function. If you add a "." in the id, it will return the item as a nested object. For example, if your `id` value is `name.last`, the getFormData function will return that as {name: {last: ""}}
+      label: "Open", //The label is what we'll initially show for the input, it should explain what is required. Keep this short like "First Name"
+      value: null, //You can add a value to the input
+      desc: "You'll be able to change this name later", //This will add text below the input to explain in more detail what is needed from the user. Optional.
+      error: "A name is required", //this is the text that will appear if this input fails validation
+      validation: "string|required|min:3", // See the validation section for more details, but this adds what validation you need. In This case, it must be a string, it's required, with a min length of 3
+      validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
+      vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
+      value: "Jamie",
+      width: 50,
+    },
+    {
+      type: "time", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
+      id: "time.close", //the id will be the key when you call the getFormData function. If you add a "." in the id, it will return the item as a nested object. For example, if your `id` value is `name.last`, the getFormData function will return that as {name: {last: ""}}
+      label: "Close", //The label is what we'll initially show for the input, it should explain what is required. Keep this short like "First Name"
+      value: null, //You can add a value to the input
+      desc: "You'll be able to change this name later", //This will add text below the input to explain in more detail what is needed from the user. Optional.
+      error: "A name is required", //this is the text that will appear if this input fails validation
+      validation: "string|required|min:3", // See the validation section for more details, but this adds what validation you need. In This case, it must be a string, it's required, with a min length of 3
+      validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
+      vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
+      value: "Jones",
+      width: 50,
     },
     {
       type: "text", //will render a text input field. Other options are: "email" and "password" which are all basically the same thing
