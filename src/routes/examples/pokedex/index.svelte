@@ -121,11 +121,6 @@
   import Column100 from "$lib/layouts/Column100.svelte";
   import ListItem from "$lib/components/list/ListItem.svelte";
   import ListItemTimeline from "$lib/components/list/ListItemTimeline.svelte";
-  import { getQueryParam } from "$lib/utils/url";
-  import { page } from "$app/stores";
-
-  console.log($page);
-  console.log(getQueryParam($page.url));
 
   const types = [
     "All",

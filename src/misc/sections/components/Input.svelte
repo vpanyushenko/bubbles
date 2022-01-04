@@ -87,6 +87,10 @@
             <TableCell>This will render a number input.</TableCell>
           </TableRow>
           <TableRow>
+            <TableCell><span style="font-weight: 700"><code>time</code></span></TableCell>
+            <TableCell>This will render a time input.</TableCell>
+          </TableRow>
+          <TableRow>
             <TableCell><span style="font-weight: 700"><code>textarea</code></span></TableCell>
             <TableCell>This will render a textarea element.</TableCell>
           </TableRow>
@@ -259,6 +263,16 @@
             error="Enter your phone number"
             validation="required"
             desc="Enter your phone number. If your country code is not +1, enter your country code first."
+            margin={true}
+          />
+
+          <Input
+            id="time"
+            type="time"
+            label="Enter a time"
+            error="Enter a time"
+            validation="string"
+            desc="Enter a time. When a form is submitted, time is submitted as a string from '0:00 to 23:59'"
             margin={true}
           />
 

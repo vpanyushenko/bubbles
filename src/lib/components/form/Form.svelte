@@ -160,7 +160,7 @@
           easing: quintOut,
         }}
       >
-        {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number" || input.type === "textarea" || input.type === "tel" || input.type === "phone"}
+        {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number" || input.type === "textarea" || input.type === "tel" || input.type === "phone" || input.type === "time"}
           <Input {...input} bind:value={input.value} />
         {/if}
 

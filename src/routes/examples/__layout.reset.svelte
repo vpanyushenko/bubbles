@@ -44,6 +44,7 @@
         label: "Form",
         href: "/examples/form",
         icon: "/favicon.png",
+        href_aliases: ["/examples/test"],
       },
     ],
   };

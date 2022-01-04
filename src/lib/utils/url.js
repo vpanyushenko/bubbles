@@ -75,7 +75,7 @@ const addQueryParam = (key, value, options = { goto: false, show_loading: "", ke
 
 /**
  * Will return an object with all of the query parameters for a url. Works on server and client
- * @param {Object} page - pass the svelte kit page store
+ * @param {Object} url - pass the svelte kit url object found on the load function or $page.url
  * @param {String} [key=null] - if you pass a key, you'll get the query param for that key
  * @returns {String|Object} - If you pass in a key, the return will be the value of the param. Without a key, an Object is returned for all of the query params
  */

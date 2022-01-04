@@ -21,10 +21,6 @@
   import ListItem from "$lib/components/list/ListItem.svelte";
   import ListItemTimeline from "$lib/components/list/ListItemTimeline.svelte";
   import { pageStore } from "$lib/stores/stores";
-
-  const icon1 = uuid();
-  const icon2 = uuid();
-  const icon3 = uuid();
 </script>
 
 <Header title="Settings" breadcrumbs={false} />
@@ -33,22 +29,22 @@
   <Column100>
     <Card>
       <Table>
-        <TableRow href="/examples/pokedex" onclick={() => ($pageStore.clicked = icon1)}>
+        <TableRow href="/examples/pokedex">
           <TableCell text="Profile" large={true} bold={true} caption="Edit your profile and update your photo" />
-          <TableCell button={{ icon: "arrowRight", href: "/examples/pokedex", id: icon1 }} />
+          <TableCell button={{ icon: "arrowRight", href: "/examples/pokedex" }} />
         </TableRow>
-        <TableRow href="/examples/pokedex" onclick={() => ($pageStore.clicked = icon2)}>
+        <TableRow href="/examples/pokedex">
           <TableCell text="Notifications" large={true} caption="Select how and went we message you" />
-          <TableCell button={{ icon: "arrowRight", href: "/examples/pokedex", id: icon2 }} />
+          <TableCell button={{ icon: "arrowRight", href: "/examples/pokedex" }} />
         </TableRow>
-        <TableRow href="/examples/pokedex" onclick={() => ($pageStore.clicked = icon3)}>
+        <TableRow href="/examples/pokedex">
           <TableCell
             text="Billing"
             large={true}
             bold={true}
             caption="Edit your payment methods and see past transactions"
           />
-          <TableCell button={{ icon: "arrowRight", href: "/examples/pokedex", id: icon3 }} />
+          <TableCell button={{ icon: "arrowRight", href: "/examples/pokedex" }} />
         </TableRow>
       </Table>
     </Card>

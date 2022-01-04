@@ -21,7 +21,11 @@
   <div class="row" class:cursor-pointer={onclick} on:click={onclick} {id}>
     {#if cells && cells.length}
       {#each cells as cell}
-        <TableCell {...cell} />
+        {#if cell.button}
+          <TableCell {...cell} />
+        {:else}
+          <TableCell {...cell} />
+        {/if}
       {/each}
     {:else}
       <slot><TableCell><p>--</p></TableCell></slot>
@@ -42,10 +46,10 @@
     border-bottom: none !important;
   }
 
-  /* :global(a.row:hover button) {
-    -webkit-box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
-    box-shadow: 0 5px 20px rgba(227, 230, 236, 0.85);
-  } */
+  :global(.row:hover .__clickable button) {
+    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+  }
 
   @media only screen and (max-width: 767px) {
     .row {

@@ -35,10 +35,6 @@
       $pageStore.sidebar.active_item = section.id;
     }
 
-    if (!activeSection) {
-      activeSection = isActiveSection(section);
-    }
-
     if (!sectionsWithTitles[section.section]) {
       sectionsWithTitles[section.section] = [];
     }
@@ -46,6 +42,10 @@
     section = section;
     sectionsWithTitles[section.section].push(section);
   });
+
+  if (!activeSection) {
+    findActiveSection();
+  }
 
   onMount(() => {
     const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
@@ -85,26 +85,24 @@
     return sections;
   }
 
-  function isActiveSection(obj) {
-    if (!obj.href_aliases) {
-      obj.href_aliases = [];
-    }
-
-    //we need to convert these possible links to all combinations from most specific to least specific and see if there is a match
+  function findActiveSection() {
     const params = path.split("/").filter(Boolean);
+    const loops = params.length;
 
-    for (let i = params.length - 1; i > -1; i--) {
+    for (let i = loops; i > 0; i--) {
       const param_path = `/${params.join("/")}`;
 
-      if (param_path === path) {
-        $pageStore.sidebar.active_item = obj.id;
-        return true;
+      if (!activeSection) {
+        sections.forEach((section) => {
+          if (section.href_aliases.find((a) => a === param_path)) {
+            activeSection = true;
+            $pageStore.sidebar.active_item = section.id;
+          }
+        });
+
+        params.pop();
       }
-
-      params.pop();
     }
-
-    return false;
   }
 
   $: _sections = formatSidebar(sectionsWithTitles, $pageStore);
@@ -145,16 +143,16 @@
                 >
                   {#if obj.icon}
                     <div class="sidebar__icon">
-                      {#if !$navigating && !obj.href_aliases.includes($navigating?.to?.path) && $pageStore.clicked !== obj.id}
+                      {#if !$navigating && !obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked !== obj.id}
                         <!-- Hide the icon when the page is navigating and the to path and href are the same -->
                         <img src={obj.icon} alt="Icon" />
-                      {:else if $navigating && obj.href_aliases.includes($navigating?.to?.path) && $pageStore.clicked === obj.id}
+                      {:else if $navigating && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
                         <Spinner />
                       {:else}
                         <img src={obj.icon} alt="Icon" />
                       {/if}
                     </div>
-                  {:else if $navigating && obj.href_aliases.includes($navigating?.to?.path) && $pageStore.clicked === obj.id}
+                  {:else if $navigating && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
                     <span class="loading">
                       <Spinner />
                     </span>
