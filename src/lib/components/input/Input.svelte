@@ -3,6 +3,7 @@
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
   import { v4 as uuid } from "@lukeed/uuid";
+  import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
 
   export let id;
   export let label;
@@ -97,7 +98,9 @@
   }
 
   function selectOption(event) {
+    console.log(event);
     const option = event.currentTarget;
+    console.log(option);
     value = option.querySelector("input").value;
     typeahead_options = [];
   }
@@ -209,25 +212,7 @@
         {/if}
 
         {#if typeahead_options && typeahead_options.length > 0}
-          <div class="options">
-            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-            {#each typeahead_options as option, index}
-              <div
-                class="option"
-                on:click={selectOption}
-                on:mouseover={hoverOption}
-                tabindex="-1"
-                class:selected={option.value === value}
-                class:focused={selectedIndex === index}
-              >
-                <div class="title">{option.label}</div>
-                <input class="hidden" value={option.value} />
-                {#if option.caption}
-                  <div class="select__info caption">{option.caption}</div>
-                {/if}
-              </div>
-            {/each}
-          </div>
+          <Dropdown bind:options={typeahead_options} search={false} />
         {/if}
       </div>
       {#if desc}
