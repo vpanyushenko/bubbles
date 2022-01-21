@@ -3,6 +3,12 @@
 
   import CodeCard1 from "./select.md";
 
+  import icon_circle from "$misc/img/circle.svg";
+  import icon_square from "$misc/img/square.svg";
+  import icon_triangle from "$misc/img/triangle.svg";
+  import icon_pentagon from "$misc/img/pentagon.svg";
+  import icon_star from "$misc/img/star.svg";
+
   import Row from "$lib/layouts/Row.svelte";
   import Column from "$lib/layouts/Column100.svelte";
   import Column50 from "$lib/layouts/Column50.svelte";
@@ -92,6 +98,10 @@
             <TableCell>An array of options for the user to choose from</TableCell>
           </TableRow>
           <TableRow>
+            <TableCell><span style="font-weight: 700">option.img</span></TableCell>
+            <TableCell>An image that will be displayed on the left of the text</TableCell>
+          </TableRow>
+          <TableRow>
             <TableCell><span style="font-weight: 700">option.label</span></TableCell>
             <TableCell>The label that the user will see when select the option</TableCell>
           </TableRow>
@@ -102,6 +112,14 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">option.value</span></TableCell>
             <TableCell>The actual value that will be selected.</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">option.icon</span></TableCell>
+            <TableCell
+              >An icon to display on the right. Defaults to an arrow. You can remove this by setting this value to <code
+                >null</code
+              ></TableCell
+            >
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">option.onselect</span></TableCell>
@@ -135,26 +153,39 @@
               label: "Circle",
               value: "circle",
               caption: "No corners!",
+              img: icon_circle,
             },
             "break",
             {
               label: "Square",
               value: "square",
+              img: icon_square,
             },
             {
-              label: "Polygon",
-              value: "poly",
+              label: "Pentagon",
+              value: "pent",
+              img: icon_pentagon,
               onselect: () => {
-                console.log("Whoa, you like polygons?");
+                console.log("Whoa, you like pentagons?");
               },
             },
             {
               label: "Triangle",
               value: "tri",
+              img: icon_triangle,
             },
             {
-              label: "Hexagon",
-              value: "hex",
+              label: "Star",
+              value: "star",
+              img: icon_star,
+            },
+            {
+              label: "No Icon Shape",
+              value: null,
+            },
+            {
+              label: "Empty String Value",
+              value: "",
             },
           ]}
         />

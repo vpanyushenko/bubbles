@@ -97,57 +97,6 @@
     }
   }
 
-  function selectOption(event) {
-    console.log(event);
-    const option = event.currentTarget;
-    console.log(option);
-    value = option.querySelector("input").value;
-    typeahead_options = [];
-  }
-
-  function hoverOption(event) {
-    const option = event.currentTarget;
-
-    const _value = option.querySelector("input").value;
-    const index = typeahead_options.findIndex((item) => item.value === _value);
-    selectedIndex = index;
-  }
-
-  function keydown(event) {
-    if (typeahead_options && typeahead_options.length > 0 && !event.defaultPrevented) {
-      switch (event.key) {
-        case "ArrowDown": {
-          event.preventDefault();
-          event.stopPropagation();
-
-          if (selectedIndex === typeahead_options.length - 1) {
-            selectedIndex = 0;
-          } else {
-            selectedIndex++;
-          }
-          break;
-        }
-        case "ArrowUp": {
-          event.preventDefault();
-          event.stopPropagation();
-          if (selectedIndex === 0) {
-            selectedIndex = typeahead_options.length - 1;
-          } else {
-            selectedIndex--;
-          }
-          break;
-        }
-        case "Enter": {
-          event.preventDefault();
-          event.stopPropagation();
-          value = typeahead_options[selectedIndex].value;
-          typeahead_options = [];
-          break;
-        }
-      }
-    }
-  }
-
   function inputFocused() {
     const index = $pageStore?.errors?.findIndex((item) => item === id);
     if (index > -1) {
@@ -187,8 +136,6 @@
   }
 </script>
 
-<svelte:body on:keydown={keydown} />
-
 {#if type === "text"}
   <div class="form__field__container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
@@ -212,7 +159,7 @@
         {/if}
 
         {#if typeahead_options && typeahead_options.length > 0}
-          <Dropdown bind:options={typeahead_options} search={false} />
+          <Dropdown bind:options={typeahead_options} search={false} bind:value />
         {/if}
       </div>
       {#if desc}
@@ -388,25 +335,7 @@
         {/if}
 
         {#if typeahead_options && typeahead_options.length > 0}
-          <div class="options">
-            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-            {#each typeahead_options as option, index}
-              <div
-                class="option"
-                on:click={selectOption}
-                on:mouseover={hoverOption}
-                tabindex="-1"
-                class:selected={option.value === value}
-                class:focused={selectedIndex === index}
-              >
-                <div class="title">{option.label}</div>
-                <input class="hidden" value={option.value} />
-                {#if option.caption}
-                  <div class="select__info caption">{option.caption}</div>
-                {/if}
-              </div>
-            {/each}
-          </div>
+          <Dropdown bind:options={typeahead_options} search={false} bind:value />
         {/if}
       </div>
       {#if desc}

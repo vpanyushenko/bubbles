@@ -363,17 +363,21 @@
                   options: [
                     {
                       label: "Encounters",
-                      href: poke.location_area_encounters,
                       caption: "Areas you can find this pokemon",
+                      onclick: (event) => {
+                        window.open(poke.location_area_encounters, "_blank");
+                      },
                     },
                     "break",
                     {
                       label: "View JSON",
                       href: poke.species.url,
+                      new_page: true,
                     },
                     {
                       label: "Shiny Sprite",
                       href: poke.sprites.front_shiny,
+                      new_page: true,
                     },
                   ],
                 }}
