@@ -16,6 +16,7 @@ import Error from "./components/error/Error.svelte";
 import Overlay from "./components/overlay/Overlay.svelte";
 import Spinner from "./components/spinner/Spinner.svelte";
 import Divider from "./components/divider/Divider.svelte";
+import Dropdown from "./components/dropdown/Dropdown.svelte";
 
 export {
   Header,
@@ -36,6 +37,7 @@ export {
   Overlay,
   Spinner,
   Divider,
+  Dropdown,
 };
 
 //Inputs

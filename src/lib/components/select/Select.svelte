@@ -1,9 +1,9 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
-  import Fuse from "$lib/utils/fuzzy-search";
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
+  import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
 
   const _uuid = uuid();
 
@@ -20,25 +20,16 @@
   export let vob = $configStore.validate_on_blur;
   export let min_width = true;
 
-  const fuse = new Fuse(options, {
-    shouldSort: false,
-    keys: ["label", "caption"],
-    minMatchCharLength: 2,
-    threshold: 0.4,
-  });
-
   const _label = configLabel(label, validation);
-  let is_search_focused = false;
+
   let timestamp = 0;
-  let selected_index = 0;
+
   let title = "Select an option";
   let is_focused = false;
   let is_list_open = false;
 
   $: is_loading = $pageStore.loading.includes(id);
-  $: search_value = "";
   $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
-  $: filteredOptions = !search_value ? options : fuse.search(search_value).map((obj) => obj.item);
 
   $: if (is_error) {
     setTimeout(() => {
@@ -54,10 +45,8 @@
     }
   }
 
-  $: if (is_list_open) {
-    is_search_focused = false;
-    search_value = "";
-    selected_index = 0;
+  $: if (value !== undefined) {
+    is_list_open = false;
   }
 
   $: if (is_focused) {
@@ -77,7 +66,6 @@
 
     //the focus event fires before the click event
     //check to make sure the focus event didn't open
-
     if (event.timeStamp - timestamp > 200) {
       if (!is_list_open) {
         is_list_open = true;
@@ -123,129 +111,14 @@
     }
   }
 
-  function selectOption(event) {
-    hideError();
-
-    const option = event.currentTarget;
-
-    if (type === "select-number") {
-      value = Number(option.querySelector("input").value);
-    } else {
-      value = option.querySelector("input").value || null;
-    }
-
-    is_focused = true;
-    is_list_open = false;
-  }
-
-  function hoverOption(event) {
-    const option = event.currentTarget;
-    let _value = option.querySelector("input").value;
-    if (type === "select-number") {
-      _value = Number(_value);
-    }
-    const index = options.findIndex((item) => item.value === _value);
-    selected_index = index;
-  }
-
-  function windowClick(event) {
-    //if you click outside of the select, we want to close it
-    if (!event.target.closest(`.select`)) {
-      is_focused = false;
-      is_list_open = false;
-    }
-  }
-
   function keydown(event) {
-    if (is_list_open) {
-      switch (event.key) {
-        case "ArrowDown": {
-          event.preventDefault();
-
-          if (selected_index === options.length - 1) {
-            selected_index = 0;
-          } else {
-            selected_index++;
-
-            if (filteredOptions[selected_index] === "break") {
-              selected_index++;
-            }
-          }
-          break;
-        }
-        case "ArrowUp": {
-          event.preventDefault();
-
-          if (selected_index === 0) {
-            selected_index = options.length - 1;
-          } else {
-            selected_index--;
-
-            if (filteredOptions[selected_index] === "break") {
-              selected_index--;
-            }
-          }
-          break;
-        }
-        case "Enter": {
-          event.preventDefault();
-          const option = filteredOptions[selected_index];
-
-          value = option.value;
-
-          //select the option for the element
-          if (option.onselect) {
-            setTimeout(() => {
-              option.onselect();
-            }, 10);
-          }
-
-          hideError();
-          is_list_open = false;
-
-          break;
-        }
-        case "Backspace": {
-          if (!is_search_focused && search_value) {
-            search_value = search_value.slice(0, -1);
-          }
-          break;
-        }
-        case "Tab": {
-          if (is_search_focused) {
-            is_list_open = false;
-            is_focused = false;
-          }
-          break;
-        }
-        default: {
-          if (!is_search_focused && event.key.length === 1) {
-            selected_index = 0;
-            search_value += event.key;
-            event.preventDefault();
-          }
-        }
-      }
-
-      if (id) {
-        const element = document.getElementById(id);
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    } else {
-      if (is_focused) {
-        switch (event.key) {
-          case "Enter": {
-            event.preventDefault();
-            is_list_open = true;
-            break;
-          }
-        }
-      }
+    if ((event.key === "Enter" || event.key === " ") && is_focused && !is_list_open) {
+      event.preventDefault();
+      is_list_open = true;
     }
   }
 </script>
 
-<svelte:window on:click={windowClick} />
 <svelte:body on:keydown={keydown} />
 
 <div
@@ -257,7 +130,6 @@
   on:focus={selectFocused}
   on:blur={selectBlurred}
 >
-  <!-- <div> -->
   <div class="head" class:is_loading class:error={is_error} on:click={toggleSelectWithClick}>
     {#if label}
       <div class="label" class:hidden={is_error}>{_label}</div>
@@ -266,50 +138,13 @@
     <span class="value">{title}</span>
   </div>
 
-  <div class="options">
-    {#if search}
-      <input
-        class="search"
-        type="text"
-        placeholder="Start typing to search..."
-        bind:value={search_value}
-        on:focus|preventDefault|stopPropagation={(event) => {
-          is_search_focused = true;
-        }}
-        on:blur|preventDefault|stopPropagation={(event) => {
-          is_search_focused = false;
-        }}
-      />
-    {/if}
-
-    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    {#each filteredOptions as option, index}
-      {#if option === "break"}
-        <hr tabindex="-1" />
-      {:else}
-        <div
-          class="option"
-          on:mousedown={selectOption}
-          on:click={option.onselect}
-          on:mouseover={hoverOption}
-          tabindex="0"
-          class:selected={option.value === value}
-          class:focused={selected_index === index}
-        >
-          <div class="title">{option.label}</div>
-          <input class="hidden" type="hidden" value={option.value} />
-          {#if option.caption}
-            <div class="select__info caption">{option.caption}</div>
-          {/if}
-        </div>
-      {/if}
-    {/each}
-  </div>
+  {#if is_list_open}
+    <Dropdown bind:options {search} bind:value {type} />
+  {/if}
 
   {#if desc}
     <p class="field__desc">{@html desc}</p>
   {/if}
-  <!-- </div> -->
 </div>
 
 <style>

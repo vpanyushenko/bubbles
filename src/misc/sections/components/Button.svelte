@@ -252,11 +252,11 @@
       <Card height100={true}>
         <CardHeader title="Bundled Icon Options" border={false} />
         <div class="flex">
-          <IconButton icon="more" options={iconButtonOptions} />
+          <IconButton icon="more" options={iconButtonOptions} align="left" />
           <code>more</code>
         </div>
         <div class="flex">
-          <IconButton icon="add" options={iconButtonOptions} />
+          <IconButton icon="add" options={iconButtonOptions} align="left" />
           <code>add</code>
         </div>
         <div class="flex">
@@ -268,23 +268,23 @@
           <code>arrowRight</code>
         </div>
         <div class="flex">
-          <IconButton icon="close" options={iconButtonOptions} />
+          <IconButton icon="close" options={iconButtonOptions} align="left" />
           <code>close</code>
         </div>
         <div class="flex">
-          <IconButton icon="search" options={iconButtonOptions} />
+          <IconButton icon="search" options={iconButtonOptions} align="left" />
           <code>search</code>
         </div>
         <div class="flex">
-          <IconButton icon="edit" options={iconButtonOptions} />
+          <IconButton icon="edit" options={iconButtonOptions} align="left" />
           <code>edit</code>
         </div>
         <div class="flex">
-          <IconButton icon="trash" options={iconButtonOptions} />
+          <IconButton icon="trash" options={iconButtonOptions} align="left" />
           <code>trash</code>
         </div>
         <div class="flex">
-          <IconButton icon="filter" options={iconButtonOptions} />
+          <IconButton icon="filter" options={iconButtonOptions} align="left" />
           <code>filter</code>
         </div>
       </Card>

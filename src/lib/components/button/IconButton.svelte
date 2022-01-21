@@ -16,6 +16,7 @@
   import filter from "./filter.svg";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
   import { showLoading } from "$lib/utils/loading";
+  import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
 
   const icons = {
     arrowLeft: arrowLeft,
@@ -38,6 +39,7 @@
   export let href = "";
   export let new_page = false;
   export let transparent = true;
+  export let align = "right";
 
   const dropdown = options.length ? true : false;
 
@@ -110,8 +112,9 @@
         </slot>
       </span>
     </button>
-    {#if dropdown}
-      <div class="icon__btn__dropdown">
+    {#if active}
+      <Dropdown {options} {align} />
+      <!-- <div class="icon__btn__dropdown">
         <div class="icon__btn__options">
           {#each options as option}
             {#if option === "break"}
@@ -148,7 +151,7 @@
             {/if}
           {/each}
         </div>
-      </div>
+      </div> -->
     {/if}
   </div>
 {/if}
