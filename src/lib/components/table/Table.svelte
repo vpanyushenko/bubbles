@@ -116,7 +116,6 @@
   ---
 -->
 <script>
-  import { pageStore } from "$lib/stores/page.store";
   import TableRow from "./TableRow.svelte";
   import TableCell from "./TableCell.svelte";
   import TableHeader from "./TableHeader.svelte";
