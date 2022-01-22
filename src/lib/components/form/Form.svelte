@@ -25,24 +25,26 @@
   }
 
   function keydown(event) {
-    if (
-      event.key === "Enter" &&
-      document.activeElement.closest(".form") &&
-      !event.defaultPrevented &&
-      !document.activeElement.classList.contains("select")
-    ) {
+    setTimeout(() => {
       if (
-        document.activeElement.closest(".form").id === id ||
-        document.activeElement.closest(".form").id === `form_btn_${id}`
+        event.key === "Enter" &&
+        document.activeElement.closest(".form") &&
+        !event.defaultPrevented &&
+        !document.activeElement.classList.contains("select")
       ) {
-        const submitButton = inputs.find((a) => a.type === "submit");
-        const buttonElement = document.getElementById(submitButton.id);
+        if (
+          document.activeElement.closest(".form").id === id ||
+          document.activeElement.closest(".form").id === `form_btn_${id}`
+        ) {
+          const submitButton = inputs.find((a) => a.type === "submit");
+          const buttonElement = document.getElementById(submitButton.id);
 
-        if (submitButton && buttonElement) {
-          buttonElement.click();
+          if (submitButton && buttonElement) {
+            buttonElement.click();
+          }
         }
       }
-    }
+    }, 50);
   }
 
   //determine if any inputs are dependent on other inputs
