@@ -14,8 +14,6 @@
   export let button = { color: "primary", label: "Upload Image" };
 
   function imageAdded(event) {
-    console.log(event);
-
     const input = event.target;
 
     console.log(input);
