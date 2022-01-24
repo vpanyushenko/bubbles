@@ -7,7 +7,7 @@ import ListItem from "./components/list/ListItem.svelte";
 import ListItemTimeline from "./components/list/ListItemTimeline.svelte";
 import Sidebar from "./components/sidebar/Sidebar.svelte";
 import Form from "./components/form/Form.svelte";
-import ImageForm from "./components/form/ImageForm.svelte
+import ImageForm from "./components/form/ImageForm.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
 import ToastContainer from "./components/toast/ToastContainer.svelte";
