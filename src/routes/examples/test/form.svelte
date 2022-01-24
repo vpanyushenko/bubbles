@@ -10,6 +10,7 @@
   import TableHeader from "$lib/components/table/TableHeader.svelte";
   import TableRow from "$lib/components/table/TableRow.svelte";
   import TableCell from "$lib/components/table/TableCell.svelte";
+  import Header from "$lib/components/header/Header.svelte";
 
   import Form from "$lib/components/form/Form.svelte";
   import { validateInputs, getFormData } from "$lib/utils/form";
@@ -258,15 +259,15 @@
   ];
 </script>
 
-<Section id="form" title="Form">
-  <Row>
-    <Column>
-      <Card>
-        <CardHeader title="Demo" border={false} />
-        <div>
-          <Form inputs={formInputs} />
-        </div>
-      </Card>
-    </Column>
-  </Row>
-</Section>
+<Header breadcrumb_labels={["Home", "Testing", "Inputs"]} />
+
+<Row>
+  <Column>
+    <Card>
+      <CardHeader title="Demo" border={false} />
+      <div>
+        <Form inputs={formInputs} />
+      </div>
+    </Card>
+  </Column>
+</Row>

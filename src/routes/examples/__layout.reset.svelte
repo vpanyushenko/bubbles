@@ -4,6 +4,7 @@
 
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
   import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
+  import PageWrapper from "$lib/layouts/PageWrapper.svelte";
   import Modal from "$lib/components/modal/Modal.svelte";
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
 

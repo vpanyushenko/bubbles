@@ -8,7 +8,6 @@ import { Header } from "bubbles-ui";
 
 const props = {
   title: "Page Title", //This will automatically set the page title for you unless you overwrite it with svelte:head
-  breadcrumbs: true, //default
   breadcrumb_labels: ["Hello", "World"] //pass labels if you want to set your breadcrumbs manually. Generally only required if you have two dynamic IDs in your URLs next to each other
   buttons: [
     {
@@ -37,6 +36,20 @@ const props = {
           }
         }
       ]
+    }
+  ]
+}
+
+const custom_breadcrumbs = {
+  title: "Page Title",
+  breadcrumbs: [
+    {
+      label: "Home",
+      href: "/index"
+    },
+    {
+      label: "Nested Route",
+      href: "/index/nested-route"
     }
   ]
 }

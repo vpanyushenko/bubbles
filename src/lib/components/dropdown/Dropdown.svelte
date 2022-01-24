@@ -154,6 +154,10 @@
 
           break;
         }
+        case "Escape": {
+          is_list_open = false;
+          break;
+        }
         case "Backspace": {
           if (type && search) {
             if (!is_search_focused && search_value) {
@@ -163,7 +167,6 @@
           }
         }
         case "Tab": {
-          console.log(type, is_search_focused);
           if (type) {
             if (is_search_focused) {
               is_list_open = false;
@@ -172,6 +175,7 @@
             break;
           }
         }
+
         default: {
           if (type && search) {
             if (!is_search_focused && event.key.length === 1) {

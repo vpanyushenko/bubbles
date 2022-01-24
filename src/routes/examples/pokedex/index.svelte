@@ -189,7 +189,13 @@
   }
 </script>
 
-<Header title="Pokedex" breadcrumbs={false} />
+<Header
+  title="Pokedex"
+  breadcrumbs={[
+    { label: "Home", href: "/examples" },
+    { label: "Pokedex", href: "/examples/pokedex" },
+  ]}
+/>
 
 <Row>
   <Column100>

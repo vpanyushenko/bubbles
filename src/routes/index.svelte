@@ -62,6 +62,8 @@
   import Header from "$lib/components/header/Header.svelte";
   import Scroller from "@sveltejs/svelte-scroller";
 
+  //const GSWarning = await import("$misc/sections/getting-started/00-warning.svelte");
+
   import GSWarning from "$misc/sections/getting-started/00-warning.svelte";
   import GSIntro from "$misc/sections/getting-started/01-intro.svelte";
   import GSInstallation from "$misc/sections/getting-started/02-installation.svelte";
