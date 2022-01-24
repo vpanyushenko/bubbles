@@ -3,7 +3,7 @@
 
   export const prerender = true;
 
-  export async function load({ page, fetch, session, stuff }) {
+  export async function load() {
     const articles = importMarkdownChangelog();
 
     articles.metadata.reverse();

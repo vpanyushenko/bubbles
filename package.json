@@ -1,6 +1,6 @@
 {
   "name": "bubbles-ui",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Opinionated Svelte Kit UI Components",
   "scripts": {
     "dev": "svelte-kit dev --port 3001",
