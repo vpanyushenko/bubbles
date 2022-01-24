@@ -54,13 +54,14 @@
           <TableRow>
             <TableCell><span style="font-weight: 700">breadcrumbs</span></TableCell>
             <TableCell
-              >This is a boolean option if you want breadcrumbs enabled. Bubbles will automatically calculate
-              breadcrumbs for you.</TableCell
+              >Pass in <code>false</code> if you do not want to display breadcrumbs. If you want to override the
+              automatic breadcrumbs, you can pass in an array of objects with the <code>label</code> and
+              <code>href</code> of the breadcrumb you want to add.</TableCell
             >
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">breadcrumb_labels</span></TableCell>
-            <TableCell>An array of string to overwrite the labels for breadcrumbs</TableCell>
+            <TableCell>An array of string to overwrite the just labels for breadcrumbs</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">buttons</span></TableCell>
