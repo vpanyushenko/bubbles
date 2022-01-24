@@ -3,6 +3,7 @@
 
   import CodeCard1 from "./form.md";
   import CodeCard2 from "./form-stripe.md";
+  import CodeCard3 from "./form-image.md";
 
   import Row from "$lib/layouts/Row.svelte";
   import Column from "$lib/layouts/Column100.svelte";
@@ -15,9 +16,11 @@
   import TableCell from "$lib/components/table/TableCell.svelte";
 
   import Form from "$lib/components/form/Form.svelte";
+  import ImageForm from "$lib/components/form/ImageForm.svelte";
   import { validateInputs, getFormData } from "$lib/utils/form";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { showToast } from "$lib/utils/toast";
+  import fuzzySearch from "$lib/utils/fuzzy-search";
 
   const formInputs = [
     {
@@ -112,6 +115,287 @@
       ],
     },
     {
+      id: "favorite",
+      type: "text",
+      label: "Favorite U.S. State",
+      error: "we can't find that one!",
+      desc: "This is an example of typeahead to get results based on what the user is typing. It can be used on text and textarea inputs. Just add a function to the typeahead property that accepts the current value and responds with a Promise that array of options. Each option is the completed string. ",
+      margin: true,
+      validation: "required|string",
+      vob: true,
+      autocomplete: false,
+      typeahead: (input) => {
+        const states = [
+          {
+            name: "Alabama",
+            abbreviation: "AL",
+          },
+          {
+            name: "Alaska",
+            abbreviation: "AK",
+          },
+          {
+            name: "American Samoa",
+            abbreviation: "AS",
+          },
+          {
+            name: "Arizona",
+            abbreviation: "AZ",
+          },
+          {
+            name: "Arkansas",
+            abbreviation: "AR",
+          },
+          {
+            name: "California",
+            abbreviation: "CA",
+            caption: "West coast, best coast",
+          },
+          {
+            name: "Colorado",
+            abbreviation: "CO",
+          },
+          {
+            name: "Connecticut",
+            abbreviation: "CT",
+          },
+          {
+            name: "Delaware",
+            abbreviation: "DE",
+          },
+          {
+            name: "District Of Columbia",
+            abbreviation: "DC",
+          },
+          {
+            name: "Federated States Of Micronesia",
+            abbreviation: "FM",
+          },
+          {
+            name: "Florida",
+            abbreviation: "FL",
+          },
+          {
+            name: "Georgia",
+            abbreviation: "GA",
+          },
+          {
+            name: "Guam",
+            abbreviation: "GU",
+          },
+          {
+            name: "Hawaii",
+            abbreviation: "HI",
+          },
+          {
+            name: "Idaho",
+            abbreviation: "ID",
+          },
+          {
+            name: "Illinois",
+            abbreviation: "IL",
+          },
+          {
+            name: "Indiana",
+            abbreviation: "IN",
+          },
+          {
+            name: "Iowa",
+            abbreviation: "IA",
+          },
+          {
+            name: "Kansas",
+            abbreviation: "KS",
+          },
+          {
+            name: "Kentucky",
+            abbreviation: "KY",
+          },
+          {
+            name: "Louisiana",
+            abbreviation: "LA",
+          },
+          {
+            name: "Maine",
+            abbreviation: "ME",
+          },
+          {
+            name: "Marshall Islands",
+            abbreviation: "MH",
+          },
+          {
+            name: "Maryland",
+            abbreviation: "MD",
+          },
+          {
+            name: "Massachusetts",
+            abbreviation: "MA",
+          },
+          {
+            name: "Michigan",
+            abbreviation: "MI",
+          },
+          {
+            name: "Minnesota",
+            abbreviation: "MN",
+          },
+          {
+            name: "Mississippi",
+            abbreviation: "MS",
+          },
+          {
+            name: "Missouri",
+            abbreviation: "MO",
+          },
+          {
+            name: "Montana",
+            abbreviation: "MT",
+          },
+          {
+            name: "Nebraska",
+            abbreviation: "NE",
+          },
+          {
+            name: "Nevada",
+            abbreviation: "NV",
+          },
+          {
+            name: "New Hampshire",
+            abbreviation: "NH",
+          },
+          {
+            name: "New Jersey",
+            abbreviation: "NJ",
+          },
+          {
+            name: "New Mexico",
+            abbreviation: "NM",
+          },
+          {
+            name: "New York",
+            abbreviation: "NY",
+            caption: "I ❤️ New York",
+          },
+          {
+            name: "North Carolina",
+            abbreviation: "NC",
+          },
+          {
+            name: "North Dakota",
+            abbreviation: "ND",
+          },
+          {
+            name: "Northern Mariana Islands",
+            abbreviation: "MP",
+          },
+          {
+            name: "Ohio",
+            abbreviation: "OH",
+          },
+          {
+            name: "Oklahoma",
+            abbreviation: "OK",
+          },
+          {
+            name: "Oregon",
+            abbreviation: "OR",
+          },
+          {
+            name: "Palau",
+            abbreviation: "PW",
+          },
+          {
+            name: "Pennsylvania",
+            abbreviation: "PA",
+          },
+          {
+            name: "Puerto Rico",
+            abbreviation: "PR",
+          },
+          {
+            name: "Rhode Island",
+            abbreviation: "RI",
+          },
+          {
+            name: "South Carolina",
+            abbreviation: "SC",
+          },
+          {
+            name: "South Dakota",
+            abbreviation: "SD",
+          },
+          {
+            name: "Tennessee",
+            abbreviation: "TN",
+          },
+          {
+            name: "Texas",
+            abbreviation: "TX",
+          },
+          {
+            name: "Utah",
+            abbreviation: "UT",
+          },
+          {
+            name: "Vermont",
+            abbreviation: "VT",
+          },
+          {
+            name: "Virgin Islands",
+            abbreviation: "VI",
+          },
+          {
+            name: "Virginia",
+            abbreviation: "VA",
+          },
+          {
+            name: "Washington",
+            abbreviation: "WA",
+          },
+          {
+            name: "West Virginia",
+            abbreviation: "WV",
+          },
+          {
+            name: "Wisconsin",
+            abbreviation: "WI",
+          },
+          {
+            name: "Wyoming",
+            abbreviation: "WY",
+          },
+        ];
+
+        const array = input.split(",");
+        const text = array[array.length - 1];
+        array.pop();
+
+        let entered_string = "";
+
+        array.forEach((string) => {
+          entered_string += `${string},`;
+        });
+
+        const fuse = new fuzzySearch(states, {
+          shouldSort: false,
+          keys: ["name", "abbreviation"],
+          minMatchCharLength: 2,
+          threshold: 0.4,
+        });
+
+        return Promise.resolve(
+          fuse.search(text).map((obj) => {
+            return {
+              label: obj.item.name,
+              value: entered_string ? `${entered_string} ${obj.item.name}` : obj.item.name,
+              caption: obj.item?.caption,
+            };
+          })
+        );
+      },
+    },
+
+    {
       type: "switch", //will render a switch component
       id: "preferences.email",
       label: "Email Updates",
@@ -121,6 +405,7 @@
       error: "An error occurred",
       validation: "accepted", //best UX is to not make switches mandatory, use a checkbox instead if you need
     },
+
     {
       type: "email",
       id: "email_required_id",
@@ -289,6 +574,20 @@
       },
     },
   ];
+
+  const imageForm = {
+    button: {
+      label: "Upload Image",
+      color: "primary",
+    },
+    endpoint: "https://bubbles-ui/api/logos",
+    fetch_options: {
+      method: "POST",
+      credentials: "include",
+    },
+    toast: true,
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/800px-Google_Images_2015_logo.svg.png",
+  };
 </script>
 
 <Section id="form" title="Form">
@@ -490,6 +789,74 @@
         <CardHeader title="Demo" border={false} />
         <div>
           <Form inputs={stripeFormInputs} />
+        </div>
+      </Card>
+    </Column50>
+  </Row>
+
+  <Row>
+    <Column>
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Images" border={false} />
+        <p>
+          Generally your backend will accept images as FormData instead of JSON. The <code>ImageForm</code> is a pre-made
+          form that will allow the user to select an image and upload it to your backend as FormData
+        </p>
+      </Card>
+
+      <Card color={null} shadow={false} border={true}>
+        <CardHeader title="Properties" border={false} />
+        <p>
+          This component include the image input and a button so generally your properties are that of the
+          `ImageInput``, `Button`, and options for the `fetch` function.
+        </p>
+
+        <Table>
+          <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">button</span></TableCell>
+            <TableCell
+              >These are all of the the properties for the `Button`. You don't need to pass an `onclick` function as a
+              param because the form will handle that for you
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">endpoint</span></TableCell>
+            <TableCell>The endpoint that will accept the form data</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">fetch_options</span></TableCell>
+            <TableCell
+              >These are all of the typical options you would add to a fetch function. The only items you need to add
+              here are the method and whatever authorization you are using.</TableCell
+            >
+          </TableRow>
+
+          <TableRow>
+            <TableCell><span style="font-weight: 700">src</span></TableCell>
+            <TableCell>if there is already an image provided, add it to the source to show a preview</TableCell>
+          </TableRow>
+
+          <TableRow>
+            <TableCell><span style="font-weight: 700">toast</span></TableCell>
+            <TableCell>Boolean that will show the toast message from `res.message` or `error.message`</TableCell>
+          </TableRow>
+        </Table>
+      </Card>
+    </Column>
+  </Row>
+
+  <Row>
+    <Column50>
+      <Card color="dark" px={0} py={0} />
+      <CodeCard3 />
+    </Column50>
+
+    <Column50>
+      <Card>
+        <CardHeader title="Demo" border={false} />
+        <div>
+          <ImageForm {...imageForm} />
         </div>
       </Card>
     </Column50>
