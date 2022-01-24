@@ -25,6 +25,9 @@
     "svelte2tsx": "^0.4.11"
   },
   "type": "module",
+  "engines": {
+    "node": "16"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
