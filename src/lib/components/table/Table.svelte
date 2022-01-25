@@ -125,7 +125,7 @@
   export let empty = "Nothing here yet.";
 </script>
 
-<div class="table">
+<div class="table js-bubbles-table">
   {#if header && header.length}
     <TableHeader cells={header} />
   {/if}
