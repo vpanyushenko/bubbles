@@ -3,6 +3,7 @@
   import icon_arrowRight from "./arrow-right.svg";
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/stores";
+  import { onMount } from "svelte";
 
   const id = uuid();
 
@@ -199,6 +200,14 @@
       }
     }
   }
+
+  onMount(() => {
+    //check to see if inside of a model
+    //if we are, we should adjust the dropdown so it's visible in the modal
+    const dropdown = document.getElementById(id);
+    const modal = dropdown.closest(".js-bubbles-modal");
+    dropdown.scrollIntoView({ behavior: "smooth", block: "end" });
+  });
 </script>
 
 <svelte:body on:keydown={keydown} />
