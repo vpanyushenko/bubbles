@@ -8,6 +8,13 @@
   import Form from "$lib/components/form/Form.svelte";
 
   const id = uuid();
+  export let height = null;
+
+  let style = "";
+
+  if (height) {
+    style = `height: ${height}rem`;
+  }
 
   function hideModal() {
     $modalStore = {};
@@ -36,8 +43,8 @@
 
 {#if $modalStore.active}
   <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
-    <div class="modal" {id}>
-      <div class="container" transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
+    <div class="modal js-bubbles-modal" {id}>
+      <div class="container" {style} transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
         <header>
           <h6 class="title">{$modalStore.title}</h6>
           <IconButton icon="close" onclick={hideModal} />
@@ -93,7 +100,7 @@
   .container {
     width: 31rem;
     max-height: 80vh;
-    min-height: 50vh;
+    /* min-height: 50vh; */
     overflow-y: scroll;
     overflow-x: hidden;
     box-sizing: border-box;

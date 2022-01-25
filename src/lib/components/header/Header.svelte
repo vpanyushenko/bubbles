@@ -33,8 +33,6 @@
 
   $: back = null;
 
-  $: console.log(_breadcrumbs);
-
   $: if (_breadcrumbs.length > 1) {
     const backObject = _breadcrumbs[_breadcrumbs.length - 2];
     back = backObject.href;
@@ -45,10 +43,6 @@
   }
 
   function calcBreadcrumbs(path) {
-    console.log("calc");
-    console.log("calc");
-    console.log("calc");
-    console.log("calc");
     const pathArray = path.split("/").filter(Boolean);
 
     if (pathArray.length > 0 && !$pageStore.title) {

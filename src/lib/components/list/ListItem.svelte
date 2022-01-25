@@ -98,9 +98,9 @@
   }
 
   .content {
-    flex-basis: max-content;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    width: 100%;
   }
 
   .icon__container {
@@ -140,6 +140,7 @@
   }
 
   .center {
+    display: flex;
     align-self: center;
   }
 </style>

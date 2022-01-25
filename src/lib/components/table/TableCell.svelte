@@ -4,6 +4,7 @@
   import Tag from "$lib/components/tag/Tag.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
+  import { onMount } from "svelte";
 
   export let href = null;
   export let text = "";
@@ -49,6 +50,11 @@
   if (mobile_order) {
     style += `order:${mobile_order};`;
   }
+
+  onMount(() => {
+    //find the nearest table (js-bubbles-table)
+    //see if the table has an icon button to show a loading animation for
+  });
 </script>
 
 {#if _type === "text"}

@@ -40,7 +40,7 @@
       </Card>
 
       <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Inputs Types" border={false} />
+        <CardHeader title="Input Types" border={false} />
         <Table>
           <TableHeader cells={[{ label: "Type" }, { label: "Description" }]} />
           <TableRow>
@@ -56,17 +56,19 @@
           </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700"><code>tel</code> <code>phone</code></span></TableCell>
-            <TableCell
-              >Entering any of these types will get you the "tel" input, which will suggest phone numbers for the user.
+            <TableCell>
+              <p>
+                Entering any of these types will get you the "tel" input, which will suggest phone numbers for the user.
+              </p>
               <br />
-              <strong style="color: var(--primary);"
-                >In a future update, this input will also have properties to let the user select their country code via
-                dropdown, but that is on the roadmap.</strong
-              >
+              <p>
+                <strong style="color: var(--primary);"
+                  >In a future update, this input will also have properties to let the user select their country code
+                  via dropdown, but that is on the roadmap.</strong
+                >
+              </p>
               <br />
-              <a href="https://github.com/vpanyushenko/bubbles/issues/33" target="_blank"
-                >https://github.com/vpanyushenko/bubbles/issues/33</a
-              >
+              <a href="https://github.com/vpanyushenko/bubbles/issues/33" target="_blank">Github Link</a>
             </TableCell>
           </TableRow>
           <TableRow>

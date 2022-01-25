@@ -33,32 +33,34 @@
         <Table>
           <TableHeader cells={[{ label: "Property" }, { label: "Type" }, { label: "Description" }]} />
           <TableRow>
-            <TableCell><span style="font-weight: 700">inputs</span></TableCell>
-            <TableCell><span style="font-weight: 700"><code>array</code></span></TableCell>
-            <TableCell
+            <TableCell mobile_width={100}><span style="font-weight: 700">inputs</span></TableCell>
+            <!-- <TableCell mobile_width={100}><span style="font-weight: 700"><code>array</code></span></TableCell> -->
+            <TableCell mobile_width={100}
               >The array of inputs you passed into the Form. You'll be calling with function within the <code
                 >onsubmit</code
               > function of a button in the form.</TableCell
             >
           </TableRow>
           <TableRow>
-            <TableCell><span style="font-weight: 700">options?</span></TableCell>
-            <TableCell><span style="font-weight: 700"><code>Object</code></span></TableCell>
-            <TableCell>Options you can pass to this function. All are optional.</TableCell>
+            <TableCell mobile_width={100}><span style="font-weight: 700">options?</span></TableCell>
+            <!-- <TableCell mobile_width={100}><span style="font-weight: 700"><code>Object</code></span></TableCell> -->
+            <TableCell mobile_width={100}>Options you can pass to this function. All are optional.</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell><span style="font-weight: 700">option.include_hidden_props</span></TableCell>
-            <TableCell><span style="font-weight: 700"><code>Boolean.</code></span></TableCell>
-            <TableCell>
+            <TableCell mobile_width={100}><span style="font-weight: 700">option.include_hidden_props</span></TableCell>
+            <!-- <TableCell mobile_width={100}><span style="font-weight: 700"><code>Boolean</code></span></TableCell> -->
+            <TableCell mobile_width={100}>
               Defaults to <code>false</code>. If you want to include hidden inputs in the form data. Hidden inputs are
               only those that were removed from the DOM using the <code>hidden_if</code> property on the
               <code>Form</code></TableCell
             >
           </TableRow>
           <TableRow>
-            <TableCell><span style="font-weight: 700">option.hidden_prop_values</span></TableCell>
-            <TableCell><span style="font-weight: 700"><code>String|Number|Boolean</code></span></TableCell>
-            <TableCell>
+            <TableCell mobile_width={100}><span style="font-weight: 700">option.hidden_prop_values</span></TableCell>
+            <!-- <TableCell mobile_width={100}
+              ><span style="font-weight: 700"><code>String|Number|Boolean</code></span></TableCell
+            > -->
+            <TableCell mobile_width={100}>
               Defaults to <code>null</code>. If you do want to include hidden inputs in your data (which you normally
               should not since your backend would normally take care of those cases) you can specify what value you want
               the input to have.
