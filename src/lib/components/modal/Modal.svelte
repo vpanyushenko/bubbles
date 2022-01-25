@@ -8,13 +8,8 @@
   import Form from "$lib/components/form/Form.svelte";
 
   const id = uuid();
-  export let height = null;
 
   let style = "";
-
-  if (height) {
-    style = `height: ${height}rem`;
-  }
 
   function hideModal() {
     $modalStore = {};
@@ -24,6 +19,12 @@
     if (event.key === "Escape" && $modalStore.active) {
       hideModal();
     }
+  }
+
+  $: if ($modalStore.height) {
+    style = `height: ${$modalStore.height}vh;max-height: none;`;
+  } else {
+    style = "max-height: 80vh";
   }
 
   $: if ($modalStore.form && $modalStore.form.length) {
