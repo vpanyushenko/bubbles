@@ -112,46 +112,8 @@
         </slot>
       </span>
     </button>
-    {#if active}
+    {#if active && dropdown}
       <Dropdown {options} {align} />
-      <!-- <div class="icon__btn__dropdown">
-        <div class="icon__btn__options">
-          {#each options as option}
-            {#if option === "break"}
-              <hr />
-            {:else if option.type === "switch"}
-              <LabeledSwitch {...option} />
-            {:else if option.href}
-              <a
-                class="icon__btn__item"
-                on:click|stopPropagation={dropdownSelect}
-                href={option.href}
-                target={option.new_page ? "_blank" : ""}
-                sveltekit:prefetch
-                on:click={() => ($pageStore.is_fetching = true)}
-              >
-                <div class="icon__btn__details">
-                  <p class="font-lg font-bold label">{option.label}</p>
-                  {#if option.caption}
-                    <p class="icon__btn__text caption">{option.caption}</p>
-                  {/if}
-                </div>
-                <img class="dropdown__arrow" src={arrowRight} alt="Arrow Right" />
-              </a>
-            {:else}
-              <div class="icon__btn__item" on:click|stopPropagation={dropdownSelect} on:click={option.onclick}>
-                <div class="icon__btn__details">
-                  <p class="font-lg font-bold label">{option.label}</p>
-                  {#if option.caption}
-                    <p class="icon__btn__text caption">{option.caption}</p>
-                  {/if}
-                </div>
-                <img class="dropdown__arrow" src={arrowRight} alt="Arrow Right" />
-              </div>
-            {/if}
-          {/each}
-        </div>
-      </div> -->
     {/if}
   </div>
 {/if}
