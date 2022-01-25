@@ -535,6 +535,7 @@
             showModal("Form Modal", {
               message:
                 "This is a form modal. It can have a message option too! Just add Form details just like you would with any other form. You can include the submit buttons in the form, which will cause them to not be locked at the bottom. Or you can include the submit buttons in the footer, which will cause the buttons to be sticky at the bottom of the modal.",
+              // height: 100,
               form: [
                 {
                   type: "text",
