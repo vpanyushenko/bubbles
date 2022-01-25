@@ -50,6 +50,12 @@
             <TableCell>--</TableCell>
           </TableRow>
           <TableRow>
+            <TableCell><span style="font-weight: 700">options.height</span></TableCell>
+            <TableCell><span style="font-weight: 700"><code>number</code></span></TableCell>
+            <TableCell>The height in REM values that you want the modal to be.</TableCell>
+            <TableCell><code>null</code></TableCell>
+          </TableRow>
+          <TableRow>
             <TableCell><span style="font-weight: 700">options.message</span></TableCell>
             <TableCell><span style="font-weight: 700"><code>string</code></span></TableCell>
             <TableCell>The message you want the modal to display if any</TableCell>
