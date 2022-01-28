@@ -19,4 +19,10 @@
     display: flex;
     flex-direction: column;
   }
+
+  @media only screen and (max-width: 1179px) {
+    div {
+      max-width: calc(100% - 1.25rem);
+    }
+  }
 </style>
