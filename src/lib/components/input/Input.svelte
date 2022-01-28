@@ -19,8 +19,8 @@
   export let autocomplete = true;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
+  export let debounce = 350;
 
-  const _uuid = uuid();
   let _label = configLabel(label, validation);
   let focused = false;
   let selectedIndex = 0;
@@ -58,12 +58,14 @@
     }
   }
 
-  function typeaheadOnInput(event) {
-    const value = event.target.value;
+  async function typeaheadOnInput(event) {
+    const typeahead_value = event.target.value;
 
-    if (typeahead && value) {
+    await new Promise((resolve) => setTimeout(resolve, debounce));
+
+    if (typeahead && typeahead_value === value && value) {
       is_loading = true;
-      typeahead(value)
+      typeahead(typeahead_value)
         .then((options) => {
           is_loading = false;
           if (options && options.length) {
@@ -485,74 +487,5 @@
     position: absolute;
     top: 1.875rem;
     right: 1.25rem;
-  }
-
-  .options {
-    position: absolute;
-    left: 0;
-    z-index: 20;
-    width: 100%;
-    margin: auto;
-    margin-top: 8px;
-    padding: 1rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    border: 1px solid #e4e4e4;
-    background: #ffffff;
-    border-radius: 1.5rem;
-    -webkit-box-shadow: 0 1.25rem 1rem rgba(227, 230, 236, 0.6);
-    box-shadow: 0 1.25rem 1rem rgba(227, 230, 236, 0.6);
-    -webkit-transition: all 0.25s;
-    -o-transition: all 0.25s;
-    transition: all 0.25s;
-    max-height: 400px;
-    overflow-y: auto;
-  }
-
-  .option {
-    display: block;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    cursor: pointer;
-  }
-
-  .title {
-    position: relative;
-    margin-bottom: 3px;
-    padding-right: 30px;
-    color: var(--black);
-    -webkit-transition: color 0.25s;
-    -o-transition: color 0.25s;
-    transition: color 0.25s;
-    line-height: 1.1875;
-    font-weight: 600;
-  }
-
-  .caption {
-    color: var(--gray);
-    -webkit-transition: color 0.25s;
-    -o-transition: color 0.25s;
-    transition: color 0.25s;
-  }
-
-  .option:hover .title:before,
-  .option.focused .title:before {
-    -webkit-transform: translateX(5px);
-    -ms-transform: translateX(5px);
-    transform: translateX(5px);
-  }
-  .option.selected .title,
-  .option.selected .title,
-  .option:hover .title,
-  .option.focused .title,
-  .option:hover .select__info {
-    color: #6c5dd3;
-  }
-
-  .option.focused {
-    background-color: var(--gray-lightest);
-    border-radius: 12px;
   }
 </style>
