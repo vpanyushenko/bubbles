@@ -11,6 +11,7 @@
   import TableRow from "$lib/components/table/TableRow.svelte";
   import TableCell from "$lib/components/table/TableCell.svelte";
   import Header from "$lib/components/header/Header.svelte";
+  import search from "$lib/utils/fuzzy-search";
 
   import Form from "$lib/components/form/Form.svelte";
   import { validateInputs, getFormData } from "$lib/utils/form";
@@ -67,6 +68,77 @@
       value: null, //You can add a value to the input
       desc: "You'll be able to change this name later", //This will add text below the input to explain in more detail what is needed from the user. Optional.
       width: 33,
+    },
+    {
+      type: "text",
+      id: "pokemon",
+      label: "Fav pokemon",
+      value: "",
+      desc: "Start typing",
+      validation: "required|string",
+      error: "Enter pokemon",
+      typeahead: (input) => {
+        const array = input.split(",");
+        const text = array[array.length - 1];
+        array.pop();
+
+        let entered_string = "";
+
+        array.forEach((string) => {
+          entered_string += `${string},`;
+        });
+
+        return fetch(`https://pokeapi.co/api/v2/pokemon/?limit=100`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            const pokemon = res.results.map((poke) => {
+              return fetch(poke.url)
+                .then((res) => {
+                  return res.json();
+                })
+                .then((res) => {
+                  return res;
+                });
+            });
+
+            return Promise.all(pokemon);
+          })
+          .then((pokemon) => {
+            console.log(pokemon.length);
+
+            const formatted = pokemon.map((poke) => {
+              return {
+                label: poke.name,
+                value: poke.name,
+              };
+            });
+
+            const fuse = new search(formatted, {
+              shouldSort: false,
+              keys: ["label"],
+              minMatchCharLength: 2,
+              threshold: 0.4,
+            });
+
+            const filtered = fuse.search(text).map((obj) => obj.item);
+
+            if (filtered && filtered.length > 10) {
+              filtered.length = 10;
+            }
+            console.log(filtered);
+            return filtered;
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      },
     },
     {
       type: "date",

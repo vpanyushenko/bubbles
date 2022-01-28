@@ -91,7 +91,7 @@
         <p>
           The <code>ToastContainer</code> makes it easy to include <code>Toast</code>s in your app. Include the
           container in you <code>__layout.svelte</code> file, and then use the utility function
-          <code>showToast<code> to add toasts to the page. </code></code>
+          <code>showToast</code> to add toasts to the page.
         </p>
         <p>The container has no properties and will already show toasts at the top right of the screen.</p>
       </Card>

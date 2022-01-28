@@ -7,10 +7,15 @@
 
   export let title = "";
   export let subtitle = "";
+  export let caption = "";
   export let breadcrumbs = true;
   export let buttons = [];
   export let breadcrumb_labels = [];
   // export let sticky = true;
+
+  if (!subtitle) {
+    subtitle = caption;
+  }
 
   const icon_id = uuid();
   const header_id = uuid();
@@ -104,13 +109,18 @@
 <header id={header_id} style="opacity: {intersection_ratio * 3}">
   <div class="text">
     <div class="header__title">
-      {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
-        <IconButton icon="arrowLeft" href={back} id={icon_id} />
-      {/if}
+      <span class="back__icon">
+        {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+          <IconButton icon="arrowLeft" href={back} id={icon_id} />
+        {/if}
+      </span>
 
       <div class="header__text">
         <h2>{$pageStore.title}</h2>
-
+      </div>
+    </div>
+    {#if subtitle || (_breadcrumbs && _breadcrumbs.length)}
+      <div class="header__subtitle">
         {#if subtitle}
           <h6>{@html subtitle}</h6>
         {/if}
@@ -128,14 +138,16 @@
           </h6>
         {/if}
       </div>
-    </div>
+    {/if}
   </div>
   <div class="icons">
     <div class="header">
       <button class="header__burger" on:click={toggleSidebar} />
       <div class="header__buttons">
         {#each buttons as button}
-          <IconButton {...button} />
+          <span class="header__button">
+            <IconButton {...button} />
+          </span>
         {/each}
       </div>
     </div>
@@ -144,13 +156,12 @@
 
 <!-- {/if} -->
 <style>
-  :global(header .icon__btn:not(:last-child)) {
+  .header__button:not(:last-child) {
     margin-right: 1rem;
   }
 
-  :global(header .header__title .icon__btn) {
+  header .header__title .back__icon {
     margin-right: 8px;
-    padding-bottom: 1.6rem;
   }
 
   header {
@@ -201,6 +212,10 @@
     align-items: center;
   }
 
+  .header__subtitle {
+    padding-left: 3.75rem;
+  }
+
   .header {
     position: relative;
     z-index: 10;
@@ -214,21 +229,6 @@
     margin-left: auto;
     justify-content: flex-end;
   }
-
-  /* .header__user {
-    display: none;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 0;
-  } */
-
-  /* .header__pic {
-    width: 100%;
-    min-height: 100%;
-    border-radius: 50%;
-  } */
 
   .header__burger {
     display: none;
@@ -257,14 +257,6 @@
     margin-right: 1rem;
   }
 
-  /* .header__buttons > .icon__btn {
-    margin-right: 1rem;
-  } */
-
-  /* .header__buttons > .icon__btn:last-child {
-    margin-right: 0rem;
-  } */
-
   .breadcrumbs a:hover {
     color: var(--gray) !important;
     transition: 0.3s;
@@ -287,12 +279,6 @@
       padding-bottom: 2.5rem;
     }
 
-    /* h2 {
-      display: flex;
-      white-space: normal;
-      text-overflow: ellipsis;
-      overflow: auto;
-    } */
     header .text,
     header .icons {
       -webkit-box-flex: 0;
@@ -309,45 +295,13 @@
     }
   }
 
-  /* @media only screen and (max-width: 1023) {
-    .breadcrumbs {
-      margin-left: 3rem;
-    }
-
-    header {
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: reverse;
-      -ms-flex-direction: column-reverse;
-      margin: 0;
-      padding: 25px 0;
-    }
-  } */
-
   @media only screen and (max-width: 1179px) {
-    .page__wrapper__sidebar header {
-      padding: 0;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: reverse;
-      -ms-flex-direction: column-reverse;
-      flex-direction: column-reverse;
-      margin: 0;
-    }
-    .page__wrapper__sidebar .header {
-      height: 96px;
-      max-width: calc(100% + 2rem);
-      margin: 0 -1rem;
-      padding: 0px;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .page__wrapper__sidebar .header {
-      border-bottom: 1px solid #e4e4e4;
+    header {
+      padding-top: 3rem;
     }
 
     header .text {
-      padding: 1rem 0px 28px;
+      padding: 0px 0px 28px;
       width: 100%;
       max-width: 100%;
     }
@@ -355,15 +309,28 @@
       margin: 0;
       padding-top: 0;
     }
-    .page__wrapper__sidebar .header__burger {
-      display: inline-block;
+
+    .icons .header {
+      padding-top: 0.25rem;
+      align-self: flex-start;
+    }
+
+    .header__text {
+      align-self: flex-start;
     }
   }
 
   @media only screen and (max-width: 767px) {
-  }
+    header .text {
+      align-self: baseline;
+    }
 
-  :global(header .header__title .icon__btn) {
-    padding-bottom: 1.7rem;
+    .header__text {
+      align-self: flex-start;
+    }
+
+    .header__subtitle {
+      padding-left: 3.25rem;
+    }
   }
 </style>
