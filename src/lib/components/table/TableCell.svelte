@@ -134,7 +134,7 @@
   </div>
 {/if}
 
-{#if _type === "button" && !$pageStore.is_mobile}
+{#if _type === "button"}
   <div
     class="cell right"
     class:mobile__hide={mobile_hide}
