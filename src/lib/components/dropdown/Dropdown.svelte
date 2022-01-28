@@ -17,15 +17,22 @@
   $: filtered_options = !search_value ? options : fuse.search(search_value).map((obj) => obj.item);
   $: is_list_open = options ? true : false;
 
+  let height, y; //window bindings
+
   let is_focused = false;
   let selected_index = 0;
   let is_search_focused = false;
-  let is_using_keyboard = false;
+  let is_using_pointer_device = true;
+
+  $: if (filtered_options) {
+    is_using_pointer_device = false;
+  }
 
   $: if (is_list_open) {
     is_search_focused = false;
     search_value = "";
     selected_index = 0;
+    $pageStore.dropdown = id;
   } else {
     filtered_options = [];
   }
@@ -64,7 +71,7 @@
   }
 
   function hoverOption(event) {
-    if (!is_using_keyboard) {
+    if (is_using_pointer_device) {
       const option = event.currentTarget;
       let _value = option.querySelector("input").value;
       if (type === "select-number") {
@@ -82,7 +89,7 @@
   }
 
   function mousemove(event) {
-    is_using_keyboard = false;
+    is_using_pointer_device = true;
   }
 
   function keydown(event) {
@@ -90,7 +97,7 @@
       switch (event.key) {
         case "ArrowDown": {
           event.preventDefault();
-          is_using_keyboard = true;
+          is_using_pointer_device = false;
 
           if (selected_index === options.length - 1) {
             selected_index = 0;
@@ -113,7 +120,7 @@
         }
         case "ArrowUp": {
           event.preventDefault();
-          is_using_keyboard = true;
+          is_using_pointer_device = false;
 
           if (selected_index === 0) {
             selected_index = options.length - 1;
@@ -206,11 +213,31 @@
     //if we are, we should adjust the dropdown so it's visible in the modal
     const dropdown = document.getElementById(id);
     const modal = dropdown.closest(".js-bubbles-modal");
-    dropdown.scrollIntoView({ behavior: "smooth", block: "end" });
+    const rect = dropdown.getBoundingClientRect();
+
+    //TODO: Not sure why scrollintoView not working
+    //dropdown.scrollIntoView({ behavior: "smooth", block: "end" });
+
+    if (!modal) {
+      if (rect.bottom + y + 100 > height + y) {
+        let diff = rect.bottom + 100 - height;
+
+        y += diff;
+      }
+    } else {
+      const modal_rect = modal.querySelector("main").getBoundingClientRect();
+
+      let scroll = rect.bottom - modal_rect.bottom;
+
+      if (scroll > 25) {
+        modal.querySelector("main").scroll({ top: scroll + rect.height, behavior: "smooth" });
+      }
+    }
   });
 </script>
 
 <svelte:body on:keydown={keydown} />
+<svelte:window bind:innerHeight={height} bind:scrollY={y} />
 
 {#if (filtered_options && filtered_options.length) || is_list_open}
   <div class="options" class:left={align === "left"} class:right={align === "right"} {id} on:mousemove={mousemove}>
@@ -237,7 +264,7 @@
         <a
           class="option"
           class:selected={option.value === value}
-          class:focused={selected_index === index}
+          class:focused={selected_index === index && !is_using_pointer_device}
           href={option.href}
           target={option.new_page ? "_blank" : ""}
           sveltekit:prefetch
@@ -271,7 +298,7 @@
           on:mousedown={selectOption}
           on:mouseover={hoverOption}
           class:selected={option.value === value}
-          class:focused={selected_index === index}
+          class:focused={selected_index === index && !is_using_pointer_device}
         >
           <div class="option__content">
             {#if option.img}
