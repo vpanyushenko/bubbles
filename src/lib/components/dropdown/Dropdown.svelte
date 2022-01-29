@@ -212,7 +212,7 @@
     //check to see if inside of a model
     //if we are, we should adjust the dropdown so it's visible in the modal
     const dropdown = document.getElementById(id);
-    const modal = dropdown.closest(".js-bubbles-modal");
+    const modal = dropdown ? dropdown.closest(".js-bubbles-modal") : null;
     const rect = dropdown.getBoundingClientRect();
 
     //TODO: Not sure why scrollintoView not working
