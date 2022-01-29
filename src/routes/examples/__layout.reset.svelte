@@ -9,7 +9,7 @@
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
 
   import { goto } from "$app/navigation";
-  import { configStore } from "$lib/stores/stores";
+  import { configStore } from "bubbles-ui";
   $configStore.goto = goto;
 
   const sidebarConfig = {
