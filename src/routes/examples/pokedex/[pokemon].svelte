@@ -25,9 +25,9 @@
 <script>
   export let data;
 
-  //import { Header } from "bubbles-ui";
+  import { Header } from "bubbles-ui";
 
-  import Header from "$lib/components/header/Header.svelte";
+  //import Header from "$lib/components/header/Header.svelte";
   import Row from "$lib/layouts/Row.svelte";
   import Center from "$lib/layouts/Center.svelte";
   import Column from "$lib/layouts/Column100.svelte";

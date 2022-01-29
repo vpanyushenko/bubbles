@@ -1,6 +1,6 @@
 {
   "name": "bubbles-ui",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Opinionated Svelte Kit UI Components",
   "scripts": {
     "dev": "svelte-kit dev --port 3001",
@@ -13,9 +13,10 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "^1.0.0-next.39",
-    "@sveltejs/kit": "^1.0.0-next.247",
+    "@sveltejs/kit": "^1.0.0-next.239",
     "@sveltejs/svelte-scroller": "^2.0.7",
     "autoprefixer": "^10.4.0",
+    "bubbles-ui": "^0.5.0",
     "mdsvex": "^0.9.8",
     "prettier": "^2.5.0",
     "prettier-plugin-svelte": "^2.5.0",
