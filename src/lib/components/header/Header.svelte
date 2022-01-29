@@ -119,13 +119,12 @@
         <h2>{$pageStore.title}</h2>
       </div>
     </div>
-    {#if subtitle || (_breadcrumbs && _breadcrumbs.length)}
-      <div class="header__subtitle">
+
+    <div class="header__subtitle">
+      <slot>
         {#if subtitle}
           <h6>{@html subtitle}</h6>
-        {/if}
-
-        {#if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+        {:else if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
           <h6 class="breadcrumbs">
             {#each _breadcrumbs as breadcrumb, index}
               <a sveltekit:prefetch href={breadcrumb.href} on:click={() => ($pageStore.clicked = icon_id)}
@@ -137,8 +136,8 @@
             {/each}
           </h6>
         {/if}
-      </div>
-    {/if}
+      </slot>
+    </div>
   </div>
   <div class="icons">
     <div class="header">
