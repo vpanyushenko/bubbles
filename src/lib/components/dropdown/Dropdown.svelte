@@ -5,7 +5,7 @@
   import { pageStore } from "$lib/stores/stores";
   import { onMount } from "svelte";
 
-  const id = uuid();
+  const id = `dropdown-${uuid()}`;
 
   export let value = null;
   export let options = [];
@@ -24,7 +24,7 @@
   let is_search_focused = false;
   let is_using_pointer_device = true;
 
-  $: if (filtered_options) {
+  $: if (search_value) {
     is_using_pointer_device = false;
   }
 
@@ -32,7 +32,6 @@
     is_search_focused = false;
     search_value = "";
     selected_index = 0;
-    $pageStore.dropdown = id;
   } else {
     filtered_options = [];
   }
@@ -213,7 +212,7 @@
     //if we are, we should adjust the dropdown so it's visible in the modal
     const dropdown = document.getElementById(id);
     const modal = dropdown ? dropdown.closest(".js-bubbles-modal") : null;
-    const rect = dropdown.getBoundingClientRect();
+    const rect = dropdown ? dropdown.getBoundingClientRect() : null;
 
     //TODO: Not sure why scrollintoView not working
     //dropdown.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -224,7 +223,7 @@
 
         y += diff;
       }
-    } else {
+    } else if (rect) {
       const modal_rect = modal.querySelector("main").getBoundingClientRect();
 
       let scroll = rect.bottom - modal_rect.bottom;
