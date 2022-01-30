@@ -13,6 +13,10 @@
   let path = $page.url.pathname;
   let activeSection = false;
 
+  $: if (!$navigating) {
+    $pageStore.sidebar.is_toggled = false;
+  }
+
   sections.forEach((section, index) => {
     if (!section.id) {
       section.id = `sidebar_${index + 1}`;
@@ -65,7 +69,8 @@
   function sidebarItemSelected(obj) {
     $pageStore.sidebar.active_item = obj.id;
     $pageStore.clicked = obj.id;
-    $pageStore.sidebar.is_toggled = false;
+
+    //$pageStore.sidebar.is_toggled = false;
   }
 
   function formatSidebar(sections, pageStore) {

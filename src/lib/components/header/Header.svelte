@@ -112,6 +112,8 @@
       <span class="back__icon">
         {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
           <IconButton icon="arrowLeft" href={back} id={icon_id} />
+        {:else}
+          <button class="header__burger" on:click={toggleSidebar} />
         {/if}
       </span>
 
@@ -141,7 +143,6 @@
   </div>
   <div class="icons">
     <div class="header">
-      <button class="header__burger" on:click={toggleSidebar} />
       <div class="header__buttons">
         {#each buttons as button}
           <span class="header__button">
@@ -233,7 +234,7 @@
     display: none;
     width: 2rem;
     height: 2.5rem;
-    margin-right: auto;
+    margin-right: 1.5rem;
     font-size: 0;
   }
 
@@ -317,6 +318,10 @@
     .header__text {
       align-self: flex-start;
     }
+
+    .header__burger {
+      display: block;
+    }
   }
 
   @media only screen and (max-width: 767px) {
@@ -330,6 +335,10 @@
 
     .header__subtitle {
       padding-left: 3.25rem;
+    }
+
+    .header__burger {
+      margin-right: 0.5rem;
     }
   }
 </style>
