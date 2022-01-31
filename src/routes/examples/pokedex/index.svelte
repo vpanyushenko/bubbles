@@ -121,6 +121,7 @@
   import Column100 from "$lib/layouts/Column100.svelte";
   import ListItem from "$lib/components/list/ListItem.svelte";
   import ListItemTimeline from "$lib/components/list/ListItemTimeline.svelte";
+  import Switch from "$lib/components/switch/Switch.svelte";
 
   const types = [
     "All",
