@@ -5,6 +5,7 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
   import { onMount } from "svelte";
+  import { showLoading } from "$lib/utils/loading";
 
   export let href = null;
   export let text = "";
@@ -21,6 +22,8 @@
   export let tag = null;
   export let button = null;
 
+  let _table_row_icon_button_id = false;
+  let _dom_element;
   let _type = null;
 
   if (text) {
@@ -54,32 +57,39 @@
   onMount(() => {
     //find the nearest table (js-bubbles-table)
     //see if the table has an icon button to show a loading animation for
+    if (_dom_element && href) {
+      _table_row_icon_button_id = _dom_element.closest(".row").querySelector(".icon__btn").querySelector("button").id;
+    }
   });
+
+  function hrefClicked(event) {
+    showLoading(_table_row_icon_button_id);
+  }
 </script>
 
 {#if _type === "text"}
-  <div class="cell" class:mobile__hide={mobile_hide} {style}>
+  <div class="cell" class:mobile__hide={mobile_hide} {style} bind:this={_dom_element}>
     <div class="flex align-items-center">
       {#if href}
         <span class="href-container">
-          {#if $navigating && $navigating?.to?.pathname === href}
+          {#if $navigating && $navigating?.to?.pathname === href && !_table_row_icon_button_id}
             <Spinner style="margin: 0 0.5rem 0 0" />
           {/if}
-          <a class:h6={large} class:bold sveltekit:prefetch {href}>{text}</a>
+          <a class:h6={large} class:bold sveltekit:prefetch {href} on:click={hrefClicked}>{text}</a>
         </span>
       {:else}
         <p class:h6={large} class:bold>{text}</p>
       {/if}
 
       {#if caption}
-        <p class="text-gray">{caption}</p>
+        <p class="text-gray">{@html caption}</p>
       {/if}
     </div>
   </div>
 {/if}
 
 {#if _type === "stacked"}
-  <div class="cell" class:mobile__hide={mobile_hide} {style}>
+  <div class="cell" class:mobile__hide={mobile_hide} {style} bind:this={_dom_element}>
     <div class="d-flex align-items-center">
       {#each rows as nested_row}
         <div class="nested__row">
@@ -91,13 +101,11 @@
             {/if}
 
             {#if nested_cell.text}
-              <!-- <span class="block__text"> -->
               {#if nested_cell.href}
-                <a sveltekit:prefetch href={nested_cell.href}>{nested_cell.text}</a>
+                <a sveltekit:prefetch href={nested_cell.href} on:click={hrefClicked}>{nested_cell.text}</a>
               {:else}
                 <p class:text-gray={nested_cell.text_gray}>{nested_cell.text}</p>
               {/if}
-              <!-- </span> -->
             {/if}
 
             {#if nested_cell.tag?.label && (nested_cell.tag?.align === "right" || nested_cell.tag?.align === "end")}
@@ -113,7 +121,7 @@
 {/if}
 
 {#if _type === "image"}
-  <div class="cell image" class:mobile__hide={mobile_hide} {style}>
+  <div class="cell image" class:mobile__hide={mobile_hide} {style} bind:this={_dom_element}>
     {#if href}
       <a sveltekit:prefetch {href}>
         <picture>
@@ -146,7 +154,7 @@
 {/if}
 
 {#if !_type}
-  <div class="cell" class:mobile__hide={mobile_hide} {style}>
+  <div class="cell" class:right={align === "right" || align === "end"} class:mobile__hide={mobile_hide} {style}>
     <slot>--</slot>
   </div>
 {/if}
