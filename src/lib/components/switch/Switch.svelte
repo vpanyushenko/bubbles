@@ -7,20 +7,20 @@
   export let onclick = null;
   export let onselect = null;
   export let onchange = null;
-  export let value = true;
+  export let value = false;
 
   $: active = value ? true : false;
-  let is_animation_compelted = true;
-  $: is_loading = $pageStore.loading.includes(id) && is_animation_compelted;
+  let is_animation_completed = true;
+  $: is_loading = $pageStore.loading.includes(id) && is_animation_completed;
 
   function toggleSwitch(event) {
-    if (!disabled && !is_loading && is_animation_compelted) {
+    if (!disabled && !is_loading && is_animation_completed) {
       value = !value ? true : false;
 
-      is_animation_compelted = false;
+      is_animation_completed = false;
 
       setTimeout(() => {
-        is_animation_compelted = true;
+        is_animation_completed = true;
       }, 250);
     }
   }
@@ -75,7 +75,7 @@
   }
 
   .switch__in {
-    display: inline-block;
+    display: flex;
   }
 
   .loading,

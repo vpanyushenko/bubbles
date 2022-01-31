@@ -75,8 +75,7 @@
   }
 
   .field__desc {
-    padding: 0.625rem 0 0 !important;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);
@@ -138,7 +137,7 @@
 
   .radio__text {
     margin-left: 8px;
-    padding-top: 3px;
+    /* padding-top: 3px; */
     /* font-size: 13px;
     line-height: 1.2; */
 

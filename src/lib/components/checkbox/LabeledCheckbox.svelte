@@ -89,7 +89,7 @@
   }
 
   .field__desc {
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);

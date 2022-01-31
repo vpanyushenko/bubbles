@@ -73,8 +73,7 @@
   }
 
   .field__desc {
-    padding: 0.625rem 0 0 !important;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);
