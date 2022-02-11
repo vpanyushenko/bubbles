@@ -1,6 +1,6 @@
 {
   "name": "bubbles-ui",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Opinionated Svelte Kit UI Components",
   "scripts": {
     "dev": "svelte-kit dev --port 3001",
@@ -28,9 +28,6 @@
     "svelte2tsx": "^0.4.11"
   },
   "type": "module",
-  "engines": {
-    "node": "14"
-  },
   "license": "MIT",
   "repository": {
     "type": "git",

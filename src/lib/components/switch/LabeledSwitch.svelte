@@ -4,14 +4,14 @@
 
   export let id = "";
   export let desc = "";
-  export let error = "An error occured";
+  export let error = "An error occurred";
   export let label = "";
   export let disabled = false;
   export let onclick = null;
   export let onselect = null;
   export let onchange = null;
   export let validation = null;
-  export let value = null;
+  export let value = false;
   export let form_indent = true;
 
   const _label =
