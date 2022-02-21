@@ -19,7 +19,6 @@ const config = {
     }),
   ],
   kit: {
-    target: "#svelte",
     adapter: vercel(),
     // prerender: {
     //   enabled: true,
