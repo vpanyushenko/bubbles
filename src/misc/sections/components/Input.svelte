@@ -199,6 +199,12 @@
               > the current value of the input and should return an array of string as possible suggestions.</TableCell
             >
           </TableRow>
+          <TableRow>
+            <TableCell><span style="font-weight: 700">multiply_by</span></TableCell>
+            <TableCell
+              >The value of a numeric input will be multiplied by this number when calling the <code>getFormData</code> function.</TableCell
+            >
+          </TableRow>
         </Table>
       </Card>
     </Column>

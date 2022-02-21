@@ -394,7 +394,6 @@
         );
       },
     },
-
     {
       type: "switch", //will render a switch component
       id: "preferences.email",
@@ -405,7 +404,6 @@
       error: "An error occurred",
       validation: "accepted", //best UX is to not make switches mandatory, use a checkbox instead if you need
     },
-
     {
       type: "email",
       id: "email_required_id",
