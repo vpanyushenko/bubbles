@@ -20,6 +20,7 @@
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
   export let debounce = 350;
+  export let multiply_by = null
 
   let _label = configLabel(label, validation);
   let focused = false;
