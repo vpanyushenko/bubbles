@@ -136,7 +136,7 @@
   buttons={[
     {
       icon: "more",
-      transparent: false,
+      color: "gray-lighter",
       options: [
         {
           label: "Changelog",
