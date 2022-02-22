@@ -10,6 +10,7 @@ component: segmented-controller
 </script>
 
 <SegmentedController
+  style="default"
   segments={[
     {
       label: "Section 1",
