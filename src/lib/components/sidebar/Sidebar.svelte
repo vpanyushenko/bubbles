@@ -8,10 +8,14 @@
 
   export let sections = [];
   export let logo = null;
+  export let href = "/";
+  export let onclick = null;
+  export let oncontextmenu = null;
 
   const sectionsWithTitles = {};
   let path = $page.url.pathname;
   let activeSection = false;
+  $pageStore.sidebar.is_mounted = true;
 
   $: if (!$navigating) {
     $pageStore.sidebar.is_toggled = false;
@@ -69,8 +73,6 @@
   function sidebarItemSelected(obj) {
     $pageStore.sidebar.active_item = obj.id;
     $pageStore.clicked = obj.id;
-
-    //$pageStore.sidebar.is_toggled = false;
   }
 
   function formatSidebar(sections, pageStore) {
@@ -121,9 +123,13 @@
 
 <nav class="sidebar" class:active={$pageStore.sidebar.is_toggled}>
   <section class="top">
-    <a href="/">
-      <img src={logo} alt="Logo" />
-    </a>
+    {#if href}
+      <a {href} on:click={onclick}>
+        <img src={logo} alt="Logo" />
+      </a>
+    {:else}
+      <img src={logo} alt="Logo" on:click={onclick} on:contextmenu={oncontextmenu} />
+    {/if}
     <button on:click={toggleSidebar} />
   </section>
 
