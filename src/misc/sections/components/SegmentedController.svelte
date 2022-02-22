@@ -16,6 +16,7 @@
   import SegmentedController from "$lib/components/segmented-controller/SegmentedController.svelte";
 
   let active = "1";
+  let line_active = "1";
 </script>
 
 <Section id="segmented-controller" title="Segmented Controller">
@@ -32,9 +33,17 @@
           This relies on binding the the <code>innerWidth</code> of the window. If you are using the device toggle in your
           browser dev tools, the segmented controller will not respond correctly
         </p>
+        <p>
+          A second style and more compact version of the component is the line style version, suitable for a UI that
+          will have multiple controllers.
+        </p>
 
         <Table>
           <TableHeader cells={[{ label: "Property" }, { label: "Description" }]} />
+          <TableRow>
+            <TableCell><span style="font-weight: 700">style</span></TableCell>
+            <TableCell>"line" or "default"</TableCell>
+          </TableRow>
           <TableRow>
             <TableCell><span style="font-weight: 700">segments</span></TableCell>
             <TableCell>This is an array of options for all of the buttons to include</TableCell>
@@ -99,6 +108,86 @@
       <div class:hidden={active !== "3"}>
         <Card>
           <CardHeader title="Section 3" border={false} />
+        </Card>
+      </div>
+
+      <div class="mt-2">
+        <SegmentedController
+          style="line"
+          segments={[
+            {
+              label: "Section 1",
+              onclick: (event) => {
+                line_active = "1";
+              },
+            },
+            {
+              label: "Section 2",
+              onclick: () => {
+                line_active = "2";
+              },
+            },
+            {
+              label: "Section Three Long",
+              onclick: () => {
+                line_active = "3";
+              },
+            },
+            {
+              label: "Section 4",
+              onclick: () => {
+                line_active = "4";
+              },
+            },
+            {
+              label: "Section 5",
+              onclick: () => {
+                line_active = "5";
+              },
+            },
+            {
+              label: "Section 6",
+              onclick: () => {
+                line_active = "6";
+              },
+            },
+          ]}
+        />
+      </div>
+
+      <div class:hidden={line_active !== "1"}>
+        <Card>
+          <CardHeader title="Line Style Section 1" border={false} />
+        </Card>
+      </div>
+
+      <div class:hidden={line_active !== "2"}>
+        <Card>
+          <CardHeader title="Line Style Section 2" border={false} />
+        </Card>
+      </div>
+
+      <div class:hidden={line_active !== "3"}>
+        <Card>
+          <CardHeader title="Line Style Section 3" border={false} />
+        </Card>
+      </div>
+
+      <div class:hidden={line_active !== "4"}>
+        <Card>
+          <CardHeader title="Line Style Section 4" border={false} />
+        </Card>
+      </div>
+
+      <div class:hidden={line_active !== "5"}>
+        <Card>
+          <CardHeader title="Line Style Section 5" border={false} />
+        </Card>
+      </div>
+
+      <div class:hidden={line_active !== "6"}>
+        <Card>
+          <CardHeader title="Line Style Section 6" border={false} />
         </Card>
       </div>
     </Column>
