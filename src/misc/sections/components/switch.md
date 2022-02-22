@@ -8,7 +8,7 @@ component: switch
 </script>
 
 <Switch
-  value={true}
+  value={false}
   onclick={(event) => {
     const value = event.currentTarget.value;
 

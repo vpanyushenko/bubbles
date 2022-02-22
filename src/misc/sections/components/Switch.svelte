@@ -78,7 +78,7 @@
       <Card height100={true}>
         <CardHeader title="Demo" border={false} />
         <Switch
-          value={true}
+          value={false}
           onclick={(event) => {
             const value = event.currentTarget.value;
 
