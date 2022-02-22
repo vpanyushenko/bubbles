@@ -18,6 +18,7 @@ import Overlay from "./components/overlay/Overlay.svelte";
 import Spinner from "./components/spinner/Spinner.svelte";
 import Divider from "./components/divider/Divider.svelte";
 import Dropdown from "./components/dropdown/Dropdown.svelte";
+import SegmentedController from "./components/segmented-controller/SegmentedController.svelte";
 
 export {
   Header,
@@ -40,6 +41,7 @@ export {
   Spinner,
   Divider,
   Dropdown,
+  SegmentedController,
 };
 
 //Inputs
