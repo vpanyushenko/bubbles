@@ -21,6 +21,8 @@
   const header_id = uuid();
 
   let y = 0; //TODO: Add options to sticky headers
+  // $: _sticky = y >= 200 ? true : false;
+  let _sticky = false;
 
   $: intersection_ratio = 1;
 
@@ -106,23 +108,23 @@
 <svelte:window bind:scrollY={y} />
 
 <!-- {#if intersection_ratio !== 0} -->
-<header id={header_id} style="opacity: {intersection_ratio * 3}">
+<header id={header_id} style="opacity: {intersection_ratio * 3}" class:sticky={_sticky}>
   <div class="text">
     <div class="header__title">
-      <span class="back__icon">
-        {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+      {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+        <span class="back__icon">
           <IconButton icon="arrowLeft" href={back} id={icon_id} />
-        {:else}
-          <button class="header__burger" on:click={toggleSidebar} />
-        {/if}
-      </span>
+        </span>
+      {:else if $pageStore?.sidebar?.is_mounted}
+        <button class="header__burger" on:click={toggleSidebar} />
+      {/if}
 
       <div class="header__text">
         <h2>{$pageStore.title}</h2>
       </div>
     </div>
 
-    <div class="header__subtitle">
+    <div class:header__subtitle={back}>
       <slot>
         {#if subtitle}
           <h6>{@html subtitle}</h6>
@@ -172,9 +174,13 @@
     padding: 3rem 4rem 2.75rem;
   }
 
-  /* header.sticky {
-    padding: 1rem 4rem 1rem;
-  } */
+  header.sticky {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: red;
+    position: fixed;
+    z-index: 99;
+  }
 
   .header__text {
     display: flex;
