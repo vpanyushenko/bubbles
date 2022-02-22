@@ -12,7 +12,6 @@ import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
 import ToastContainer from "./components/toast/ToastContainer.svelte";
 import Tag from "./components/tag/Tag.svelte";
-import Chart from "./components/chart/Chart.svelte";
 import Error from "./components/error/Error.svelte";
 import Overlay from "./components/overlay/Overlay.svelte";
 import Spinner from "./components/spinner/Spinner.svelte";
@@ -35,7 +34,6 @@ export {
   Form,
   ImageForm,
   Tag,
-  Chart,
   Error,
   Overlay,
   Spinner,
