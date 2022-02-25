@@ -383,7 +383,12 @@ const getValidationRequirements = (validation) => {
 };
 
 const isValidInput = (value, validation) => {
-  const requirements = getValidationRequirements(validation);
+  const requirements = getValidationRequirements(validation) || [];
+
+  //if validation is requested but not required and the field is empty
+  if (!value && !requirements.includes("required")) {
+    return true;
+  }
 
   const booleans = requirements.map((requirement) => {
     //check each requirement property against the value and see if the condition is met
