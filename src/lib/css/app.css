@@ -483,6 +483,15 @@ hr {
     margin-bottom: 1rem;
   }
 
+  /* Currently removing them but we should style these to be thinner perhaps for accessability */
+  *::-webkit-scrollbar {
+	display: none;
+  }
+  * {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+  }
+
 @media only screen and (max-width: 1419px) {
 	/* breakpoints */
 }
