@@ -47,6 +47,11 @@
         icon: "/favicon.png",
         href_aliases: ["/examples/test"],
       },
+      {
+        label: "File",
+        href: "/examples/file",
+        icon: "/favicon.png",
+      },
     ],
   };
 </script>

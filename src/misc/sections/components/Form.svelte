@@ -16,7 +16,7 @@
   import TableCell from "$lib/components/table/TableCell.svelte";
 
   import Form from "$lib/components/form/Form.svelte";
-  import ImageForm from "$lib/components/form/ImageForm.svelte";
+  import FileForm from "$lib/components/form/FileForm.svelte";
   import { validateInputs, getFormData } from "$lib/utils/form";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { showToast } from "$lib/utils/toast";
@@ -575,7 +575,7 @@
     },
   ];
 
-  const imageForm = {
+  const fileForm = {
     button: {
       label: "Upload Image",
       color: "primary",
@@ -586,7 +586,7 @@
       credentials: "include",
     },
     toast: true,
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/800px-Google_Images_2015_logo.svg.png",
+    //src: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/800px-Google_Images_2015_logo.svg.png",
   };
 </script>
 
@@ -797,10 +797,10 @@
   <Row>
     <Column>
       <Card color={null} shadow={false} border={true}>
-        <CardHeader title="Images" border={false} />
+        <CardHeader title="Files" border={false} />
         <p>
-          Generally your backend will accept images as FormData instead of JSON. The <code>ImageForm</code> is a pre-made
-          form that will allow the user to select an image and upload it to your backend as FormData
+          Generally your backend will accept images and files as FormData instead of JSON. The <code>FileForm</code> is a
+          pre-made form that will allow the user to select an image and upload it to your backend as FormData
         </p>
       </Card>
 
@@ -841,6 +841,13 @@
             <TableCell><span style="font-weight: 700">toast</span></TableCell>
             <TableCell>Boolean that will show the toast message from `res.message` or `error.message`</TableCell>
           </TableRow>
+
+          <TableRow>
+            <TableCell><span style="font-weight: 700">extensions</span></TableCell>
+            <TableCell
+              >An array of extensions that you want to use for the input. Defaults to [".png", ".jpg", ".jpeg", ".svg"]</TableCell
+            >
+          </TableRow>
         </Table>
       </Card>
     </Column>
@@ -856,7 +863,7 @@
       <Card>
         <CardHeader title="Demo" border={false} />
         <div>
-          <ImageForm {...imageForm} />
+          <FileForm {...fileForm} />
         </div>
       </Card>
     </Column50>

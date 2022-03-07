@@ -4,7 +4,7 @@ component: form-image
 
 ```svelte
 <script>
-  import { FormImage } from "bubbles-ui";
+  import { ImageForm, FileForm } from "bubbles-ui";
 
   const options = {
     button: {
@@ -17,9 +17,12 @@ component: form-image
       credentials: "include",
     },
     toast: true,
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/800px-Google_Images_2015_logo.svg.png",
+    src: "",
+    extensions: [".csv"],
+    label: "Select File",
   };
 </script>
 
-<FormImage {...options} />
+<ImageForm {...options} />
+<FileForm {...options} />
 ```

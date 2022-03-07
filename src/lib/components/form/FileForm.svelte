@@ -11,35 +11,38 @@
   };
   export let endpoint = ``;
   export let toast = true;
-  export let button = { color: "primary", label: "Upload Image" };
+  export let button = { color: "primary", label: "Submit" };
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
+  export let label = "Select File";
 
-  function imageAdded(event) {
+  let _placeholder_src = null;
+
+  if (Array.isArray(extensions)) {
+    extensions = extensions.join(",");
+  }
+
+  function fileAdded(event) {
     const input = event.target;
 
     if (input.files && input.files[0]) {
       src = URL.createObjectURL(input.files[0]);
+      //Check if we can show the preview, or if it's a file that does not support
+      //a preview like a csv or pdf
 
-      if (input.files && input.files[0]) {
-        src = URL.createObjectURL(input.files[0]);
-        //Check if we can show the preview, or if it's a file that does not support
-        //a preview like a csv or pdf
+      const preview_types = [
+        "image/png",
+        "image/svg+xml",
+        "image/gif",
+        "image/jpeg",
+        "image/webp",
+        "image/avif",
+        "image/apng",
+        "image/bmp",
+        "image/tiff",
+      ];
 
-        const preview_types = [
-          "image/png",
-          "image/svg+xml",
-          "image/gif",
-          "image/jpeg",
-          "image/webp",
-          "image/avif",
-          "image/apng",
-          "image/bmp",
-          "image/tiff",
-        ];
-
-        if (!preview_types.includes(input.files[0].type)) {
-          _placeholder_src = input.files[0].name;
-        }
+      if (!preview_types.includes(input.files[0].type)) {
+        _placeholder_src = input.files[0].name;
       }
     }
   }
@@ -52,7 +55,7 @@
     const file = document.getElementById(id).files[0];
 
     const data = new FormData();
-    data.append("image", file);
+    data.append("file", file);
 
     fetch_options.body = data;
 
@@ -78,10 +81,12 @@
 
 <div class="field">
   <div class="image__preview">
-    <span class:hidden={src}>Upload Image</span>
-    <input type="file" class="upload__button" on:change={imageAdded} {id} />
-    {#if src}
+    <span class:hidden={src}>{label}</span>
+    <input type="file" class="upload__button" on:change={fileAdded} {id} accept={extensions} />
+    {#if src && !_placeholder_src}
       <img {src} alt="Upload Preview" />
+    {:else if src && _placeholder_src}
+      <p>{_placeholder_src}</p>
     {/if}
   </div>
 </div>
@@ -132,6 +137,9 @@
 
   .image__preview:hover > span {
     display: block !important;
+    position: relative;
+    z-index: 10;
+    filter: none;
   }
 
   .upload__button {
@@ -142,5 +150,16 @@
     z-index: 10;
     opacity: 0;
     cursor: pointer;
+    filter: blur(2px);
+  }
+
+  p {
+    position: absolute;
+    margin-bottom: 0;
+    opacity: 1;
+  }
+
+  .image__preview:hover > p {
+    display: none;
   }
 </style>

@@ -10,7 +10,7 @@ component: page-wrapper
   import "bubbles-ui/css/app.css";
 
   // Import the components
-  import { PageSidebarWrapper, Sidebar, Modal, ToastContainer } from "bubbles-ui";
+  import { SidebarPageWrapper, Sidebar, Modal, ToastContainer } from "bubbles-ui";
 
   // Import the stores, just separated for cleaner code
   import { toastStore } from "bubbles-ui";
