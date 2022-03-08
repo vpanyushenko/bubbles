@@ -1,5 +1,5 @@
 <script context="module">
-  import { importMarkdownChangelog } from "$misc/read-markdown";
+  import { importMarkdownChangelog } from "src/__misc/read-markdown";
 
   export const prerender = true;
 

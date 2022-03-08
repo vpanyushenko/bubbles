@@ -3,7 +3,7 @@
 </script>
 
 <script>
-  import Section from "$misc/components/section.svelte";
+  import Section from "src/__misc/components/section.svelte";
 
   import Row from "$lib/layouts/Row.svelte";
   import Column from "$lib/layouts/Column100.svelte";

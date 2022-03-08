@@ -1,8 +1,10 @@
 <script>
   import "$lib/css/app.css";
+  import "$assets/css/oceanic.css";
+  import "$assets/css/markdown.css";
 
   import store from "src/__misc/store";
-  import icon_arrow from "./arrow.svg";
+  import icon_arrow from "$assets/icons/arrow.svg";
 
   import { goto } from "$app/navigation";
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";

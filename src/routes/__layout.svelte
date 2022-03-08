@@ -3,7 +3,7 @@
   import "$assets/css/oceanic.css";
   import "$assets/css/markdown.css";
 
-  import store from "$misc/store";
+  // import store from "src/__misc/store";
   import icon_arrow from "$assets/icons/arrow.svg";
 
   import { goto } from "$app/navigation";
@@ -28,7 +28,7 @@
       {
         label: "Installation",
         id: "installation",
-        href: "/#installation",
+        href: "/installation",
         section: "Getting Started",
       },
       {
@@ -250,11 +250,11 @@
     ],
   };
 
-  $: if ($store.sidebar_index) {
-    setTimeout(() => {
-      $pageStore.sidebar.active_item = sidebarConfig.sections[$store.sidebar_index].id;
-    }, 750);
-  }
+  // $: if ($store.sidebar_index) {
+  //   setTimeout(() => {
+  //     $pageStore.sidebar.active_item = sidebarConfig.sections[$store.sidebar_index].id;
+  //   }, 750);
+  // }
 
   let y = 0;
 </script>
