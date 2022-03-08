@@ -1,0 +1,189 @@
+.markdown table,
+.markdown td,
+.markdown th {
+  border: 1px solid var(--gray-light);
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.markdown table,
+.markdown tbody {
+  min-width: -webkit-fill-available;
+}
+
+.markdown p + p {
+  margin-top: 1rem;
+}
+
+.markdown p {
+  color: var(--gray-darkest);
+  font-size: 0.95rem;
+}
+
+.markdown h6 {
+  margin-bottom: 1rem;
+  color: var(--gray-darkest);
+}
+
+code {
+  font-weight: 400;
+  background-color: var(--gray-light);
+  font-size: 0.9rem;
+  vertical-align: bottom;
+}
+
+code + code {
+  margin-left: 0.3rem;
+}
+
+.markdown code {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  letter-spacing: 0.3px;
+}
+
+details {
+  border: 1px solid var(--gray-light);
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  width: fit-content;
+}
+
+details[open] {
+  padding: 0.5rem;
+  margin-top: 0.5rem !important;
+  width: 100%;
+  padding: 0;
+}
+
+details[open] summary {
+  padding: 0.5rem;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.markdown details table {
+  margin-bottom: 0px;
+  border-radius: 10px;
+}
+
+/* .markdown details tbody tr:last-child {
+  border-bottom: none;
+} */
+.markdown details td,
+.markdown details th,
+.markdown details table {
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+
+.markdown details p {
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.markdown details table thead tr,
+.markdown details table thead th,
+.markdown details table thead {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.markdown h1 {
+  font-size: 1.75rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -1px;
+  padding-bottom: 1rem;
+}
+
+.markdown h2 {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -1px;
+  padding-bottom: 1rem;
+}
+
+.markdown h3 {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -1px;
+  padding-bottom: 1rem;
+}
+
+.markdown h3 {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -1px;
+  padding-bottom: 1rem;
+}
+
+.markdown h4 {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0px;
+  padding-bottom: 0;
+}
+
+.markdown h5 {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0px;
+  padding-bottom: 0;
+}
+
+.markdown h6 {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0px;
+  padding-bottom: 0;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+code.red {
+  background-color: var(--error-lightest);
+  color: var(--error-darkest);
+}
+code.blue {
+  background-color: var(--info-lightest);
+  color: var(--info-darkest);
+}
+code.green {
+  background-color: var(--success-lightest);
+  color: var(--success-darkest);
+}
+code.yellow {
+  background-color: var(--warning-lightest);
+  color: var(--warning-darkest);
+}
+code.purple {
+  background-color: var(--primary-lightest);
+  color: var(--primary-darkest);
+}
+code.lc {
+  text-transform: lowercase;
+}

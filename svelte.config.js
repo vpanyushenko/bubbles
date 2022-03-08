@@ -29,7 +29,7 @@ const config = {
         alias: {
           $lib: path.resolve("./src/lib"),
           $misc: path.resolve("./src/misc"),
-          $data: path.resolve("./src/data"),
+          $assets: path.resolve("./src/assets"),
         },
       },
       optimizeDeps: {
