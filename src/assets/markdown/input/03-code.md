@@ -120,4 +120,14 @@ type: code
     margin={true}
     stripe_key_name="VITE_STRIPE_PUBLIC_KEY"
   />
+
+<Input
+  id="disabled"
+  type="text"
+  label="Disabled"
+  error="Please add your name"
+  margin={true}
+  disabled={true}
+  value="This is disabled"
+/>
 ```

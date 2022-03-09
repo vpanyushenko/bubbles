@@ -119,6 +119,11 @@ The value for this input it you want to pre-fill it.
 
 ---
 
+**disabled** `boolean` <code class="blue">false</code><br>
+Disabled the input from being used. The contents will still be sent when used with a form.
+
+---
+
 **autocomplete** `boolean` <code class="blue">true</code><br>
 If you want to browser to autocomplete fields for the user.
 
