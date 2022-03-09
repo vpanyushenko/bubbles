@@ -9,7 +9,7 @@
   import more from "./more.svg";
   import add from "./add.svg";
   import close from "./close.svg";
-  import search from "./search.svg";
+  import search_icon from "./search.svg";
   import edit from "./edit.svg";
   import trash from "./trash.svg";
   import filter from "./filter.svg";
@@ -24,7 +24,7 @@
     more: more,
     add: add,
     close: close,
-    search: search,
+    search: search_icon,
     edit: edit,
     trash: trash,
     filter: filter,
@@ -37,6 +37,7 @@
   export let href = "";
   export let new_page = false;
   export let align = "right";
+  export let search = false
   
   export let color = null; 
   export let border = null; 
@@ -157,7 +158,7 @@
       </span>
     </button>
     {#if active && dropdown}
-      <Dropdown {options} {align} />
+      <Dropdown {options} {align} {search}/>
     {/if}
   </div>
 {/if}
