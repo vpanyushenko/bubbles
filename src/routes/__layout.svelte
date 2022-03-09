@@ -69,8 +69,8 @@
       },
       {
         label: "Page Grid",
-        id: "grid",
-        href: "/grid",
+        id: "page-grid",
+        href: "/page-grid",
         section: "Layouts",
       },
       {
