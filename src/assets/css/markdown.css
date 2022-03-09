@@ -154,6 +154,12 @@ details[open] summary {
   padding-bottom: 0;
 }
 
+.markdown blockquote {
+  background: var(--gray-lighter);
+  border-radius: 0.25rem;
+  margin: 0.5rem;
+}
+
 h1 code,
 h2 code,
 h3 code,
@@ -186,4 +192,9 @@ code.purple {
 }
 code.lc {
   text-transform: lowercase;
+}
+code.component {
+  font-size: xx-large;
+  margin-bottom: 2rem !important;
+  margin-top: 1rem;
 }
