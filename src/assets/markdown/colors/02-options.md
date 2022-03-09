@@ -2,7 +2,6 @@
 
 Like most kits, Bubbles uses descriptive words for colors that describe the action to which that color will apply. For example the default red color is called error. Below is a list of all of the color variables included with Bubbles.
 
-<!-- prettier-ignore -->
 | Variable  | Description                                                 | Default                                                  |
 | --------- | ----------------------------------------------------------- | -------------------------------------------------------- |
 | primary   | The main color for buttons, hovers, sidebar                 | <strong style="color:var(--primary);">#DAD6F4</strong>   |
