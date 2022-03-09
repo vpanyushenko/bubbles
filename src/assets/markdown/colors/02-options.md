@@ -3,7 +3,7 @@
 Like most kits, Bubbles uses descriptive words for colors that describe the action to which that color will apply. For example the default red color is called error. Below is a list of all of the color variables included with Bubbles.
 
 | Variable  | Description                                                 | Default                                                  |
-| --------- | ----------------------------------------------------------- | -------------------------------------------------------- |
+| :-------- | :---------------------------------------------------------- | :------------------------------------------------------- |
 | primary   | The main color for buttons, hovers, sidebar                 | <strong style="color:var(--primary);">#DAD6F4</strong>   |
 | secondary | Secondary buttons and colors                                | <strong style="color:var(--secondary);">#FF98E5</strong> |
 | error     | Error states on inputs and toasts                           | <strong style="color:var(--error);">#FF6628</strong>     |
