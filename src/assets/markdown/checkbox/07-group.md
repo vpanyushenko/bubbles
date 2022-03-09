@@ -53,7 +53,7 @@ The error text you want to show if this item fails validation.
 ---
 
 **validation** `string`<br>
-The validation string you want to use for this form. See [validation](/validation) for more information.
+The validation string you want to use for this form. See [validateInputs](/validate-inputs) for more information.
 
 ---
 
