@@ -11,7 +11,16 @@ const formatPosts = (posts) => {
       metadata: post.metadata || {},
     };
 
-    if (post?.metadata?.width === 50) {
+    if (path.slice(path.length - 6) === "svelte") {
+      p.metadata.svelte = true;
+    }
+
+    if (path.slice(path.length - 9) === "50.svelte") {
+      p.metadata.width = 50;
+      p.metadata.height = 100;
+    }
+
+    if (p?.metadata?.width === 50) {
       temp.push(p);
       count++;
 
@@ -22,10 +31,6 @@ const formatPosts = (posts) => {
         count = 0;
       }
     } else {
-      if (path.slice(path.length - 6) === "svelte") {
-        p.metadata.svelte = true;
-      }
-
       _posts.push(p);
     }
   }
