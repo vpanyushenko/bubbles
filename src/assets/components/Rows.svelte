@@ -12,7 +12,11 @@
     <Row>
       {#each row as post}
         <Column50>
-          <Card data={post.markdown} metadata={post.metadata} />
+          {#if post?.metadata?.svelte === true}
+            <svelte:component this={post.markdown} />
+          {:else}
+            <Card data={post.markdown} metadata={post.metadata} />
+          {/if}
         </Column50>
       {/each}
     </Row>
