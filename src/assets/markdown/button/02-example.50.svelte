@@ -1,50 +1,10 @@
 <script>
-  export const width = 50;
-
-  import Row from "$lib/layouts/Row.svelte";
-  import Column100 from "$lib/layouts/Column100.svelte";
-  import Card from "$lib/components/card/Card.svelte";
-  import CardHeader from "$lib/components/card/CardHeader.svelte";
   import Button from "$lib/components/button/Button.svelte";
-
-  import IconButton from "$lib/components/button/IconButton.svelte";
   import { showLoading, hideLoading } from "$lib/utils/loading";
 
   const buttonLoadingDemo = (event) => {
     const id = event.currentTarget.id;
 
-    showLoading(id);
-
-    setTimeout(() => {
-      hideLoading(id);
-    }, 2000);
-  };
-
-  const iconButtonOptions = [
-    {
-      label: "Option 1",
-      caption: "onclick example",
-      onclick: (event) => {
-        const icon_button_id = event.currentTarget.parentElement.parentElement.parentElement.querySelector("button").id;
-
-        showLoading(icon_button_id);
-
-        setTimeout(() => {
-          hideLoading(icon_button_id);
-        }, 2000);
-      },
-    },
-    {
-      label: "Option 2",
-      caption: "href example",
-      href: "/#button",
-    },
-  ];
-
-  const onclick = (event) => {
-    //here the click event is the actual button click
-    //so we can get the id for the button from the event
-    const id = event.currentTarget.id;
     showLoading(id);
 
     setTimeout(() => {
