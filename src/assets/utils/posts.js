@@ -5,11 +5,10 @@ const formatPosts = (posts) => {
 
   for (let path in posts) {
     const post = posts[path];
-    const metadata = post.metadata;
 
     const p = {
       markdown: post.default,
-      metadata,
+      metadata: post.metadata || {},
     };
 
     if (post?.metadata?.width === 50) {
@@ -23,6 +22,10 @@ const formatPosts = (posts) => {
         count = 0;
       }
     } else {
+      if (path.slice(path.length - 6) === "svelte") {
+        p.metadata.svelte = true;
+      }
+
       _posts.push(p);
     }
   }

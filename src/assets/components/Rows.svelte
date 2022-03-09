@@ -16,6 +16,8 @@
         </Column50>
       {/each}
     </Row>
+  {:else if row?.metadata?.svelte === true}
+    <svelte:component this={row.markdown} />
   {:else}
     <Row>
       <Column100>
