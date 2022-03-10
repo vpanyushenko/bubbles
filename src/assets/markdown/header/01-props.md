@@ -49,6 +49,6 @@ An array of string to overwrite the just labels for breadcrumbs.
 ---
 
 **buttons** `object<IconButton>` <br>
-Buttons are an array of [IconButtons](/icon-buttons) that will show up on the right side of the component.
+Buttons are an array of [IconButtons](/icon-button) that will show up on the right side of the component.
 
 ---
