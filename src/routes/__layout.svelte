@@ -270,6 +270,7 @@
 <ToastContainer />
 
 <Sidebar {...sidebarConfig} />
+
 <SidebarPageWrapper>
   <slot />
 </SidebarPageWrapper>
