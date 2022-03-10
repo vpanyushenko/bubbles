@@ -122,6 +122,12 @@
         section: "Components",
       },
       {
+        label: "Icon Button",
+        id: "icon-button",
+        href: "/icon-button",
+        section: "Components",
+      },
+      {
         label: "Input",
         id: "input",
         href: "/input",
