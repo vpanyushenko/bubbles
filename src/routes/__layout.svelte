@@ -253,6 +253,12 @@
         href: "/hide-modal",
         section: "Utils",
       },
+      {
+        label: "Change Log",
+        id: "changelog",
+        href: "/changelog",
+        section: "Settings",
+      },
     ],
   };
 

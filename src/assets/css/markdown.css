@@ -22,6 +22,7 @@
   font-size: 0.95rem;
 }
 
+.markdown ul,
 .markdown h6 {
   margin-bottom: 1rem;
   color: var(--gray-darkest);
