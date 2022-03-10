@@ -104,7 +104,7 @@ If true, runs the validation checks when focus is lost from the input.
 
 ---
 
-**validate_on_blur** `boolean` <br>
+**vob** `boolean` <br>
 Just an alias for `validate_on_blur`. Set whichever is best for you.
 
 ---
