@@ -44,7 +44,7 @@ export {
   SegmentedController,
 };
 
-//Inputs
+//input
 import Button from "./components/button/Button.svelte";
 import IconButton from "./components/button/IconButton.svelte";
 import Input from "./components/input/Input.svelte";

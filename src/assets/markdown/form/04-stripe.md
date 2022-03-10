@@ -8,4 +8,4 @@ The process for this is pretty simple. Like any Bubbles `Form` component, you pa
 
 Any StripeJS dependencies will only load client side after everything else mounts, so there will be no performance penalties for using this component.
 
-Learn more about the `stripe-card` input type [here](/inputs).
+Learn more about the `stripe-card` input type [here](/input).

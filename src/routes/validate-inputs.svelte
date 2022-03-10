@@ -10,6 +10,6 @@
   const rows = formatPosts(all_posts);
 </script>
 
-<Header title="ValidateInputs" />
+<Header title="validateInputs" />
 
 <Rows {rows} />
