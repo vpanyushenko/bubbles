@@ -8,6 +8,7 @@
   export let desc = "";
   export let validation = null;
   export let form_indent = true;
+  export let background = true;
 
   const _label =
     $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
@@ -22,7 +23,7 @@
   }
 </script>
 
-<div class="form__field__container" {id}>
+<div class="form__field__container" {id} class:background>
   <div class="field" class:style__indent={form_indent}>
     <div class="text">
       <p class="error" class:hidden={!is_error}>{error}</p>
@@ -70,9 +71,14 @@
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
-    /* border-radius: 8px;
-    border: 1px solid var(--gray-light); */
   }
+
+  .background {
+    background: rgba(228, 228, 228, 0.3);
+    border-radius: 12px;
+    padding: 1.125rem 0;
+  }
+
   .text {
     margin-bottom: 0.5rem;
   }

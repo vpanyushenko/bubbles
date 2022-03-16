@@ -333,10 +333,15 @@
   @media only screen and (max-width: 767px) {
     header .text {
       align-self: baseline;
+      padding: 0;
     }
 
     .header__text {
-      align-self: flex-start;
+      align-self: center;
+    }
+
+    .header__text h2 {
+      font-size: 1.5rem;
     }
 
     .header__subtitle {
@@ -344,7 +349,11 @@
     }
 
     .header__burger {
-      margin-right: 0.5rem;
+      margin-right: 1rem;
+    }
+
+    header .icons {
+      padding-top: 0;
     }
   }
 </style>

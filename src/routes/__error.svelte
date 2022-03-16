@@ -23,4 +23,4 @@
   };
 </script>
 
-<Error {...props} button={{ href: "/examples", mt: true, label: "Go Back" }} />
+<Error {...props} button={{ href: "/error", mt: true, label: "Go Back" }} />

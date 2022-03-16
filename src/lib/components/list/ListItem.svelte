@@ -44,9 +44,9 @@
       <div class="label">{label}</div>
       {#if text}
         {#if href}
-          <a {href} {target}>{text}</a>
+          <a class="wrap-anywhere" {href} {target}>{text}</a>
         {:else}
-          <span>{text}</span>
+          <span class="wrap-anywhere">{text}</span>
         {/if}
       {:else if tag}
         <Tag {...tag} />
@@ -142,5 +142,9 @@
   .center {
     display: flex;
     align-self: center;
+  }
+
+  .wrap-anywhere {
+    overflow-wrap: anywhere;
   }
 </style>

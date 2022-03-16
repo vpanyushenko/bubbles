@@ -6,7 +6,7 @@
 -->
 <script>
   export let label = "";
-  export let color = "primary";
+  export let color = "primary-light";
   export let small = false;
   export let min_width = 3;
   export let margin = "0 0 0 0";

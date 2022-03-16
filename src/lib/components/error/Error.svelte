@@ -92,9 +92,9 @@
     <h2>{code}: {title}</h2>
     <h5>{message}</h5>
     {#if button}
-      <Button {...button} onclick={() => window.location.href === button.href || "/"} />
+      <Button {...button} onclick={() => (window.location.href = button.href || "/")} />
     {:else}
-      <Button mt={true} label="Go Back" onclick={() => window.location.href === "/"} />
+      <Button mt={true} label="Go Back" onclick={() => (window.location.href = "/")} />
     {/if}
   </Center>
 </Overlay>

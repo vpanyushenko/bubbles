@@ -12,13 +12,35 @@
   export let endpoint = ``;
   export let toast = true;
   export let button = { color: "primary", label: "Upload Image" };
+  export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
 
   function imageAdded(event) {
     const input = event.target;
 
-    console.log(input);
     if (input.files && input.files[0]) {
       src = URL.createObjectURL(input.files[0]);
+
+      if (input.files && input.files[0]) {
+        src = URL.createObjectURL(input.files[0]);
+        //Check if we can show the preview, or if it's a file that does not support
+        //a preview like a csv or pdf
+
+        const preview_types = [
+          "image/png",
+          "image/svg+xml",
+          "image/gif",
+          "image/jpeg",
+          "image/webp",
+          "image/avif",
+          "image/apng",
+          "image/bmp",
+          "image/tiff",
+        ];
+
+        if (!preview_types.includes(input.files[0].type)) {
+          _placeholder_src = input.files[0].name;
+        }
+      }
     }
   }
 
@@ -64,7 +86,7 @@
   </div>
 </div>
 
-<Button {...button} onclick={submit} onsubmit={submit} />
+<Button {...button} onsubmit={submit} />
 
 <style>
   .field {

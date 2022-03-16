@@ -8,6 +8,7 @@ import ListItemTimeline from "./components/list/ListItemTimeline.svelte";
 import Sidebar from "./components/sidebar/Sidebar.svelte";
 import Form from "./components/form/Form.svelte";
 import ImageForm from "./components/form/ImageForm.svelte";
+import FileForm from "./components/form/FileForm.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import Toast from "./components/toast/Toast.svelte";
 import ToastContainer from "./components/toast/ToastContainer.svelte";
@@ -33,6 +34,7 @@ export {
   ToastContainer,
   Form,
   ImageForm,
+  FileForm,
   Tag,
   Error,
   Overlay,
@@ -42,7 +44,7 @@ export {
   SegmentedController,
 };
 
-//Inputs
+//input
 import Button from "./components/button/Button.svelte";
 import IconButton from "./components/button/IconButton.svelte";
 import Input from "./components/input/Input.svelte";

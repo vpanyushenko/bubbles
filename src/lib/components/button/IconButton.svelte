@@ -1,7 +1,6 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/page.store";
-  import LabeledSwitch from "$lib/components/switch/LabeledSwitch.svelte";
   import { navigating } from "$app/stores";
   import arrowLeft from "./arrow-left.svg";
   import arrowLeftDouble from "./arrow-left-double.svg";
@@ -10,12 +9,11 @@
   import more from "./more.svg";
   import add from "./add.svg";
   import close from "./close.svg";
-  import search from "./search.svg";
+  import search_icon from "./search.svg";
   import edit from "./edit.svg";
   import trash from "./trash.svg";
   import filter from "./filter.svg";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
-  import { showLoading } from "$lib/utils/loading";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
 
   const icons = {
@@ -26,7 +24,7 @@
     more: more,
     add: add,
     close: close,
-    search: search,
+    search: search_icon,
     edit: edit,
     trash: trash,
     filter: filter,
@@ -39,15 +37,18 @@
   export let href = "";
   export let new_page = false;
   export let align = "right";
+  export let search = false
   
   export let color = null; 
   export let border = null; 
   export let invert_icon = false 
 
- export let mobile_shadow = false
+  export let mobile_shadow = false
   
   export let transparent = true; //TODO: deprecated
   
+  
+
   if (!transparent) {
     console.info("[bubbles-ui]: transparent on IconButton is deprecated, add an color property instead")
     
@@ -108,6 +109,7 @@
       $pageStore.dropdown = null;
     }
   }
+
 </script>
 
 <svelte:window on:click={windowClick} />
@@ -140,9 +142,9 @@
       on:click={iconClick}
       on:click={onclick}
       {id}
-      style:background-color={color ? `var(--${color})` : null}
-      style:outline={border ? `2px solid var(--${border})` : null}
-      style:outline-offset={border ? `-2px` : null}
+      style:background-color={dropdown && active ? `var(--primary)` : color ? `var(--${color})` : null}
+      style:outline={dropdown && active ? "" : border ? `2px solid var(--${border})` : null}
+      style:outline-offset={dropdown && active ? "" : border ? `-2px` : null}
       class:mobile_shadow={mobile_shadow}
 
     >
@@ -156,7 +158,7 @@
       </span>
     </button>
     {#if active && dropdown}
-      <Dropdown {options} {align} />
+      <Dropdown {options} {align} {search}/>
     {/if}
   </div>
 {/if}

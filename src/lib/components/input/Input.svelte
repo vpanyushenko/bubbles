@@ -20,7 +20,7 @@
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
   export let debounce = 350;
-  export let multiply_by = null
+  export let disabled = false;
 
   let _label = configLabel(label, validation);
   let focused = false;
@@ -156,6 +156,7 @@
           on:focus={inputFocused}
           on:blur={inputBlurred}
           on:input={typeaheadOnInput}
+          {disabled}
         />
         {#if is_loading}
           <span class="spinner" />
@@ -186,6 +187,7 @@
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlurred}
+          {disabled}
         />
       </div>
       {#if desc}
@@ -209,6 +211,7 @@
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlurred}
+          {disabled}
         />
       </div>
       {#if desc}
@@ -232,6 +235,7 @@
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlurred}
+          {disabled}
         />
       </div>
       {#if desc}
@@ -257,6 +261,7 @@
           on:focus={dateFieldFocused}
           on:blur={inputBlurred}
           on:blur={dateFieldBlurred}
+          {disabled}
         />
       </div>
       {#if desc}
@@ -282,6 +287,7 @@
           on:blur={inputBlurred}
           min={bounds ? bounds[0] : null}
           max={bounds ? bounds[1] : null}
+          {disabled}
         />
       </div>
       {#if desc}
@@ -307,6 +313,7 @@
           on:focus={timeFieldFocused}
           on:blur={inputBlurred}
           on:blur={timeFieldBlurred}
+          {disabled}
         />
       </div>
       {#if desc}
@@ -331,6 +338,7 @@
           on:focus={inputFocused}
           on:blur={inputBlurred}
           on:input={typeaheadOnInput}
+          {disabled}
           bind:value
         />
         {#if is_loading}
@@ -396,6 +404,13 @@
   input[type="number"] {
     -moz-appearance: textfield;
   }
+
+  textarea:disabled,
+  input:disabled {
+    color: var(--gray);
+    cursor: not-allowed;
+  }
+
   .form__field__container {
     width: 100%;
   }
@@ -477,11 +492,15 @@
   }
 
   .field__desc {
-    padding: 0.625rem 1.375rem 0 !important;
+    padding: 0.625rem 1.375rem 0;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);
+  }
+
+  p.field__desc {
+    margin-bottom: 0;
   }
 
   .spinner {

@@ -73,7 +73,7 @@
   .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
@@ -90,6 +90,7 @@
     display: flex;
     flex-direction: column;
     flex-basis: 100%;
+    align-self: center;
   }
 
   .filters {
@@ -111,9 +112,10 @@
     margin-left: 0.5rem;
   }
 
-  p {
+  .header p {
     color: var(--gray);
     margin-bottom: 0px;
+    margin-top: 0px;
   }
 
   h6 + p {

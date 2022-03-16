@@ -10,7 +10,7 @@ import { mdsvex } from "mdsvex";
 const config = {
   extensions: [".svelte", ".md", ".svelte.md", ".svx"],
   preprocess: [
-    mdsvex({ extensions: [".svelte.md", ".md", ".svx"] }),
+    mdsvex({ extensions: [".svelte.md", ".md", ".svx"], smartypants: false }),
     preprocess({
       lang: "css",
       postcss: {
@@ -28,8 +28,7 @@ const config = {
       resolve: {
         alias: {
           $lib: path.resolve("./src/lib"),
-          $misc: path.resolve("./src/misc"),
-          $data: path.resolve("./src/data"),
+          $assets: path.resolve("./src/assets"),
         },
       },
       optimizeDeps: {

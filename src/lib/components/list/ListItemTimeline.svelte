@@ -46,9 +46,9 @@
     <div class="content">
       <div class="label">{label}</div>
       {#if href}
-        <a {href} {target}>{text}</a>
+        <a class="wrap-anywhere" {href} {target}>{text}</a>
       {:else}
-        <span>{text}</span>
+        <span class="wrap-anywhere">{text}</span>
       {/if}
     </div>
     {#if icon}
@@ -200,5 +200,9 @@
     animation-iteration-count: infinite;
     -webkit-animation-iteration-count: infinite;
     opacity: 0;
+  }
+
+  .wrap-anywhere {
+    overflow-wrap: anywhere;
   }
 </style>
