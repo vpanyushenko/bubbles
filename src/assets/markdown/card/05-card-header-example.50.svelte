@@ -12,6 +12,7 @@
 <Card>
   <CardHeader
     title="Header With Buttons"
+    caption="You can also add a caption."
     buttons={[
       {
         icon: "edit",
