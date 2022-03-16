@@ -54,3 +54,8 @@ If the switch is disabled or not
 
 **onclick, onselect, onchange** `function` <br>
 Bubbles will treat all of these the same. Write the function you want to occur when the switch is clicked or toggled.
+
+---
+
+**background** `boolean` <code class="blue">true</code><br>
+Toggle a gray background around the element. This makes the element look in a form with other text and select input.
