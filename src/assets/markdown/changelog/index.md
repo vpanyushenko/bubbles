@@ -7,6 +7,7 @@
 - ImageForm can accept extensions
 - Input components have a disabled state now
 - Tag before color is changed from primary to primary-light
+- Checkbox, Switch, and Radio components have a `background` property to make them look in line with other form elements.
 
 **Fixed**
 
@@ -15,6 +16,7 @@
 - Header has a search property with a default of false
 - ListItem and ListItemTimeline support wrapping long elements
 - Error component back button was not doing anything
+- CardHeader styles for fixed to fix positions of buttons with a long caption.
 
 <br>
 
