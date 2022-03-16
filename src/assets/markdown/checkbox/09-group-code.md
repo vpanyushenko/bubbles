@@ -15,6 +15,7 @@ type: code
     desc: `You can view more details about our terms of service and privacy policy <a href="https://google.com">at this link</a>.`,
     error: "You have not accepted the terms of service.",
     validation: "required|boolean",
+    background: false,
   };
 </script>
 

@@ -24,6 +24,7 @@
     desc: `You may select as many toppings as you would like.`,
     error: "Something went wrong",
     validation: "array",
+    background: false,
   };
 </script>
 

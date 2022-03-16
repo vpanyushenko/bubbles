@@ -15,6 +15,7 @@
     label="Choose sandwich"
     validation="required|string"
     desc="This is the longer description for the RadioGroup if you think it needs more explanation. You can add html elements like <a href='https://google.com' target='blank'>links</a>."
+    background={false}
     options={[
       {
         label: "Burger",
