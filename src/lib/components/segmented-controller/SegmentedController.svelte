@@ -62,7 +62,9 @@
             on:click={segment.onclick}
             id={segment.id ? segment.id : `${id}_${i}`}
           >
-            {segment.label}
+            <span>
+              {segment.label}
+            </span>
           </button>
         {/each}
       </div>
@@ -84,13 +86,20 @@
     z-index: 1;
     height: 2.625rem;
     border-radius: 0.625rem;
-    min-width: 11.25rem;
     font-weight: bolder;
     color: var(--gray);
+    min-width: 7rem;
+    width: fit-content;
   }
 
   button.active {
     color: var(--black);
+  }
+
+  button > span {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
   }
 
   .wrapper {
@@ -141,7 +150,10 @@
     min-width: auto;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+    padding-bottom: 4px;
+    padding-top: 4px;
     border-bottom: 2px solid transparent;
+    border-radius: 12px;
   }
 
   .line button:hover {
@@ -151,6 +163,8 @@
   .line button.active {
     color: var(--black);
     border-bottom: 2px solid var(--black);
+    border-radius: 12px 12px 0 0;
+    transition-duration: 150ms;
   }
 
   .line .wrapper:after {
@@ -159,10 +173,17 @@
     inset: 0 0 0 0;
     position: absolute;
     z-index: -2;
+    transition-duration: 150ms;
   }
 
   .line .wrapper {
     height: auto;
     border-radius: 0px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    button {
+      width: fit-content;
+    }
   }
 </style>

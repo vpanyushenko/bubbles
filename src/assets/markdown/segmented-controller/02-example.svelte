@@ -22,7 +22,7 @@
           },
         },
         {
-          label: "Section 2",
+          label: "The Second Section",
           onclick: () => {
             active = "2";
           },
