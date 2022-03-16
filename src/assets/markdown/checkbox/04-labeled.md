@@ -44,3 +44,8 @@ The validation string you want to use for this form. See [validateInputs](/valid
 
 **form_indent** `boolean` <code class="blue">true</code><br>
 Causes the elements to have spacing on the left and right to align it better with other elements in a form.
+
+---
+
+**background** `boolean` <code class="blue">true</code><br>
+Toggle a gray background around the element. This makes the element look in a form with other text and select input.

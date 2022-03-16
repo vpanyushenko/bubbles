@@ -492,11 +492,15 @@
   }
 
   .field__desc {
-    padding: 0.625rem 1.375rem 0 !important;
+    padding: 0.625rem 1.375rem 0;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);
+  }
+
+  p.field__desc {
+    margin-bottom: 0;
   }
 
   .spinner {
