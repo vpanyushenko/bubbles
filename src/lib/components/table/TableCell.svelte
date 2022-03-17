@@ -183,8 +183,10 @@
 {/if}
 
 {#if _type === "checkbox"}
-  <div class="cell" class:mobile__hide={mobile_hide} {style} bind:this={_checkbox_cell}>
-    <Checkbox {...checkbox} onchange={selectItem} />
+  <div class="cell no-width" class:mobile__hide={mobile_hide} {style} bind:this={_checkbox_cell}>
+    <div class="flex">
+      <Checkbox {...checkbox} onchange={selectItem} />
+    </div>
   </div>
 {/if}
 
@@ -227,22 +229,6 @@
   .cell:first-child {
     padding-left: 0px;
   }
-
-  /* .cell.thin {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
-  .cell.thinnest {
-    padding-top: 8px;
-    padding-bottom: 8px;
-  } */
-
-  /* .cell.icon {
-    width: 1.25rem;
-    padding: 0;
-    font-size: 0;
-  } */
 
   .cell picture {
     position: relative;
@@ -288,6 +274,10 @@
 
   .bold {
     font-weight: bold;
+  }
+
+  .no-width {
+    width: 0;
   }
 
   p {
