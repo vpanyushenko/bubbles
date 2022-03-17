@@ -67,7 +67,7 @@
           {/if}
         </main>
 
-        {#if $modalStore.footer.length > 0}
+        {#if $modalStore.footer && $modalStore.footer.length > 0}
           <footer class="modal__footer">
             {#each $modalStore.footer as button}
               <Button {...button} wide={true} />
