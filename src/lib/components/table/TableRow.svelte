@@ -8,7 +8,7 @@
 </script>
 
 {#if href}
-  <a class="row" sveltekit:prefetch {href} {id} on:click={onclick}>
+  <a class="row js-bubbles-table-row" sveltekit:prefetch {href} {id} on:click={onclick}>
     {#if cells && cells.length}
       {#each cells as cell}
         <TableCell {...cell} />
@@ -18,7 +18,7 @@
     {/if}
   </a>
 {:else}
-  <div class="row" class:cursor-pointer={onclick} on:click={onclick} {id}>
+  <div class="row js-bubbles-table-row" class:cursor-pointer={onclick} on:click={onclick} {id}>
     {#if cells && cells.length}
       {#each cells as cell}
         {#if cell.button}
@@ -63,7 +63,6 @@
       flex-basis: 100%;
       width: 100%;
       position: relative;
-      padding: 2rem 0rem;
       background: #fff;
       flex-wrap: none;
       border-bottom: 1px solid var(--gray-light);

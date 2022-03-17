@@ -254,6 +254,18 @@
         section: "Utils",
       },
       {
+        label: "getSelectedTableRows",
+        id: "get-selected-table-rows",
+        href: "/get-selected-table-rows",
+        section: "Utils",
+      },
+      {
+        label: "deselectTableRows",
+        id: "deselect-table-rows",
+        href: "/deselect-table-rows",
+        section: "Utils",
+      },
+      {
         label: "Change Log",
         id: "changelog",
         href: "/changelog",
