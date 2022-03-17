@@ -40,7 +40,7 @@
 
   //conditions for mobile layouts
   let mobile_hide = false;
-  let style = "";
+  let style = ``;
 
   if (mobile_width && mobile_width !== "__default") {
     style += `flex:${mobile_width}%;`;
@@ -174,8 +174,8 @@
     display: table-cell;
     vertical-align: middle;
     padding-left: 1.25rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    /* padding-top: 2rem;
+    padding-bottom: 2rem; */
     border-bottom: 1px solid var(--gray-light);
     color: var(--black);
     flex-grow: 1;

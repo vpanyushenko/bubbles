@@ -68,6 +68,7 @@
     <Card>
       <CardHeader title="Complex Table Example" border={false} />
       <Table
+        padding="roomy"
         header={[
           { label: null },
           { label: "Name" },

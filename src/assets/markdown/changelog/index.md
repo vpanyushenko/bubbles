@@ -1,4 +1,4 @@
-## Version 0.7.0
+## Version 0.7.0@next
 
 **Added**
 
@@ -8,6 +8,7 @@
 - Input components have a disabled state now
 - Tag before color is changed from primary to primary-light
 - Checkbox, Switch, and Radio components have a `background` property to make them look in line with other form elements.
+- Roomy and compact styles for Tables.
 
 **Fixed**
 

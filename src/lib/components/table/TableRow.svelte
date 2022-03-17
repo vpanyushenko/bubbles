@@ -63,7 +63,6 @@
       flex-basis: 100%;
       width: 100%;
       position: relative;
-      padding: 2rem 0rem;
       background: #fff;
       flex-wrap: none;
       border-bottom: 1px solid var(--gray-light);
