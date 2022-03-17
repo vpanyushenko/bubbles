@@ -206,7 +206,15 @@ const _validation = {
   },
 
   accepted: function (val, req) {
-    if (val === "on" || val === "yes" || val === 1 || val === "1" || val === true) {
+    if (
+      val === "on" ||
+      val === "yes" ||
+      val === 1 ||
+      val === "1" ||
+      val === true ||
+      val === "true" ||
+      val === "checked"
+    ) {
       return true;
     }
 

@@ -54,7 +54,7 @@
             <TableCell><span style="color: var(--primary-darker); font-weight: 700">#352E69</span></TableCell>
           </TableRow>
           <TableRow>
-            <TableCell>primary-darkerest</TableCell>
+            <TableCell>primary-darkest</TableCell>
             <TableCell><span style="color: var(--primary-darkest); font-weight: 700">#1B1734</span></TableCell>
           </TableRow>
         </Table>
