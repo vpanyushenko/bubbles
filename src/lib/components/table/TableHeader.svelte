@@ -1,11 +1,42 @@
 <script>
+  import { pageStore } from "$lib/stores/stores";
+  import Checkbox from "$lib/components/checkbox/Checkbox.svelte";
+
   export let cells = [];
+
+  let checkbox_value = false;
+  let header;
+
+  $pageStore.selected_table_rows = 0;
+
+  function selectAll(event) {
+    $pageStore.selected_table_rows = 0;
+
+    header
+      .closest(".js-bubbles-table")
+      .querySelectorAll(".js-bubbles-table-row")
+      .forEach((row) => {
+        if (checkbox_value) {
+          $pageStore.selected_table_rows++;
+        }
+        row.querySelector(".checkbox").querySelector("input").checked = checkbox_value;
+      });
+  }
+
+  if (cells.find((obj) => obj.checkbox === true)) {
+    const checkbox_cell = cells.find((obj) => obj.checkbox === true);
+    if (checkbox_cell.options && checkbox_cell.options.length) {
+      $pageStore.checkbox_options = checkbox_cell.options;
+    }
+  }
 </script>
 
-<div class="row header">
+<div class="row header" bind:this={header}>
   {#each cells as cell}
     <div class="cell" class:right={cell.align === "right" || cell.align === "end"}>
-      {#if cell.label}
+      {#if cell.checkbox}
+        <Checkbox onchange={selectAll} bind:value={checkbox_value} />
+      {:else if cell.label}
         {cell.label}
       {/if}
     </div>

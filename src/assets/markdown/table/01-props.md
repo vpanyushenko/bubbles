@@ -20,3 +20,6 @@ If you're looking to add filters or pagination at the bottom of your table, you'
 "roomy" or "compact". Decides how much spacing is between each row.
 
 ---
+
+**id** `string`<br>
+You can pass in an ID to the component if you need to reference it later. If you do not pass an ID, there will be a unique id added to the component.

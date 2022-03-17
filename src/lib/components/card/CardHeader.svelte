@@ -1,4 +1,5 @@
 <script>
+  import { pageStore } from "$lib/stores/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Select from "$lib/components/select/Select.svelte";
   import { addQueryParam } from "$lib/utils/url";
@@ -10,6 +11,8 @@
   export let buttons = [];
   export let center = false;
   export let border = false;
+
+  $pageStore.selected_table_rows = 0;
 
   const filterIds = filters.map((filter) => {
     return filter.id;
@@ -34,7 +37,16 @@
   });
 </script>
 
-{#if filters.length || title || caption || buttons.length}
+{#if $pageStore.selected_table_rows}
+  <div class="header center" class:border={border === true || border === "true"}>
+    <h6>
+      {`${$pageStore.selected_table_rows} items selected`}
+    </h6>
+    {#if $pageStore.checkbox_options && $pageStore.checkbox_options.length}
+      <IconButton icon="more" options={$pageStore.checkbox_options} color="gray-lighter" />
+    {/if}
+  </div>
+{:else if filters.length || title || caption || buttons.length}
   <div class="header" class:border={border === true || border === "true"} class:filters={filters.length > 0}>
     <div class="filters">
       {#each filters as filter}
@@ -84,6 +96,7 @@
 
   .center {
     text-align: center;
+    align-items: center;
   }
 
   .title {

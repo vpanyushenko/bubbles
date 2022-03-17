@@ -9,6 +9,7 @@
 - Tag before color is changed from primary to primary-light
 - Checkbox, Switch, and Radio components have a `background` property to make them look in line with other form elements.
 - Roomy and compact styles for Tables.
+- Added options to include checkboxes on table rows and utility functions to manipulate them.
 
 **Fixed**
 

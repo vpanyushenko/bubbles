@@ -1,4 +1,5 @@
 <script>
+  import { v4 as uuid } from "@lukeed/uuid";
   import TableRow from "./TableRow.svelte";
   import TableCell from "./TableCell.svelte";
   import TableHeader from "./TableHeader.svelte";
@@ -7,9 +8,10 @@
   export let rows = [];
   export let empty = "Nothing here yet.";
   export let padding = "roomy";
+  export let id = uuid();
 </script>
 
-<div class="table js-bubbles-table" class:compact={padding === "compact"}>
+<div class="table js-bubbles-table" class:compact={padding === "compact"} {id}>
   {#if header && header.length}
     <TableHeader cells={header} />
   {/if}
@@ -48,6 +50,10 @@
   :global(.table.compact .row .cell) {
     padding-top: 1rem;
     padding-bottom: 1rem;
+  }
+
+  .selected__items {
+    display: flex;
   }
 
   /* @media only screen and (max-width: 767px) {

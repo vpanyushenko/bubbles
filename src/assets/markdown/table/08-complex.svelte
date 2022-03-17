@@ -15,6 +15,7 @@
   import Pagination from "$lib/components/pagination/Pagination.svelte";
 
   import store from "$assets/utils/store";
+  import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
 
   $: pagination = $store?.pagination ? $store.pagination : {};
   $: pokemon = $store.pokemon ? $store.pokemon : [];
@@ -68,8 +69,22 @@
     <Card>
       <CardHeader title="Complex Table Example" border={false} />
       <Table
+        id="pokemon-table"
         padding="roomy"
         header={[
+          {
+            checkbox: true,
+            options: [
+              {
+                label: "Print Selected Rows To Console",
+                value: "label1",
+                onselect: (event) => {
+                  console.log(getSelectedTableRows("pokemon-table"));
+                  deselectTableRows("pokemon-table");
+                },
+              },
+            ],
+          },
           { label: null },
           { label: "Name" },
           { label: "Weight" },
@@ -79,7 +94,8 @@
         ]}
       >
         {#each pokemon as poke}
-          <TableRow>
+          <TableRow id={poke.id}>
+            <TableCell checkbox={{ value: false }} />
             <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} mobile_width={10} />
             <TableCell
               text={poke.name}

@@ -3,6 +3,7 @@
   import { navigating } from "$app/stores";
   import Tag from "$lib/components/tag/Tag.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
+  import Checkbox from "$lib/components/checkbox/Checkbox.svelte";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
   import { onMount } from "svelte";
   import { showLoading } from "$lib/utils/loading";
@@ -21,10 +22,12 @@
   export let img = null;
   export let tag = null;
   export let button = null;
+  export let checkbox = null;
 
   let _table_row_icon_button_id = false;
   let _dom_element;
   let _type = null;
+  let _checkbox_cell;
 
   if (text) {
     _type = "text";
@@ -36,6 +39,8 @@
     _type = "tag";
   } else if (button) {
     _type = "button";
+  } else if (checkbox) {
+    _type = "checkbox";
   }
 
   //conditions for mobile layouts
@@ -60,10 +65,34 @@
     if (_dom_element && href) {
       _table_row_icon_button_id = _dom_element.closest(".row").querySelector(".icon__btn").querySelector("button").id;
     }
+
+    $pageStore.selected_table_rows = 0;
   });
 
   function hrefClicked(event) {
     showLoading(_table_row_icon_button_id);
+  }
+
+  function selectItem(event) {
+    $pageStore.selected_table_rows = 0;
+    let total = _checkbox_cell.closest(".js-bubbles-table").querySelectorAll(".js-bubbles-table-row").length;
+
+    _checkbox_cell
+      .closest(".js-bubbles-table")
+      .querySelectorAll(".js-bubbles-table-row")
+      .forEach((row) => {
+        if (row.querySelector(".checkbox").querySelector("input").checked) {
+          $pageStore.selected_table_rows++;
+        }
+      });
+
+    let header = _checkbox_cell.closest(".js-bubbles-table").querySelector(".header");
+
+    if ($pageStore.selected_table_rows === total && header) {
+      header.querySelector(".checkbox").querySelector("input").checked = true;
+    } else {
+      header.querySelector(".checkbox").querySelector("input").checked = false;
+    }
   }
 </script>
 
@@ -150,6 +179,12 @@
     class:__clickable={button.icon === "arrowRight" || !button.icon}
   >
     <IconButton icon="arrowRight" {...button} />
+  </div>
+{/if}
+
+{#if _type === "checkbox"}
+  <div class="cell" class:mobile__hide={mobile_hide} {style} bind:this={_checkbox_cell}>
+    <Checkbox {...checkbox} onchange={selectItem} />
   </div>
 {/if}
 
