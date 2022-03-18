@@ -112,7 +112,7 @@
     flex-basis: 100%;
     align-self: center;
     min-height: 3rem;
-    justify-items: center;
+    justify-content: center;
   }
 
   .filters {
