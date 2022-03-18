@@ -1,4 +1,5 @@
 import { browser } from "$app/env";
+import { pageStore } from "bubbles-ui";
 
 /**
  * Returns an array of all selected table rows IDs
@@ -28,6 +29,17 @@ const deselectTableRows = (table_id = null) => {
   let table = table_id ? document.getElementById(table_id) : document.querySelector(".js-bubbles-table");
 
   if (browser && table) {
+    pageStore.update((data) => {
+      if (!data.table) {
+        data.table = {};
+      }
+
+      data.table.selected_table_rows = 0;
+      data.table.checkbox_options = [];
+      data.table.id = null;
+      return data;
+    });
+
     table.querySelectorAll(".row").forEach((row) => {
       row.querySelector(".checkbox").querySelector("input").checked = false;
     });
