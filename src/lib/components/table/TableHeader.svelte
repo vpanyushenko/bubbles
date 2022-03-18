@@ -31,7 +31,7 @@
       });
   }
 
-  if (cells.find((obj) => obj.checkbox === true)) {
+  $: if (cells.find((obj) => obj.checkbox === true)) {
     const checkbox_cell = cells.find((obj) => obj.checkbox === true);
 
     if (checkbox_cell.options && checkbox_cell.options.length) {

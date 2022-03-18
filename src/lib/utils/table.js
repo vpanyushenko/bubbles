@@ -35,8 +35,9 @@ const deselectTableRows = (table_id = null) => {
       }
 
       data.table.selected_table_rows = 0;
-      data.table.checkbox_options = [];
+      // data.table.checkbox_options = [];
       data.table.id = null;
+
       return data;
     });
 

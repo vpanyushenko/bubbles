@@ -14,6 +14,11 @@
   export let button = { color: "primary", label: "Submit" };
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
   export let label = "Select File";
+  export let callback = null;
+
+  let value;
+
+  $: disabled = src ? false : true;
 
   let _placeholder_src = null;
 
@@ -22,6 +27,7 @@
   }
 
   function fileAdded(event) {
+    src = null;
     const input = event.target;
 
     if (input.files && input.files[0]) {
@@ -67,6 +73,10 @@
         if (toast) {
           showToast(res.message, "success");
         }
+
+        if (callback) {
+          callback();
+        }
       })
       .catch((err) => {
         if (toast) {
@@ -74,6 +84,7 @@
         }
       })
       .finally(() => {
+        src = null;
         hideLoading(button_id);
       });
   }
@@ -82,7 +93,15 @@
 <div class="field">
   <div class="image__preview">
     <span class:hidden={src}>{label}</span>
-    <input type="file" class="upload__button" on:change={fileAdded} {id} accept={extensions} />
+    <input
+      bind:value
+      type="file"
+      class="upload__button"
+      on:change={fileAdded}
+      {id}
+      accept={extensions}
+      on:click={() => (src = null)}
+    />
     {#if src && !_placeholder_src}
       <img {src} alt="Upload Preview" />
     {:else if src && _placeholder_src}
@@ -91,7 +110,7 @@
   </div>
 </div>
 
-<Button {...button} onsubmit={submit} />
+<Button {...button} onsubmit={submit} {disabled} />
 
 <style>
   .field {
