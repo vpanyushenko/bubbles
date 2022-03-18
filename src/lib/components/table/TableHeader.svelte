@@ -5,6 +5,10 @@
 
   export let cells = [];
 
+  if (!$pageStore.table) {
+    $pageStore.table = {};
+  }
+
   $pageStore.table.selected_table_rows = 0;
   $pageStore.table.checkbox_options = [];
   $pageStore.table.id = null;
@@ -14,7 +18,7 @@
 
   function selectAll(event) {
     $pageStore.table.selected_table_rows = 0;
-    console.log($pageStore.table);
+    $pageStore.table.id = header.closest(".js-bubbles-table").id;
 
     header
       .closest(".js-bubbles-table")
@@ -29,13 +33,9 @@
 
   if (cells.find((obj) => obj.checkbox === true)) {
     const checkbox_cell = cells.find((obj) => obj.checkbox === true);
+
     if (checkbox_cell.options && checkbox_cell.options.length) {
       $pageStore.table.checkbox_options = checkbox_cell.options;
-
-      console.log($pageStore.table);
-      // if (browser) {
-      //   $pageStore.table.id = header.parentElement.querySelector(".js-bubbles-table").id;
-      // }
     }
   }
 </script>

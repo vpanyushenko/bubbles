@@ -4,6 +4,8 @@
   import Select from "$lib/components/select/Select.svelte";
   import { addQueryParam } from "$lib/utils/url";
   import { page } from "$app/stores";
+  import { v4 as uuid } from "@lukeed/uuid";
+  import { browser } from "$app/env";
 
   export let filters = [];
   export let title = "";
@@ -12,7 +14,7 @@
   export let center = false;
   export let border = false;
 
-  let _header_component;
+  const id = `card_header_${uuid()}`;
 
   const filterIds = filters.map((filter) => {
     return filter.id;
@@ -37,24 +39,22 @@
   });
 </script>
 
-{#if $pageStore.table.selected_table_rows && _header_component && $pageStore.table.id === _header_component.parentElement.querySelector(".js-bubbles-table").id}
-  <div class="header center" class:border={border === true || border === "true"} bind:this={_header_component}>
+{#if $pageStore?.table?.selected_table_rows && $pageStore?.table?.id && browser && $pageStore.table.id === document
+      .getElementById(id)
+      ?.closest(".js-bubbles-card")
+      ?.querySelector(".js-bubbles-table")?.id}
+  <div class="header center" class:border={border === true || border === "true"} {id}>
     <h6>
       {$pageStore.table.selected_table_rows === 1
         ? "1 item selected"
         : `${$pageStore.table.selected_table_rows} items selected`}
     </h6>
-    {#if $pageStore.table.checkbox_options && $pageStore.table.checkbox_options.length}
+    {#if $pageStore?.table?.checkbox_options && $pageStore.table.checkbox_options.length}
       <IconButton icon="more" options={$pageStore.table.checkbox_options} color="gray-lighter" />
     {/if}
   </div>
 {:else if filters.length || title || caption || buttons.length}
-  <div
-    class="header"
-    class:border={border === true || border === "true"}
-    class:filters={filters.length > 0}
-    bind:this={_header_component}
-  >
+  <div class="header" class:border={border === true || border === "true"} class:filters={filters.length > 0} {id}>
     <div class="filters">
       {#each filters as filter}
         <div class="filter">
@@ -83,7 +83,7 @@
     </div>
   </div>
 {:else}
-  <div class="header" class:border bind:this={_header_component}>
+  <div class="header" class:border {id}>
     <slot>No header props provided</slot>
   </div>
 {/if}
@@ -111,6 +111,8 @@
     flex-direction: column;
     flex-basis: 100%;
     align-self: center;
+    min-height: 3rem;
+    justify-items: center;
   }
 
   .filters {
