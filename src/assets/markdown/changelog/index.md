@@ -11,6 +11,7 @@
 - Roomy and compact styles for Tables.
 - Added options to include checkboxes on table rows and utility functions to manipulate them.
 - Add callback option to fileform
+- FileForm input will clear value after promise completes
 
 **Fixed**
 

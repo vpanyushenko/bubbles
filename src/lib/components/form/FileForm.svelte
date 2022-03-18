@@ -16,11 +16,9 @@
   export let label = "Select File";
   export let callback = null;
 
-  let value;
-
   $: disabled = src ? false : true;
 
-  let _placeholder_src = null;
+  let _placeholder_src, _input_element;
 
   if (Array.isArray(extensions)) {
     extensions = extensions.join(",");
@@ -85,6 +83,7 @@
       })
       .finally(() => {
         src = null;
+        _input_element.value = "";
         hideLoading(button_id);
       });
   }
@@ -94,13 +93,12 @@
   <div class="image__preview">
     <span class:hidden={src}>{label}</span>
     <input
-      bind:value
       type="file"
       class="upload__button"
       on:change={fileAdded}
       {id}
       accept={extensions}
-      on:click={() => (src = null)}
+      bind:this={_input_element}
     />
     {#if src && !_placeholder_src}
       <img {src} alt="Upload Preview" />
