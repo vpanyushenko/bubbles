@@ -16,6 +16,11 @@ export const pageStore = writable({
   errors: [],
   host: null,
   is_mobile: false,
+  table: {
+    selected_table_rows: 0,
+    checkbox_options: [],
+    id: null,
+  },
 });
 
 export const noscrollStore = derived([modalStore, pageStore], ([$modalStore, $pageStore]) => {

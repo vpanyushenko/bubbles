@@ -12,7 +12,7 @@
   export let center = false;
   export let border = false;
 
-  $pageStore.selected_table_rows = 0;
+  let _header_component;
 
   const filterIds = filters.map((filter) => {
     return filter.id;
@@ -37,17 +37,24 @@
   });
 </script>
 
-{#if $pageStore.selected_table_rows}
-  <div class="header center" class:border={border === true || border === "true"}>
+{#if $pageStore.table.selected_table_rows && _header_component && $pageStore.table.id === _header_component.parentElement.querySelector(".js-bubbles-table").id}
+  <div class="header center" class:border={border === true || border === "true"} bind:this={_header_component}>
     <h6>
-      {`${$pageStore.selected_table_rows} items selected`}
+      {$pageStore.table.selected_table_rows === 1
+        ? "1 item selected"
+        : `${$pageStore.table.selected_table_rows} items selected`}
     </h6>
-    {#if $pageStore.checkbox_options && $pageStore.checkbox_options.length}
-      <IconButton icon="more" options={$pageStore.checkbox_options} color="gray-lighter" />
+    {#if $pageStore.table.checkbox_options && $pageStore.table.checkbox_options.length}
+      <IconButton icon="more" options={$pageStore.table.checkbox_options} color="gray-lighter" />
     {/if}
   </div>
 {:else if filters.length || title || caption || buttons.length}
-  <div class="header" class:border={border === true || border === "true"} class:filters={filters.length > 0}>
+  <div
+    class="header"
+    class:border={border === true || border === "true"}
+    class:filters={filters.length > 0}
+    bind:this={_header_component}
+  >
     <div class="filters">
       {#each filters as filter}
         <div class="filter">
@@ -76,7 +83,7 @@
     </div>
   </div>
 {:else}
-  <div class="header" class:border>
+  <div class="header" class:border bind:this={_header_component}>
     <slot>No header props provided</slot>
   </div>
 {/if}

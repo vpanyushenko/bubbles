@@ -1,23 +1,27 @@
 <script>
   import { pageStore } from "$lib/stores/stores";
   import Checkbox from "$lib/components/checkbox/Checkbox.svelte";
+  import { browser } from "$app/env";
 
   export let cells = [];
+
+  $pageStore.table.selected_table_rows = 0;
+  $pageStore.table.checkbox_options = [];
+  $pageStore.table.id = null;
 
   let checkbox_value = false;
   let header;
 
-  $pageStore.selected_table_rows = 0;
-
   function selectAll(event) {
-    $pageStore.selected_table_rows = 0;
+    $pageStore.table.selected_table_rows = 0;
+    console.log($pageStore.table);
 
     header
       .closest(".js-bubbles-table")
       .querySelectorAll(".js-bubbles-table-row")
       .forEach((row) => {
         if (checkbox_value) {
-          $pageStore.selected_table_rows++;
+          $pageStore.table.selected_table_rows++;
         }
         row.querySelector(".checkbox").querySelector("input").checked = checkbox_value;
       });
@@ -26,7 +30,12 @@
   if (cells.find((obj) => obj.checkbox === true)) {
     const checkbox_cell = cells.find((obj) => obj.checkbox === true);
     if (checkbox_cell.options && checkbox_cell.options.length) {
-      $pageStore.checkbox_options = checkbox_cell.options;
+      $pageStore.table.checkbox_options = checkbox_cell.options;
+
+      console.log($pageStore.table);
+      // if (browser) {
+      //   $pageStore.table.id = header.parentElement.querySelector(".js-bubbles-table").id;
+      // }
     }
   }
 </script>
