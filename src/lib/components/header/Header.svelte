@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <div class:header__subtitle={back}>
+    <div class:header__subtitle={breadcrumbs && _breadcrumbs && _breadcrumbs.length ? true : false}>
       <slot>
         {#if subtitle}
           <h6>{@html subtitle}</h6>
