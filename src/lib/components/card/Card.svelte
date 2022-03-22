@@ -55,6 +55,7 @@
     padding: 0.625rem 2rem 0.625rem;
     border-radius: 1.5rem;
     background: var(--white);
+    width: -webkit-fill-available;
   }
 
   .shadow {
