@@ -346,6 +346,10 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
 
         let value = input.value;
 
+        if (value === undefined || value === "") {
+          value = null;
+        }
+
         if (input.is_hidden && _options.hidden_prop_values !== "**") {
           value = _options.hidden_prop_values;
         } else if (type === "number") {
