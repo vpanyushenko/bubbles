@@ -33,7 +33,9 @@ type: code
         caption: "No corners!",
         img: icon_circle,
       },
-      "break", //add a horizontal line
+      {
+        break: true, //Add horizontal line
+      },
       {
         label: "Square",
         value: "square",

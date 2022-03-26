@@ -29,7 +29,9 @@
         caption: "No corners!",
         img: icon_circle,
       },
-      "break",
+      {
+        break: true,
+      },
       {
         label: "Square",
         value: "square",

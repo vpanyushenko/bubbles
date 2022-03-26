@@ -23,14 +23,16 @@ An array that will contain the options the user can select.
 <details>
 <summary>Show Details</summary>
 
-|                                                                                                                                         |
-| :-------------------------------------------------------------------------------------------------------------------------------------- |
-| option[].**label** `string`<br> The text the user sees for the option                                                                   |
-| option[].**value** `string`<br> The value that will be added for the url query param                                                    |
-| option[].**caption** `string`<br> More details to give about the option                                                                 |
-| option[].**img** `string`<br> An image that will be displayed on the left of the text                                                   |
-| option[].**icon** `string`<br> An icon to display on the right. Defaults to an arrow. You can remove this by setting this value to null |
-| option[].**onselect** `function`<br> A function that can be run if this option is selected                                              |
+|                                                                                                                                                           |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| option[].**label** `string`<br> The text the user sees for the option                                                                                     |
+| option[].**value** `string`<br> The value that will be added for the url query param                                                                      |
+| option[].**caption** `string`<br> More details to give about the option                                                                                   |
+| option[].**img** `string`<br> An image that will be displayed on the left of the text                                                                     |
+| option[].**icon** `string`<br> An icon to display on the right. Defaults to an arrow. You can remove this by setting this value to null                   |
+| option[].**onselect** `function`<br> A function that can be run if this option is selected                                                                |
+| option[].**hidden** `boolean`<br> Will hide the option if set to true, defaults to false                                                                  |
+| option[].**break** `boolean`<br> Will create a line break as this option. The line break is not rendered as a clickable option, it's just for aesthetics. |
 
 </details><br>
 
