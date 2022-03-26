@@ -14,6 +14,7 @@
 - FileForm input will clear value after promise completes
 - The dropdown component can now be hidden with the hidden property
 - The dropdown component line breaks are now set as a boolean
+- Ability to hide a sidebar section with the hidden property - perhaps for role based account access
 
 **Fixed**
 
