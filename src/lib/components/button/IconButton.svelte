@@ -1,7 +1,9 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/page.store";
-  import { navigating } from "$app/stores";
+  import { showLoading, hideLoading } from "$lib/utils/loading";
+  import { addQueryParam, deleteQueryParam } from "$lib/utils/url";
+  import { navigating, page, session } from "$app/stores";
   import arrowLeft from "./arrow-left.svg";
   import arrowLeftDouble from "./arrow-left-double.svg";
   import arrowRight from "./arrow-right.svg";
@@ -15,6 +17,7 @@
   import filter from "./filter.svg";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
+
 
   const icons = {
     arrowLeft: arrowLeft,
@@ -37,16 +40,18 @@
   export let href = "";
   export let new_page = false;
   export let align = "right";
-  export let search = false
   
   export let color = null; 
   export let border = null; 
   export let invert_icon = false 
 
   export let mobile_shadow = false
+
+  export let search = false
+  export let __search_id = null
   
   export let transparent = true; //TODO: deprecated
-  
+
   
 
   if (!transparent) {
@@ -58,21 +63,14 @@
 
   }
 
-  // let opacity = 1
-
-  // if (color && color.split("--").length === 2) {
-  //   opacity = Number(color.split("--")[1])
-  //   color = color.split("--")[0]
-
-  //   if (opacity > 1) {
-  //     opacity = opacity / 100
-  //   }
-  // }
-
   const dropdown = options.length ? true : false;
 
   let src = icons[icon] ? icons[icon] : icon;
+  
+  let search_active = false
+  let search_input, search_value, search_focused
 
+  $: $pageStore.search = search_active === true ? __search_id : null
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
 
@@ -83,6 +81,19 @@
 
     if (!event.currentTarget.classList.contains("icon__btn")) {
       iconElement = iconElement.closest(".icon__btn");
+    }
+
+    if (search === true && !search_active) {
+      $pageStore.search = __search_id
+      search_active = true
+
+      setTimeout(() => {
+        if (search_input) {
+          search_input.focus()
+        }
+      }, 100)
+
+
     }
 
     if (dropdown && active) {
@@ -104,15 +115,30 @@
 
   function windowClick(event) {
     //if you click outside of the select, we want to close it
-    if (!event.target.closest(`.icon__btn`)) {
+    if (!event.target.closest(".icon__btn")) {
       active = false;
+      search_active = false
       $pageStore.dropdown = null;
     }
   }
 
+  function onsearch(event) {
+    if (event.currentTarget.value) {
+     addQueryParam("search", event.currentTarget.value)
+     showLoading(id)
+      $session.timestamp = Date.now()
+    } else {
+      deleteQueryParam("search")
+      $session.timestamp = Date.now()
+    }
+  }
+
+
+
 </script>
 
 <svelte:window on:click={windowClick} />
+
 
 {#if href}
   <a class="icon__btn" sveltekit:prefetch target={new_page ? "_blank" : ""} {href} on:click={iconClick}>
@@ -137,31 +163,75 @@
     </button>
   </a>
 {:else}
-  <div class="icon__btn" class:active={dropdown && active}>
-    <button
-      on:click={iconClick}
-      on:click={onclick}
+  <div class="icon__btn" class:active={dropdown && active} >
+    <button on:click={iconClick} on:click={onclick} class:search_active={search_active}
       {id}
       style:background-color={dropdown && active ? `var(--primary)` : color ? `var(--${color})` : null}
       style:outline={dropdown && active ? "" : border ? `2px solid var(--${border})` : null}
       style:outline-offset={dropdown && active ? "" : border ? `-2px` : null}
       class:mobile_shadow={mobile_shadow}
-
+      class:search={search_active}
     >
-      {#if is_loading}
-        <Spinner />
-      {/if}
-      <span class:hidden={is_loading} >
-        <slot>
-          <img class="icon icon-main" {src} class:hidden={is_loading} alt="icon" style:filter={invert_icon ? "invert(1)" : null}/>
-        </slot>
-      </span>
+    {#if search_active}
+      <div class="field__wrapper" class:focused={search_focused}>
+
+        <input bind:this={search_input} bind:value={search_value}
+          class="field__input"
+          type="search"
+          placeholder="Press Enter to search"
+          on:search={onsearch}
+          on:focus={() => search_focused = true}
+          on:blur={() => search_focused = false}
+        />
+
+        {#if search_active}
+        {#if is_loading}
+          <span style="margin-right: 1rem;" on:click|stopPropagation={() => {
+            hideLoading(id)
+            search_value = ""
+            search_input.focus()
+          }}>
+            <Spinner/>
+          </span>
+        {/if}
+
+          <span class:hidden={is_loading}>
+            <img class="icon icon-main icon-close" src={close} alt="close" style:filter={invert_icon ? "invert(1)" : null} on:click={() => {
+              if (search_value) {
+                search_value = ""
+              } else {
+                search_active = false
+                deleteQueryParam("search")
+                $session.timestamp = Date.now()
+              }
+            }}/>
+          </span>
+        {/if}
+
+      </div>
+        
+     
+    {/if}
+  
+    {#if is_loading && !search_active}
+      <Spinner />
+    {/if}
+
+    <span class:hidden={is_loading || search_active}>
+      <slot>
+        <img class="icon icon-main" {src} class:hidden={is_loading} alt="icon" style:filter={invert_icon ? "invert(1)" : null}/>
+      </slot>
+    </span>
+
+
+
     </button>
     {#if active && dropdown}
       <Dropdown {options} {align} {search}/>
     {/if}
   </div>
 {/if}
+
 
 <style>
   .icon-main {
@@ -173,6 +243,10 @@
 
   .icon__btn {
     position: relative;
+  }
+
+  .icon-close {
+    margin-right: 1rem
   }
 
   button {
@@ -247,6 +321,54 @@
   a:active {
     color: var(--black);
   }
+
+  .search {
+    width: 23rem;
+  }
+
+  .field__wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 2px solid transparent;
+    border-radius: 100rem;
+  }
+
+  .field__input {
+    width: 100%;
+    height: 3rem;
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
+    border: 2px solid transparent;
+    background: none;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--black);
+    transition: all 0.2s;
+  }
+
+  .field__wrapper.focused {
+    border-color: var(--primary);
+    background: var(--white);
+  }
+
+  button.search_active {
+    border-radius: 100rem;
+  }
+
+
+  input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  border-radius: 50em;
+  background: none;
+  background-size: contain;
+  opacity: 0;
+  pointer-events: none;
+}
+
 
   @media only screen and (max-width: 767px) {
     .icon__btn {

@@ -21,6 +21,7 @@ export const pageStore = writable({
     checkbox_options: [],
     id: null,
   },
+  search: null,
 });
 
 export const noscrollStore = derived([modalStore, pageStore], ([$modalStore, $pageStore]) => {

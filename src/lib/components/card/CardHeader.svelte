@@ -14,6 +14,8 @@
   export let center = false;
   export let border = false;
 
+  let search = true;
+
   const id = `card_header_${uuid()}`;
 
   const filterIds = filters.map((filter) => {
@@ -32,7 +34,7 @@
         return option;
       } else {
         option.onselect = () => {
-          addQueryParam(filter.id, option.value, { show_loading: filter.id, keep_only: filterIds });
+          addQueryParam(filter.id, option.value, { show_loading: filter.id, keep_only: filterIds, goto: true });
         };
       }
     });
@@ -54,17 +56,36 @@
     {/if}
   </div>
 {:else if filters.length || title || caption || buttons.length}
-  <div class="header" class:border={border === true || border === "true"} class:filters={filters.length > 0} {id}>
-    <div class="filters">
-      {#each filters as filter}
-        <div class="filter">
-          <Select {...filter} />
-        </div>
-      {/each}
-    </div>
+  <div
+    class="header"
+    class:border={border === true || border === "true"}
+    class:filters={filters.length > 0}
+    {id}
+    class:justify-end={$pageStore.search === id}
+  >
+    {#if filters.length > 0}
+      <div class="flex">
+        {#if title || caption}
+          <div class="title" class:center>
+            {#if title}
+              <h6>{title}</h6>
+            {/if}
+            {#if caption}
+              <p>{@html caption}</p>
+            {/if}
+          </div>
 
-    {#if title || caption}
-      <div class="title" class:center>
+          <div class="buttons">
+            {#each buttons as button}
+              <div class="action">
+                <IconButton {...button} />
+              </div>
+            {/each}
+          </div>
+        {/if}
+      </div>
+    {:else if title || caption}
+      <div class="title" class:center class:searching={$pageStore.search === id}>
         {#if title}
           <h6>{title}</h6>
         {/if}
@@ -74,13 +95,25 @@
       </div>
     {/if}
 
-    <div class="buttons">
-      {#each buttons as button}
-        <div class="action">
-          <IconButton {...button} />
-        </div>
-      {/each}
-    </div>
+    {#if $pageStore.search !== id}
+      <div class="filters" class:mt={title || caption}>
+        {#each filters as filter}
+          <div class="filter">
+            <Select {...filter} />
+          </div>
+        {/each}
+      </div>
+    {/if}
+
+    {#if filters.length === 0}
+      <div class="buttons">
+        {#each buttons as button}
+          <div class="action">
+            <IconButton {...button} __search_id={id} />
+          </div>
+        {/each}
+      </div>
+    {/if}
   </div>
 {:else}
   <div class="header" class:border {id}>
@@ -140,6 +173,20 @@
     margin-top: 0px;
   }
 
+  .flex {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  .mt {
+    margin-top: 1.5rem;
+  }
+
+  .justify-end {
+    justify-content: end;
+  }
+
   h6 + p {
     margin-top: 0.5rem;
   }
@@ -161,6 +208,10 @@
 
     .filter:last-of-type {
       margin-bottom: 0rem;
+    }
+
+    .searching {
+      display: none;
     }
   }
 </style>

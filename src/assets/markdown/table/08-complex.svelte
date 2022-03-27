@@ -20,6 +20,29 @@
   $: pagination = $store?.pagination ? $store.pagination : {};
   $: pokemon = $store.pokemon ? $store.pokemon : [];
 
+  const types = [
+    "All",
+    "break",
+    "Normal",
+    "Fire",
+    "Water",
+    "Grass",
+    "Electric",
+    "Ice",
+    "Fighting",
+    "Poison",
+    "Ground",
+    "Flying",
+    "Psychic",
+    "Bug",
+    "Rock",
+    "Ghost",
+    "Dark",
+    "Dragon",
+    "Steel",
+    "Fairy",
+  ];
+
   function typeColor(type) {
     switch (type) {
       case "normal":
@@ -67,7 +90,32 @@
 <Row>
   <Column>
     <Card>
-      <CardHeader title="Complex Table Example" border={false} />
+      <CardHeader
+        title="Complex Table Example"
+        caption="You can add a subtitle but it's not advised with filters"
+        buttons={[
+          { icon: "search", color: "gray-lighter", search: true },
+          { icon: "more", color: "gray-lighter" },
+        ]}
+        border={false}
+        filters={[
+          {
+            id: "type",
+            label: "Type",
+            value: "",
+            options: types.map((type) => {
+              if (type === "break") {
+                return "break";
+              }
+
+              return {
+                label: type,
+                value: type === "All" ? "" : type.toLowerCase(),
+              };
+            }),
+          },
+        ]}
+      />
       <Table
         id="pokemon-table"
         padding="roomy"
