@@ -456,7 +456,6 @@ const validateInputs = (inputs) => {
         // we should not validate them
         if (!input.is_hidden) {
           if (input.type === "stripe" || input.type === "stripe-card") {
-            console.log("validate stripe");
             //We'll need to find the stripe element that was created in the dom and get the token for the user
             try {
               const value = await createStripeToken(input, _inputs);
