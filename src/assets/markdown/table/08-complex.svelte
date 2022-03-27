@@ -92,7 +92,7 @@
     <Card>
       <CardHeader
         title="Complex Table Example"
-        caption="You can add a subtitle but it's not advised with filters"
+        caption="This example uses an external API for data, which may run slowly especially when using the search."
         buttons={[
           { icon: "search", color: "gray-lighter", search: true },
           { icon: "more", color: "gray-lighter" },
