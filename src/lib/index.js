@@ -121,6 +121,7 @@ import { addQueryParam, getQueryParam, deleteQueryParam } from "./utils/url";
 import { getSelectedTableRows, deselectTableRows } from "./utils/table";
 import fuzzySearch from "$lib/utils/fuzzy-search";
 import merge from "$lib/utils/merge";
+import { api_url, fetchData } from "$lib/utils/fetch";
 export {
   getFormData,
   validateInputs,
@@ -137,4 +138,6 @@ export {
   merge,
   getSelectedTableRows,
   deselectTableRows,
+  api_url,
+  fetchData,
 };
