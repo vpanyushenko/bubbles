@@ -156,7 +156,7 @@
             addQueryParam(limit_query_name, limit, { goto: false });
             addQueryParam(page_query_name, button, { show_loading: id, goto: true });
           },
-          transparent: current_page.toString() !== button.toString(),
+          color: current_page.toString() !== button.toString() ? "" : "gray-lighter",
         };
       } else {
         const _onclick = () => {
@@ -168,11 +168,15 @@
           id: id,
           label: button.label,
           onclick: button.onclick ? button.onclick : _onclick,
-          transparent: current_page.toString() !== button.label.toString(),
+          color: current_page.toString() !== button.toString() ? "" : "gray-lighter",
         };
       }
     });
   }
+
+  $: console.log(formattedButtons);
+  $: console.log(formatted_rows_per_page);
+  $: console.log(total_pages);
 </script>
 
 <div class="pagination" class:is_small={dom_component_is_small === true} bind:clientWidth={dom_component_width}>
@@ -211,9 +215,7 @@
 
     {#if formattedButtons.length > 1}
       {#each formattedButtons as button}
-        <IconButton id={button.id} onclick={button.onclick} bind:transparent={button.transparent}
-          >{button.label}</IconButton
-        >
+        <IconButton id={button.id} onclick={button.onclick} bind:color={button.color}>{button.label}</IconButton>
       {/each}
     {:else if count}
       <p class="viewing__page">Viewing page: 1 of 1</p>
