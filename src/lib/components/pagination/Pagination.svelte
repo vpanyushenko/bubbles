@@ -7,7 +7,7 @@
 
   export let id = uuid();
   export let rows_per_page = [10, 25, 50, 100];
-  export let limit = rows_per_page ? rows_per_page[0] : 10;
+  export let limit = null;
   export let count = null;
   export let max_buttons = 10;
   export let arrows = true;
@@ -19,7 +19,7 @@
   let dom_component_width, dom_component_is_small, _max_buttons;
 
   $: current_page = Number($page.url.searchParams.get(page_query_name)) || 1;
-  $: current_limit = Number($page.url.searchParams.get(limit_query_name)) || limit;
+  $: current_limit = Number($page.url.searchParams.get(limit_query_name)) || limit ? limit : rows_per_page[0];
 
   const _first = uuid();
   const _prev = uuid();
@@ -97,7 +97,7 @@
     } else {
       limit = Number($page.url.searchParams.get(limit_query_name));
     }
-  } else {
+  } else if (!limit) {
     limit = rows_per_page && rows_per_page.length ? rows_per_page[0] : 10;
   }
 
@@ -179,7 +179,7 @@
   {#if rows_per_page && rows_per_page.length}
     <div class="rows">
       <p>Rows per page:</p>
-      <span><Select value={limit} {id} options={formatted_rows_per_page} /></span>
+      <span><Select value={current_limit} {id} options={formatted_rows_per_page} /></span>
     </div>
   {/if}
 
