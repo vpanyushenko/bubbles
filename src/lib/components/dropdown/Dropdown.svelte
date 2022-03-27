@@ -96,17 +96,32 @@
       switch (event.key) {
         case "ArrowDown": {
           event.preventDefault();
-          is_using_pointer_device = false;
+
+          if (is_using_pointer_device) {
+            //the first arrow should select the first option. Even though the first index is already selected, it's not clear to the user
+            //So on this first moment, if the index is 0, we'll leave it at zero.
+          }
 
           if (selected_index === options.length - 1) {
             selected_index = 0;
           } else {
-            selected_index++;
+            if (is_using_pointer_device) {
+              //the first arrow should select the first option. Even though the first index is already selected, it's not clear to the user
+              //So on this first moment, if the index is 0, we'll leave it at zero.
 
-            if (filtered_options[selected_index] === "break") {
+              if (selected_index === 0) {
+                selected_index = 0;
+              }
+            } else {
+              selected_index++;
+            }
+
+            if (filtered_options[selected_index] === "break" || filtered_options[selected_index]?.break === true) {
               selected_index++;
             }
           }
+
+          is_using_pointer_device = false;
 
           if (id) {
             const option = document.getElementById(id).querySelectorAll(".option")[selected_index];
@@ -146,7 +161,7 @@
           value = option?.value;
 
           if (option.href) {
-            window.open(option.href, option.new_page ? "_blank" : "");
+            window.open(option.href, option.new_page ? "_blank" : "_self");
           }
 
           if (option.onclick) {
