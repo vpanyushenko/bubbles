@@ -173,10 +173,6 @@
       }
     });
   }
-
-  $: console.log(formattedButtons);
-  $: console.log(formatted_rows_per_page);
-  $: console.log(total_pages);
 </script>
 
 <div class="pagination" class:is_small={dom_component_is_small === true} bind:clientWidth={dom_component_width}>
