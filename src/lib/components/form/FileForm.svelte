@@ -68,8 +68,12 @@
         return res.json();
       })
       .then((res) => {
-        if (toast) {
+        if (toast && res.status && res.status >= 200 && res.status < 300) {
           showToast(res.message, "success");
+        }
+
+        if (toast && res.status && res.status >= 400) {
+          showToast(res.message, "error");
         }
 
         if (callback) {
