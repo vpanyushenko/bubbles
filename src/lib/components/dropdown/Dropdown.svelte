@@ -1,5 +1,5 @@
 <script>
-  import Fuse from "$lib/utils/fuzzy-search";
+  import Fuse from "$lib/utils/fuze";
   import icon_arrowRight from "./arrow-right.svg";
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/stores";

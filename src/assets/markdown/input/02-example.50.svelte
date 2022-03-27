@@ -334,16 +334,11 @@
           },
         ];
 
-        const fuse = new fuzzySearch(states, {
-          shouldSort: false,
-          keys: ["name", "abbreviation"],
-          minMatchCharLength: 2,
-          threshold: 0.4,
-        });
+        const filtered = fuzzySearch(input, states, { keys: ["name", "abbreviation"], sort: true });
 
         return Promise.resolve(
-          fuse.search(input).map((obj) => {
-            return { label: obj.item.name, value: obj.item.name, caption: obj.item?.caption };
+          filtered.map((obj) => {
+            return { label: obj.name, value: obj.name, caption: obj?.caption };
           })
         );
       }}
