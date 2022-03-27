@@ -22,6 +22,7 @@
       offset: Number(url.searchParams.get("limit")) * (Number(url.searchParams.get("page")) - 1),
       count: null,
       first_last_arrow: true,
+      count: null,
     };
 
     const type = url.searchParams.get("type") ? url.searchParams.get("type") : "all";
@@ -43,7 +44,6 @@
           return res.json();
         })
         .then((res) => {
-          // pagination.has_more = res.next ? true : false;
           pagination.count = res.count;
 
           const pokemon = res.results.map((poke) => {
@@ -53,17 +53,24 @@
               })
               .then((res) => {
                 return res;
+              })
+              .catch((err) => {
+                return null;
               });
           });
 
-          return Promise.all(pokemon);
+          return Promise.all(pokemon.filter(Boolean));
         })
         .then((pokemon) => {
+          const filtered = search ? searchPokemon(search, pokemon) : pokemon;
+          if (search) {
+            pagination.count = filtered.length;
+          }
           hideLoading();
 
           return {
             props: {
-              pokemon: search ? searchPokemon(search, pokemon) : pokemon,
+              pokemon: filtered,
               pagination: pagination,
             },
           };
@@ -82,12 +89,9 @@
           return res.json();
         })
         .then((res) => {
-          //in this case, everything gets returned so we can show pagination ourselves
-          const count = res.pokemon.length;
+          pagination.count = res.pokemon.length;
 
           const filtered = res.pokemon.filter((item, index) => index >= offset && index < offset + limit);
-
-          pagination.count = count;
 
           const pokemon = filtered.map((poke) => {
             return fetch(poke.pokemon.url)
@@ -96,17 +100,25 @@
               })
               .then((res) => {
                 return res;
+              })
+              .catch((err) => {
+                return null;
               });
           });
 
-          return Promise.all(pokemon);
+          return Promise.all(pokemon.filter(Boolean));
         })
         .then((pokemon) => {
+          const filtered = search ? searchPokemon(search, pokemon) : pokemon;
+
+          if (search) {
+            pagination.count = filtered.length;
+          }
           hideLoading();
 
           return {
             props: {
-              pokemon: search ? searchPokemon(search, pokemon) : pokemon,
+              pokemon: filtered,
               pagination: pagination,
             },
           };
