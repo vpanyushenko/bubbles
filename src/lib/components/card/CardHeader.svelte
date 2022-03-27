@@ -66,7 +66,7 @@
     {#if filters.length > 0}
       <div class="flex">
         {#if title || caption}
-          <div class="title" class:center>
+          <div class="title" class:center class:searching={$pageStore.search === id}>
             {#if title}
               <h6>{title}</h6>
             {/if}
@@ -78,7 +78,7 @@
           <div class="buttons">
             {#each buttons as button}
               <div class="action">
-                <IconButton {...button} />
+                <IconButton {...button} __search_id={id} />
               </div>
             {/each}
           </div>

@@ -109,21 +109,34 @@
 
 <!-- {#if intersection_ratio !== 0} -->
 <header id={header_id} style="opacity: {intersection_ratio * 3}" class:sticky={_sticky}>
-  <div class="text">
-    <div class="header__title">
-      {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
-        <span class="back__icon">
-          <IconButton icon="arrowLeft" href={back} id={icon_id} />
-        </span>
-      {:else if $pageStore?.sidebar?.is_mounted}
-        <button class="header__burger" on:click={toggleSidebar} />
-      {/if}
+  <div class="header__row">
+    <div class="text">
+      <div class="header__title">
+        {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
+          <span class="back__icon">
+            <IconButton icon="arrowLeft" href={back} id={icon_id} />
+          </span>
+        {:else if $pageStore?.sidebar?.is_mounted}
+          <button class="header__burger" on:click={toggleSidebar} />
+        {/if}
 
-      <div class="header__text">
-        <h2>{$pageStore.title}</h2>
+        <div class="header__text">
+          <h2>{$pageStore.title}</h2>
+        </div>
       </div>
     </div>
+    <div class="icons">
+      <div class="header__buttons">
+        {#each buttons as button}
+          <span class="header__button">
+            <IconButton {...button} />
+          </span>
+        {/each}
+      </div>
+    </div>
+  </div>
 
+  <div class="header__row burger__indent">
     <div class:header__subtitle={breadcrumbs && _breadcrumbs && _breadcrumbs.length ? true : false}>
       <slot>
         {#if subtitle}
@@ -143,17 +156,6 @@
       </slot>
     </div>
   </div>
-  <div class="icons">
-    <div class="header">
-      <div class="header__buttons">
-        {#each buttons as button}
-          <span class="header__button">
-            <IconButton {...button} />
-          </span>
-        {/each}
-      </div>
-    </div>
-  </div>
 </header>
 
 <!-- {/if} -->
@@ -168,8 +170,7 @@
 
   header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     width: 100%;
     padding: 3rem 4rem 2.75rem;
   }
@@ -180,6 +181,17 @@
     background-color: red;
     position: fixed;
     z-index: 99;
+  }
+
+  header .header__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  header .header__row.header__row.burger__indent {
+    width: none;
   }
 
   .header__text {
@@ -260,7 +272,7 @@
   }
 
   .header__buttons:first-child {
-    margin-right: 1rem;
+    margin-right: 0.25rem;
   }
 
   .breadcrumbs a:hover {
@@ -297,7 +309,9 @@
 
     header .icons {
       margin-left: 3rem;
-      display: contents;
+      display: flex;
+      justify-content: end;
+      width: 0;
     }
   }
 
@@ -307,17 +321,12 @@
     }
 
     header .text {
-      padding: 0px 0px 28px;
       width: 100%;
       max-width: 100%;
     }
     header .icons {
       margin: 0;
       padding-top: 0;
-    }
-
-    .icons .header {
-      padding-top: 0.25rem;
       align-self: flex-start;
     }
 
@@ -327,6 +336,12 @@
 
     .header__burger {
       display: block;
+    }
+  }
+
+  @media only screen and (max-width: 1062px) {
+    header .header__row.burger__indent {
+      margin-left: 3.5rem;
     }
   }
 
@@ -354,6 +369,10 @@
 
     header .icons {
       padding-top: 0;
+    }
+
+    header .header__row.burger__indent {
+      margin-left: 3rem;
     }
   }
 </style>
