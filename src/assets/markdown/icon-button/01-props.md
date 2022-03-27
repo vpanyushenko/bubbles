@@ -55,7 +55,19 @@ If you add options, you'll get a dropdown of those options.
 | option[].**onselect** `function`<br> A function that can be run if this option is selected                                                                |
 | option[].**hidden** `boolean`<br> Will hide the option if set to true, defaults to false                                                                  |
 | option[].**break** `boolean`<br> Will create a line break as this option. The line break is not rendered as a clickable option, it's just for aesthetics. |
+| option[].**href** `string`<br> Will navigate to the new page                                                                                              |
+| option[].**new_page** `boolean`<br> Used with `href`. If true will open a new tab.                                                                        |
 
 </details><br>
+
+---
+
+**search** `Boolean`<br>
+Will transform the button into a search element when clicked. Pairs nicely with the "search" icon you can add. When using search, you can either enter the string into the input and press enter. This will update the query paramiter search with that input, and will trigger the load function to re-run. You can also use the `typeahead` property, and get a dropdown list of options.
+
+---
+
+**typeahead** `function(query<String>)`<br>
+This is a function that will provide one input, which is whatever data is entered into the search string. It expects a promise to be returned with an Array of options in the format of `options`, just like in the "Show Details" summary above.
 
 ---
