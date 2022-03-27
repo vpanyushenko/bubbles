@@ -11,10 +11,10 @@ const showLoading = (id) => {
 
 const hideLoading = (id) => {
   pageStore.update((store) => {
-    const index = store.loading.findIndex((a) => a === id);
+    store.loading = store.loading.filter((a) => a !== id);
 
-    if (index > -1) {
-      store.loading.splice(index, 1);
+    if (!id) {
+      store.loading = [];
     }
 
     return store;
