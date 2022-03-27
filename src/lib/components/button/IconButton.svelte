@@ -136,8 +136,6 @@
   async function typeaheadOnInput(event) {
     const typeahead_value = event.target.value;
 
-    console.log(typeahead_value, search_value);
-
     await new Promise((resolve) => setTimeout(resolve, debounce));
 
     if (typeahead && typeahead_value === search_value && search_value) {
