@@ -1,7 +1,6 @@
 import { browser } from "$app/env";
 import { showLoading, hideLoading } from "$lib/utils/loading";
-import { get } from "svelte/store";
-import { session, navigating } from "$app/stores";
+import { session } from "$app/stores";
 
 /**
  * Adds a url query param based on a key value pair

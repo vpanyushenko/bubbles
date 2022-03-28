@@ -11,10 +11,6 @@ height: 100
   // First import the global css styles
   import "bubbles-ui/css/app.css";
 
-  // Import the goto function from svelte kit and make a
-  // reference to it in the configStore
-  import { goto } from "$app/navigation";
-
   // Import config store to update defaults
   import { configStore } from "bubbles-ui";
 
@@ -39,11 +35,5 @@ height: 100
   // We'll let you know if there are any issues with the
   // Bubbles library
   $configStore.debug = true;
-
-  // Import the goto function from the svelte kit $app/navigation
-  // package and pass a reference to it here. This is a workaround
-  // from a current limitation of svelte kit
-  // https://github.com/sveltejs/kit/issues/3010
-  $configStore.goto = goto;
 </script>
 ```
