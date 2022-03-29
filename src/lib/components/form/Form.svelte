@@ -178,7 +178,7 @@
         {/if}
 
         {#if input.type === "switch"}
-          <Switch {...input} bind:value={input.value} />
+          <Switch {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
 
         {#if input.type === "select" || input.type === "select-number"}
@@ -196,15 +196,15 @@
         {/if}
 
         {#if input.type === "radio" || input.type === "radio-group"}
-          <RadioGroup {...input} bind:value={input.value} />
+          <RadioGroup {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
 
         {#if input.type === "checkbox"}
-          <LabeledCheckbox {...input} bind:value={input.value} />
+          <LabeledCheckbox {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
 
         {#if input.type === "checkbox-group"}
-          <CheckboxGroup {...input} bind:value={input.value} />
+          <CheckboxGroup {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
 
         {#if input.type === "p"}

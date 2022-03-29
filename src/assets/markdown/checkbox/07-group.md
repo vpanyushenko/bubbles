@@ -23,10 +23,10 @@ An array that will contain the options the user can select.
 <details>
 <summary>Show Details</summary>
 
-|                                                                                      |
-| :----------------------------------------------------------------------------------- |
-| option[].**label** `string`<br> The text the user sees for the option                |
-| option[].**value** `string`<br> The value that will be added for the url query param |
+|                                                                                                          |
+| :------------------------------------------------------------------------------------------------------- |
+| option[].**label** `string`<br> The text the user sees for the option                                    |
+| option[].**value** `string`<br> The value will be added to the array of values bound to the whole input. |
 
 </details><br>
 

@@ -8,8 +8,12 @@
   export let label = "";
   export let desc = "";
   export let validation = null;
-  export let form_indent = true;
-  export let background = true;
+  export let form_indent = false;
+  export let background = false;
+
+  if (background) {
+    form_indent = true;
+  }
 
   const _label =
     $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
