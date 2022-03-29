@@ -40,7 +40,7 @@
 
 {#if y > 1000}
   <div>
-    <IconButton icon={icon_arrow} transparent={false} onclick={() => (y = 0)} />
+    <IconButton icon={icon_arrow} color="gray-lighter" onclick={() => (y = 0)} />
   </div>
 {/if}
 
