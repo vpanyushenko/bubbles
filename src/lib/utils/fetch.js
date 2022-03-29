@@ -112,12 +112,18 @@ const fetchData = async (endpoint, options = { fetch: null, url: null, session: 
         const props = {};
         let redirect = null;
         let status = 200;
+        let pagination = null;
 
         array.forEach((obj, index) => {
           if (obj.redirect) {
             redirect = obj.redirect;
             status = obj.status;
           }
+
+          if (obj.pagination) {
+            pagination = obj.props.pagination;
+          }
+
           props[endpoint[index].key] = obj.props?.[endpoint[index].key];
         });
 
