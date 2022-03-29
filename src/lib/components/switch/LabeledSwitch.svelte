@@ -12,18 +12,12 @@
   export let onchange = null;
   export let validation = null;
   export let value = false;
-  export let form_indent = true;
-  export let background = true;
+  export let form_indent = false;
+  export let background = false;
 
   if (background) {
     form_indent = true;
   }
-
-  console.log(form_indent);
-  console.log(form_indent);
-  console.log(form_indent);
-  console.log(form_indent);
-  console.log(form_indent);
 
   const _label =
     $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
