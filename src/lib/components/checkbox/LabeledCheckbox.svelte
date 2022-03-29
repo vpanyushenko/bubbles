@@ -171,4 +171,9 @@
     -o-transition: all 0.25s;
     transition: all 0.25s;
   }
+
+  .style__indent {
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
+  }
 </style>

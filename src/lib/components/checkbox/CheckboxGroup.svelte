@@ -187,4 +187,9 @@
     text-transform: uppercase;
     color: var(--gray);
   }
+
+  .style__indent {
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
+  }
 </style>
