@@ -139,7 +139,7 @@
               ],
             },
             { label: null },
-            { label: "Name", sort: { id: "name", query: true, key: "hello", value: "world" } },
+            { label: "Name", sort: { id: "name" } },
             { label: "Weight", sort: { id: "weight" } },
             { label: "Type(s)" },
             { label: "Possible Moves", align: "end" },
