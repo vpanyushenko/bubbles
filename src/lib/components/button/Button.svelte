@@ -18,6 +18,8 @@
   export let disabled = false;
 
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
+
+  $: is_loading === true ? (disabled = true) : (disabled = false);
 </script>
 
 {#if href}
