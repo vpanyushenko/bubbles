@@ -1,6 +1,8 @@
 <script>
   import Select from "$lib/components/select/Select.svelte";
   import { v4 as uuid } from "@lukeed/uuid";
+  import { Spinner } from "$lib/index";
+  import { navigating } from "$app/stores";
 
   export let segments = [];
   export let style = "default";
@@ -55,17 +57,38 @@
     <div bind:this={wrapper} class="wrapper" style="--left: {left}px; --width: {width}px;">
       <div class="buttons">
         {#each segments as segment, i}
-          <button
-            class:active={i === selected}
-            on:click={() => (selected = i)}
-            bind:this={items[i]}
-            on:click={segment.onclick}
-            id={segment.id ? segment.id : `${id}_${i}`}
-          >
-            <span>
-              {segment.label}
-            </span>
-          </button>
+          {#if segment.href}
+            <a
+              class="segment"
+              href={segment.href}
+              sveltekit:prefetch
+              class:active={i === selected}
+              on:click={() => (selected = i)}
+              bind:this={items[i]}
+              on:click={segment.onclick}
+              id={segment.id ? segment.id : `${id}_${i}`}
+            >
+              <span>
+                {#if $navigating?.to?.pathname === segment?.href}
+                  <Spinner size={1} />
+                {:else}
+                  {segment.label}
+                {/if}
+              </span>
+            </a>
+          {:else}
+            <button
+              class:active={i === selected}
+              on:click={() => (selected = i)}
+              bind:this={items[i]}
+              on:click={segment.onclick}
+              id={segment.id ? segment.id : `${id}_${i}`}
+            >
+              <span>
+                {segment.label}
+              </span>
+            </button>
+          {/if}
         {/each}
       </div>
     </div>
@@ -80,6 +103,13 @@
     margin-bottom: 2rem;
   }
 
+  a.segment {
+    display: inline-flex;
+    background: aqua;
+    align-items: center;
+  }
+
+  a,
   button {
     background: transparent;
     text-align: center;
@@ -92,10 +122,11 @@
     width: fit-content;
   }
 
+  a.active,
   button.active {
     color: var(--black);
   }
-
+  a > span,
   button > span {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -141,6 +172,7 @@
     border-bottom: 1px solid var(--gray-light);
   }
 
+  .line a,
   .line button {
     min-width: none;
     background: transparent;
@@ -156,10 +188,12 @@
     border-radius: 12px;
   }
 
+  .line a:hover,
   .line button:hover {
     background-color: var(--input-bg);
   }
 
+  .line a.active,
   .line button.active {
     color: var(--black);
     border-bottom: 2px solid var(--black);
@@ -182,6 +216,7 @@
   }
 
   @media only screen and (max-width: 767px) {
+    a,
     button {
       width: fit-content;
     }
