@@ -14,7 +14,10 @@
 
 <Header
   title="Header"
-  subtitle="Headers can have subtitles"
+  breadcrumbs={[
+    { label: "Hello", href: "/header" },
+    { label: "World", href: "/header" },
+  ]}
   buttons={[
     {
       icon: "search",

@@ -8,6 +8,14 @@
   export let title = "";
   export let subtitle = "";
   export let caption = "";
+
+  /**
+   * @prop {Boolean|Array<Object>} - false to disable. {label: String, href: String} for custom ones.
+   * @example
+   *
+   * breadcrumbs={[{ label: "hello", href: "/hello" }, { label: "World", href: "/hello/world" }]}
+   *
+   */
   export let breadcrumbs = true;
   export let buttons = [];
   export let breadcrumb_labels = [];
@@ -190,8 +198,8 @@
     width: 100%;
   }
 
-  header .header__row.header__row.burger__indent {
-    width: none;
+  .burger__indent {
+    margin-left: 3.75rem;
   }
 
   .header__text {
@@ -228,10 +236,6 @@
   .header__title {
     display: flex;
     align-items: center;
-  }
-
-  .header__subtitle {
-    padding-left: 3.75rem;
   }
 
   .header {
@@ -340,7 +344,7 @@
   }
 
   @media only screen and (max-width: 1062px) {
-    header .header__row.burger__indent {
+    .burger__indent {
       margin-left: 3.5rem;
     }
   }
@@ -359,8 +363,8 @@
       font-size: 1.5rem;
     }
 
-    .header__subtitle {
-      padding-left: 3.25rem;
+    .header__subtitle h6 {
+      font-size: medium;
     }
 
     .header__burger {
@@ -371,7 +375,7 @@
       padding-top: 0;
     }
 
-    header .header__row.burger__indent {
+    .burger__indent {
       margin-left: 3rem;
     }
   }
