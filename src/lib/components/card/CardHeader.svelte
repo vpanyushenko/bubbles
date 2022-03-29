@@ -156,7 +156,7 @@
 
   .buttons {
     display: flex;
-    align-items: center;
+    align-self: start;
   }
 
   .filter + .filter {
