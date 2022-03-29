@@ -86,10 +86,6 @@
         return "gray";
     }
   }
-
-  function sortData(event) {
-    pokemon = sort(pokemon, event.detail.sort_by, event.detail.order);
-  }
 </script>
 
 <Row>
