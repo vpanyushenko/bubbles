@@ -30,7 +30,9 @@
         event.key === "Enter" &&
         document.activeElement.closest(".form") &&
         !event.defaultPrevented &&
-        !document.activeElement.classList.contains("select")
+        !document.activeElement.classList.contains("select") &&
+        document.activeElement.type !== "checkbox" &&
+        document.activeElement.type !== "radio"
       ) {
         if (
           document.activeElement.closest(".form").id === id ||

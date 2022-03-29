@@ -76,6 +76,10 @@
     border: 1px solid var(--gray-light); */
   }
 
+  /* .field:focus-within {
+    border: 2px solid var(--primary);
+  } */
+
   .background {
     background: rgba(228, 228, 228, 0.3);
     border-radius: 12px;

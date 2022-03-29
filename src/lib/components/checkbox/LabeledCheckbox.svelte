@@ -1,9 +1,10 @@
 <script>
   import { configStore, pageStore } from "$lib/stores/stores";
+  import { uuid } from "$lib/index";
 
-  export let id = null;
+  export let id = uuid();
   export let value = null;
-  export let error = "An error occured";
+  export let error = "An error occurred";
   export let label = "";
   export let desc = "";
   export let validation = null;
@@ -21,7 +22,21 @@
       is_error = false;
     }, $configStore.error_delay);
   }
+
+  function keydown(event) {
+    if (event.key === "Enter" && event?.target?.closest(".form__field__container")?.id === id) {
+      if (value) {
+        value = false;
+        event.target.checked = false;
+      } else {
+        value = true;
+        event.target.checked = true;
+      }
+    }
+  }
 </script>
+
+<svelte:body on:keydown={keydown} />
 
 <div class="form__field__container" {id} class:background>
   <div class="field" class:style__indent={form_indent}>
@@ -37,10 +52,7 @@
           type="checkbox"
           bind:checked={value}
           on:click={() => {
-            const index = $pageStore.errors.findIndex((item) => item === id);
-            if (index > -1) {
-              $pageStore.errors.splice(index, 1);
-            }
+            $pageStore.errors = $pageStore.errors.filter((a) => a === id);
           }}
         />
         <span class="checkbox__in">
@@ -175,5 +187,15 @@
   .style__indent {
     padding-left: 1.375rem;
     padding-right: 1.375rem;
+  }
+
+  .form__field__container:focus,
+  .background:focus,
+  .form__field__container:focus-within {
+    border-color: var(--primary);
+  }
+
+  input:focus + .checkbox__in .checkbox__tick {
+    border: 1px solid var(--primary);
   }
 </style>

@@ -38,6 +38,7 @@
       disabled: false,
       error: "An error occurred",
       validation: "accepted", //best UX is to not make switches mandatory, use a checkbox instead if you need
+      background: true,
     },
     {
       type: "email",

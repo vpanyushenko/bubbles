@@ -34,6 +34,10 @@
     border-color: var(--primary);
   }
 
+  input:focus + .checkbox__in .checkbox__tick {
+    border: 1px solid var(--primary);
+  }
+
   .checkbox__input:checked + .checkbox__in .checkbox__tick:before {
     opacity: 1;
   }

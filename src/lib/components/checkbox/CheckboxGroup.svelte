@@ -1,10 +1,11 @@
 <script>
   import { configStore, pageStore } from "$lib/stores/stores";
+  import { uuid } from "$lib/index";
 
-  export let id = null;
+  export let id = uuid();
   export let options = [];
   export let value = [];
-  export let error = "An error occured";
+  export let error = "An error occurred";
   export let label = "";
   export let desc = "";
   export let validation = null;
@@ -22,7 +23,46 @@
       is_error = false;
     }, $configStore.error_delay);
   }
+
+  function keydown(event) {
+    if (event.key === "ArrowUp" && event?.target?.closest(".form__field__container")?.id === id) {
+      event.preventDefault();
+      let index = options.findIndex((a) => a.value === event.target.value);
+
+      if (index === 0) {
+        index = options.length;
+      }
+
+      document.getElementById(id).querySelectorAll("input")[index - 1].focus();
+    }
+
+    if (event.key === "ArrowDown" && event?.target?.closest(".form__field__container")?.id === id) {
+      event.preventDefault();
+      let index = options.findIndex((a) => a.value === event.target.value);
+
+      if (index === options.length - 1) {
+        index = -1;
+      }
+
+      document.getElementById(id).querySelectorAll("input")[index + 1].focus();
+    }
+
+    if (event.key === "Enter" && event?.target?.closest(".form__field__container")?.id === id) {
+      let index = options.findIndex((a) => a.value === event.target.value);
+      document.getElementById(id).querySelectorAll("input")[index].focus();
+
+      if (value.includes(event.target.value)) {
+        value = value.filter((a) => a !== event.target.value);
+        event.target.checked = false;
+      } else {
+        value.push(event.target.value);
+        event.target.checked = true;
+      }
+    }
+  }
 </script>
+
+<svelte:body on:keydown={keydown} />
 
 <div class="form__field__container" {id} class:background>
   <div class="field" class:style__indent={form_indent}>
@@ -44,10 +84,7 @@
             bind:group={value}
             checked={value.includes(option.value)}
             on:click={() => {
-              const index = $pageStore.errors.findIndex((item) => item === id);
-              if (index > -1) {
-                $pageStore.errors.splice(index, 1);
-              }
+              $pageStore.errors = $pageStore.errors.filter((a) => a === id);
             }}
           />
           <span class="checkbox__in">
@@ -177,10 +214,6 @@
 
   .checkbox__text {
     margin-left: 8px;
-    /* padding-top: 3px; */
-    /* font-size: 13px;
-    line-height: 1.2; */
-
     font-size: 0.625rem;
     font-weight: 700;
     letter-spacing: 0.9px;
@@ -191,5 +224,16 @@
   .style__indent {
     padding-left: 1.375rem;
     padding-right: 1.375rem;
+  }
+
+  .form__field__container:focus,
+  .background:focus,
+  .form__field__container:focus-within {
+    border-color: var(--primary);
+  }
+
+  input:focus + .checkbox__in .checkbox__tick {
+    border: 1px solid var(--primary);
+    /* background-color: var(--primary-light) !important; */
   }
 </style>
