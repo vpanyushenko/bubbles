@@ -6,9 +6,24 @@
   import { page } from "$app/stores";
 
   export let id = uuid();
+  /**
+   * @prop {Array<Integers>} rows_per_page - The different limits you want to support
+   */
   export let rows_per_page = [10, 25, 50, 100];
+
+  /**
+   * @prop {?Integer} limit - The current limit you are supporting. Will get it from query params or use the first value from `rows_per_page`
+   */
   export let limit = null;
+
+  /**
+   * @prop {?Integer} count - the total number of documents known.
+   */
   export let count = null;
+
+  /**
+   * @prop {Integer} [max_buttons=10] - The maximum buttons that will be displayed to the end user.
+   */
   export let max_buttons = 10;
   export let arrows = true;
   export let first_last_arrows = false;
@@ -173,11 +188,13 @@
       }
     });
   }
+
+  $: console.log(formatted_rows_per_page[0]);
 </script>
 
 <div class="pagination" class:is_small={dom_component_is_small === true} bind:clientWidth={dom_component_width}>
   {#if rows_per_page && rows_per_page.length}
-    <div class="rows">
+    <div class="rows" class:hidden={count && formatted_rows_per_page[0].value >= count}>
       <p>Rows per page:</p>
       <span><Select value={current_limit} {id} options={formatted_rows_per_page} /></span>
     </div>
