@@ -16,6 +16,8 @@
 - The dropdown component line breaks are now set as a boolean
 - Ability to hide a sidebar section with the hidden property - perhaps for role based account access
 - Added search functionality to the IconButton component
+- SegmentedController supports hrefs
+- New sort function and sort functionality for TableHeaders
 
 **Fixed**
 

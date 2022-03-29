@@ -110,4 +110,4 @@ const deleteQueryParam = (param) => {
   }
 };
 
-export { addQueryParam, getQueryParam, deleteQueryParam };
+export { addQueryParam, getQueryParam, deleteQueryParam, addQueryParam as setQueryParam };

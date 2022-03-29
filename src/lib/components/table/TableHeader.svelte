@@ -1,8 +1,17 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { pageStore } from "$lib/stores/stores";
   import Checkbox from "$lib/components/checkbox/Checkbox.svelte";
-  import { browser } from "$app/env";
+  import { addQueryParam } from "$lib/utils/url";
 
+  const dispatch = createEventDispatcher();
+
+  import arrow_up from "./arrow-up.svg";
+  import arrow_down from "./arrow-down.svg";
+
+  /**
+   * @prop {Array<Cell>} cells - the details for the header cells.
+   */
   export let cells = [];
 
   if (!$pageStore.table) {
@@ -45,6 +54,30 @@
     <div class="cell" class:right={cell.align === "right" || cell.align === "end"}>
       {#if cell.checkbox}
         <Checkbox onchange={selectAll} bind:value={checkbox_value} />
+      {:else if cell.sort}
+        <span
+          class="sort"
+          on:click={(event) => {
+            if (cell.sort.order === "descending" || cell.sort.order === "desc") cell.sort.order = "ascending";
+            else cell.sort.order = "descending";
+
+            if (cell.sort.query) {
+              addQueryParam(cell.sort.key || cell?.sort?.id || cell.label, cell.sort.value || cell.sort.order);
+            }
+
+            dispatch("sort", {
+              sort_by: cell?.sort?.id || cell.label,
+              order: cell.sort?.order,
+            });
+          }}
+        >
+          <img
+            class="sort__icon"
+            src={cell.sort?.order === "ascending" ? arrow_up : arrow_down}
+            alt="Option Indicator"
+          />
+          {cell.label}
+        </span>
       {:else if cell.label}
         {cell.label}
       {/if}
@@ -88,6 +121,18 @@
 
   .row:last-child > .cell {
     border-bottom: none;
+  }
+
+  span.sort {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+  }
+
+  .sort__icon {
+    width: 1rem;
+    margin-right: 0.3rem;
   }
 
   @media only screen and (max-width: 1179px) {

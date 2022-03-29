@@ -4,7 +4,8 @@ type: code
 
 ```svelte
 <script>
-import { Header } from "bubbles-ui";
+import { Header, fuzzySearch } from "bubbles-ui";
+import sections from "$assets/utils/sidebar-sections"; //Just for the demo, since there is a search element here
 
 const props = {
   title: "Page Title", //This will automatically set the page title for you unless you overwrite it with svelte:head
@@ -16,13 +17,27 @@ const props = {
         someFunction(), //you can all a function on click, like opening a modal;
       }
       href: null, //if you want this button to bring you to a different page. The benefit of href instead of onclick here is that the page will prefetch on hover for a faster load
-      dropdown: [] //if you want to open a menu of options, you can pass them in here
+      options: [] //if you want to open a menu of options, you can pass them in here
+    },
+    {
+      icon: "search",
+      color: "gray-lighter",
+      search: true,
+      typeahead: (input) => {
+        const filtered = fuzzySearch(input, sections, { keys: ["id"], sort: true });
+
+        return Promise.resolve(
+          filtered.map((obj) => {
+            return { label: obj.label, value: obj.id, href: `/${obj.id}`, new_page: false };
+          })
+        );
+      },
     },
     {
       icon: "more" //use one of the bundled icons or pass in your own svg
       onclick: null,
       href: null,
-      dropdown: [
+      options: [
         {
           label: "Option 1",
           caption: "This is an option caption"

@@ -252,6 +252,12 @@ export default [
     section: "Utils",
   },
   {
+    label: "sort",
+    id: "sort",
+    href: "/sort",
+    section: "Utils",
+  },
+  {
     label: "Change Log",
     id: "changelog",
     href: "/changelog",

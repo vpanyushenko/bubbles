@@ -122,6 +122,7 @@ import { getSelectedTableRows, deselectTableRows } from "./utils/table";
 import fuzzySearch from "$lib/utils/fuzzy-search";
 import merge from "$lib/utils/merge";
 import { api_url, fetchData } from "$lib/utils/fetch";
+import sort from "$lib/utils/sort";
 export {
   getFormData,
   validateInputs,
@@ -140,4 +141,5 @@ export {
   deselectTableRows,
   api_url,
   fetchData,
+  sort,
 };
