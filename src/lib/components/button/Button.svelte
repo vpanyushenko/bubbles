@@ -18,8 +18,6 @@
   export let disabled = false;
 
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
-
-  $: is_loading === true ? (disabled = true) : (disabled = false);
 </script>
 
 {#if href}
@@ -65,7 +63,7 @@
       class:mt
       class:wide
       {style}
-      {disabled}
+      disabled={is_loading || disabled}
     >
       <div class="flex">
         <span class="loading" class:hidden={!is_loading}><Spinner /></span>

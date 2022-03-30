@@ -28,7 +28,9 @@
 - Error component back button was not doing anything
 - CardHeader styles for fixed to fix positions of buttons with a long caption.
 - Support for error message on FileForm
-- The svelte goto function lo longer needs to be passed in via the configStore
+- The svelte goto function no longer needs to be passed in via the configStore
+- Focus states for non-text inputs
+- Buttons now become disabled when they are loading
 
 <br>
 

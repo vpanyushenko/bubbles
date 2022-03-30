@@ -112,7 +112,7 @@
   </div>
 </div>
 
-<Button {...button} onsubmit={submit} {disabled} />
+<Button {...button} onsubmit={submit} {disabled} mb={true} />
 
 <style>
   .field {

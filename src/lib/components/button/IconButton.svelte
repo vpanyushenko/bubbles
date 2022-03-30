@@ -67,14 +67,11 @@
 
   let search_active = false;
   let search_input, search_value, search_focused;
-  let disabled = false;
 
   $: $pageStore.search = search_active === true ? __search_id : null;
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
   $: typeahead_options = [];
-
-  $: is_loading === true ? (disabled = true) : (disabled = false);
 
   function iconClick(event) {
     $pageStore.clicked = id;
@@ -183,7 +180,7 @@
 {#if href}
   <a class="icon__btn" sveltekit:prefetch target={new_page ? "_blank" : ""} {href} on:click={iconClick}>
     <button
-      {disabled}
+      disabled={is_loading}
       class:disabled={is_loading}
       {id}
       style:background-color={color ? `var(--${color})` : null}
@@ -216,7 +213,7 @@
       on:click={onclick}
       class:search_active
       {id}
-      {disabled}
+      disabled={is_loading}
       style:background-color={dropdown && active ? `var(--primary)` : color ? `var(--${color})` : null}
       style:outline={dropdown && active ? "" : border ? `2px solid var(--${border})` : null}
       style:outline-offset={dropdown && active ? "" : border ? `-2px` : null}
