@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import Fuse from "$lib/utils/fuze";
   import icon_arrowRight from "./arrow-right.svg";
   import { v4 as uuid } from "@lukeed/uuid";
@@ -6,6 +7,8 @@
   import { onMount } from "svelte";
 
   const id = `dropdown-${uuid()}`;
+
+  const dispatch = createEventDispatcher();
 
   export let value = null;
   export let options = [];
@@ -67,6 +70,11 @@
     is_list_open = false;
     $pageStore.clicked = null;
     $pageStore.dropdown = null;
+
+    dispatch("select", {
+      value: value,
+      index: selected_index,
+    });
   }
 
   function hoverOption(event) {

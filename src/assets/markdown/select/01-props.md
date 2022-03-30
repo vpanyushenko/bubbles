@@ -82,3 +82,8 @@ Just an alias for `validate_on_blur`. Set whichever is best for you.
 If you want the select element to be searchable. By default, if you have more than 5 options, the search will be turned on. You can override this behavior if you want to.
 
 ---
+
+**onselect** `function(value)` <br>
+A function that will fire every time an item is selected. The function will be provided one argument, which will be the value of the value of the selected option.
+
+---

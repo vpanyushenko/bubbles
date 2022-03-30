@@ -1,4 +1,14 @@
-## Version 0.7.0@next
+## Version 0.7.1
+
+**Added**
+
+- onselect method for a Select element
+
+<br>
+
+---
+
+## Version 0.7.0
 
 **Added**
 

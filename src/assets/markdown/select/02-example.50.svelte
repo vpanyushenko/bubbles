@@ -22,6 +22,10 @@
     type="select"
     validation="required|string"
     vob={true}
+    onselect={(value) => {
+      //This will fire for every item you select with the value of the selected item
+      console.log(value);
+    }}
     options={[
       {
         label: "Circle",

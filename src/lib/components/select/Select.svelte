@@ -19,6 +19,7 @@
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
   export let min_width = true;
+  export let onselect = null;
 
   const _label = configLabel(label, validation);
 
@@ -139,7 +140,17 @@
   </div>
 
   {#if is_list_open}
-    <Dropdown bind:options {search} bind:value {type} />
+    <Dropdown
+      bind:options
+      {search}
+      bind:value
+      {type}
+      on:select={(event) => {
+        if (onselect) {
+          onselect(event?.detail?.value);
+        }
+      }}
+    />
   {/if}
 
   {#if desc}

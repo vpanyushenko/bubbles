@@ -24,6 +24,10 @@ type: code
     error="Please select a shape"
     desc="This is the description that will be below the select element. Any description field can render inline html elements."
     type="select"
+    onselect={(value) => {
+      //This will fire for every item you select with the value of the selected item
+      console.log(value);
+    }}
     validation="required|string"
     vob={true}
     options={[
