@@ -15,6 +15,7 @@
   export let new_page = false;
   export let href;
   export let style;
+  export let disabled = false;
 
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
 </script>
@@ -62,6 +63,7 @@
       class:mt
       class:wide
       {style}
+      disabled={is_loading || disabled}
     >
       <div class="flex">
         <span class="loading" class:hidden={!is_loading}><Spinner /></span>
@@ -106,6 +108,7 @@
     class:mt
     class:wide
     {style}
+    {disabled}
   >
     <div class="flex">
       <span class="loading" class:hidden={!is_loading}><Spinner style="margin: 0 0.5rem 0 0" /></span>
@@ -399,7 +402,7 @@
 
   .btn:disabled {
     cursor: not-allowed;
-    background: var(--gray);
-    color: var(--black);
+    background: var(--gray-light);
+    color: var(--gray-dark);
   }
 </style>

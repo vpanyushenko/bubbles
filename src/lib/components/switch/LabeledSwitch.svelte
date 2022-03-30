@@ -12,8 +12,12 @@
   export let onchange = null;
   export let validation = null;
   export let value = false;
-  export let form_indent = true;
-  export let background = true;
+  export let form_indent = false;
+  export let background = false;
+
+  if (background) {
+    form_indent = true;
+  }
 
   const _label =
     $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
@@ -72,6 +76,10 @@
     border: 1px solid var(--gray-light); */
   }
 
+  /* .field:focus-within {
+    border: 2px solid var(--primary);
+  } */
+
   .background {
     background: rgba(228, 228, 228, 0.3);
     border-radius: 12px;
@@ -91,6 +99,11 @@
 
   .field__desc.padding {
     padding: 0.625rem 1.375rem 0 !important;
+  }
+
+  .style__indent {
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
   }
 
   p {

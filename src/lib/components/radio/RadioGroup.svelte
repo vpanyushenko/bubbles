@@ -1,15 +1,20 @@
 <script>
   import { configStore, pageStore } from "$lib/stores/stores";
+  import { browser } from "$app/env";
 
   export let options = [];
   export let id = null;
   export let value = null;
-  export let error = "An error occured";
+  export let error = "An error occurred";
   export let label = "";
   export let desc = "";
   export let validation = null;
-  export let form_indent = true;
-  export let background = true;
+  export let form_indent = false;
+  export let background = false;
+
+  if (background) {
+    form_indent = true;
+  }
 
   const _label =
     $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
@@ -37,7 +42,7 @@
     <div class="options">
       {#each options as option}
         <label class="radio">
-          <input type="radio" name={id} value={option.value} bind:group={value} />
+          <input type="radio" name={id} value={option.value} bind:group={value} on:focus={focus} />
           <span class="radio__in">
             <span class="radio__tick" />
             <span class="radio__text">{option.label}</span>
@@ -51,6 +56,7 @@
 <style>
   .form__field__container {
     width: 100%;
+    border: 2px solid transparent;
   }
 
   .field {
@@ -180,5 +186,17 @@
     -webkit-transition: opacity 0.25s;
     -o-transition: opacity 0.25s;
     transition: opacity 0.25s;
+  }
+
+  .style__indent {
+    padding-left: 1.375rem;
+    padding-right: 1.375rem;
+  }
+
+  .form__field__container:focus,
+  .background:focus,
+  .background:focus-visible,
+  .form__field__container:focus-within {
+    border-color: var(--primary);
   }
 </style>

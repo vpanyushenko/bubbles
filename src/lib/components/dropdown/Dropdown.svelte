@@ -1,5 +1,5 @@
 <script>
-  import Fuse from "$lib/utils/fuzzy-search";
+  import Fuse from "$lib/utils/fuze";
   import icon_arrowRight from "./arrow-right.svg";
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/stores/stores";
@@ -96,17 +96,32 @@
       switch (event.key) {
         case "ArrowDown": {
           event.preventDefault();
-          is_using_pointer_device = false;
+
+          if (is_using_pointer_device) {
+            //the first arrow should select the first option. Even though the first index is already selected, it's not clear to the user
+            //So on this first moment, if the index is 0, we'll leave it at zero.
+          }
 
           if (selected_index === options.length - 1) {
             selected_index = 0;
           } else {
-            selected_index++;
+            if (is_using_pointer_device) {
+              //the first arrow should select the first option. Even though the first index is already selected, it's not clear to the user
+              //So on this first moment, if the index is 0, we'll leave it at zero.
 
-            if (filtered_options[selected_index] === "break") {
+              if (selected_index === 0) {
+                selected_index = 0;
+              }
+            } else {
+              selected_index++;
+            }
+
+            if (filtered_options[selected_index] === "break" || filtered_options[selected_index]?.break === true) {
               selected_index++;
             }
           }
+
+          is_using_pointer_device = false;
 
           if (id) {
             const option = document.getElementById(id).querySelectorAll(".option")[selected_index];
@@ -146,7 +161,7 @@
           value = option?.value;
 
           if (option.href) {
-            window.open(option.href, option.new_page ? "_blank" : "");
+            window.open(option.href, option.new_page ? "_blank" : "_self");
           }
 
           if (option.onclick) {
@@ -257,66 +272,68 @@
 
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     {#each filtered_options as option, index}
-      {#if option === "break"}
-        <hr tabindex="-1" />
-      {:else if option.href}
-        <a
-          class="option"
-          class:selected={option.value === value}
-          class:focused={selected_index === index && !is_using_pointer_device}
-          href={option.href}
-          target={option.new_page ? "_blank" : ""}
-          sveltekit:prefetch
-          on:mousedown={() => ($pageStore.is_fetching = true)}
-          on:mousedown={option.onselect}
-          on:mouseover={hoverOption}
-        >
-          <div class="option__content">
-            {#if option.img}
-              <img class="option__img" src={option.img} alt={option.label} />
-            {/if}
-
-            <div class="text">
-              <div class="title">{option.label}</div>
-              <input class="hidden" type="hidden" value={option.value} />
-              {#if option.caption}
-                <div class="select__info caption">{option.caption}</div>
+      {#if option.hidden !== true}
+        {#if option === "break" || option.break === true}
+          <hr tabindex="-1" />
+        {:else if option.href}
+          <a
+            class="option"
+            class:selected={option.value === value}
+            class:focused={selected_index === index && !is_using_pointer_device}
+            href={option.href}
+            target={option.new_page ? "_blank" : ""}
+            sveltekit:prefetch
+            on:mousedown={() => ($pageStore.is_fetching = true)}
+            on:mousedown={option.onselect}
+            on:mouseover={hoverOption}
+          >
+            <div class="option__content">
+              {#if option.img}
+                <img class="option__img" src={option.img} alt={option.label} />
               {/if}
-            </div>
-          </div>
 
-          {#if option.icon !== null}
-            <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
-          {/if}
-        </a>
-      {:else}
-        <div
-          class="option"
-          on:mousedown={option.onclick}
-          on:mousedown={option.onselect}
-          on:mousedown={selectOption}
-          on:mouseover={hoverOption}
-          class:selected={option.value === value}
-          class:focused={selected_index === index && !is_using_pointer_device}
-        >
-          <div class="option__content">
-            {#if option.img}
-              <img class="option__img" src={option.img} alt={option.label} />
+              <div class="text">
+                <div class="title">{option.label}</div>
+                <input class="hidden" type="hidden" value={option.value} />
+                {#if option.caption}
+                  <div class="select__info caption">{option.caption}</div>
+                {/if}
+              </div>
+            </div>
+
+            {#if option.icon !== null}
+              <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
             {/if}
-
-            <div class="text">
-              <div class="title">{option.label}</div>
-              <input class="hidden" type="hidden" value={option.value} />
-              {#if option.caption}
-                <div class="select__info caption">{option.caption}</div>
+          </a>
+        {:else}
+          <div
+            class="option"
+            on:mousedown={option.onclick}
+            on:mousedown={option.onselect}
+            on:mousedown={selectOption}
+            on:mouseover={hoverOption}
+            class:selected={option.value === value}
+            class:focused={selected_index === index && !is_using_pointer_device}
+          >
+            <div class="option__content">
+              {#if option.img}
+                <img class="option__img" src={option.img} alt={option.label} />
               {/if}
-            </div>
-          </div>
 
-          {#if option.icon !== null}
-            <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
-          {/if}
-        </div>
+              <div class="text">
+                <div class="title">{option.label}</div>
+                <input class="hidden" type="hidden" value={option.value} />
+                {#if option.caption}
+                  <div class="select__info caption">{option.caption}</div>
+                {/if}
+              </div>
+            </div>
+
+            {#if option.icon !== null}
+              <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
+            {/if}
+          </div>
+        {/if}
       {/if}
     {/each}
   </div>

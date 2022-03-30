@@ -43,7 +43,7 @@ Buttons are an array of <strong><a href="/icon-button">IconButtons</a></strong> 
 ---
 
 **filters** `array<IconButton>`<br>
-An array of filters that should be used if you have a `Table` inside of your `Card` and want to filter the data. The `Filters` are a special type of `Select` that will modify url query params, which will cause Svelte to refetch the data required.
+An array of filters that should be used if you have a `Table` inside of your `Card` and want to filter the data. The `Filters` are a special type of `Select` that will modify url query params, which will cause Svelte to refetch the data required. To get a more accurate loading indicator, it's advised to run the `hideLoading()` function with no props just before the promise from the load function resolves.
 
 <details>
 <summary>Show Details</summary>

@@ -1,32 +1,50 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { pageStore } from "$lib/stores/stores";
   import Checkbox from "$lib/components/checkbox/Checkbox.svelte";
+  import { addQueryParam } from "$lib/utils/url";
 
+  const dispatch = createEventDispatcher();
+
+  import arrow_up from "./arrow-up.svg";
+  import arrow_down from "./arrow-down.svg";
+
+  /**
+   * @prop {Array<Cell>} cells - the details for the header cells.
+   */
   export let cells = [];
+
+  if (!$pageStore.table) {
+    $pageStore.table = {};
+  }
+
+  $pageStore.table.selected_table_rows = 0;
+  $pageStore.table.checkbox_options = [];
+  $pageStore.table.id = null;
 
   let checkbox_value = false;
   let header;
 
-  $pageStore.selected_table_rows = 0;
-
   function selectAll(event) {
-    $pageStore.selected_table_rows = 0;
+    $pageStore.table.selected_table_rows = 0;
+    $pageStore.table.id = header.closest(".js-bubbles-table").id;
 
     header
       .closest(".js-bubbles-table")
       .querySelectorAll(".js-bubbles-table-row")
       .forEach((row) => {
         if (checkbox_value) {
-          $pageStore.selected_table_rows++;
+          $pageStore.table.selected_table_rows++;
         }
         row.querySelector(".checkbox").querySelector("input").checked = checkbox_value;
       });
   }
 
-  if (cells.find((obj) => obj.checkbox === true)) {
+  $: if (cells.find((obj) => obj.checkbox === true)) {
     const checkbox_cell = cells.find((obj) => obj.checkbox === true);
+
     if (checkbox_cell.options && checkbox_cell.options.length) {
-      $pageStore.checkbox_options = checkbox_cell.options;
+      $pageStore.table.checkbox_options = checkbox_cell.options;
     }
   }
 </script>
@@ -36,6 +54,30 @@
     <div class="cell" class:right={cell.align === "right" || cell.align === "end"}>
       {#if cell.checkbox}
         <Checkbox onchange={selectAll} bind:value={checkbox_value} />
+      {:else if cell.sort}
+        <span
+          class="sort"
+          on:click={(event) => {
+            if (cell.sort.order === "descending" || cell.sort.order === "desc") cell.sort.order = "ascending";
+            else cell.sort.order = "descending";
+
+            if (cell.sort.query) {
+              addQueryParam(cell.sort.key || cell?.sort?.id || cell.label, cell.sort.value || cell.sort.order);
+            }
+
+            dispatch("sort", {
+              sort_by: cell?.sort?.id || cell.label,
+              order: cell.sort?.order,
+            });
+          }}
+        >
+          <img
+            class="sort__icon"
+            src={cell.sort?.order === "ascending" ? arrow_up : arrow_down}
+            alt="Option Indicator"
+          />
+          {cell.label}
+        </span>
       {:else if cell.label}
         {cell.label}
       {/if}
@@ -79,6 +121,18 @@
 
   .row:last-child > .cell {
     border-bottom: none;
+  }
+
+  span.sort {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+  }
+
+  .sort__icon {
+    width: 1rem;
+    margin-right: 0.3rem;
   }
 
   @media only screen and (max-width: 1179px) {

@@ -1,14 +1,11 @@
 <script>
   import Card from "$lib/components/card/Card.svelte";
   import CardHeader from "$lib/components/card/CardHeader.svelte";
-  import Button from "$lib/components/button/Button.svelte";
 
   import Form from "$lib/components/form/Form.svelte";
-  import FileForm from "$lib/components/form/FileForm.svelte";
   import { validateInputs, getFormData } from "$lib/utils/form";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { showToast } from "$lib/utils/toast";
-  import fuzzySearch from "$lib/utils/fuzzy-search";
 
   const stripeFormInputs = [
     {

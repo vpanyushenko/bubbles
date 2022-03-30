@@ -14,14 +14,18 @@
   export let button = { color: "primary", label: "Submit" };
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
   export let label = "Select File";
+  export let callback = null;
 
-  let _placeholder_src = null;
+  $: disabled = src ? false : true;
+
+  let _placeholder_src, _input_element;
 
   if (Array.isArray(extensions)) {
     extensions = extensions.join(",");
   }
 
   function fileAdded(event) {
+    src = null;
     const input = event.target;
 
     if (input.files && input.files[0]) {
@@ -64,8 +68,16 @@
         return res.json();
       })
       .then((res) => {
-        if (toast) {
+        if (toast && res.status && res.status >= 200 && res.status < 300) {
           showToast(res.message, "success");
+        }
+
+        if (toast && res.status && res.status >= 400) {
+          showToast(res.message, "error");
+        }
+
+        if (callback) {
+          callback();
         }
       })
       .catch((err) => {
@@ -74,6 +86,8 @@
         }
       })
       .finally(() => {
+        src = null;
+        _input_element.value = "";
         hideLoading(button_id);
       });
   }
@@ -82,7 +96,14 @@
 <div class="field">
   <div class="image__preview">
     <span class:hidden={src}>{label}</span>
-    <input type="file" class="upload__button" on:change={fileAdded} {id} accept={extensions} />
+    <input
+      type="file"
+      class="upload__button"
+      on:change={fileAdded}
+      {id}
+      accept={extensions}
+      bind:this={_input_element}
+    />
     {#if src && !_placeholder_src}
       <img {src} alt="Upload Preview" />
     {:else if src && _placeholder_src}
@@ -91,7 +112,7 @@
   </div>
 </div>
 
-<Button {...button} onsubmit={submit} />
+<Button {...button} onsubmit={submit} {disabled} mb={true} />
 
 <style>
   .field {

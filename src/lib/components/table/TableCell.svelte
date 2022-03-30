@@ -65,8 +65,6 @@
     if (_dom_element && href) {
       _table_row_icon_button_id = _dom_element.closest(".row").querySelector(".icon__btn").querySelector("button").id;
     }
-
-    $pageStore.selected_table_rows = 0;
   });
 
   function hrefClicked(event) {
@@ -74,7 +72,7 @@
   }
 
   function selectItem(event) {
-    $pageStore.selected_table_rows = 0;
+    $pageStore.table.selected_table_rows = 0;
     let total = _checkbox_cell.closest(".js-bubbles-table").querySelectorAll(".js-bubbles-table-row").length;
 
     _checkbox_cell
@@ -82,13 +80,14 @@
       .querySelectorAll(".js-bubbles-table-row")
       .forEach((row) => {
         if (row.querySelector(".checkbox").querySelector("input").checked) {
-          $pageStore.selected_table_rows++;
+          $pageStore.table.selected_table_rows++;
         }
       });
 
     let header = _checkbox_cell.closest(".js-bubbles-table").querySelector(".header");
+    $pageStore.table.id = _checkbox_cell.closest(".js-bubbles-table").id;
 
-    if ($pageStore.selected_table_rows === total && header) {
+    if ($pageStore.table.selected_table_rows === total && header) {
       header.querySelector(".checkbox").querySelector("input").checked = true;
     } else {
       header.querySelector(".checkbox").querySelector("input").checked = false;

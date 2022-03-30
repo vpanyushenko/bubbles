@@ -6,9 +6,24 @@
   import { page } from "$app/stores";
 
   export let id = uuid();
+  /**
+   * @prop {Array<Integers>} rows_per_page - The different limits you want to support
+   */
   export let rows_per_page = [10, 25, 50, 100];
-  export let limit = rows_per_page ? rows_per_page[0] : 10;
+
+  /**
+   * @prop {?Integer} limit - The current limit you are supporting. Will get it from query params or use the first value from `rows_per_page`
+   */
+  export let limit = null;
+
+  /**
+   * @prop {?Integer} count - the total number of documents known.
+   */
   export let count = null;
+
+  /**
+   * @prop {Integer} [max_buttons=10] - The maximum buttons that will be displayed to the end user.
+   */
   export let max_buttons = 10;
   export let arrows = true;
   export let first_last_arrows = false;
@@ -19,7 +34,7 @@
   let dom_component_width, dom_component_is_small, _max_buttons;
 
   $: current_page = Number($page.url.searchParams.get(page_query_name)) || 1;
-  $: current_limit = Number($page.url.searchParams.get(limit_query_name)) || limit;
+  $: current_limit = Number($page.url.searchParams.get(limit_query_name)) || limit ? limit : rows_per_page[0];
 
   const _first = uuid();
   const _prev = uuid();
@@ -97,7 +112,7 @@
     } else {
       limit = Number($page.url.searchParams.get(limit_query_name));
     }
-  } else {
+  } else if (!limit) {
     limit = rows_per_page && rows_per_page.length ? rows_per_page[0] : 10;
   }
 
@@ -156,7 +171,7 @@
             addQueryParam(limit_query_name, limit, { goto: false });
             addQueryParam(page_query_name, button, { show_loading: id, goto: true });
           },
-          transparent: current_page.toString() !== button.toString(),
+          color: current_page.toString() !== button.toString() ? "" : "gray-lighter",
         };
       } else {
         const _onclick = () => {
@@ -168,18 +183,20 @@
           id: id,
           label: button.label,
           onclick: button.onclick ? button.onclick : _onclick,
-          transparent: current_page.toString() !== button.label.toString(),
+          color: current_page.toString() !== button.toString() ? "" : "gray-lighter",
         };
       }
     });
   }
+
+  $: console.log(formatted_rows_per_page[0]);
 </script>
 
 <div class="pagination" class:is_small={dom_component_is_small === true} bind:clientWidth={dom_component_width}>
   {#if rows_per_page && rows_per_page.length}
-    <div class="rows">
+    <div class="rows" class:hidden={count && formatted_rows_per_page[0].value >= count}>
       <p>Rows per page:</p>
-      <span><Select value={limit} {id} options={formatted_rows_per_page} /></span>
+      <span><Select value={current_limit} {id} options={formatted_rows_per_page} /></span>
     </div>
   {/if}
 
@@ -211,9 +228,7 @@
 
     {#if formattedButtons.length > 1}
       {#each formattedButtons as button}
-        <IconButton id={button.id} onclick={button.onclick} bind:transparent={button.transparent}
-          >{button.label}</IconButton
-        >
+        <IconButton id={button.id} onclick={button.onclick} bind:color={button.color}>{button.label}</IconButton>
       {/each}
     {:else if count}
       <p class="viewing__page">Viewing page: 1 of 1</p>

@@ -10,6 +10,14 @@
 - Checkbox, Switch, and Radio components have a `background` property to make them look in line with other form elements.
 - Roomy and compact styles for Tables.
 - Added options to include checkboxes on table rows and utility functions to manipulate them.
+- Add callback option to FileForm
+- FileForm input will clear value after promise completes
+- The dropdown component can now be hidden with the hidden property
+- The dropdown component line breaks are now set as a boolean
+- Ability to hide a sidebar section with the hidden property - perhaps for role based account access
+- Added search functionality to the IconButton component
+- SegmentedController supports hrefs
+- New sort function and sort functionality for TableHeaders
 
 **Fixed**
 
@@ -19,6 +27,10 @@
 - ListItem and ListItemTimeline support wrapping long elements
 - Error component back button was not doing anything
 - CardHeader styles for fixed to fix positions of buttons with a long caption.
+- Support for error message on FileForm
+- The svelte goto function no longer needs to be passed in via the configStore
+- Focus states for non-text inputs
+- Buttons now become disabled when they are loading
 
 <br>
 

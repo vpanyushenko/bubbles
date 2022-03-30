@@ -1,7 +1,6 @@
 import { browser } from "$app/env";
 import { showLoading, hideLoading } from "$lib/utils/loading";
-import { configStore } from "$lib/stores/config.store";
-import { get } from "svelte/store";
+import { session } from "$app/stores";
 
 /**
  * Adds a url query param based on a key value pair
@@ -12,15 +11,10 @@ import { get } from "svelte/store";
  * @param {String} [options.show_loading] - The ID of an element you want to shoe the animation for. The loading state will automatically stop when the load function completes it's promise.
  * @param {Array<String>} [options.keep_only=[]] - An array of query parameter strings that you want to keep. If the array is empty, then no query parameters will be deleted
  */
-const addQueryParam = (key, value, options = { goto: false, show_loading: "", keep_only: [] }) => {
-  const _options = {
-    goto: !options?.goto ? false : true,
-    show_loading: options?.show_loading ? options.show_loading : "",
-    keep_only: options?.keep_only ? options.keep_only : [],
-  };
-
-  const svelteGoto = get(configStore).goto;
-  const debug = get(configStore).debug;
+const addQueryParam = (key, value, options = { goto: true, show_loading: "", keep_only: [] }) => {
+  const goto = options.goto || true;
+  const show_loading = options.show_loading || null;
+  const keep_only = options.keep_only || [];
 
   if (browser) {
     const queryParams = new URLSearchParams(window.location.search);
@@ -33,7 +27,7 @@ const addQueryParam = (key, value, options = { goto: false, show_loading: "", ke
 
     history.replaceState(null, null, "?" + queryParams.toString());
 
-    if (_options?.keep_only && _options.keep_only.length > 0) {
+    if (keep_only && keep_only.length > 0) {
       //remove all params that we do not want to keep
       const all_query_params = Object.fromEntries(queryParams.entries());
 
@@ -41,7 +35,7 @@ const addQueryParam = (key, value, options = { goto: false, show_loading: "", ke
 
       if (param_keys) {
         param_keys.forEach((key) => {
-          if (!_options.keep_only.find((a) => a === key)) {
+          if (!keep_only.find((a) => a === key)) {
             queryParams.delete(key);
             history.replaceState(null, null, "?" + queryParams.toString());
           }
@@ -49,25 +43,20 @@ const addQueryParam = (key, value, options = { goto: false, show_loading: "", ke
       }
     }
 
-    if (_options?.goto || _options?.show_loading) {
-      if (_options?.show_loading) {
-        showLoading(_options.show_loading);
+    if (goto || show_loading) {
+      if (show_loading) {
+        showLoading(show_loading);
+
+        setTimeout(() => {
+          hideLoading(show_loading);
+        }, 2000);
       }
 
-      if (svelteGoto) {
-        svelteGoto(window.location.href, { keepfocus: true, replaceState: true, noscroll: true }).then(() => {
-          if (_options.show_loading) {
-            hideLoading(_options.show_loading);
-          }
+      if (goto) {
+        session.update((obj) => {
+          obj.timestamp = Date.now();
+          return obj;
         });
-      } else {
-        if (debug) {
-          console.log(
-            "[Bubbles]: You did not pass the Svelte Kit goto function to the Bubbles configStore so the load function is being rerun using browser window APIs."
-          );
-        }
-
-        window.location.replace(window.location.href);
       }
     }
   }
@@ -99,4 +88,26 @@ const getQueryParam = (url, key = null) => {
   return all_query_params;
 };
 
-export { addQueryParam, getQueryParam };
+/**
+ * Deletes a url query param
+ * @param {String} param - The name of the url param you want to delete
+ */
+const deleteQueryParam = (param) => {
+  if (browser) {
+    const queryParams = new URLSearchParams(window.location.search);
+    const all_query_params = Object.fromEntries(queryParams.entries());
+
+    const param_keys = Object.keys(all_query_params);
+
+    if (param_keys) {
+      param_keys.forEach((key) => {
+        if (key === "search") {
+          queryParams.delete(key);
+          history.replaceState(null, null, "?" + queryParams.toString());
+        }
+      });
+    }
+  }
+};
+
+export { addQueryParam, getQueryParam, deleteQueryParam, addQueryParam as setQueryParam };

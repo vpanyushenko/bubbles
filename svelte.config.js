@@ -20,9 +20,9 @@ const config = {
   ],
   kit: {
     adapter: vercel(),
-    // prerender: {
-    //   enabled: true,
-    // },
+    prerender: {
+      enabled: true,
+    },
     vite: {
       // plugins: [inlineSvg()],
       resolve: {

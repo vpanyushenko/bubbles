@@ -62,6 +62,11 @@ There can be times when you have pages with multiple href values. For example, i
 ---
 
 section[].**notifications** `Integer` <br>
-f you want to set an initial value for notifications when the component mounts you can do so here. Otherwise, you'll update notifications counts using the `pageStore`
+If you want to set an initial value for notifications when the component mounts you can do so here. Otherwise, you'll update notifications counts using the `pageStore`
+
+---
+
+section[].**hidden** `boolean` <br>
+The section will not be rendered to the DOM.
 
 ---

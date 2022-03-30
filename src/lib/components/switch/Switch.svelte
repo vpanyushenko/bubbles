@@ -24,7 +24,19 @@
       }, 250);
     }
   }
+
+  function keydown(event) {
+    if (event.key === "Enter" && document.activeElement.id === id) {
+      if (value) {
+        value = false;
+      } else {
+        value = true;
+      }
+    }
+  }
 </script>
+
+<svelte:body on:keydown={keydown} />
 
 <label class="switch" class:active class:disabled={disabled || is_loading}>
   <input
@@ -89,6 +101,7 @@
     -webkit-transition: all 0.25s;
     -o-transition: all 0.25s;
     transition: all 0.25s;
+    outline: 2px solid transparent;
   }
 
   .switch__box:before {
@@ -120,6 +133,10 @@
     -webkit-transform: translate(2.5rem, -50%);
     -ms-transform: translate(2.5rem, -50%);
     transform: translate(2.5rem, -50%);
+  }
+
+  input:focus + .switch__in .switch__box {
+    outline-color: var(--primary);
   }
 
   .loading:before {

@@ -8,16 +8,12 @@
   import { formatPosts } from "$assets/utils/posts";
   import { fuzzySearch } from "$lib/index";
   import sections from "$assets/utils/sidebar-sections";
-  const all_posts = import.meta.globEager(`../assets/markdown/header/**/*`);
+  const all_posts = import.meta.globEager(`../assets/markdown/fuzzy-search/**/*`);
   const rows = formatPosts(all_posts);
 </script>
 
 <Header
-  title="Header"
-  breadcrumbs={[
-    { label: "Hello", href: "/header" },
-    { label: "World", href: "/header" },
-  ]}
+  title="Fuzzy Search"
   buttons={[
     {
       icon: "search",

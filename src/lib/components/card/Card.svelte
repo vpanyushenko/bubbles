@@ -36,7 +36,7 @@
   // out:fly={{ y: -50, duration: 250 }}
 </script>
 
-<div class="card" class:shadow class:border class:height-100={height100} {style}>
+<div class="card js-bubbles-card" class:shadow class:border class:height-100={height100} {style}>
   {#if header && Object.keys(header).length}
     <CardHeader {...header} />
   {/if}
@@ -55,6 +55,7 @@
     padding: 0.625rem 2rem 0.625rem;
     border-radius: 1.5rem;
     background: var(--white);
+    width: -webkit-fill-available;
   }
 
   .shadow {

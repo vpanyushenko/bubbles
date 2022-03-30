@@ -28,7 +28,11 @@ Normally cells are aligned to the left, but if you want to align the header to t
 <br>
 <br>
 
-**Below is a special use case if you are adding a checkbox to your header which will allow you to select to deselect all rows**.
+## "Select All" Checkbox Props
+
+In some tables, you'll want the user to select multiple items and do an action, like deleting all items. Each `TableRow` can have a checkbox component. Adding an option to the header will let you select and deselect all checkboxes in the same column, and adjust to UI of the `CardHeader` to display options.
+
+<br>
 
 ---
 
@@ -55,3 +59,46 @@ An array that will contain the options the user can select. These options should
 </details><br>
 
 ---
+
+<br>
+<br>
+
+## Table Sorting
+
+At some point you'll want to sort the data in your table. There are two ways you can sort the data. First, you can sort the data in place, that means you are not refetching data from an API and the other route is to fetch the data from the API and have the server do the sorting. The sorting props let you do both. Refetching data will add query parameters to the url, which will trigger the load function to run. Make sure that you have destructured the `url` property in the load function.
+
+<br>
+
+---
+
+cell[].**sort** `Object`<br>
+Set this value to sort the table rows for the end user. The result is when the user clicks on the cell to sort, an event gets fired. If you are modifying the query params and refetching data, you don't need to do anything at this point. If you are sorting locally, you'll need to listen for the sort event dispatched to the header, and sort the data yourself. Bubbles has a built in utility function that can [sort](/sort) for you.
+
+<details>
+<summary>Show Details</summary>
+
+|                                                                                                                                        |
+| :------------------------------------------------------------------------------------------------------------------------------------- |
+| cell.sort.**id** `string`<br> The prop name you want to search for. If the prop is nested, use dot notation like "hello.world"         |
+| cell.sort.**order** `string`<br> The default order for the displayed arrow. Defaults to "ascending" but you can change to "descending" |
+| cell.sort.**query** `boolean`<br> Set to true if you want the sort to add query params to refetch the API                              |
+| cell.sort.**key** `string`<br> The key for the query param. Will default to the ID                                                     |
+| cell.sort.**value** `string`<br> The value for the query param, will default to the `order`                                            |
+
+<br>
+
+```js
+import { TableHeader, sort } from "bubbles-ui";
+
+$: data = [] //This is the data for your table
+
+<TableHeader
+  on:sort={(event) => (data = sort(data, event.detail.sort_by, event.detail.order))} //Will sort the data locally without refetching
+  cells={[
+    { label: "Name", sort: { id: "name", query: true, key: "name" } }, //Will add a query param, with custom key
+    { label: "Weight", sort: { id: "size.weight" } }, //The sort function will sort by numbers and find the value nested on obj.size.weight
+  ]}
+/>;
+```
+
+</details><br>

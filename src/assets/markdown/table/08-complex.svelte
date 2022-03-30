@@ -16,9 +16,33 @@
 
   import store from "$assets/utils/store";
   import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
+  import { sort } from "$lib/index";
 
   $: pagination = $store?.pagination ? $store.pagination : {};
   $: pokemon = $store.pokemon ? $store.pokemon : [];
+
+  const types = [
+    "All",
+    "break",
+    "Normal",
+    "Fire",
+    "Water",
+    "Grass",
+    "Electric",
+    "Ice",
+    "Fighting",
+    "Poison",
+    "Ground",
+    "Flying",
+    "Psychic",
+    "Bug",
+    "Rock",
+    "Ghost",
+    "Dark",
+    "Dragon",
+    "Steel",
+    "Fairy",
+  ];
 
   function typeColor(type) {
     switch (type) {
@@ -67,32 +91,58 @@
 <Row>
   <Column>
     <Card>
-      <CardHeader title="Complex Table Example" border={false} />
-      <Table
-        id="pokemon-table"
-        padding="roomy"
-        header={[
-          {
-            checkbox: true,
-            options: [
-              {
-                label: "Print Selected Rows To Console",
-                value: "label1",
-                onselect: (event) => {
-                  console.log(getSelectedTableRows("pokemon-table"));
-                  deselectTableRows("pokemon-table");
-                },
-              },
-            ],
-          },
-          { label: null },
-          { label: "Name" },
-          { label: "Weight" },
-          { label: "Type(s)" },
-          { label: "Possible Moves", align: "end" },
-          { label: null, align: "end" },
+      <CardHeader
+        title="Complex Table Example"
+        caption="This example uses an external API for data, which may run slowly especially when using the search."
+        buttons={[
+          { icon: "search", color: "gray-lighter", search: true },
+          { icon: "more", color: "gray-lighter" },
         ]}
-      >
+        border={false}
+        filters={[
+          {
+            id: "type",
+            label: "Type",
+            value: "",
+            options: types.map((type) => {
+              if (type === "break") {
+                return "break";
+              }
+
+              return {
+                label: type,
+                value: type === "All" ? "" : type.toLowerCase(),
+              };
+            }),
+          },
+        ]}
+      />
+      <Table id="pokemon-table" padding="roomy">
+        <TableHeader
+          on:sort={(event) => (pokemon = sort(pokemon, event.detail.sort_by, event.detail.order))}
+          cells={[
+            {
+              checkbox: true,
+              options: [
+                {
+                  label: "Print Selected Rows To Console",
+                  value: "label1",
+                  onselect: (event) => {
+                    console.log(getSelectedTableRows("pokemon-table"));
+                    deselectTableRows("pokemon-table");
+                  },
+                },
+              ],
+            },
+            { label: null },
+            { label: "Name", sort: { id: "name" } },
+            { label: "Weight", sort: { id: "weight" } },
+            { label: "Type(s)" },
+            { label: "Possible Moves", align: "end" },
+            { label: null, align: "end" },
+          ]}
+        />
+
         {#each pokemon as poke}
           <TableRow id={poke.id}>
             <TableCell checkbox={{ value: false }} />

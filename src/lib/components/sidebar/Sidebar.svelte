@@ -12,6 +12,8 @@
   export let onclick = null;
   export let oncontextmenu = null;
 
+  sections = sections.filter((section) => section.hidden !== true);
+
   const sectionsWithTitles = {};
   let path = $page.url.pathname;
   let activeSection = false;

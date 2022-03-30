@@ -8,8 +8,6 @@ type: code
 <script>
   import { Input, fuzzySearch } from "bubbles-ui";
 
-  //The fuzzy search is built into the bubbles package but is not ready as a general purpose
-  //utility function yet. It's essentially a wrapper around fuze search
 </script>
 
 <Input
@@ -102,14 +100,8 @@ type: code
       },
     ];
 
-    const fuse = new fuzzySearch(states, {
-      shouldSort: false,
-      keys: ["name", "abbreviation"],
-      minMatchCharLength: 2,
-      threshold: 0.4,
-    });
-
-    return Promise.resolve(fuse.search(input).map((obj) => obj.item.name));
+    const filtered = fuzzySearch(input, states, { keys: ["name", "abbreviation"], sort: true });
+    return Promise.resolve(filtered.map((obj) => obj.item.name));
   }}
 />
 
