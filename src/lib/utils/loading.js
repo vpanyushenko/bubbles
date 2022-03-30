@@ -11,10 +11,14 @@ const showLoading = (id) => {
 
 const hideLoading = (id) => {
   pageStore.update((store) => {
-    store.loading = store.loading.filter((a) => a !== id);
-
-    if (!id) {
+    if (Array.isArray(store.loading)) {
+      store.loading = store.loading.filter((a) => a !== id);
+    } else {
       store.loading = [];
+    }
+
+    if (store.clicked === id) {
+      store.clicked = null;
     }
 
     return store;
