@@ -6,5 +6,7 @@ export const configStore = writable({
   toast_delay: 5500,
   error_delay: 4500,
   debug: true,
-  goto: null,
+  padding: "roomy",
+  radius: "rounded",
+  max_content_width: 1200,
 });

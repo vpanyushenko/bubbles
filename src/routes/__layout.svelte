@@ -11,6 +11,10 @@
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import sections from "$assets/utils/sidebar-sections";
+  import { configStore } from "$lib/index";
+
+  $configStore.padding = "compact";
+  $configStore.radius = "blocky";
 
   const sidebarConfig = {
     logo: "/logo.svg",

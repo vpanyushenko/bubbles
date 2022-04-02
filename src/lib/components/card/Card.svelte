@@ -1,7 +1,7 @@
 <script>
-  import { pageStore } from "$lib/stores/page.store";
   import CardHeader from "./CardHeader.svelte";
   import CardFooter from "./CardFooter.svelte";
+  import { configStore } from "$lib/index";
 
   // import { scale, fade, fly } from "svelte/transition";
   // import { quintOut } from "svelte/easing";
@@ -14,6 +14,7 @@
   export let shadow = true;
   export let border = null;
   export let height100 = false;
+  export let radius = $configStore.radius || "rounded";
 
   let style = "";
 
@@ -36,7 +37,14 @@
   // out:fly={{ y: -50, duration: 250 }}
 </script>
 
-<div class="card js-bubbles-card" class:shadow class:border class:height-100={height100} {style}>
+<div
+  class="card js-bubbles-card"
+  class:shadow
+  class:border
+  class:height-100={height100}
+  {style}
+  class:blocky={radius === "blocky"}
+>
   {#if header && Object.keys(header).length}
     <CardHeader {...header} />
   {/if}
@@ -56,6 +64,10 @@
     border-radius: 1.5rem;
     background: var(--white);
     width: -webkit-fill-available;
+  }
+
+  .blocky {
+    border-radius: 0.5rem;
   }
 
   .shadow {

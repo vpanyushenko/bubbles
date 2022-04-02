@@ -579,7 +579,7 @@ hr {
   order: -99999;
 }
 
-.page__row_border .page__col:nth-of-type(2) {
+.page__row.border .page__col:nth-of-type(2) {
   border-left: 1px solid #e4e4e4;
 }
 
@@ -625,6 +625,27 @@ hr {
   padding-left: 1.5rem;
 }
 
+.page__row.compact,
+.page__grid.compact,
+.page__col.compact,
+.page__col_w100.compact {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.page__col.compact:nth-of-type(1),
+.page__col.page__col_w50.compact:nth-of-type(1) {
+  padding-right: 0.4rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+.page__col.compact:nth-of-type(2),
+.page__col.page__col_w50.compact:nth-of-type(2) {
+  padding-left: 0.4rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
 @media only screen and (max-width: 1419px) {
   .page__grid,
   .page__col,
@@ -659,7 +680,7 @@ hr {
     display: block;
   }
 
-  .page__row_border .page__col:nth-of-type(2) {
+  .page__row.border .page__col:nth-of-type(2) {
     border: none;
   }
   .page__grid,
@@ -710,7 +731,28 @@ hr {
   .page__col_w100 + .page__row,
   .page__row + .page__col_w100,
   .page__col + .page__col {
-    margin-top: 3rem;
+    padding-top: 3rem;
+  }
+
+  .page__row.compact,
+  .page__grid.compact,
+  .page__col.compact,
+  .page__col_w100.compact {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .page__col.compact:nth-of-type(1),
+  .page__col.page__col_w50.compact:nth-of-type(1) {
+    padding-right: 0.4rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+  .page__col.compact:nth-of-type(2),
+  .page__col.page__col_w50.compact:nth-of-type(2) {
+    padding-left: 0.4rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
   }
 }
 
