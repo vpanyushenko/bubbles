@@ -19,6 +19,10 @@
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
   export let min_width = true;
+
+  /**
+   * @prop {Function} onselect - A function that will be provided with the value of the selected option
+   */
   export let onselect = null;
 
   const _label = configLabel(label, validation);
