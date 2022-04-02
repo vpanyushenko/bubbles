@@ -83,7 +83,6 @@ export { Table, TableCell, TableHeader, TableRow, Pagination };
 import SidebarPageWrapper from "./layouts/SidebarPageWrapper.svelte";
 import PageWrapper from "./layouts/PageWrapper.svelte";
 import Row from "./layouts/Row.svelte";
-import RowBorder from "./layouts/RowBorder.svelte";
 import RowFlex from "./layouts/RowFlex.svelte";
 import Column from "./layouts/Column.svelte";
 import Column50 from "./layouts/Column50.svelte";
@@ -97,7 +96,6 @@ export {
   SidebarPageWrapper,
   PageWrapper,
   Row,
-  RowBorder,
   RowFlex,
   Column,
   Column50,
