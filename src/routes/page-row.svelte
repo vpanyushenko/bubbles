@@ -10,6 +10,6 @@
   const rows = formatPosts(all_posts);
 </script>
 
-<Header title="Page Row" />x
+<Header title="Page Row" />
 
 <Rows {rows} />
