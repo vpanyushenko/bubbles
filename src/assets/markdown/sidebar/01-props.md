@@ -26,6 +26,16 @@ Where to navigate if the user clicks on the logo.
 
 ---
 
+**flat** `boolean` <code class="blue">true</code><br>
+A flat sidebar will not have any nesting but will instead label groups. Settings with to false will create groups into dropdowns. Icons will not be displayed for sections inside of the group, instead the group will take the icon of the first section and display it, if there is an icon there.
+
+---
+
+**padding** `string` <code class="blue">roomy</code><br>
+You can change this to "compact" to increase information density.
+
+---
+
 **sections** `Array<Object>` <br>
 These objects will be all of the sections in the sidebar.
 
@@ -41,7 +51,7 @@ This is the text that will be displayed for the user.
 
 ---
 
-section[].**section** `string` <br>
+section[].**group** `string` <br>
 If you want to divide your sidebar into groups, you can add a section property. In this example, the sidebar is divided into four sections, "Getting Started", "Layouts", "Components", and "Utils"
 
 ---

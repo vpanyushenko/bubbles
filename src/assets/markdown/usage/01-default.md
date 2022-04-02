@@ -5,7 +5,7 @@ height: 100
 
 ## Default Config
 
-You can import a store called <code class="lc">configStore</code> into your initial \_\_layout.svelte file to set some default behaviors for Bubbles. You can view the table below for all of the default options:
+You can import a store called <code class="lc">configStore</code> into your initial `__layout.svelte` file to set some default behaviors for Bubbles. You can view the table below for all of the default options:
 
 <br>
 

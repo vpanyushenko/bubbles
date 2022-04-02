@@ -188,8 +188,6 @@
       }
     });
   }
-
-  $: console.log(formatted_rows_per_page[0]);
 </script>
 
 <div class="pagination" class:is_small={dom_component_is_small === true} bind:clientWidth={dom_component_width}>

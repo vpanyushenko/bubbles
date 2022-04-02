@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore, configStore } from "$lib/stores/stores";
   import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
   import { hexToRgb, getColorFilter } from "$lib/utils/colors";
@@ -10,13 +10,22 @@
   export let logo = null;
   export let href = "/";
   export let onclick = null;
-  export let oncontextmenu = null;
+  export let padding = $configStore.padding || "roomy";
+  export let flat = true;
 
   sections = sections.filter((section) => section.hidden !== true);
+
+  const has_groups = sections.find((a) => a.group);
+
+  if (!has_groups) {
+    flat = true;
+  }
 
   const sectionsWithTitles = {};
   let path = $page.url.pathname;
   let activeSection = false;
+  let open_section = null;
+
   $pageStore.sidebar.is_mounted = true;
 
   $: if (!$navigating) {
@@ -45,12 +54,12 @@
       $pageStore.sidebar.active_item = section.id;
     }
 
-    if (!sectionsWithTitles[section.section]) {
-      sectionsWithTitles[section.section] = [];
+    if (!sectionsWithTitles[section.group]) {
+      sectionsWithTitles[section.group] = [];
     }
 
     section = section;
-    sectionsWithTitles[section.section].push(section);
+    sectionsWithTitles[section.group].push(section);
   });
 
   if (!activeSection) {
@@ -114,37 +123,54 @@
     }
   }
 
-  $: _sections = formatSidebar(sectionsWithTitles, $pageStore);
+  $: groups = formatSidebar(sectionsWithTitles, $pageStore);
 
   $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar.is_toggled);
 
   function toggleSidebar(event) {
     $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
+
+  function toggleSection(index) {
+    if (open_section === index) {
+      open_section = null;
+    } else {
+      open_section = index;
+    }
+  }
 </script>
 
-<nav class="sidebar" class:active={$pageStore.sidebar.is_toggled}>
+<nav class="sidebar" class:active={$pageStore.sidebar.is_toggled} class:compact={padding === "compact"}>
   <section class="top">
     {#if href}
       <a {href} on:click={onclick}>
         <img src={logo} alt="Logo" />
       </a>
     {:else}
-      <img src={logo} alt="Logo" on:click={onclick} on:contextmenu={oncontextmenu} />
+      <img src={logo} alt="Logo" on:click={onclick} />
     {/if}
     <button on:click={toggleSidebar} />
   </section>
 
-  <section class="sidebar__wrapper">
+  <section class="sidebar__wrapper" class:flat>
     <div class="sidebar__inner">
       <div class="sidebar__list">
-        {#each Object.keys(_sections) as section}
-          <div class="sidebar__group">
-            {#if section !== "undefined"}
-              <div class="caption">{section}</div>
+        {#each Object.keys(groups) as group, index}
+          <div class="sidebar__group" class:open={open_section === index} class:flat>
+            {#if group !== "undefined"}
+              {#if flat === true}
+                <div class="caption">{group}</div>
+              {:else}
+                <div class="group__dropdown cursor-pointer" on:click={() => toggleSection(index)}>
+                  {#if groups?.[group] && groups[group]?.[0]?.icon}
+                    <img src={groups[group][0].icon} alt="Icon" />
+                  {/if}
+                  <div class="group__dropdown__text">{group}</div>
+                </div>
+              {/if}
             {/if}
-            <div class="sidebar__menu">
-              {#each _sections[section] as obj}
+            <div class="sidebar__menu" class:hidden={!flat && open_section !== index}>
+              {#each groups[group] as obj}
                 <a
                   class="sidebar__item cursor-pointer"
                   class:active={obj.active}
@@ -154,7 +180,7 @@
                     sidebarItemSelected(obj);
                   }}
                 >
-                  {#if obj.icon}
+                  {#if obj.icon && flat}
                     <div class="sidebar__icon">
                       {#if !$navigating && !obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked !== obj.id}
                         <!-- Hide the icon when the page is navigating and the to path and href are the same -->
@@ -266,13 +292,13 @@
     line-height: 1.33333;
   }
 
-  .sidebar__group:not(:last-child) {
+  .flat.sidebar__group:not(:last-child) {
     position: relative;
     margin-bottom: 2.5rem;
     padding-bottom: 30px;
   }
 
-  .sidebar__group:not(:last-child):before {
+  .flat.sidebar__group:not(:last-child):before {
     content: "";
     position: absolute;
     left: 1.25rem;
@@ -306,6 +332,78 @@
     margin-bottom: 1.25rem;
   }
 
+  .group__dropdown {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 56px;
+    padding: 0 1.25rem;
+    border-radius: 12px;
+    background: transparent;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray);
+    -webkit-transition: color 0.25s;
+    -o-transition: color 0.25s;
+    transition: color 0.25s;
+    -webkit-transition: all 0.25s;
+    -o-transition: all 0.25s;
+    transition: all 0.25s;
+  }
+
+  .sidebar.compact .group__dropdown {
+    height: 3rem;
+  }
+
+  .group__dropdown:hover {
+    cursor: pointer;
+    color: var(--dark);
+    background: var(--gray-lightest);
+  }
+
+  .group__dropdown:before {
+    content: "";
+    position: absolute;
+    right: 2rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath fill='%231b1d21' d='M.293.293A1 1 0 0 1 1.613.21l.094.083L7 5.585 12.293.293a1 1 0 0 1 1.32-.083l.094.083a1 1 0 0 1 .083 1.32l-.083.094-6 6a1 1 0 0 1-1.32.083l-.094-.083-6-6a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E")
+      no-repeat 50% 50%/100% auto;
+    -webkit-transition: -webkit-transform 0.25s;
+    transition: -webkit-transform 0.25s;
+    -o-transition: transform 0.25s;
+    transition: transform 0.25s;
+    transition: transform 0.25s, -webkit-transform 0.25s;
+  }
+
+  .sidebar__group.open .group__dropdown:before {
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+
+  img + .group__dropdown__text {
+    margin-left: 1.25rem;
+  }
+
+  .sidebar__menu {
+    position: relative;
+  }
+
+  .sidebar__group.open .sidebar__menu:before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    left: 1.25rem;
+    bottom: 1.75rem;
+    width: 2px;
+    border-radius: 2px;
+    background: #efefef;
+  }
+
   .sidebar__item {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -328,14 +426,34 @@
     transition: all 0.25s;
   }
 
+  .sidebar.compact .sidebar__item {
+    height: 3rem;
+  }
+
   .sidebar__item:hover {
-    color: var(--primary);
+    color: var(--dark);
     background: var(--gray-lighter);
   }
 
   .sidebar__item.active {
-    background: var(--primary);
-    color: var(--white);
+    color: var(--dark);
+    background: var(--gray-light);
+  }
+
+  .group__dropdown + .sidebar__menu .sidebar__item {
+    margin-left: 2rem;
+    position: relative;
+  }
+
+  .group__dropdown + .sidebar__menu .sidebar__item:before {
+    content: "";
+    position: absolute;
+    top: 0.75rem;
+    left: -0.75rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+      no-repeat 50% 50%/100% auto;
   }
 
   .sidebar__icon {
@@ -355,6 +473,8 @@
     /* margin-right: 1rem; */
     font-size: 0;
   }
+
+  .group__dropdown img,
   .sidebar__icon img {
     font-size: 1.25rem;
     opacity: 0.4;
@@ -389,26 +509,6 @@
     transition: all 0.25s;
   }
 
-  /* .sidebar__bottom {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    height: 4.5rem;
-    padding: 0 2.5rem;
-  } */
-
-  /* .sidebar__bottom:hover img {
-    filter: none;
-    opacity: 1;
-  } */
-
   .sidebar__counter {
     -ms-flex-negative: 0;
     flex-shrink: 0;
@@ -423,208 +523,6 @@
     font-weight: 500;
     color: #ffffff;
   }
-
-  /* .sidebar__profile {
-    color: var(--black);
-    -webkit-box-direction: normal;
-    box-sizing: inherit;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    vertical-align: baseline;
-    outline: none;
-    margin-top: 25px;
-  } */
-
-  /* .sidebar__user {
-    position: relative;
-    display: flex;
-    -webkit-box-align: center;
-    align-items: center;
-    padding: 0 1.25rem;
-    height: 62px;
-    border-radius: 12px;
-    color: var(--black);
-    cursor: pointer;
-    transition: background 0.25s;
-  }
-
-  .avatar {
-    border-radius: 50%;
-    width: 1.5rem;
-    height: 1.5rem;
-  } */
-
-  /* @media only screen and (max-width: 1179px) {
-    .sidebar {
-      padding-top: 96px;
-      overflow-x: hidden;
-      overflow-y: scroll;
-      -webkit-transition: width 0.25s, -webkit-transform 0.25s;
-      transition: width 0.25s, -webkit-transform 0.25s;
-      -o-transition: width 0.25s, transform 0.25s;
-      transition: width 0.25s, transform 0.25s;
-      transition: width 0.25s, transform 0.25s, -webkit-transform 0.25s;
-    }
-    .top {
-      -webkit-box-pack: stretch;
-      -ms-flex-pack: stretch;
-      justify-content: stretch;
-      height: 96px;
-      padding-left: 2.5rem;
-      -webkit-transition: all 0.25s;
-      -o-transition: all 0.25s;
-      transition: all 0.25s;
-    }
-
-    .sidebar .top > a > img {
-      -webkit-transition: opacity 0.2s;
-      -o-transition: opacity 0.2s;
-      transition: opacity 0.2s;
-    }
-
-    .sidebar__wrapper {
-      padding-top: 24px;
-    }
-    nav button {
-      display: inline-block;
-    }
-    .sidebar__group:not(:last-child):before {
-      -webkit-transition: all 0.25s;
-      -o-transition: all 0.25s;
-      transition: all 0.25s;
-    }
-
-    .caption {
-      white-space: nowrap;
-      -webkit-transition: padding 0.25s;
-      -o-transition: padding 0.25s;
-      transition: padding 0.25s;
-    }
-    .sidebar__item {
-      position: relative;
-      padding-left: 3px;
-    }
-    .sidebar__icon {
-      width: 56px;
-      height: 56px;
-      margin-right: 0;
-      -webkit-transition: margin 0.25s;
-      -o-transition: margin 0.25s;
-      transition: margin 0.25s;
-    }
-    .sidebar__counter {
-      -webkit-transition: all 0.25s;
-      -o-transition: all 0.25s;
-      transition: all 0.25s;
-    }
-    .sidebar.active {
-      width: 96px;
-    }
-    .sidebar.active .sidebar__inner {
-      width: 56px;
-    }
-    .sidebar.active .sidebar__group:before {
-      left: -1.25rem;
-      right: -1.25rem;
-    }
-    .sidebar.active .sidebar__item {
-      padding-left: 0;
-    }
-    .sidebar.active .sidebar__counter {
-      position: absolute;
-      top: 15px;
-      left: 1.375rem;
-      min-width: 0.625rem;
-      height: 0.625rem;
-      font-size: 0;
-    }
-    .sidebar.active .caption {
-      text-align: center;
-      padding-left: 0px;
-    }
-  }
-  @media only screen and (max-width: 1023px) {
-    nav {
-      z-index: 10;
-      width: 96px;
-    }
-    .sidebar__inner {
-      width: 56px;
-    }
-    .top {
-      padding: 0;
-    }
-    nav .top > a > img {
-      opacity: 0;
-    }
-    nav .top {
-      border-bottom: 1px solid var(--gray-light);
-    }
-
-    .sidebar__group:not(:last-child):before {
-      left: -1.25rem;
-      right: -1.25rem;
-    }
-    .caption {
-      padding-left: 0;
-      text-align: center;
-    }
-
-    .caption:first-child {
-      margin-top: 1.5rem;
-    }
-    .sidebar__item {
-      padding-left: 0;
-    }
-    .sidebar__item:hover {
-      color: var(--gray);
-    }
-    .sidebar__icon {
-      margin-right: 1.25rem;
-    }
-    .sidebar__counter {
-      position: absolute;
-      top: 15px;
-      left: 1.375rem;
-      min-width: 0.625rem;
-      height: 0.625rem;
-      font-size: 0;
-    }
-    .sidebar.active {
-      width: 256px;
-    }
-    .sidebar.active .sidebar__inner {
-      width: 100%;
-    }
-
-    .sidebar.active .sidebar__icon {
-      margin-right: 0;
-    }
-    .sidebar.active .sidebar__group:before {
-      left: 1.25rem;
-      right: 1.25rem;
-    }
-    .sidebar.active .sidebar__item {
-      padding-left: 3px;
-    }
-    .sidebar.active .sidebar__counter {
-      position: static;
-      min-width: 1.5rem;
-      height: 1.5rem;
-      font-size: 12px;
-    }
-    .top {
-      padding-left: 2.5rem;
-    }
-    .sidebar.active .top img {
-      opacity: 1;
-    }
-    .sidebar.active .caption {
-      text-align: left;
-      padding-left: 1.25rem;
-    }
-  } */
 
   @media only screen and (max-width: 1179px) {
     .sidebar {
@@ -680,40 +578,15 @@
     .sidebar__list {
       margin: 0;
     }
-    .sidebar__group:not(:last-child) {
+    .flat.sidebar__group:not(:last-child) {
       margin-bottom: 1.25rem;
       padding-bottom: 15px;
     }
-    .sidebar__group:not(:last-child):before {
+    .flat.sidebar__group:not(:last-child):before {
       left: 1.25rem;
       right: 1.25rem;
     }
-    /* .caption {
-      padding-left: 1.25rem;
-      text-align: left;
-    }
 
-    .sidebar__item {
-      position: relative;
-      padding-left: 3px;
-    }
-    .sidebar__icon {
-      width: 56px;
-      height: 56px;
-      margin-right: 0;
-      -webkit-transition: margin 0.25s;
-      -o-transition: margin 0.25s;
-      transition: margin 0.25s;
-    }
-
-    .sidebar__icon + .sidebar__text {
-      margin-left: 1.25rem;
-    }
-
-    .sidebar__text {
-      margin-right: auto;
-      transition: all 0.25s;
-    } */
     .sidebar__counter {
       -webkit-transition: all 0.25s;
       -o-transition: all 0.25s;
@@ -730,9 +603,6 @@
       -ms-transform: translateX(0);
       transform: translateX(0);
     }
-    /* .sidebar.active .sidebar__item {
-      padding-left: 0;
-    } */
 
     .sidebar.active .caption {
       text-align: left;

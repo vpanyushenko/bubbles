@@ -12,13 +12,16 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
   import sections from "$assets/utils/sidebar-sections";
   import { configStore } from "$lib/index";
+  import store from "$assets/utils/store";
 
-  $configStore.padding = "compact";
-  $configStore.radius = "blocky";
+  // $configStore.padding = "compact";
+  // $configStore.radius = "blocky";
 
-  const sidebarConfig = {
+  $: sidebarConfig = {
     logo: "/logo.svg",
     sections: sections,
+    flat: $store.flat,
+    padding: $store.sidebar_padding,
   };
 
   // $: if ($store.sidebar_index) {

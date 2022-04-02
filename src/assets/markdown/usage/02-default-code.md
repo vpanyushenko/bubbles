@@ -35,5 +35,11 @@ height: 100
   // We'll let you know if there are any issues with the
   // Bubbles library
   $configStore.debug = true;
+
+  // Compact will reduce padding everywhere for more information density
+  $configStore.padding = "roomy"; //or compact
+
+  // Blocky will reduce the radius on elements. Plays nicely with "compact" padding
+  $configStore.radius = "rounded"; //or blocky
 </script>
 ```

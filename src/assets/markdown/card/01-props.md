@@ -22,6 +22,11 @@ If you want the card to have a border.
 
 ---
 
+**radius** `string` <code class="blue">rounded</code><br>
+Can be changed to "blocky" for less rounded cards. Ideally this should be set from the configStore to apply to all cards.
+
+---
+
 **shadow** `boolean` <code class="blue">true</code><br>
 The shadow behind the card. You can't specify the shadow right now, just if you want it or not. It defaults to true.
 
