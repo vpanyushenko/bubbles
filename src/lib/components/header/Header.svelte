@@ -21,7 +21,7 @@
   export let breadcrumb_labels = [];
   // export let sticky = true;
 
-  if (!subtitle) {
+  $: if (!subtitle) {
     subtitle = caption;
   }
 
@@ -30,11 +30,11 @@
 
   let y = 0; //TODO: Add options to sticky headers
   // $: _sticky = y >= 200 ? true : false;
-  let _sticky = false;
+  let _sticky = false; //TODO:
 
   $: intersection_ratio = 1;
 
-  if (title) {
+  $: if (title) {
     $pageStore.title = title;
   }
 
@@ -107,6 +107,8 @@
       return breadcrumbs;
     }
   }
+
+  // --gutterWidth: calc(var(--windowWidth)/2 - var(--layoutWidth)/2);
 </script>
 
 <svelte:head>
@@ -116,6 +118,7 @@
 <svelte:window bind:scrollY={y} />
 
 <!-- {#if intersection_ratio !== 0} -->
+
 <header id={header_id} style="opacity: {intersection_ratio * 3}" class:sticky={_sticky}>
   <div class="header__row">
     <div class="text">
@@ -166,6 +169,10 @@
   </div>
 </header>
 
+{#if _sticky}
+  <div class="sticky" />
+{/if}
+
 <!-- {/if} -->
 <style>
   .header__button:not(:last-child) {
@@ -186,9 +193,27 @@
   header.sticky {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
-    background-color: red;
+    /* background-color: red; */
+    position: sticky;
+    top: 0px;
+    /* margin-left: calc(50% - 50vw - 426px); */
+    z-index: 10;
+    /* position: fixed;
+    width: 100vw;
+    top: 0px;
+    left: 0px; */
+    /* width: calc((100vw - 0px) / 2 - (1200px / 2)); */
+  }
+
+  div.sticky {
+    width: 100vw;
+    left: 0px;
     position: fixed;
-    z-index: 99;
+    margin: 0;
+    height: 70px;
+    top: 0px;
+    z-index: 9;
+    background-color: aquamarine;
   }
 
   header .header__row {

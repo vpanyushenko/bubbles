@@ -1,10 +1,9 @@
 <script>
-  import { onMount } from "svelte";
-  import { pageStore, configStore } from "$lib/stores/stores";
+  import { pageStore, configStore, Spinner, uuid } from "$lib/index";
   import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
   import { hexToRgb, getColorFilter } from "$lib/utils/colors";
-  import Spinner from "$lib/components/spinner/Spinner.svelte";
+  import { onMount } from "svelte";
 
   export let sections = [];
   export let logo = null;
@@ -25,11 +24,22 @@
   let path = $page.url.pathname;
   let activeSection = false;
   let open_section = null;
+  let is_loading = false;
 
-  $pageStore.sidebar.is_mounted = true;
+  $: if ($page.url.pathname) {
+    path = $page.url.pathname;
+    findActiveSection();
+  }
 
   $: if (!$navigating) {
     $pageStore.sidebar.is_toggled = false;
+    is_loading = false;
+  } else {
+    setTimeout(() => {
+      if ($navigating) {
+        is_loading = true;
+      }
+    }, 400);
   }
 
   sections.forEach((section, index) => {
@@ -66,20 +76,6 @@
     findActiveSection();
   }
 
-  onMount(() => {
-    const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
-
-    if (primaryhex) {
-      const rgb = hexToRgb(`${primaryhex.trim()}`);
-
-      const iconFilter = getColorFilter(rgb);
-      let filter = iconFilter.filter.split("filter: ")[1];
-      filter = filter.substring(0, filter.length - 1);
-
-      document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
-    }
-  });
-
   //make sure notifications cannot be below 0
   function sidebarItemSelected(obj) {
     $pageStore.sidebar.active_item = obj.id;
@@ -103,26 +99,6 @@
     return sections;
   }
 
-  function findActiveSection() {
-    const params = path.split("/").filter(Boolean);
-    const loops = params.length;
-
-    for (let i = loops; i > 0; i--) {
-      const param_path = `/${params.join("/")}`;
-
-      if (!activeSection) {
-        sections.forEach((section) => {
-          if (section.href_aliases.find((a) => a === param_path)) {
-            activeSection = true;
-            $pageStore.sidebar.active_item = section.id;
-          }
-        });
-
-        params.pop();
-      }
-    }
-  }
-
   $: groups = formatSidebar(sectionsWithTitles, $pageStore);
 
   $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar.is_toggled);
@@ -138,6 +114,52 @@
       open_section = index;
     }
   }
+
+  function findActiveSection() {
+    activeSection = null;
+    const params = path.split("/").filter(Boolean);
+    const loops = params.length;
+
+    for (let i = loops; i > 0; i--) {
+      const param_path = `/${params.join("/")}`;
+
+      if (!activeSection) {
+        sections.forEach((section) => {
+          if (section.href_aliases.find((a) => a === param_path)) {
+            activeSection = true;
+            $pageStore.sidebar.active_item = section.id;
+
+            //if we found an active section and it's in a collapsed group, we should expand the group
+            if (section.group) {
+              const groups = [...new Set(sections.map((section) => section.group || uuid()))];
+              let index = groups.findIndex((key) => key === section.group);
+
+              if (open_section !== index) {
+                toggleSection(index);
+              }
+            }
+          }
+        });
+
+        params.pop();
+      }
+    }
+  }
+
+  onMount(() => {
+    $pageStore.sidebar.is_mounted = true;
+    const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
+
+    if (primaryhex) {
+      const rgb = hexToRgb(`${primaryhex.trim()}`);
+
+      const iconFilter = getColorFilter(rgb);
+      let filter = iconFilter.filter.split("filter: ")[1];
+      filter = filter.substring(0, filter.length - 1);
+
+      document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
+    }
+  });
 </script>
 
 <nav class="sidebar" class:active={$pageStore.sidebar.is_toggled} class:compact={padding === "compact"}>
@@ -157,10 +179,10 @@
       <div class="sidebar__list">
         {#each Object.keys(groups) as group, index}
           <div class="sidebar__group" class:open={open_section === index} class:flat>
-            {#if group !== "undefined"}
+            {#if group}
               {#if flat === true}
                 <div class="caption">{group}</div>
-              {:else}
+              {:else if groups?.[group] && groups?.[group].length > 1}
                 <div class="group__dropdown cursor-pointer" on:click={() => toggleSection(index)}>
                   {#if groups?.[group] && groups[group]?.[0]?.icon}
                     <img src={groups[group][0].icon} alt="Icon" />
@@ -169,7 +191,10 @@
                 </div>
               {/if}
             {/if}
-            <div class="sidebar__menu" class:hidden={!flat && open_section !== index}>
+            <div
+              class="sidebar__menu"
+              class:hidden={!flat && open_section !== index && groups?.[group] && groups?.[group].length > 1}
+            >
               {#each groups[group] as obj}
                 <a
                   class="sidebar__item cursor-pointer"
@@ -180,18 +205,18 @@
                     sidebarItemSelected(obj);
                   }}
                 >
-                  {#if obj.icon && flat}
+                  {#if (obj.icon && flat) || (obj.icon && groups[group].length === 1)}
                     <div class="sidebar__icon">
-                      {#if !$navigating && !obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked !== obj.id}
+                      {#if !is_loading && !obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked !== obj.id}
                         <!-- Hide the icon when the page is navigating and the to path and href are the same -->
                         <img src={obj.icon} alt="Icon" />
-                      {:else if $navigating && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
+                      {:else if is_loading && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
                         <Spinner />
                       {:else}
                         <img src={obj.icon} alt="Icon" />
                       {/if}
                     </div>
-                  {:else if $navigating && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
+                  {:else if is_loading && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
                     <span class="loading">
                       <Spinner />
                     </span>
@@ -223,7 +248,7 @@
     padding: 2.5rem 0 4.5rem;
     background: #ffffff;
     border-right: 1px solid var(--gray-light);
-    z-index: 5;
+    z-index: 20;
     overflow-y: scroll;
   }
 
@@ -361,7 +386,7 @@
   .group__dropdown:hover {
     cursor: pointer;
     color: var(--dark);
-    background: var(--gray-lightest);
+    /* background: var(--gray-lightest); */
   }
 
   .group__dropdown:before {
@@ -393,11 +418,11 @@
     position: relative;
   }
 
-  .sidebar__group.open .sidebar__menu:before {
+  .sidebar__group.open:not(.flat) .sidebar__menu:before {
     content: "";
     position: absolute;
     top: 0.5rem;
-    left: 1.25rem;
+    left: 1.85rem;
     bottom: 1.75rem;
     width: 2px;
     border-radius: 2px;
@@ -432,12 +457,12 @@
 
   .sidebar__item:hover {
     color: var(--dark);
-    background: var(--gray-lighter);
+    /* background: var(--gray-lighter); */
   }
 
   .sidebar__item.active {
-    color: var(--dark);
-    background: var(--gray-light);
+    color: var(--primary);
+    background: var(--gray-lighter);
   }
 
   .group__dropdown + .sidebar__menu .sidebar__item {
@@ -448,12 +473,30 @@
   .group__dropdown + .sidebar__menu .sidebar__item:before {
     content: "";
     position: absolute;
-    top: 0.75rem;
-    left: -0.75rem;
+    top: 1rem;
+    left: -0.9rem;
     width: 0.75rem;
     height: 0.75rem;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23efefef' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
       no-repeat 50% 50%/100% auto;
+  }
+
+  .compact .group__dropdown + .sidebar__menu .sidebar__item:before {
+    top: 0.75rem;
+  }
+
+  .group__dropdown + .sidebar__menu .sidebar__item {
+    padding-right: 0.25rem;
+    margin-left: 2.75rem;
+  }
+
+  img {
+    -webkit-transition: color 0.25s;
+    -o-transition: color 0.25s;
+    transition: color 0.25s;
+    -webkit-transition: all 0.25s;
+    -o-transition: all 0.25s;
+    transition: all 0.25s;
   }
 
   .sidebar__icon {
@@ -486,11 +529,10 @@
 
   .sidebar__item.active .sidebar__icon img {
     opacity: 1;
-    filter: invert(1);
-  }
-
-  .sidebar__item:hover img {
     filter: var(--sidebar-hover-filter);
+  }
+  .group__dropdown:hover img,
+  .sidebar__item:hover img {
     opacity: 1;
   }
 

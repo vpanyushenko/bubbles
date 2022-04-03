@@ -1,3 +1,34 @@
+## Version 0.7.9
+
+**Fixed**
+
+- Nested Sidebar line was appearing on non-nested sidebars
+- fixed alignment on non-compact style sidebars
+
+<br>
+
+---
+
+## Version 0.7.6
+
+**Fixed**
+
+- Add delay to sidebar navigation
+
+<br>
+
+---
+
+## Version 0.7.6
+
+**Fixed**
+
+- Sidebar and Header reactivity
+
+<br>
+
+---
+
 ## Version 0.7.1
 
 **Added**
