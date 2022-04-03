@@ -1,5 +1,6 @@
 <script>
-  export let max_content_width = 1200;
+  import { configStore } from "$lib/index";
+  export let max_content_width = $configStore.max_content_width || 1200;
 </script>
 
 <main class="page__wrapper__sidebar">
