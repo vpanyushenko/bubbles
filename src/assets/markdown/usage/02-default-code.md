@@ -41,5 +41,8 @@ height: 100
 
   // Blocky will reduce the radius on elements. Plays nicely with "compact" padding
   $configStore.radius = "rounded"; //or blocky
+
+  // The max width for the content in pixels.
+  $configStore.max_content_width = 1200;
 </script>
 ```
