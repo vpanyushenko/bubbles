@@ -2,7 +2,7 @@ import { pageStore } from "$lib/stores/page.store";
 
 const showLoading = (id) => {
   pageStore.update((store) => {
-    if (!store.loading.includes(id)) {
+    if (!store.loading.includes(id) && id) {
       store.loading.push(id);
     }
     return store;
@@ -10,6 +10,10 @@ const showLoading = (id) => {
 };
 
 const hideLoading = (id) => {
+  if (!id) {
+    return;
+  }
+
   pageStore.update((store) => {
     if (Array.isArray(store.loading)) {
       store.loading = store.loading.filter((a) => a !== id);
