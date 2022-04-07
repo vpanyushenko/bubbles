@@ -19,9 +19,12 @@
 
   $: sidebarConfig = {
     logo: "/logo.svg",
-    sections: sections,
     flat: $store.flat,
     padding: $store.sidebar_padding,
+    sections: sections.map((section) => {
+      // delete section.group;
+      return section;
+    }),
   };
 
   // $: if ($store.sidebar_index) {
