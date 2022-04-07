@@ -181,7 +181,9 @@
           <div class="sidebar__group" class:open={open_section === index} class:flat>
             {#if group}
               {#if flat === true}
-                <div class="caption">{group}</div>
+                {#if group !== "undefined"}
+                  <div class="caption">{group}</div>
+                {/if}
               {:else if groups?.[group] && groups?.[group].length > 1}
                 <div class="group__dropdown cursor-pointer" on:click={() => toggleSection(index)}>
                   {#if groups?.[group] && groups[group]?.[0]?.icon}
