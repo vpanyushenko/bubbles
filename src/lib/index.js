@@ -110,7 +110,7 @@ export {
 export { toastStore, modalStore, pageStore, noscrollStore, configStore } from "./stores/stores";
 
 //utils
-import { getFormData, validateInputs } from "./utils/form";
+import { getFormData, validateInputs, submitForm } from "./utils/form";
 import { showLoading, hideLoading } from "./utils/loading";
 import { showModal, hideModal } from "./utils/modal";
 import { showToast } from "./utils/toast";
@@ -124,6 +124,7 @@ import sort from "$lib/utils/sort";
 export {
   getFormData,
   validateInputs,
+  submitForm,
   showLoading,
   hideLoading,
   showModal,

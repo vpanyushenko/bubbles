@@ -1,5 +1,20 @@
 ## Version 0.7.9
 
+**Added**
+
+- SubmitForm util function
+
+**Fixed**
+
+- Loading utils will check for ID
+- Sidebar will no longer show undefined if there is no group
+
+<br>
+
+---
+
+## Version 0.7.9
+
 **Fixed**
 
 - Nested Sidebar line was appearing on non-nested sidebars
@@ -57,7 +72,7 @@
 - The dropdown component line breaks are now set as a boolean
 - Ability to hide a sidebar section with the hidden property - perhaps for role based account access
 - Added search functionality to the IconButton component
-- SegmentedController supports hrefs
+- SegmentedController supports href
 - New sort function and sort functionality for TableHeaders
 
 **Fixed**

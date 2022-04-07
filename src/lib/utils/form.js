@@ -1,5 +1,17 @@
-import { pageStore } from "$lib/stores/page.store";
-import merge from "$lib/utils/merge";
+import {
+  pageStore,
+  modalStore,
+  toastStore,
+  showLoading,
+  hideLoading,
+  merge,
+  api_url,
+  configStore,
+  uuid,
+} from "$lib/index";
+
+import { session } from "$app/stores";
+import { browser } from "$app/env";
 
 const _getSize = (value) => {
   if (value instanceof Array) {
@@ -506,4 +518,186 @@ const validateInputs = (inputs) => {
   });
 };
 
-export { getFormData, getValidationRequirements, isValidInput, validateInputs };
+/**
+ * Submits data to and endpoint after running `validateInputs` and `getFormData` functions
+ * @param {Array<Object>} inputs - the inputs you used to create the form
+ * @param {String} The endpoint to submit the results to. If it's submitting to an internal endpoint, bubbles will prefix the URI from import.meta.env.VITE_API_URL
+ * @param {Object} options
+ * @param {String} [options.method="POST"] - method for the fetch function
+ * @param {Boolean} [options.show_toast=true] - If a toast should me shown. Looks for a message property in the response
+ * @param {Boolean} [options.hide_modal=true] - If a model is active, will hide the model
+ * @param {?String} [options.loading=null] - The ID of the element to show a loading animation for and hide loading when the fetch is done.
+ * @param {Boolean} [options.credentials="include"] - If you want credentials to be sent with the request
+ * @param {Boolean} [options.debug=false] - If you want debug logs for this function
+ * @param {Boolean} [options.include_hidden_props=false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
+ * @param {?String} [options.bearer_token] - The bearer token to add to the authorization headers
+ * @param {(String|Number|Boolean|null)} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
+ * @returns {Promise} The response from the api request
+ */
+const submitForm = (
+  inputs,
+  endpoint,
+  options = {
+    method: "POST",
+    show_toast: true,
+    // goto: null,
+    hide_modal: true,
+    // refresh_token: false,
+    include_hidden_props: false,
+    hidden_prop_values: null,
+    debug: false,
+    credentials: "include",
+    loading: null,
+    bearer_token: null,
+  }
+) => {
+  return new Promise((resolve, reject) => {
+    const METHOD = options.method || "POST";
+    const CREDENTIALS = options.credentials || "include";
+    const SHOW_TOAST = options.show_toast || true;
+    const HIDE_MODAL = options.hide_modal || true;
+
+    let response, data, token;
+
+    showLoading(options?.loading);
+
+    const api = endpoint.startsWith("http") ? endpoint : `${api_url}${endpoint}`;
+
+    if (options?.debug) {
+      console.log(api);
+    }
+
+    validateInputs(inputs)
+      .then(() => {
+        return getFormData(inputs, {
+          include_hidden_props: options?.include_hidden_props,
+          hidden_prop_values: options?.hidden_prop_values,
+        });
+      })
+      .then((obj) => {
+        data = obj;
+        if (options?.debug) {
+          console.log(data);
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+        };
+
+        if (options.bearer_token) {
+          headers.Authorization = `Bearer ${options.bearer_token}`;
+        }
+
+        return fetch(api, {
+          method: METHOD,
+          credentials: CREDENTIALS,
+          headers: headers,
+          body: JSON.stringify(data),
+        });
+      })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        response = res;
+      })
+      .then(() => {
+        return response;
+      })
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          if (SHOW_TOAST) {
+            toastStore.update((data) => {
+              const toast = {
+                message: res.message,
+                color: "success",
+                active: true,
+                id: uuid(),
+              };
+              data.unshift(toast);
+              return data;
+            });
+          }
+
+          //check if the user wanted to hide the modal
+          if (HIDE_MODAL) {
+            modalStore.update((data) => {
+              return {};
+            });
+          }
+
+          //   //check if the user wanted to redirect to another page
+          //   if (options?.goto) {
+          //     const array = options?.goto.split("/").filter(Boolean);
+
+          //     if (array) {
+          //       let index = array.findIndex((a) => a === ":id");
+
+          //       if (index > 0) {
+          //         array[index] = res.data.id;
+          //       }
+
+          //       const path = array.join("/");
+          //       goto(`/${path}`);
+          //     } else {
+          //       goto(options?.goto);
+          //     }
+          //   }
+          // }
+
+          if (res.status >= 300 && res.status < 400) {
+            console.log("Redirect requested");
+          }
+
+          if (res.status >= 400) {
+            pageStore.update((data) => {
+              data.errors = res.errors ? res.errors : data.errors;
+              return data;
+            });
+
+            toastStore.update((data) => {
+              const toast = {
+                message: res.message,
+                color: "error",
+                active: true,
+                id: uuid(),
+              };
+              data.unshift(toast);
+              return data;
+            });
+          }
+          hideLoading(options?.loading);
+          resolve(res);
+        }
+      })
+      .catch((err) => {
+        //this error happened because of a client error
+        console.log("Client error");
+        console.error(err);
+        console.error(err.errors);
+        //   stopLoadingButton();
+        //   toast(err.message, "error");
+
+        pageStore.update((data) => {
+          data.errors = err.errors ? err.errors : data.errors;
+          data.fetching = false;
+          return data;
+        });
+
+        toastStore.update((data) => {
+          const toast = {
+            message: err.message,
+            color: "error",
+            active: true,
+            id: uuid(),
+          };
+          data.unshift(toast);
+          return data;
+        });
+        hideLoading(options?.loading);
+        reject(err);
+      });
+  });
+};
+
+export { getFormData, getValidationRequirements, isValidInput, validateInputs, submitForm };
