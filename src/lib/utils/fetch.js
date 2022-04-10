@@ -30,10 +30,10 @@ const fetchData = async (endpoint, options = { fetch: null, url: null, session: 
   async function getData(endpoint, key = "data") {
     let res, json, pagination;
 
-    let uri = `${api_url}${endpoint}?`;
+    let uri = `${api_url}${endpoint}`;
 
     if (endpoint.startsWith("http")) {
-      uri = `${endpoint}?`;
+      uri = `${endpoint}`;
     }
 
     if (options.debug) {
@@ -43,9 +43,18 @@ const fetchData = async (endpoint, options = { fetch: null, url: null, session: 
     const query_params = url ? getQueryParam(url) : [];
     const param_keys = Object.keys(query_params);
 
+    if (param_keys && param_keys.length) {
+      uri = `${uri}?`;
+    }
+
     param_keys.forEach((key, index) => {
       const value = query_params[key];
-      uri += `${key}=${value}&`;
+
+      if (index === 0) {
+        uri += `${key}=${value}`;
+      } else {
+        uri += `&${key}=${value}`;
+      }
     });
 
     if (options.debug) {
@@ -135,13 +144,19 @@ const fetchData = async (endpoint, options = { fetch: null, url: null, session: 
         };
 
         if (options.debug) {
-          console.table(response);
+          console.log(response);
         }
 
         return response;
       })
       .catch((err) => {
         console.error(err);
+        let response = {
+          status: err.status,
+          message: err.message || "Something went wrong",
+        };
+
+        return response;
       });
   }
 };

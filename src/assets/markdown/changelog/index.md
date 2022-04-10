@@ -3,11 +3,14 @@
 **Added**
 
 - SubmitForm util function
+- TableCells can set their own width
+- Added a hide function for inputs in a form
 
 **Fixed**
 
 - Loading utils will check for ID
 - Sidebar will no longer show undefined if there is no group
+- Text in TableCell can now be aligned left
 
 <br>
 

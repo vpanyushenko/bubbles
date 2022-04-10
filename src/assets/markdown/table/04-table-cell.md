@@ -68,6 +68,11 @@ If you add a button property, Bubbles will assume you want to add an `IconButton
 
 ---
 
+**width** `number|string` <br>
+The the width for the cell. Enter a number for the width to be treated as a percentage, or a string with the units you want like "3rem" or "20px"
+
+---
+
 **mobile_width** `number` <br>
 Select the width this cell will take up on small screens. If you want to hide the cell on mobile, set the value to 0.
 

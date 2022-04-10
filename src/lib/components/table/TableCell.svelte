@@ -13,9 +13,22 @@
   export let caption = "";
   export let large = false;
   export let bold = false;
+
+  /**
+   * @prop {("left"|"right")} [align="left"] - aligns the text in the cell to the left or right (end) of the cell
+   */
   export let align = "left";
-  export let mobile_width = "__default";
+
+  /**
+   * @prop {?Number} [mobile_width=null]
+   */
+  export let mobile_width = null;
+
+  /**
+   * @prop {Number} [mobile_order=0]
+   */
   export let mobile_order = 0;
+  export let width = null;
 
   //conditions passed for custom cell types
   export let rows = [];
@@ -47,7 +60,7 @@
   let mobile_hide = false;
   let style = ``;
 
-  if (mobile_width && mobile_width !== "__default") {
+  if (mobile_width && mobile_width) {
     style += `flex:${mobile_width}%;`;
   }
 
@@ -57,6 +70,14 @@
 
   if (mobile_order) {
     style += `order:${mobile_order};`;
+  }
+
+  if (width !== null || width !== undefined) {
+    if (isNaN(width)) {
+      style += `width:${width}`;
+    } else {
+      style += `width:${width}%`;
+    }
   }
 
   onMount(() => {
@@ -96,7 +117,13 @@
 </script>
 
 {#if _type === "text"}
-  <div class="cell" class:mobile__hide={mobile_hide} {style} bind:this={_dom_element}>
+  <div
+    class="cell"
+    class:mobile__hide={mobile_hide}
+    class:right={align === "right" || align === "end"}
+    {style}
+    bind:this={_dom_element}
+  >
     <div class="flex align-items-center">
       {#if href}
         <span class="href-container">
@@ -117,7 +144,13 @@
 {/if}
 
 {#if _type === "stacked"}
-  <div class="cell" class:mobile__hide={mobile_hide} {style} bind:this={_dom_element}>
+  <div
+    class="cell"
+    class:mobile__hide={mobile_hide}
+    class:right={align === "right" || align === "end"}
+    {style}
+    bind:this={_dom_element}
+  >
     <div class="d-flex align-items-center">
       {#each rows as nested_row}
         <div class="nested__row">

@@ -50,7 +50,12 @@ type: code
       error: "Email is required",
       validation: "email|required|min:3",
       vob: true,
-      hidden_if: [{ id: "preferences.email", value: false }],
+      hide: () => {
+        const input = formInputs.find((input) => input.id === "preferences.email");
+        if (input.value === false) {
+          return true;
+        }
+      },
     },
     {
       type: "date",

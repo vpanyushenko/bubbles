@@ -101,6 +101,20 @@
         }
       });
 
+      if (input.hidden_unless && Array.isArray(input.hidden_unless) && input.hidden_unless.length) {
+        console.warn("hidden_unless has been deprecated. Use hide function instead");
+      }
+
+      if (input.hidden_if && Array.isArray(input.hidden_if) && input.hidden_if.length) {
+        console.warn("hidden_if has been deprecated. Use hide function instead");
+      }
+
+      if (input.hide && input.hide instanceof Function) {
+        if (input.hide() === true) {
+          input.is_hidden = true;
+        }
+      }
+
       return input;
     });
   }

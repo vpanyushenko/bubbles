@@ -521,13 +521,13 @@ const validateInputs = (inputs) => {
 /**
  * Submits data to and endpoint after running `validateInputs` and `getFormData` functions
  * @param {Array<Object>} inputs - the inputs you used to create the form
- * @param {String} The endpoint to submit the results to. If it's submitting to an internal endpoint, bubbles will prefix the URI from import.meta.env.VITE_API_URL
+ * @param {String} endpoint - The endpoint to submit the results to. If it's submitting to an internal endpoint, bubbles will prefix the URI from import.meta.env.VITE_API_URL
  * @param {Object} options
  * @param {String} [options.method="POST"] - method for the fetch function
  * @param {Boolean} [options.show_toast=true] - If a toast should me shown. Looks for a message property in the response
  * @param {Boolean} [options.hide_modal=true] - If a model is active, will hide the model
  * @param {?String} [options.loading=null] - The ID of the element to show a loading animation for and hide loading when the fetch is done.
- * @param {Boolean} [options.credentials="include"] - If you want credentials to be sent with the request
+ * @param {("include"|"same-origin"|"omit")} [options.credentials="include"] - If you want credentials to be sent with the request
  * @param {Boolean} [options.debug=false] - If you want debug logs for this function
  * @param {Boolean} [options.include_hidden_props=false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
  * @param {?String} [options.bearer_token] - The bearer token to add to the authorization headers
@@ -540,9 +540,7 @@ const submitForm = (
   options = {
     method: "POST",
     show_toast: true,
-    // goto: null,
     hide_modal: true,
-    // refresh_token: false,
     include_hidden_props: false,
     hidden_prop_values: null,
     debug: false,
@@ -557,7 +555,7 @@ const submitForm = (
     const SHOW_TOAST = options.show_toast || true;
     const HIDE_MODAL = options.hide_modal || true;
 
-    let response, data, token;
+    let data;
 
     showLoading(options?.loading);
 
@@ -599,13 +597,16 @@ const submitForm = (
         return res.json();
       })
       .then((res) => {
-        response = res;
-      })
-      .then(() => {
-        return response;
-      })
-      .then((res) => {
+        hideLoading(options?.loading);
+
         if (res.status >= 200 && res.status < 300) {
+          //check if the user wanted to hide the modal
+          if (HIDE_MODAL) {
+            modalStore.update(() => {
+              return {};
+            });
+          }
+
           if (SHOW_TOAST) {
             toastStore.update((data) => {
               const toast = {
@@ -617,70 +618,48 @@ const submitForm = (
               data.unshift(toast);
               return data;
             });
+            return resolve(res);
           }
+        }
 
-          //check if the user wanted to hide the modal
-          if (HIDE_MODAL) {
-            modalStore.update((data) => {
-              return {};
-            });
-          }
+        //   //check if the user wanted to redirect to another page
+        //   if (options?.goto) {
+        //     const array = options?.goto.split("/").filter(Boolean);
 
-          //   //check if the user wanted to redirect to another page
-          //   if (options?.goto) {
-          //     const array = options?.goto.split("/").filter(Boolean);
+        //     if (array) {
+        //       let index = array.findIndex((a) => a === ":id");
 
-          //     if (array) {
-          //       let index = array.findIndex((a) => a === ":id");
+        //       if (index > 0) {
+        //         array[index] = res.data.id;
+        //       }
 
-          //       if (index > 0) {
-          //         array[index] = res.data.id;
-          //       }
+        //       const path = array.join("/");
+        //       goto(`/${path}`);
+        //     } else {
+        //       goto(options?.goto);
+        //     }
+        //   }
+        // }
 
-          //       const path = array.join("/");
-          //       goto(`/${path}`);
-          //     } else {
-          //       goto(options?.goto);
-          //     }
-          //   }
-          // }
-
-          if (res.status >= 300 && res.status < 400) {
-            console.log("Redirect requested");
-          }
-
-          if (res.status >= 400) {
-            pageStore.update((data) => {
-              data.errors = res.errors ? res.errors : data.errors;
-              return data;
-            });
-
-            toastStore.update((data) => {
-              const toast = {
-                message: res.message,
-                color: "error",
-                active: true,
-                id: uuid(),
-              };
-              data.unshift(toast);
-              return data;
-            });
-          }
-          hideLoading(options?.loading);
+        if (res.status >= 300 && res.status < 400) {
+          console.log("Redirect requested");
           resolve(res);
+        }
+
+        if (res.status >= 400) {
+          throw res;
         }
       })
       .catch((err) => {
         //this error happened because of a client error
-        console.log("Client error");
-        console.error(err);
-        console.error(err.errors);
-        //   stopLoadingButton();
-        //   toast(err.message, "error");
+        if (options.debug) {
+          console.error(err);
+          console.error(err.errors);
+        }
 
         pageStore.update((data) => {
           data.errors = err.errors ? err.errors : data.errors;
-          data.fetching = false;
+          data.is_fetching = false;
           return data;
         });
 
