@@ -562,6 +562,7 @@ const submitForm = (
     const api = endpoint.startsWith("http") ? endpoint : `${api_url}${endpoint}`;
 
     if (options?.debug) {
+      console.log(`Method: ${METHOD}`);
       console.log(api);
     }
 
