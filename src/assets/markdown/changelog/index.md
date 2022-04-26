@@ -11,6 +11,7 @@
 - Loading utils will check for ID
 - Sidebar will no longer show undefined if there is no group
 - Text in TableCell can now be aligned left
+- Sidebar subtitle indenting when no back button is present
 
 <br>
 

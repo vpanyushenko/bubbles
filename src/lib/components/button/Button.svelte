@@ -405,4 +405,43 @@
     background: var(--gray-light);
     color: var(--gray-dark);
   }
+
+  /* .animated__button {
+    padding: 12px 24px;
+    background-color: hsl(222, 100%, 95%);
+    color: hsl(243, 80%, 62%);
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.animated__button span {
+    z-index: 1;
+    position: relative;
+}
+
+.animated__button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    transform: translate3d(-50%,-50%,0) scale3d(0,0,0);
+    transition: opacity .4s cubic-bezier(.19,1,.22,1),transform .75s cubic-bezier(.19,1,.22,1);
+    background-color: hsl(243, 80%, 62%);
+    opacity: 0;
+}
+
+.animated__button:hover span {
+    color: hsl(222, 100%, 95%);
+}
+
+.animated__button:hover::before {
+    opacity: 1;
+    transition-duration: .85s;
+    transform: translate3d(-50%,-50%,0) scale3d(1.2,1.2,1.2);
+} */
 </style>

@@ -22,6 +22,11 @@ If you want the card to have a border.
 
 ---
 
+**center** `boolean` <code class="blue">false</code><br>
+Will center the text on the card
+
+---
+
 **radius** `string` <code class="blue">rounded</code><br>
 Can be changed to "blocky" for less rounded cards. Ideally this should be set from the configStore to apply to all cards.
 

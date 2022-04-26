@@ -147,7 +147,7 @@
     </div>
   </div>
 
-  <div class="header__row burger__indent">
+  <div class="header__row" class:burger__indent={breadcrumbs}>
     <div class:header__subtitle={breadcrumbs && _breadcrumbs && _breadcrumbs.length ? true : false}>
       <slot>
         {#if subtitle}

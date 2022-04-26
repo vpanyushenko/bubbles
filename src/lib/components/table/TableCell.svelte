@@ -58,13 +58,13 @@
 
   //conditions for mobile layouts
   let mobile_hide = false;
-  let style = ``;
+  let style = "";
 
-  if (mobile_width && mobile_width) {
+  if (mobile_width && mobile_width !== null) {
     style += `flex:${mobile_width}%;`;
   }
 
-  if (!mobile_width) {
+  if (mobile_width === 0) {
     mobile_hide = true;
   }
 
@@ -342,19 +342,28 @@
   }
 
   @media only screen and (max-width: 767px) {
-    .cell {
+    /* .cell {
       display: flex;
       width: 100%;
-      padding: 0px;
+      padding: 0.75rem 0rem;
       text-align: left;
       justify-content: center;
       display: block;
       border: none;
       flex-basis: content;
+    } */
+
+    .cell {
+      padding: 0.75rem 0rem;
     }
 
     .cell picture {
       margin-right: 0px;
+    }
+
+    .cell + .cell.image picture {
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
     }
 
     .mobile__hide {

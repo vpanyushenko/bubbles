@@ -51,7 +51,7 @@
     box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
   }
 
-  @media only screen and (max-width: 767px) {
+  /* @media only screen and (max-width: 767px) {
     .row {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -67,5 +67,5 @@
       flex-wrap: none;
       border-bottom: 1px solid var(--gray-light);
     }
-  }
+  } */
 </style>

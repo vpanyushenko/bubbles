@@ -1,17 +1,4 @@
-import {
-  pageStore,
-  modalStore,
-  toastStore,
-  showLoading,
-  hideLoading,
-  merge,
-  api_url,
-  configStore,
-  uuid,
-} from "$lib/index";
-
-import { session } from "$app/stores";
-import { browser } from "$app/env";
+import { pageStore, modalStore, toastStore, showLoading, hideLoading, merge, api_url, uuid } from "$lib/index";
 
 const _getSize = (value) => {
   if (value instanceof Array) {
@@ -336,10 +323,11 @@ const createStripeToken = (stripe_input, inputs) => {
  * @param {String|Number|Boolean|null} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
  * @returns {Object} key value pairs of your inputs and their values
  */
-const getFormData = (inputs, options = { include_hidden_props: false, hidden_prop_values: null }) => {
+const getFormData = (inputs, options = { include_hidden_props: false, hidden_prop_values: null, debug: false }) => {
   const _options = {
     include_hidden_props: options.include_hidden_props === true ? true : false,
     hidden_prop_values: options.hidden_prop_values === undefined ? null : options.hidden_prop_values,
+    debug: options.debug || false,
   };
 
   let data = {};
@@ -464,27 +452,29 @@ const validateInputs = (inputs) => {
 
     const promises = _inputs.map((input) => {
       return new Promise(async (resolve, reject) => {
-        // Some inputs may be dependent on others. If any dependant inputs were removed from the dom,
-        // we should not validate them
-        if (!input.is_hidden) {
+        try {
+          // Some inputs may be dependent on others. If any dependant inputs were removed from the dom,
+          // we should not validate them
+          if (input.is_hidden) {
+            console.log("hidden", input.id);
+            return resolve();
+          }
+
           if (input.type === "stripe" || input.type === "stripe-card") {
             //We'll need to find the stripe element that was created in the dom and get the token for the user
-            try {
-              const value = await createStripeToken(input, _inputs);
-              input.value = value;
-              return resolve();
-            } catch (err) {
-              errors.push(input.id);
-              return reject(input.id);
-            }
+            const value = await createStripeToken(input, _inputs);
+            input.value = value;
+            return resolve();
           } else if (!isValidInput(input.value, input.validation)) {
+            console.log(input.id, input.validation);
             errors.push(input.id);
             return reject(input.id);
           } else {
             resolve();
           }
-        } else {
-          resolve();
+        } catch (err) {
+          errors.push(input.id);
+          return reject(input.id);
         }
       });
     });
@@ -532,6 +522,7 @@ const validateInputs = (inputs) => {
  * @param {Boolean} [options.include_hidden_props=false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
  * @param {?String} [options.bearer_token] - The bearer token to add to the authorization headers
  * @param {(String|Number|Boolean|null)} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
+ * @param {?Object>} [options.data = null] - This object will be merged with the one generated from inputs. This will override any properties from inputs that conflict.
  * @returns {Promise} The response from the api request
  */
 const submitForm = (
@@ -547,13 +538,22 @@ const submitForm = (
     credentials: "include",
     loading: null,
     bearer_token: null,
+    data: null,
   }
 ) => {
   return new Promise((resolve, reject) => {
     const METHOD = options.method || "POST";
     const CREDENTIALS = options.credentials || "include";
-    const SHOW_TOAST = options.show_toast || true;
-    const HIDE_MODAL = options.hide_modal || true;
+    const SHOW_TOAST = options.show_toast === false ? false : true;
+    const HIDE_MODAL = options.hide_modal === false ? false : true;
+
+    if (options?.debug) {
+      console.log(options);
+      console.log("method:", METHOD);
+      console.log("credentials:", CREDENTIALS);
+      console.log("Show Toast:", SHOW_TOAST);
+      console.log("Hide Modal:", HIDE_MODAL);
+    }
 
     let data;
 
@@ -571,10 +571,17 @@ const submitForm = (
         return getFormData(inputs, {
           include_hidden_props: options?.include_hidden_props,
           hidden_prop_values: options?.hidden_prop_values,
+          debug: options?.debug,
         });
       })
       .then((obj) => {
         data = obj;
+
+        if (options.data && typeof options.data === "object") {
+          console.log("Adding custom data to final object...");
+          data = { ...data, ...options.data };
+        }
+
         if (options?.debug) {
           console.log(data);
         }
@@ -600,6 +607,10 @@ const submitForm = (
       .then((res) => {
         hideLoading(options?.loading);
 
+        if (options?.debug) {
+          console.log(res.message);
+        }
+
         if (res.status >= 200 && res.status < 300) {
           //check if the user wanted to hide the modal
           if (HIDE_MODAL) {
@@ -619,8 +630,9 @@ const submitForm = (
               data.unshift(toast);
               return data;
             });
-            return resolve(res);
           }
+
+          return resolve(res);
         }
 
         //   //check if the user wanted to redirect to another page

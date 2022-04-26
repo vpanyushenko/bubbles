@@ -168,7 +168,7 @@
       display: none;
     }
 
-    /* .row {
+    .row {
       width: 100%;
       position: relative;
       padding: 2rem;
@@ -187,6 +187,6 @@
       padding: 0px;
       text-align: center;
       justify-content: center;
-    } */
+    }
   }
 </style>

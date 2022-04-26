@@ -14,6 +14,7 @@
   export let shadow = true;
   export let border = null;
   export let height100 = false;
+  export let center = false;
   export let radius = $configStore.radius || "rounded";
 
   let style = "";
@@ -41,6 +42,7 @@
   class="card js-bubbles-card"
   class:shadow
   class:border
+  class:center
   class:height-100={height100}
   {style}
   class:blocky={radius === "blocky"}
@@ -64,6 +66,10 @@
     border-radius: 1.5rem;
     background: var(--white);
     width: -webkit-fill-available;
+  }
+
+  .center {
+    text-align: center;
   }
 
   .blocky {
