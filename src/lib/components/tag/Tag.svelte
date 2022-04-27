@@ -1,11 +1,6 @@
-<!--
-  @component
-
-  - *label*: The text for the tag 
-  - *color*: The color of the tag
--->
 <script>
   export let label = "";
+  export let tooltip = null;
   export let color = "primary-light";
   export let small = false;
   export let min_width = 3;
@@ -18,7 +13,9 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <span
+  data-tooltip={tooltip}
   style="min-width:{min_width}rem; margin:{margin};"
   class:primary={color === "primary"}
   class:secondary={color === "secondary"}
@@ -53,6 +50,75 @@
 
 <style>
   @import "@fontsource/fira-mono/700.css";
+
+  @media only screen and (min-width: 767px) {
+    [data-tooltip] {
+      position: relative;
+      z-index: 10;
+    }
+
+    [data-tooltip]:before,
+    [data-tooltip]:after {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s ease-out;
+      transform: translate(-50%, 5px);
+      /* display: inline-table;
+      white-space: pre-wrap; */
+      display: table;
+    }
+
+    [data-tooltip]:before {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      margin-bottom: 5px;
+      padding: 7px;
+      width: 100%;
+      min-width: 70px;
+      max-width: 250px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      background-color: var(--white);
+      color: var(--dark);
+      content: attr(data-tooltip);
+      text-align: center;
+      font-size: 0.75rem;
+      line-height: 1.2;
+      transition: 0.2s ease-out;
+      font-family: "Inter", sans-serif;
+      text-transform: none;
+      filter: drop-shadow(0px 6px 6px rgba(227, 230, 236, 1));
+    }
+
+    [data-tooltip]:after {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      width: 0;
+      border-top: 5px solid var(--white);
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+      content: " ";
+      font-size: 0;
+      line-height: 0;
+      filter: drop-shadow(0px 6px 6px rgba(227, 230, 236, 1));
+    }
+
+    [data-tooltip]:hover:before,
+    [data-tooltip]:hover:after {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    [data-tooltip="false"]:hover:before,
+    [data-tooltip="false"]:hover:after {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
 
   span {
     font-family: "Fira Mono";

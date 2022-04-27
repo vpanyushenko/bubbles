@@ -5,6 +5,7 @@
 - SubmitForm util function
 - TableCells can set their own width
 - Added a hide function for inputs in a form
+- Added a tooltip option for tags
 
 **Fixed**
 

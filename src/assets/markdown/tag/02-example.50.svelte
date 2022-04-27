@@ -16,6 +16,7 @@
   <Tag color="info" margin="1rem 0 1rem 0">info</Tag>
   <Tag color="gray" margin="1rem 0 1rem 0">gray</Tag>
   <Tag color="dark" margin="1rem 0 1rem 0">dark</Tag>
+  <Tag color="primary" margin="1rem 0 1rem 0" tooltip="Hello, you can do a tooltip">tooltip</Tag>
 </Card>
 
 <Card>
