@@ -35,11 +35,9 @@
     $pageStore.sidebar.is_toggled = false;
     is_loading = false;
   } else {
-    setTimeout(() => {
-      if ($navigating) {
-        is_loading = true;
-      }
-    }, 400);
+    if ($navigating) {
+      is_loading = true;
+    }
   }
 
   sections.forEach((section, index) => {
