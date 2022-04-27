@@ -34,7 +34,6 @@
   >
     <button
       {id}
-      class="btn"
       class:primary={color === "primary"}
       class:secondary={color === "secondary"}
       class:error={color === "error"}
@@ -79,7 +78,6 @@
     on:click={onclick}
     on:click={onsubmit}
     {id}
-    class="btn"
     class:primary={color === "primary"}
     class:secondary={color === "secondary"}
     class:error={color === "error"}
@@ -126,7 +124,7 @@
     margin-top: 1rem;
   }
 
-  .btn {
+  button {
     min-width: 10rem;
     height: 3.5rem;
     padding: 0 1.25rem;
@@ -400,48 +398,39 @@
     min-width: 100%;
   }
 
-  .btn:disabled {
+  button:disabled {
     cursor: not-allowed;
     background: var(--gray-light);
     color: var(--gray-dark);
   }
 
-  /* .animated__button {
-    padding: 12px 24px;
-    background-color: hsl(222, 100%, 95%);
-    color: hsl(243, 80%, 62%);
+  /* .primary {
     position: relative;
-    border-radius: 6px;
     overflow: hidden;
     z-index: 1;
-}
+  }
 
-.animated__button span {
-    z-index: 1;
-    position: relative;
-}
-
-.animated__button::before {
-    content: '';
+  .primary::before {
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    transform: translate3d(-50%,-50%,0) scale3d(0,0,0);
-    transition: opacity .4s cubic-bezier(.19,1,.22,1),transform .75s cubic-bezier(.19,1,.22,1);
-    background-color: hsl(243, 80%, 62%);
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
+    transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1), transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+    background-color: var(--primary-dark);
     opacity: 0;
-}
+  }
 
-.animated__button:hover span {
-    color: hsl(222, 100%, 95%);
-}
+  .primary:hover span {
+    color: var(--white);
+  }
 
-.animated__button:hover::before {
+  .primary:hover::before {
     opacity: 1;
-    transition-duration: .85s;
-    transform: translate3d(-50%,-50%,0) scale3d(1.2,1.2,1.2);
-} */
+    transition-duration: 0.85s;
+    transform: translate3d(-50%, -50%, 0) scale3d(1.2, 1.2, 1.2);
+  } */
 </style>
