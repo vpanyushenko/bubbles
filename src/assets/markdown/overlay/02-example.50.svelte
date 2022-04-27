@@ -14,7 +14,7 @@
   <CardHeader title="Overlay Demo" border={false} />
 
   {#if overlayToggle}
-    <Overlay solid={true} transition_duration={500} onclick={() => (overlayToggle = false)}>
+    <Overlay background="solid" transition_duration={500} onclick={() => (overlayToggle = false)}>
       <Center>
         <Spinner size={5} color="primary" />
         <p>Loading Your Data (Click anywhere to close the overlay)</p>

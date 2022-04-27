@@ -29,6 +29,11 @@
    */
   export let img = null;
 
+  /**
+   * @type {"solid"|"gradient"|"null"} [background=null] - Sets up the background
+   */
+  export let background = "gradient";
+
   onMount(() => {
     if (browser) {
       document.body.classList.add("noscroll");
@@ -40,9 +45,20 @@
       document.body.classList.remove("noscroll");
     }
   });
+
+  if (solid) {
+    console.warn("[DEPRECATED]: The prop 'solid' for overlay is deprecated. Use background = 'solid' instead");
+  }
 </script>
 
-<div class="overlay" class:solid on:click={onclick} transition:fade={{ duration: transition_duration }} {id}>
+<div
+  class="overlay"
+  class:solid={solid === true || background === "solid"}
+  class:gradient={background === "gradient"}
+  on:click={onclick}
+  transition:fade={{ duration: transition_duration }}
+  {id}
+>
   {#if img}
     <img src={img} alt="background" />
   {/if}
@@ -73,6 +89,24 @@
 
   .solid {
     background: var(--white);
+  }
+
+  .gradient {
+    background: linear-gradient(-45deg, #ff6628, #ff9f38, #6c5dd3, #355dff, #4fbf67);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   img {

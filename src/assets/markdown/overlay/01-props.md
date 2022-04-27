@@ -16,8 +16,8 @@ You'll want to include functionality to hide an show the `Overlay`, otherwise it
 
 <br>
 
-**solid** `boolean` <code class="blue">false</code><br>
-Normally the overlay is a transparent black background, but you can force it to be a solid background by passing in true to this field.
+**background** `"solid"|"gradient"` <code class="blue">null</code><br>
+Normally the overlay is a transparent black background, but you can force it to be a solid white background or gradient background
 
 ---
 
