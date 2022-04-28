@@ -81,7 +81,7 @@
   $pageStore.title = title;
 </script>
 
-<Overlay solid={true}>
+<Overlay background="solid">
   <Center>
     {#if img}
       <picture>
