@@ -13,12 +13,14 @@
   import RadioGroup from "$lib/components/radio/RadioGroup.svelte";
   import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
+  import { createEventDispatcher } from "svelte";
 
   export let inputs = [];
   export let id = uuid();
   let row_width = 0;
 
   const submitButton = inputs.find((a) => a.type === "submit");
+  const dispatch = createEventDispatcher();
 
   if (submitButton && !submitButton.id) {
     submitButton.id = `form_btn_${id}`;
@@ -51,7 +53,10 @@
 
   //determine if any inputs are dependent on other inputs
   $: formatted_inputs = formatInputs(inputs);
-  // let dom_component_width, mobile;
+
+  $: if (inputs) {
+    dispatch("update", inputs);
+  }
 
   function formatInputs(inputs, mobile = false) {
     return inputs.map((input) => {
