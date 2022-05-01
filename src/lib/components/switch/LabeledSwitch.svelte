@@ -1,8 +1,9 @@
 <script>
   import Switch from "./Switch.svelte";
   import { configStore, pageStore } from "$lib/stores/stores";
+  import { uuid } from "$lib/index";
 
-  export let id = "";
+  export let id = uuid();
   export let desc = "";
   export let error = "An error occurred";
   export let label = "";
