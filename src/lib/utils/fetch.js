@@ -1,4 +1,4 @@
-import { getQueryParam } from "$lib/utils/url";
+import { getQueryParam } from "$lib/index";
 
 /**
  * Returns the API base path
@@ -15,9 +15,13 @@ const api_url = import.meta.env.VITE_API_URL;
  * @param {Object} options.session - pass through the session store from the svelte kit load function
  * @param {Object} options.params - pass through the params store from the svelte kit load function
  * @param {Boolean} [options.debug=false] - Adds debugging logs for the network requests
+ * @param {Boolean} [options.data="data"] - The key to look for the data
  * @returns {Promise<Object>} Returns an object with either props, redirect, or error
  */
-const fetchData = async (endpoint, options = { fetch: null, url: null, session: null, params: null, debug: false }) => {
+const fetchData = async (
+  endpoint,
+  options = { fetch: null, url: null, session: null, params: null, debug: false, data: "data" }
+) => {
   if (options.debug) {
     console.log("Fetching data...");
   }
@@ -26,6 +30,7 @@ const fetchData = async (endpoint, options = { fetch: null, url: null, session: 
   const url = options.url;
   const session = options.session;
   const params = options.params;
+  const data_key = options.data === undefined ? "data" : options.data;
 
   async function getData(endpoint, key = "data") {
     let res, json, pagination;
@@ -37,6 +42,7 @@ const fetchData = async (endpoint, options = { fetch: null, url: null, session: 
     }
 
     if (options.debug) {
+      console.log(`Data key: ${data_key}`);
       console.log(`Base uri: ${uri}`);
     }
 
@@ -83,7 +89,7 @@ const fetchData = async (endpoint, options = { fetch: null, url: null, session: 
 
         return {
           props: {
-            [key]: json.data,
+            [key]: json[data_key],
             pagination: pagination,
           },
         };

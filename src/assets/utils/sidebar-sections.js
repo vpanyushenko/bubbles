@@ -258,6 +258,12 @@ export default [
     group: "Utils",
   },
   {
+    label: "fetchData",
+    id: "fetch-data",
+    href: "/fetch-data",
+    group: "Utils",
+  },
+  {
     label: "Change Log",
     id: "changelog",
     href: "/changelog",

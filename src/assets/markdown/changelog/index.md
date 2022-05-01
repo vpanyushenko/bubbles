@@ -7,6 +7,7 @@
 - Added a hide function for inputs in a form
 - Added a tooltip option for tags
 - Gradient backgrounds for overlays
+- fetchData docs
 
 **Fixed**
 
