@@ -124,10 +124,11 @@ const fetchData = async (
 
     return Promise.all(promises)
       .then((array) => {
-        const props = {};
+        const props = {
+          pagination: null,
+        };
         let redirect = null;
         let status = 200;
-        let pagination = null;
 
         array.forEach((obj, index) => {
           if (obj.redirect) {
@@ -135,8 +136,8 @@ const fetchData = async (
             status = obj.status;
           }
 
-          if (obj.pagination) {
-            pagination = obj.props.pagination;
+          if (obj?.props?.pagination) {
+            props.pagination = obj.props.pagination;
           }
 
           props[endpoint[index].key] = obj.props?.[endpoint[index].key];
