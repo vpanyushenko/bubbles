@@ -193,6 +193,7 @@
     transition: all 0.25s;
     cursor: pointer;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-align: left;
   }
 
   .head:before {
