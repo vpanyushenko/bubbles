@@ -4,7 +4,6 @@
   import { page } from "$app/stores";
   import { browser } from "$app/env";
   import IconButton from "$lib/components/button/IconButton.svelte";
-  import icon_home from "./home.svg";
 
   export let title = "";
   export let subtitle = "";
