@@ -86,11 +86,6 @@
 </div>
 
 <style>
-  canvas {
-    width: 100%;
-    height: 100%;
-  }
-
   .overlay {
     position: fixed;
     top: 0;
@@ -103,6 +98,7 @@
     align-items: center;
     z-index: 9998;
     overflow: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   .overlay__content {
@@ -121,6 +117,20 @@
     transform: skewY(-12deg);
     will-change: transform;
     z-index: 0;
+    outline: 1px solid transparent;
+    overflow: hidden;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    outline: 1px solid transparent;
+    opacity: 1;
+    position: relative;
+    display: block;
+    width: inherit;
+    height: 100%;
+    opacity: 1;
   }
 
   @keyframes gradient {
