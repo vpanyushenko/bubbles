@@ -136,9 +136,9 @@
             },
             { label: null },
             { label: "Name", sort: { id: "name" } },
-            { label: "Weight", sort: { id: "weight" } },
-            { label: "Type(s)" },
-            { label: "Possible Moves", align: "end" },
+            { label: "Weight", sort: { id: "weight" }, mobile_width: 0 },
+            { label: "Type(s)", mobile_width: 0 },
+            { label: "Possible Moves", align: "end", mobile_width: 0 },
             { label: null, align: "end" },
           ]}
         />

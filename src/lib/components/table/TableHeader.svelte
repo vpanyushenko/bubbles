@@ -51,7 +51,12 @@
 
 <div class="row header" bind:this={header}>
   {#each cells as cell}
-    <div class="cell" class:right={cell.align === "right" || cell.align === "end"}>
+    <div
+      class="cell"
+      class:right={cell.align === "right" || cell.align === "end"}
+      class:hidden={cell.width === 0}
+      class:mobile__hide={cell.mobile_width === 0}
+    >
       {#if cell.checkbox}
         <Checkbox onchange={selectAll} bind:value={checkbox_value} />
       {:else if cell.sort}
@@ -142,51 +147,14 @@
   }
 
   @media only screen and (max-width: 1023px) {
-    .header .cell {
-      display: none;
-    }
-    .row {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      justify-content: space-between;
-      flex-basis: 100%;
-      flex-wrap: wrap;
-    }
     .cell {
-      display: block;
       padding: 1rem 0px;
-      border: none;
     }
   }
 
   @media only screen and (max-width: 767px) {
-    .row {
+    .mobile__hide {
       display: none;
-    }
-
-    .row {
-      width: 100%;
-      position: relative;
-      padding: 2rem;
-      border-radius: 1.5rem;
-      background: #fff;
-      -webkit-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      -moz-box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      box-shadow: rgba(227, 230, 236, 0.65) 0px 0px 6.875rem;
-      align-items: center;
-      flex-wrap: none;
-    }
-
-    .cell {
-      display: flex;
-      width: 100%;
-      padding: 0px;
-      text-align: center;
-      justify-content: center;
     }
   }
 </style>

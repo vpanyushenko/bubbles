@@ -8,11 +8,17 @@
   import { onMount } from "svelte";
   import { showLoading } from "$lib/utils/loading";
 
+  export let id = "";
   export let href = null;
   export let text = "";
   export let caption = "";
   export let large = false;
   export let bold = false;
+  export let empty = false;
+
+  if (empty) {
+    text = " ";
+  }
 
   /**
    * @prop {("left"|"right")} [align="left"] - aligns the text in the cell to the left or right (end) of the cell
@@ -29,6 +35,8 @@
    */
   export let mobile_order = 0;
   export let width = null;
+  export let wrap = true;
+  export let mobile_wrap = true;
 
   //conditions passed for custom cell types
   export let rows = [];
@@ -56,12 +64,16 @@
     _type = "checkbox";
   }
 
-  //conditions for mobile layouts
   let mobile_hide = false;
+  let hide = false;
   let style = "";
 
-  if (mobile_width && mobile_width !== null) {
+  if (isNaN(mobile_width) === false && mobile_width && mobile_width !== null) {
     style += `flex:${mobile_width}%;`;
+  }
+
+  if (mobile_width === "min") {
+    style += `flex:0%;`;
   }
 
   if (mobile_width === 0) {
@@ -72,7 +84,15 @@
     style += `order:${mobile_order};`;
   }
 
-  if (width !== null || width !== undefined) {
+  if (width === "min") {
+    style += `width:0%`;
+  }
+
+  if (width === 0) {
+    hide = true;
+  }
+
+  if (width) {
     if (isNaN(width)) {
       style += `width:${width}`;
     } else {
@@ -120,8 +140,12 @@
   <div
     class="cell"
     class:mobile__hide={mobile_hide}
+    class:hidden={hide}
     class:right={align === "right" || align === "end"}
+    class:nowrap={wrap === false}
+    class:mobile__nowrap={mobile_wrap === false}
     {style}
+    {id}
     bind:this={_dom_element}
   >
     <div class="flex align-items-center">
@@ -130,14 +154,26 @@
           {#if $navigating && $navigating?.to?.pathname === href && !_table_row_icon_button_id}
             <Spinner style="margin: 0 0.5rem 0 0" />
           {/if}
-          <a class:h6={large} class:bold sveltekit:prefetch {href} on:click={hrefClicked}>{text}</a>
+          <a
+            class:h6={large}
+            class:bold
+            sveltekit:prefetch
+            {href}
+            on:click={hrefClicked}
+            class:nowrap={wrap === false}
+            class:mobile__nowrap={mobile_wrap === false}>{text}</a
+          >
         </span>
       {:else}
-        <p class:h6={large} class:bold>{text}</p>
+        <p class:h6={large} class:bold class:nowrap={wrap === false} class:mobile__nowrap={mobile_wrap === false}>
+          {text}
+        </p>
       {/if}
 
       {#if caption}
-        <p class="text-gray">{@html caption}</p>
+        <p class="text-gray" class:nowrap={wrap === false} class:mobile__nowrap={mobile_wrap === false}>
+          {@html caption}
+        </p>
       {/if}
     </div>
   </div>
@@ -148,6 +184,8 @@
     class="cell"
     class:mobile__hide={mobile_hide}
     class:right={align === "right" || align === "end"}
+    class:nowrap={wrap === false}
+    class:mobile__nowrap={mobile_wrap === false}
     {style}
     bind:this={_dom_element}
   >
@@ -163,9 +201,21 @@
 
             {#if nested_cell.text}
               {#if nested_cell.href}
-                <a sveltekit:prefetch href={nested_cell.href} on:click={hrefClicked}>{nested_cell.text}</a>
+                <a
+                  sveltekit:prefetch
+                  href={nested_cell.href}
+                  on:click={hrefClicked}
+                  class:nowrap={wrap === false}
+                  class:mobile__nowrap={mobile_wrap === false}>{nested_cell.text}</a
+                >
               {:else}
-                <p class:text-gray={nested_cell.text_gray}>{nested_cell.text}</p>
+                <p
+                  class:text-gray={nested_cell.text_gray}
+                  class:nowrap={wrap === false}
+                  class:mobile__nowrap={mobile_wrap === false}
+                >
+                  {nested_cell.text}
+                </p>
               {/if}
             {/if}
 
@@ -223,7 +273,14 @@
 {/if}
 
 {#if !_type}
-  <div class="cell" class:right={align === "right" || align === "end"} class:mobile__hide={mobile_hide} {style}>
+  <div
+    class="cell"
+    class:right={align === "right" || align === "end"}
+    class:mobile__hide={mobile_hide}
+    {style}
+    class:nowrap={wrap === false}
+    class:mobile__nowrap={mobile_wrap === false}
+  >
     <slot>--</slot>
   </div>
 {/if}
@@ -237,6 +294,10 @@
 
   .href-container {
     display: flex;
+  }
+
+  .nowrap {
+    white-space: nowrap;
   }
 
   .cell {
@@ -309,7 +370,7 @@
   }
 
   .no-width {
-    width: 0;
+    width: 0px;
   }
 
   p {
@@ -357,6 +418,10 @@
       padding: 0.75rem 0rem;
     }
 
+    .cell:not(:last-child) {
+      padding-right: 1rem;
+    }
+
     .cell picture {
       margin-right: 0px;
     }
@@ -368,6 +433,10 @@
 
     .mobile__hide {
       display: none;
+    }
+
+    .mobile__nowrap {
+      white-space: nowrap;
     }
   }
 </style>

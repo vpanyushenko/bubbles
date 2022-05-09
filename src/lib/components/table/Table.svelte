@@ -9,26 +9,29 @@
   export let empty = "Nothing here yet.";
   export let padding = "roomy";
   export let id = uuid();
+  export let overflow = false;
 </script>
 
-<div class="table js-bubbles-table" class:compact={padding === "compact"} {id}>
-  {#if header && header.length}
-    <TableHeader cells={header} />
-  {/if}
+<div class="table__wrapper" class:overflow>
+  <div class="table js-bubbles-table" class:compact={padding === "compact"} {id}>
+    {#if header && header.length}
+      <TableHeader cells={header} />
+    {/if}
 
-  {#if rows && rows.length}
-    {#each rows as row}
-      <TableRow {...row} />
-    {/each}
-  {:else}
-    <slot>
-      <TableRow>
-        <TableCell>
-          <p class="empty">{empty}</p>
-        </TableCell>
-      </TableRow>
-    </slot>
-  {/if}
+    {#if rows && rows.length}
+      {#each rows as row}
+        <TableRow {...row} />
+      {/each}
+    {:else}
+      <slot>
+        <TableRow>
+          <TableCell>
+            <p class="empty">{empty}</p>
+          </TableCell>
+        </TableRow>
+      </slot>
+    {/if}
+  </div>
 </div>
 
 <style>
@@ -54,6 +57,12 @@
 
   .selected__items {
     display: flex;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .table__wrapper {
+      overflow-x: scroll;
+    }
   }
 
   /* @media only screen and (max-width: 767px) {

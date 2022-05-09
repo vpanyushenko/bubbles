@@ -147,7 +147,6 @@
 
   import Pagination from "$lib/components/pagination/Pagination.svelte";
 
-  import store from "$assets/utils/store";
   import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
   import { sort } from "$lib/index";
 
@@ -230,7 +229,7 @@
 
 <Row>
   <Column>
-    <Card>
+    <Card overflow={true}>
       <CardHeader
         title="Complex Table Example"
         caption="This example uses an external API for data, which may run slowly especially when using the search."
@@ -276,6 +275,7 @@
             },
             { label: null },
             { label: "Name", sort: { id: "name" } },
+            { label: "Alt Name", sort: { id: "name" } },
             { label: "Weight", sort: { id: "weight" } },
             { label: "Type(s)" },
             { label: "Possible Moves", align: "end" },
@@ -284,19 +284,23 @@
         />
 
         {#each pokemon as poke}
-          <TableRow id={poke.id}>
+          <TableRow id={poke.id} wrap={false}>
             <TableCell checkbox={{ value: false }} />
-            <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} mobile_width={10} />
+            <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} />
             <TableCell
               text={poke.name}
-              href={`/examples/pokedex/${poke.name}`}
+              href={`/examples/nested/table/${poke.name}`}
               caption={`Pokedex Number: ${poke.id}`}
               bold={true}
-              mobile_width={70}
             />
-            <TableCell text={`${poke.weight} lbs`} mobile_width={0} />
             <TableCell
-              mobile_width={0}
+              text={poke.name}
+              href={`/examples/nested/table/${poke.name}`}
+              caption={`Pokedex Number: ${poke.id}`}
+              bold={true}
+            />
+            <TableCell text={`${poke.weight} lbs`} />
+            <TableCell
               rows={[
                 [
                   {
@@ -319,14 +323,9 @@
               ]}
             />
 
-            <TableCell
-              tag={{ label: poke.moves.length, color: "primary", min_width: 2.75 }}
-              align="right"
-              mobile_width={0}
-            />
+            <TableCell tag={{ label: poke.moves.length, color: "primary", min_width: 2.75 }} align="right" />
 
             <TableCell
-              mobile_width={10}
               button={{
                 icon: "more",
                 options: [
