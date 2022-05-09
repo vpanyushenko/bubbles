@@ -16,6 +16,8 @@
 - Text in TableCell can now be aligned left
 - Sidebar subtitle indenting when no back button is present
 - Make sure text is left aligned on select
+- Mobile options for tables
+- Better gradients on overlays
 
 <br>
 
