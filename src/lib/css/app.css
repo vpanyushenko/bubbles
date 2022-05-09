@@ -121,9 +121,9 @@ button:focus:not(:focus-visible) {
   display: none !important;
 }
 
-.visible {
+/* .visible {
   display: block !important;
-}
+} */
 
 html,
 body,
@@ -617,6 +617,7 @@ hr {
 .page__row .page__col_100 {
   flex-direction: column;
 }
+
 .page__grid,
 .page__col {
   padding: 0 4rem 3rem;
@@ -638,14 +639,15 @@ hr {
 .page__col.page__col_w50 {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
+  flex: 1 0 50%;
   max-width: 50%;
 }
 
+.page__col:nth-of-type(1),
 .page__col.page__col_w50:nth-of-type(1) {
   padding-right: 1.5rem;
 }
-
+.page__col:nth-of-type(2),
 .page__col.page__col_w50:nth-of-type(2) {
   padding-left: 1.5rem;
 }
@@ -687,7 +689,7 @@ hr {
   padding-bottom: 0;
 }
 
-@media only screen and (max-width: 1419px) {
+/* @media only screen and (max-width: 1419px) {
   .page__grid,
   .page__col,
   .page__col_w100 {
@@ -709,7 +711,7 @@ hr {
     flex: 0 0 50%;
     max-width: 50%;
   }
-}
+} */
 
 @media only screen and (max-width: 1339px) {
   .page__center {
@@ -717,9 +719,9 @@ hr {
     max-width: 930px;
     padding: 0 4.375rem 2.5rem;
   }
-  .page__row {
+  /* .page__row {
     display: block;
-  }
+  } */
 
   .page__row.border .page__col:nth-of-type(2) {
     border: none;
@@ -729,14 +731,21 @@ hr {
   .page__col {
     padding: 0px;
   }
+
   .page__col:first-of-type {
     max-width: 100%;
+    flex-grow: 1;
+    padding: 0;
   }
   .page__col:nth-of-type(2) {
     width: 100%;
+    flex-grow: 1;
+    padding: 0;
   }
+
   .page__col.page__col_w50 {
     padding: 0;
+    flex: 1 0 100%;
   }
   .page__col.page__col_w50:first-of-type {
     max-width: 100%;
@@ -747,9 +756,9 @@ hr {
   }
 
   .page__col.page__col_w50 {
-    -webkit-box-flex: 0;
+    /* -webkit-box-flex: 0;
     -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
+    flex: 0 0 50%; */
     max-width: 50%;
     margin: 0;
   }
@@ -836,6 +845,16 @@ hr {
   .page__center {
     padding: 0 2rem 2rem;
     max-width: none;
+  }
+
+  .page__row .page__col:nth-of-type(1) {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  }
+
+  .page__row .page__col:nth-of-type(2) {
+    padding-right: 0px;
+    padding-left: 0px;
   }
 
   .page__col_w100 {
