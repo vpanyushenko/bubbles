@@ -4,6 +4,7 @@
   import { page } from "$app/stores";
   import { browser } from "$app/env";
   import IconButton from "$lib/components/button/IconButton.svelte";
+  import icon_home from "./home.svg";
 
   export let title = "";
   export let subtitle = "";
@@ -101,6 +102,10 @@
           href: href,
         };
 
+        if (index === 0) {
+          obj.label = "🏠";
+        }
+
         return obj;
       });
 
@@ -147,13 +152,13 @@
     </div>
   </div>
 
-  <div class="header__row" class:burger__indent={breadcrumbs}>
+  <div class="breadcrumb__row" class:burger__indent={breadcrumbs}>
     <div class:header__subtitle={breadcrumbs && _breadcrumbs && _breadcrumbs.length ? true : false}>
       <slot>
         {#if subtitle}
-          <h6>{@html subtitle}</h6>
+          <p>{@html subtitle}</p>
         {:else if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
-          <h6 class="breadcrumbs">
+          <p class="breadcrumbs">
             {#each _breadcrumbs as breadcrumb, index}
               <a sveltekit:prefetch href={breadcrumb.href} on:click={() => ($pageStore.clicked = icon_id)}
                 >{breadcrumb.label}</a
@@ -162,7 +167,7 @@
                 <span> / </span>
               {/if}
             {/each}
-          </h6>
+          </p>
         {/if}
       </slot>
     </div>
@@ -204,7 +209,7 @@
     left: 0px; */
     /* width: calc((100vw - 0px) / 2 - (1200px / 2)); */
   }
-
+  /* 
   div.sticky {
     width: 100vw;
     left: 0px;
@@ -214,14 +219,26 @@
     top: 0px;
     z-index: 9;
     background-color: aquamarine;
-  }
+  } */
 
+  header .breadcrumb__row,
   header .header__row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  header .header__row {
     width: 100%;
   }
+
+  header .breadcrumb__row p {
+    margin-bottom: 0;
+  }
+  /* header .breadcrumb__row a {
+    color: transparent;
+    text-shadow: 0 0 0 var(--gray-dark);
+  } */
 
   .burger__indent {
     margin-left: 3.75rem;
