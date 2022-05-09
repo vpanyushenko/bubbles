@@ -23,3 +23,8 @@ If you're looking to add filters or pagination at the bottom of your table, you'
 
 **id** `string`<br>
 You can pass in an ID to the component if you need to reference it later. If you do not pass an ID, there will be a unique id added to the component.
+
+---
+
+**overflow** `boolean` <code class="blue">false</code> <br>
+Allow for the table contents to overflow the container. The table will become scrollable.

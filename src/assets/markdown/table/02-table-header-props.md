@@ -25,6 +25,16 @@ This is the text the user will see. Leave this blank or pass in null to add a bl
 cell[].**align** `string`<br>
 Normally cells are aligned to the left, but if you want to align the header to the right, pass in "right" or "end
 
+---
+
+cell[].**width** `integer`<br>
+Set the width to `0` to hide this item
+
+---
+
+cell[].**mobile_width** `integer`<br>
+Set to zero to hide this cell on mobile devices
+
 <br>
 <br>
 

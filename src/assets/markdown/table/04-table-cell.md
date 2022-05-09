@@ -80,3 +80,13 @@ Select the width this cell will take up on small screens. If you want to hide th
 
 **mobile_order** `number` <br>
 This is the `order` css property. You can change the order or elements by passing in larger integers and move them left in the stack by passing in larger negative integers.
+
+---
+
+**wrap** `boolean` <code class="blue">true</code> <br>
+Set to `false` if you don't want to wrap the contents of the cell.
+
+---
+
+**mobile_wrap** `boolean` <code class="blue">true</code> <br>
+Set to `false` fi you don't wan to wrap the contents of mobile only

@@ -22,3 +22,13 @@ The href value for the entire row. This is useful is you are using a Table for a
 
 **onclick** `function`<br>
 You can run a function when the user clicks on the row. If you just want to take the user to a new page, use href because it will have better performance as the page with be prefetched.
+
+---
+
+**wrap** `boolean` <code class="blue">true</code> <br>
+Set to `false` if you don't want to wrap the contents of each cell.
+
+---
+
+**mobile_wrap** `boolean` <code class="blue">true</code> <br>
+Set to `false` fi you don't wan to wrap the contents of each cell mobile only
