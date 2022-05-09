@@ -16,8 +16,13 @@ You'll want to include functionality to hide an show the `Overlay`, otherwise it
 
 <br>
 
-**background** `"solid"|"gradient"` <code class="blue">null</code><br>
+**background** `"solid"|"gradient|null"` <code class="blue">null</code><br>
 Normally the overlay is a transparent black background, but you can force it to be a solid white background or gradient background
+
+---
+
+**colors** `Array<String>` <code class="blue">["#ef008f", "#6ec3f4", "#7038ff", "#ffba27"]</code><br>
+The colors for your gradient fill, if background is gradient. Must be at least two colors.
 
 ---
 

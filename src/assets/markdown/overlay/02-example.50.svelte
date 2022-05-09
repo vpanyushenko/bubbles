@@ -14,11 +14,15 @@
   <CardHeader title="Overlay Demo" border={false} />
 
   {#if overlayToggle}
-    <Overlay background="solid" transition_duration={500} onclick={() => (overlayToggle = false)}>
-      <Center>
-        <Spinner size={5} color="primary" />
-        <p>Loading Your Data (Click anywhere to close the overlay)</p>
-      </Center>
+    <Overlay background="gradient" transition_duration={500} onclick={() => (overlayToggle = false)}>
+      <Card>
+        <div>
+          <Center height100={false}>
+            <Spinner size={5} color="primary" />
+            <p>Loading Your Data (Click anywhere to close the overlay)</p>
+          </Center>
+        </div>
+      </Card>
     </Overlay>
   {/if}
 
@@ -31,3 +35,12 @@
     }}
   />
 </Card>
+
+<style>
+  div {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

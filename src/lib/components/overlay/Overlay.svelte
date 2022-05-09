@@ -3,6 +3,7 @@
   import { fade } from "svelte/transition";
   import { onDestroy, onMount } from "svelte";
   import { browser } from "$app/env";
+  import { gradient } from "$lib/utils/colors";
 
   /**
    * @type {Boolean} [solid=false] - If you want the overlay to have a solid background. Defaults to a darkened, transparent background.
@@ -32,7 +33,12 @@
   /**
    * @type {"solid"|"gradient"|"null"} [background=null] - Sets up the background
    */
-  export let background = "gradient";
+  export let background = null;
+
+  /**
+   * @type {Array<String>} [colors=["#ef008f", "#6ec3f4", "#7038ff", "#ffba27"]] - Creates the gradient
+   */
+  export let colors = ["#ef008f", "#6ec3f4", "#7038ff", "#ffba27"];
 
   onMount(() => {
     if (browser) {
@@ -49,12 +55,17 @@
   if (solid) {
     console.warn("[DEPRECATED]: The prop 'solid' for overlay is deprecated. Use background = 'solid' instead");
   }
+
+  let gradient_id = "gradient-canvas";
+
+  onMount(() => {
+    const observer = gradient(colors, gradient_id);
+  });
 </script>
 
 <div
   class="overlay"
-  class:solid={solid === true || background === "solid"}
-  class:gradient={background === "gradient"}
+  class:solid={solid === true || background === "solid" || background === "gradient"}
   on:click={onclick}
   transition:fade={{ duration: transition_duration }}
   {id}
@@ -63,12 +74,23 @@
     <img src={img} alt="background" />
   {/if}
 
+  {#if background === "gradient"}
+    <div class="gradient__hero">
+      <canvas id="gradient-canvas" data-js-darken-top data-transition-in />
+    </div>
+  {/if}
+
   <section class="overlay__content">
     <slot />
   </section>
 </div>
 
 <style>
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+
   .overlay {
     position: fixed;
     top: 0;
@@ -88,13 +110,17 @@
   }
 
   .solid {
-    background: var(--white);
+    background: var(--gray-lightest);
   }
 
-  .gradient {
-    background: linear-gradient(-45deg, #ff6628, #ff9f38, #6c5dd3, #355dff, #4fbf67);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+  .gradient__hero {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    transform: skewY(-12deg);
+    will-change: transform;
+    z-index: 0;
   }
 
   @keyframes gradient {
