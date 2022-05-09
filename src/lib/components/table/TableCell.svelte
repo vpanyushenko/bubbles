@@ -64,8 +64,8 @@
     _type = "checkbox";
   }
 
-  let mobile_hide = false;
-  let hide = false;
+  let mobile_hidden = false;
+  let hidden = false;
   let style = "";
 
   if (isNaN(mobile_width) === false && mobile_width && mobile_width !== null) {
@@ -77,7 +77,7 @@
   }
 
   if (mobile_width === 0) {
-    mobile_hide = true;
+    mobile_hidden = true;
   }
 
   if (mobile_order) {
@@ -85,20 +85,23 @@
   }
 
   if (width === "min") {
-    style += `width:0%`;
+    style += `width:0%;`;
   }
 
   if (width === 0) {
-    hide = true;
+    hidden = true;
   }
 
-  if (width) {
+  if (width && width !== "min") {
     if (isNaN(width)) {
-      style += `width:${width}`;
+      style += `width:${width};`;
     } else {
-      style += `width:${width}%`;
+      style += `width:${width}%;`;
     }
   }
+
+  console.log(style);
+  console.log(width, mobile_width, hidden);
 
   onMount(() => {
     //find the nearest table (js-bubbles-table)
@@ -139,8 +142,8 @@
 {#if _type === "text"}
   <div
     class="cell"
-    class:mobile__hide={mobile_hide}
-    class:hidden={hide}
+    class:mobile__hidden={mobile_hidden}
+    class:hidden
     class:right={align === "right" || align === "end"}
     class:nowrap={wrap === false}
     class:mobile__nowrap={mobile_wrap === false}
@@ -182,7 +185,8 @@
 {#if _type === "stacked"}
   <div
     class="cell"
-    class:mobile__hide={mobile_hide}
+    class:mobile__hidden={mobile_hidden}
+    class:hidden
     class:right={align === "right" || align === "end"}
     class:nowrap={wrap === false}
     class:mobile__nowrap={mobile_wrap === false}
@@ -232,7 +236,7 @@
 {/if}
 
 {#if _type === "image"}
-  <div class="cell image" class:mobile__hide={mobile_hide} {style} bind:this={_dom_element}>
+  <div class="cell image" class:mobile__hidden={mobile_hidden} class:hidden {style} bind:this={_dom_element}>
     {#if href}
       <a sveltekit:prefetch {href}>
         <picture>
@@ -248,7 +252,13 @@
 {/if}
 
 {#if _type === "tag"}
-  <div class="cell" class:mobile__hide={mobile_hide} {style} class:right={align === "right" || align === "end"}>
+  <div
+    class="cell"
+    class:mobile__hidden={mobile_hidden}
+    class:hidden
+    {style}
+    class:right={align === "right" || align === "end"}
+  >
     <Tag {...tag} />
   </div>
 {/if}
@@ -256,7 +266,8 @@
 {#if _type === "button"}
   <div
     class="cell right"
-    class:mobile__hide={mobile_hide}
+    class:mobile__hidden={mobile_hidden}
+    class:hidden
     {style}
     class:__clickable={button.icon === "arrowRight" || !button.icon}
   >
@@ -265,7 +276,7 @@
 {/if}
 
 {#if _type === "checkbox"}
-  <div class="cell no-width" class:mobile__hide={mobile_hide} {style} bind:this={_checkbox_cell}>
+  <div class="cell no-width" class:mobile__hidden={mobile_hidden} class:hidden {style} bind:this={_checkbox_cell}>
     <div class="flex">
       <Checkbox {...checkbox} onchange={selectItem} />
     </div>
@@ -276,7 +287,8 @@
   <div
     class="cell"
     class:right={align === "right" || align === "end"}
-    class:mobile__hide={mobile_hide}
+    class:mobile__hidden={mobile_hidden}
+    class:hidden
     {style}
     class:nowrap={wrap === false}
     class:mobile__nowrap={mobile_wrap === false}
@@ -414,13 +426,13 @@
       flex-basis: content;
     } */
 
-    .cell {
+    /* .cell {
       padding: 0.75rem 0rem;
     }
 
     .cell:not(:last-child) {
       padding-right: 1rem;
-    }
+    } */
 
     .cell picture {
       margin-right: 0px;
@@ -431,7 +443,7 @@
       margin-right: 0.5rem;
     }
 
-    .mobile__hide {
+    .mobile__hidden {
       display: none;
     }
 

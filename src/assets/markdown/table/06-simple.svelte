@@ -22,10 +22,12 @@
       <Table>
         <TableRow href="#table">
           <TableCell text="Profile" large={true} bold={true} caption="Edit your profile and update your photo" />
-          <TableCell button={{ icon: "arrowRight" }} />
+          <TableCell tag={{ label: "coming soon" }} align="right" width="min" />
+          <TableCell button={{ icon: "arrowRight" }} width="min" />
         </TableRow>
         <TableRow href="#table">
           <TableCell text="Notifications" large={true} caption="Select how and went we message you" />
+          <TableCell empty={true} />
           <TableCell button={{ icon: "arrowRight" }} />
         </TableRow>
         <TableRow href="#table">
@@ -35,6 +37,7 @@
             bold={true}
             caption="Edit your payment methods and see past transactions"
           />
+          <TableCell empty={true} />
           <TableCell button={{ icon: "arrowRight" }} />
         </TableRow>
       </Table>
