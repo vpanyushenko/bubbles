@@ -100,9 +100,6 @@
     }
   }
 
-  console.log(style);
-  console.log(width, mobile_width, hidden);
-
   onMount(() => {
     //find the nearest table (js-bubbles-table)
     //see if the table has an icon button to show a loading animation for

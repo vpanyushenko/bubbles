@@ -55,8 +55,8 @@
     padding-bottom: 1rem;
   }
 
-  .selected__items {
-    display: flex;
+  .table__wrapper {
+    width: 100%;
   }
 
   @media only screen and (max-width: 767px) {
