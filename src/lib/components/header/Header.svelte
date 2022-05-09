@@ -396,6 +396,11 @@
       padding: 0;
     }
 
+    header .icons {
+      -ms-flex: 0;
+      flex: 0;
+    }
+
     .header__text {
       align-self: center;
     }
