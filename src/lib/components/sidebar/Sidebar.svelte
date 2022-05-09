@@ -2,23 +2,24 @@
   import { pageStore, configStore, Spinner, uuid } from "$lib/index";
   import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
-  import { hexToRgb, getColorFilter } from "$lib/utils/colors";
   import { onMount } from "svelte";
+  // import { hexToRgb, getColorFilter } from "$lib/utils/colors";
 
   export let sections = [];
   export let logo = null;
   export let href = "/";
   export let onclick = null;
   export let padding = $configStore.padding || "roomy";
-  export let flat = true;
+  export let flat = sections.find((a) => a.group) ? false : true;
 
-  sections = sections.filter((section) => section.hidden !== true);
-
-  const has_groups = sections.find((a) => a.group);
-
-  if (!has_groups) {
-    flat = true;
-  }
+  $: sections = sections
+    .map((section, index) => {
+      if (!section.id) {
+        section.id = `sidebar_${index + 1}`;
+      }
+      return section;
+    })
+    .filter((section) => section.hidden !== true);
 
   const sectionsWithTitles = {};
   let path = $page.url.pathname;
@@ -123,7 +124,7 @@
 
       if (!activeSection) {
         sections.forEach((section) => {
-          if (section.href_aliases.find((a) => a === param_path)) {
+          if (Array.isArray(section.href_aliases) && section.href_aliases.includes(param_path)) {
             activeSection = true;
             $pageStore.sidebar.active_item = section.id;
 
@@ -146,17 +147,17 @@
 
   onMount(() => {
     $pageStore.sidebar.is_mounted = true;
-    const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
+    // const primaryhex = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 
-    if (primaryhex) {
-      const rgb = hexToRgb(`${primaryhex.trim()}`);
+    // if (primaryhex) {
+    //   const rgb = hexToRgb(`${primaryhex.trim()}`);
 
-      const iconFilter = getColorFilter(rgb);
-      let filter = iconFilter.filter.split("filter: ")[1];
-      filter = filter.substring(0, filter.length - 1);
+    //   const iconFilter = getColorFilter(rgb);
+    //   let filter = iconFilter.filter.split("filter: ")[1];
+    //   filter = filter.substring(0, filter.length - 1);
 
-      document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
-    }
+    //   document.documentElement.style.setProperty("--sidebar-hover-filter", filter);
+    // }
   });
 </script>
 

@@ -515,12 +515,13 @@ const validateInputs = (inputs) => {
  * @param {Object} options
  * @param {String} [options.method="POST"] - method for the fetch function
  * @param {Boolean} [options.show_toast=true] - If a toast should me shown. Looks for a message property in the response
+ * @param {Boolean} [options.toast=true] - An alias for show_toast
  * @param {Boolean} [options.hide_modal=true] - If a model is active, will hide the model
  * @param {?String} [options.loading=null] - The ID of the element to show a loading animation for and hide loading when the fetch is done.
  * @param {("include"|"same-origin"|"omit")} [options.credentials="include"] - If you want credentials to be sent with the request
  * @param {Boolean} [options.debug=false] - If you want debug logs for this function
  * @param {Boolean} [options.include_hidden_props=false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
- * @param {?String} [options.bearer_token] - The bearer token to add to the authorization headers
+ * @param {?String} [options.bearer] - The bearer token to add to the authorization headers
  * @param {(String|Number|Boolean|null)} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
  * @param {?Object>} [options.data = null] - This object will be merged with the one generated from inputs. This will override any properties from inputs that conflict.
  * @returns {Promise} The response from the api request
@@ -531,17 +532,22 @@ const submitForm = (
   options = {
     method: "POST",
     show_toast: true,
+    toast: true,
     hide_modal: true,
     include_hidden_props: false,
     hidden_prop_values: null,
     debug: false,
     credentials: "include",
     loading: null,
-    bearer_token: null,
+    bearer: null,
     data: null,
   }
 ) => {
   return new Promise((resolve, reject) => {
+    if (!options.toast || !options.show_toast) {
+      options.show_toast = false;
+    }
+
     const METHOD = options.method || "POST";
     const CREDENTIALS = options.credentials || "include";
     const SHOW_TOAST = options.show_toast === false ? false : true;
@@ -590,8 +596,11 @@ const submitForm = (
           "Content-Type": "application/json",
         };
 
-        if (options.bearer_token) {
-          headers.Authorization = `Bearer ${options.bearer_token}`;
+        if (options.bearer) {
+          headers.Authorization = `Bearer ${options.bearer}`;
+          if (options?.debug) {
+            console.log("Added Bearer token to Authorization header");
+          }
         }
 
         return fetch(api, {

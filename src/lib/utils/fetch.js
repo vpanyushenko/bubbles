@@ -16,6 +16,7 @@ const api_url = import.meta.env.VITE_API_URL;
  * @param {Object} options.params - pass through the params store from the svelte kit load function
  * @param {Boolean} [options.debug=false] - Adds debugging logs for the network requests
  * @param {Boolean} [options.data="data"] - The key to look for the data
+ * @param {Boolean} [options.check_session=true] - if the session should be checked before proceeding
  * @returns {Promise<Object>} Returns an object with either props, redirect, or error
  */
 const fetchData = async (
@@ -79,7 +80,7 @@ const fetchData = async (
           "Content-Type": "application/json",
           Authorization: `Bearer ${session?.token}`,
         },
-        credentials: "include",
+        // credentials: "include",
       });
 
       json = await res.json();
@@ -146,7 +147,6 @@ const fetchData = async (
         let response = {
           status: status,
           props: props,
-          pagination: pagination || null,
           redirect: redirect,
         };
 
