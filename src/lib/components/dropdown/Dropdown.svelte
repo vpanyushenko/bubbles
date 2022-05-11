@@ -417,7 +417,7 @@
   }
 
   img.option__img {
-    height: 1.5rem;
+    height: 1rem;
     margin-right: 1rem;
   }
 
@@ -446,7 +446,7 @@
 
   .title {
     position: relative;
-    margin-bottom: 3px;
+    /* margin-bottom: 3px; */
     padding-right: 30px;
     color: var(--black);
     -webkit-transition: color 0.25s;
@@ -477,6 +477,7 @@
     -webkit-transition: color 0.25s;
     -o-transition: color 0.25s;
     transition: color 0.25s;
+    margin-top: 3px;
   }
 
   /* .option:hover .title:before,
