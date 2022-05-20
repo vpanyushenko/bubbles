@@ -28,6 +28,9 @@
   function selectAll(event) {
     $pageStore.table.selected_table_rows = 0;
     $pageStore.table.id = header.closest(".js-bubbles-table").id;
+    if (document) {
+      document.body.style.cursor = "wait";
+    }
 
     header
       .closest(".js-bubbles-table")
@@ -38,6 +41,10 @@
         }
         row.querySelector(".checkbox").querySelector("input").checked = checkbox_value;
       });
+
+    if (document) {
+      document.body.style.removeProperty("cursor");
+    }
   }
 
   $: if (cells.find((obj) => obj.checkbox === true)) {
