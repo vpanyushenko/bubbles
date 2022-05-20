@@ -841,12 +841,16 @@ class Gradient {
         rotation: 0,
         playing: true,
       }),
-      document.querySelectorAll("canvas").length < 1
-        ? console.log("DID NOT LOAD HERO STRIPE CANVAS")
-        : ((this.minigl = new MiniGl(this.el, null, null, !0)),
+      document.querySelectorAll("canvas").length >= 1
+        ? ((this.minigl = new MiniGl(this.el, null, null, !0)),
           requestAnimationFrame(() => {
             this.el && ((this.computedCanvasStyle = getComputedStyle(this.el)), this.waitForCssVars());
-          }));
+          }))
+        : null;
+
+    // document.querySelectorAll("canvas").length < 1
+    //   ? console.log("")
+    //   :
     /*
         this.scrollObserver = await s.create(.1, !1),
         this.scrollObserver.observe(this.el),
