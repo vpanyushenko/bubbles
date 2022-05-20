@@ -7,13 +7,15 @@ import { modalStore } from "$lib/stores/modal.store";
  * @param {?String} options.img - An image to include at the top of the modal
  * @param {?String} options.message - If you want the modal to display a message.
  * @param {?Array<Object>} options.form - An array of form inputs
+ * @param {?Object} options.file - File form inputs
  * @param {?Array} options.footer - An array of buttons for the modal footer. Usually cancel and confirm combos.
  */
-const showModal = (title, options = { message: "", form: [], footer: [], img: null, height: null }) => {
+const showModal = (title, options = { message: "", form: [], footer: [], img: null, height: null, file: null }) => {
   modalStore.update((data) => {
     data.title = title;
     data.active = true;
     data.form = options.form || [];
+    data.file = options.file || null;
     data.message = options.message || null;
     data.footer = options.footer;
     data.img = options.img || null;

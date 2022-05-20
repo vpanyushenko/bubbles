@@ -6,6 +6,7 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Button from "$lib/components/button/Button.svelte";
   import Form from "$lib/components/form/Form.svelte";
+  import FileForm from "$lib/components/form/FileForm.svelte";
 
   const id = uuid();
 
@@ -64,6 +65,10 @@
 
           {#if $modalStore.form}
             <Form inputs={$modalStore.form} />
+          {/if}
+
+          {#if $modalStore.file}
+            <FileForm {...$modalStore.file} />
           {/if}
         </main>
 

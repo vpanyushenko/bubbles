@@ -3,6 +3,7 @@
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { showToast } from "$lib/utils/toast";
   import { v4 as uuid } from "@lukeed/uuid";
+  import { modalStore } from "$lib/index";
 
   let id = uuid();
   export let src = null;
@@ -15,6 +16,8 @@
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
   export let label = "Select File";
   export let callback = null;
+  export let getBearerToken = null;
+  export let debug = false;
 
   $: disabled = src ? false : true;
 
@@ -51,8 +54,22 @@
     }
   }
 
-  function submit(event) {
+  async function submit(event) {
     const button_id = event.currentTarget.id;
+    let bearer = null;
+
+    if (getBearerToken) {
+      bearer = await getBearerToken();
+
+      if (!fetch_options.headers) {
+        fetch_options.headers = {};
+      }
+      fetch_options.headers.Authorization = `Bearer ${bearer}`;
+    }
+
+    if (debug) {
+      console.log(fetch_options);
+    }
 
     showLoading(button_id);
 
