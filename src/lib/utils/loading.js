@@ -11,6 +11,10 @@ const showLoading = (id) => {
 
 const hideLoading = (id) => {
   if (!id) {
+    pageStore.update((store) => {
+      store.loading = [];
+      return store;
+    });
     return;
   }
 
