@@ -88,16 +88,40 @@
   }
 </script>
 
+<!-- <CardHeader
+title="Complex Table Example"
+caption="This example uses an external API for data, which may run slowly especially when using the search."
+buttons={[
+  { icon: "search", color: "gray-lighter", search: true },
+  { icon: "more", color: "gray-lighter" },
+]}
+border={false}
+filters={[
+  {
+    id: "type",
+    label: "Type",
+    value: "",
+    options: types.map((type) => {
+      if (type === "break") {
+        return "break";
+      }
+
+      return {
+        label: type,
+        value: type === "All" ? "" : type.toLowerCase(),
+      };
+    }),
+  },
+]}
+/> -->
+
 <Row>
   <Column>
     <Card>
       <CardHeader
         title="Complex Table Example"
         caption="This example uses an external API for data, which may run slowly especially when using the search."
-        buttons={[
-          { icon: "search", color: "gray-lighter", search: true },
-          { icon: "more", color: "gray-lighter" },
-        ]}
+        buttons={[{ icon: "search", color: "gray-lighter", search: true }]}
         border={false}
         filters={[
           {

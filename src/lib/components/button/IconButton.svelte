@@ -50,6 +50,7 @@
   export let debounce = 350;
   export let search = false;
   export let __search_id = null;
+  export let __search_width_100 = false;
 
   export let transparent = true; //TODO: deprecated
 
@@ -219,6 +220,7 @@
       style:outline-offset={dropdown && active ? "" : border ? `-2px` : null}
       class:mobile_shadow
       class:search={search_active}
+      class:w-100={search_active && __search_width_100}
     >
       {#if search_active}
         <div class="field__wrapper" class:focused={search_focused}>
@@ -390,6 +392,10 @@
 
   .search {
     width: 23rem;
+  }
+
+  .w-100 {
+    width: 100%;
   }
 
   .field__wrapper {

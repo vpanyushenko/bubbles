@@ -1,4 +1,5 @@
 <script>
+  import { scale, fade } from "svelte/transition";
   import { pageStore } from "$lib/stores/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Select from "$lib/components/select/Select.svelte";
@@ -13,8 +14,6 @@
   export let buttons = [];
   export let center = false;
   export let border = false;
-
-  let search = true;
 
   const id = `card_header_${uuid()}`;
 
@@ -39,6 +38,10 @@
       }
     });
   });
+
+  //buttons 100
+  //actions 100
+  //search button 100
 </script>
 
 {#if $pageStore?.table?.selected_table_rows && $pageStore?.table?.id && browser && $pageStore.table.id === document
@@ -63,28 +66,46 @@
     {id}
     class:justify-end={$pageStore.search === id}
   >
-    {#if filters.length > 0}
-      <div class="flex">
-        {#if title || caption}
-          <div class="title" class:center class:searching={$pageStore.search === id}>
-            {#if title}
-              <h6>{title}</h6>
-            {/if}
-            {#if caption}
-              <p>{@html caption}</p>
-            {/if}
-          </div>
+    <div class="flex">
+      {#if title || caption}
+        <div class="title" class:center class:searching={$pageStore.search === id}>
+          {#if title}
+            <h6>{title}</h6>
+          {/if}
+          {#if caption && $pageStore.search !== id}
+            <p transition:fade={{ duration: 100 }}>{@html caption}</p>
+          {/if}
+        </div>
+      {:else if filters.length > 0 && $pageStore.search !== id}
+        <div class="filters" class:mt={title || caption} transition:scale>
+          {#each filters as filter}
+            <div class="filter">
+              <Select {...filter} />
+            </div>
+          {/each}
+        </div>
+      {/if}
 
-          <div class="buttons">
-            {#each buttons as button}
-              <div class="action">
-                <IconButton {...button} __search_id={id} />
-              </div>
-            {/each}
+      <div class="buttons">
+        {#each buttons as button}
+          <div class="action">
+            <IconButton {...button} __search_id={id} />
           </div>
-        {/if}
+        {/each}
       </div>
-    {:else if title || caption}
+    </div>
+
+    {#if filters.length > 0 && $pageStore.search !== id && (title || caption)}
+      <div class="filters" class:mt={title || caption} transition:scale>
+        {#each filters as filter}
+          <div class="filter">
+            <Select {...filter} />
+          </div>
+        {/each}
+      </div>
+    {/if}
+
+    <!-- {#if filters.length > 0}{:else if title || caption}
       <div class="title" class:center class:searching={$pageStore.search === id}>
         {#if title}
           <h6>{title}</h6>
@@ -96,7 +117,7 @@
     {/if}
 
     {#if $pageStore.search !== id}
-      <div class="filters" class:mt={title || caption}>
+      <div class="filters" class:mt={title || caption} transition:scale>
         {#each filters as filter}
           <div class="filter">
             <Select {...filter} />
@@ -109,11 +130,15 @@
       <div class="buttons">
         {#each buttons as button}
           <div class="action">
-            <IconButton {...button} __search_id={id} />
+            {#if button.search}
+              <IconButton {...button} __search_id={id} __search_width_100={false} />
+            {:else}
+              <IconButton {...button} />
+            {/if}
           </div>
         {/each}
       </div>
-    {/if}
+    {/if} -->
   </div>
 {:else}
   <div class="header" class:border {id}>
@@ -156,7 +181,10 @@
 
   .buttons {
     display: flex;
-    align-self: start;
+    max-width: 100%;
+    justify-content: flex-end;
+    flex-grow: 1;
+    align-self: flex-start;
   }
 
   .filter + .filter {
@@ -186,6 +214,10 @@
   .justify-end {
     justify-content: end;
   }
+
+  /* .w-100 {
+    width: 100%;
+  } */
 
   h6 + p {
     margin-top: 0.5rem;

@@ -71,7 +71,32 @@ type: code
 <Row>
   <Column>
     <Card>
-      <CardHeader title="Complex Table Example" border={false} />
+      <CardHeader
+        title="Complex Table Example"
+        caption="This example uses an external API for data, which may run slowly especially when using the search."
+        buttons={[
+          { icon: "search", color: "gray-lighter", search: true },
+          { icon: "more", color: "gray-lighter" },
+        ]}
+        border={false}
+        filters={[
+          {
+            id: "type",
+            label: "Type",
+            value: "",
+            options: types.map((type) => {
+              if (type === "break") {
+                return "break";
+              }
+
+              return {
+                label: type,
+                value: type === "All" ? "" : type.toLowerCase(),
+              };
+            }),
+          },
+        ]}
+      />
       <Table id="pokemon-table" padding="roomy">
         <TableHeader
           on:sort={(event) => (pokemon = sort(pokemon, event.detail.sort_by, event.detail.order))}
