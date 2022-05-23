@@ -19,7 +19,7 @@ const config = {
     }),
   ],
   kit: {
-    adapter: vercel(),
+    adapter: vercel({ edge: true }),
     prerender: {
       enabled: true,
     },

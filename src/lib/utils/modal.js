@@ -1,4 +1,5 @@
-import { modalStore } from "$lib/utils/stores";
+//import { modalStore } from "$lib/utils/stores";
+import { modalStore } from "../utils/stores";
 
 /**
  * Shows a modal

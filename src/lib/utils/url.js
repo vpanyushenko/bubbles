@@ -1,6 +1,7 @@
 import { browser } from "$app/env";
-import { showLoading, hideLoading } from "$lib/utils/loading";
 import { session } from "$app/stores";
+//import { showLoading, hideLoading } from "$lib/utils/loading";
+import { showLoading, hideLoading } from "../utils/loading";
 
 /**
  * Adds a url query param based on a key value pair
