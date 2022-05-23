@@ -1,6 +1,6 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore, configStore } from "$lib/stores/stores";
+  import { pageStore, configStore } from "$lib/utils/stores";
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";

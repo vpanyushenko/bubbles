@@ -27,7 +27,6 @@ const config = {
       // plugins: [inlineSvg()],
       resolve: {
         alias: {
-          $lib: path.resolve("./src/lib"),
           $assets: path.resolve("./src/assets"),
         },
       },

@@ -1,4 +1,4 @@
-import { modalStore } from "$lib/stores/modal.store";
+import { modalStore } from "$lib/utils/stores";
 
 /**
  * Shows a modal
@@ -33,4 +33,4 @@ const hideModal = () => {
   });
 };
 
-export { showModal, modalStore, hideModal };
+export { showModal, hideModal };

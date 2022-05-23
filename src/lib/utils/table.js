@@ -1,5 +1,5 @@
 import { browser } from "$app/env";
-import { pageStore } from "bubbles-ui";
+import { pageStore } from "$lib/utils/stores";
 
 /**
  * Returns an array of all selected table rows IDs

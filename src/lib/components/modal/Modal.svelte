@@ -2,7 +2,7 @@
   import { browser } from "$app/env";
   import { v4 as uuid } from "@lukeed/uuid";
   import { fly, fade } from "svelte/transition";
-  import { modalStore } from "$lib/stores/modal.store";
+  import { modalStore } from "$lib/utils/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Button from "$lib/components/button/Button.svelte";
   import Form from "$lib/components/form/Form.svelte";

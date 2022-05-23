@@ -321,6 +321,7 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
+  width: -webkit-fill-available;
 }
 
 html {
@@ -871,5 +872,11 @@ hr {
 @media only screen and (max-width: 767px) {
   .page__center {
     padding: 0 1rem 2rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  table {
+    width: max-content;
   }
 }

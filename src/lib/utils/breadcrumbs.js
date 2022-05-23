@@ -1,4 +1,4 @@
-import { pageStore } from "$lib/stores/page.store";
+import { pageStore } from "$lib/utils/stores";
 import { get } from "svelte/store";
 
 export default (path) => {

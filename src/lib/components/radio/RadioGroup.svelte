@@ -1,6 +1,5 @@
 <script>
-  import { configStore, pageStore } from "$lib/stores/stores";
-  import { browser } from "$app/env";
+  import { configStore, pageStore } from "$lib/utils/stores";
 
   export let options = [];
   export let id = null;
@@ -11,6 +10,7 @@
   export let validation = null;
   export let form_indent = false;
   export let background = false;
+  export let focus = false;
 
   if (background) {
     form_indent = true;

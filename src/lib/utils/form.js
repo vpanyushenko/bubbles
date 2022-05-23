@@ -1,4 +1,9 @@
-import { pageStore, modalStore, toastStore, showLoading, hideLoading, merge, api_url, uuid } from "$lib/index";
+// import { pageStore, modalStore, toastStore, showLoading, hideLoading, merge, api_url, uuid } from "$lib/index";
+import { pageStore, modalStore, toastStore } from "$lib/utils/stores";
+import { showLoading, hideLoading } from "$lib/utils/loading";
+import merge from "$lib/utils/merge";
+import { v4 as uuid } from "@lukeed/uuid";
+import { api_url } from "$lib/utils/fetch";
 
 const _getSize = (value) => {
   if (value instanceof Array) {

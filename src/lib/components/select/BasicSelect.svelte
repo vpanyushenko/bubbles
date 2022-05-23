@@ -1,6 +1,6 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore } from "$lib/utils/stores";
 
   const _uuid = uuid();
 

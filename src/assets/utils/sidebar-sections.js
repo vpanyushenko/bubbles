@@ -257,12 +257,12 @@ export default [
     href: "/sort",
     group: "Utils",
   },
-  {
-    label: "fetchData",
-    id: "fetch-data",
-    href: "/fetch-data",
-    group: "Utils",
-  },
+  // {
+  //   label: "fetchData",
+  //   id: "fetch-data",
+  //   href: "/fetch-data",
+  //   group: "Utils",
+  // },
   {
     label: "Change Log",
     id: "changelog",

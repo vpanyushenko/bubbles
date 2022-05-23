@@ -17,15 +17,3 @@
     <svelte:component this={data} />
   </CodeCard>
 {/if}
-
-<style>
-  :global(table) {
-    width: -webkit-fill-available;
-  }
-
-  @media only screen and (max-width: 600px) {
-    :global(table) {
-      width: max-content;
-    }
-  }
-</style>

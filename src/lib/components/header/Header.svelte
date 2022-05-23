@@ -1,6 +1,6 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore } from "$lib/utils/stores";
   import { page } from "$app/stores";
   import { browser } from "$app/env";
   import IconButton from "$lib/components/button/IconButton.svelte";
@@ -279,7 +279,7 @@
     align-items: center;
   }
 
-  .header {
+  /* .header {
     position: relative;
     z-index: 10;
     display: -webkit-box;
@@ -291,7 +291,7 @@
     max-width: 298px;
     margin-left: auto;
     justify-content: flex-end;
-  }
+  } */
 
   .header__burger {
     display: none;
@@ -407,10 +407,6 @@
 
     .header__text h2 {
       font-size: 1.5rem;
-    }
-
-    .header__subtitle h6 {
-      font-size: medium;
     }
 
     .header__burger {

@@ -1,6 +1,6 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore } from "$lib/utils/stores";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { addQueryParam, deleteQueryParam } from "$lib/utils/url";
   import { navigating, page, session } from "$app/stores";

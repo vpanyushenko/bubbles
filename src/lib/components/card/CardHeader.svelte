@@ -1,6 +1,6 @@
 <script>
   import { scale, fade } from "svelte/transition";
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore } from "$lib/utils/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Select from "$lib/components/select/Select.svelte";
   import { addQueryParam } from "$lib/utils/url";

@@ -107,7 +107,7 @@ export {
 };
 
 //Stores
-export { toastStore, modalStore, pageStore, noscrollStore, configStore } from "./stores/stores";
+export { toastStore, modalStore, pageStore, noscrollStore, configStore } from "./utils/stores";
 
 //utils
 import { getFormData, validateInputs, submitForm } from "./utils/form";
@@ -117,10 +117,10 @@ import { showToast } from "./utils/toast";
 import { v4 as uuid } from "@lukeed/uuid";
 import { addQueryParam, getQueryParam, deleteQueryParam } from "./utils/url";
 import { getSelectedTableRows, deselectTableRows } from "./utils/table";
-import fuzzySearch from "$lib/utils/fuzzy-search";
-import merge from "$lib/utils/merge";
-import { api_url, fetchData } from "$lib/utils/fetch";
-import sort from "$lib/utils/sort";
+import fuzzySearch from "./utils/fuzzy-search";
+import merge from "./utils/merge";
+import { api_url, fetchData } from "./utils/fetch";
+import sort from "./utils/sort";
 export {
   getFormData,
   validateInputs,
