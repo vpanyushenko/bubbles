@@ -119,7 +119,7 @@ import { addQueryParam, getQueryParam, deleteQueryParam } from "./utils/url";
 import { getSelectedTableRows, deselectTableRows } from "./utils/table";
 import fuzzySearch from "./utils/fuzzy-search";
 import merge from "./utils/merge";
-import { api_url, fetchData } from "./utils/fetch";
+import { api_url } from "./utils/fetch";
 import sort from "./utils/sort";
 export {
   getFormData,
@@ -139,6 +139,5 @@ export {
   getSelectedTableRows,
   deselectTableRows,
   api_url,
-  fetchData,
   sort,
 };
