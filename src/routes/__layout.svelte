@@ -3,23 +3,23 @@
   import "$assets/css/oceanic.css";
   import "$assets/css/markdown.css";
 
-  import {
-    Header,
-    Grid,
-    GridItem,
-    Row,
-    Tag,
-    Card,
-    CardHeader,
-    Table,
-    TableRow,
-    TableCell,
-    Column100,
-    showLoading,
-    hideLoading,
-    Spinner,
-    Form,
-  } from "bubbles-ui";
+  // import {
+  //   Header,
+  //   Grid,
+  //   GridItem,
+  //   Row,
+  //   Tag,
+  //   Card,
+  //   CardHeader,
+  //   Table,
+  //   TableRow,
+  //   TableCell,
+  //   Column100,
+  //   showLoading,
+  //   hideLoading,
+  //   Spinner,
+  //   Form,
+  // } from "bubbles-ui";
 
   import icon_arrow from "$assets/icons/arrow.svg";
 
@@ -56,8 +56,6 @@
 <svelte:window bind:scrollY={y} />
 
 <ToastContainer />
-
-<Form />
 
 <Sidebar {...sidebarConfig} />
 
