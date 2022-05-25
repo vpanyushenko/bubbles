@@ -2,7 +2,6 @@
   import { pageStore, configStore } from "$lib/stores/stores";
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
-  import { v4 as uuid } from "@lukeed/uuid";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
 
   export let id;

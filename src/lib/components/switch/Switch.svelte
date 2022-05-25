@@ -47,6 +47,7 @@
     on:change={onchange}
     {value}
     {id}
+    {disabled}
   />
   <span class="switch__in">
     <span class="switch__box" class:hidden={is_loading} />
