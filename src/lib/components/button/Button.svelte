@@ -1,5 +1,5 @@
 <script>
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore } from "$lib/utils/stores";
   import { v4 as uuid } from "@lukeed/uuid";
   import { navigating } from "$app/stores";
   import Spinner from "$lib/components/spinner/Spinner.svelte";

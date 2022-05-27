@@ -3,7 +3,7 @@ width: 50
 height: 100
 ---
 
-Because there can only be one `Modal` at a time, you can call the `hideModal` function from anywhere and it will hide the currently active modal. You generally will not need to do this as the model can be dismissed with a button on the model as well as by clicking into tje overlay
+Because there can only be one `Modal` at a time, you can call the `hideModal` function from anywhere and it will hide the currently active modal. You generally will not need to do this as the modal can be dismissed with a button on the modal as well as by clicking into tje overlay
 
 <br>
 

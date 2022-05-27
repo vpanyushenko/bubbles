@@ -1,7 +1,7 @@
 <script>
   import { fly, fade } from "svelte/transition";
   import close from "./close.svg";
-  import { configStore, toastStore } from "$lib/stores/stores";
+  import { configStore, toastStore } from "$lib/utils/stores";
 
   export let active = false;
   export let color = "success";

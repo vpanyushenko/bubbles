@@ -1,6 +1,6 @@
 <script>
-  import { scale, fade } from "svelte/transition";
-  import { pageStore } from "$lib/stores/stores";
+  // import { scale, fade } from "svelte/transition";
+  import { pageStore } from "$lib/utils/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Select from "$lib/components/select/Select.svelte";
   import { addQueryParam } from "$lib/utils/url";
@@ -73,11 +73,11 @@
             <h6>{title}</h6>
           {/if}
           {#if caption && $pageStore.search !== id}
-            <p transition:fade={{ duration: 100 }}>{@html caption}</p>
+            <p>{@html caption}</p>
           {/if}
         </div>
       {:else if filters.length > 0 && $pageStore.search !== id}
-        <div class="filters" class:mt={title || caption} transition:scale>
+        <div class="filters" class:mt={title || caption}>
           {#each filters as filter}
             <div class="filter">
               <Select {...filter} />
@@ -96,7 +96,7 @@
     </div>
 
     {#if filters.length > 0 && $pageStore.search !== id && (title || caption)}
-      <div class="filters" class:mt={title || caption} transition:scale>
+      <div class="filters" class:mt={title || caption}>
         {#each filters as filter}
           <div class="filter">
             <Select {...filter} />

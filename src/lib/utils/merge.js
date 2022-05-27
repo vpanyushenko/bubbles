@@ -1918,7 +1918,7 @@ function keysIn(object) {
  * _.merge(object, other);
  * // => { 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] }
  */
-let merge = createAssigner(function (object, source, srcIndex) {
+const merge = createAssigner((object, source, srcIndex) => {
   baseMerge(object, source, srcIndex);
 });
 

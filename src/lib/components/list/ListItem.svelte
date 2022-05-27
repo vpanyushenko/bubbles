@@ -1,5 +1,5 @@
 <script>
-  import { pageStore } from "$lib/stores/page.store";
+  import { pageStore } from "$lib/utils/stores";
   import { v4 as uuid } from "@lukeed/uuid";
   import Tag from "$lib/components/tag/Tag.svelte";
 

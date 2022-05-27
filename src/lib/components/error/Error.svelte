@@ -2,7 +2,7 @@
   import Overlay from "$lib/components/overlay/Overlay.svelte";
   import Center from "$lib/layouts/Center.svelte";
   import Button from "$lib/components/button/Button.svelte";
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore } from "$lib/utils/stores";
 
   export let title = "";
   export let message = "";

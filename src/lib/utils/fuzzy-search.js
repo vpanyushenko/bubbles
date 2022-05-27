@@ -1,4 +1,5 @@
-import Search from "$lib/utils/fuze";
+//import Search from "$lib/utils/fuze";
+import Search from "../utils/fuze";
 
 /**
  * @typedef SearchOptions

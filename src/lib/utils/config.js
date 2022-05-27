@@ -1,4 +1,5 @@
-import { configStore } from "$lib/stores/stores";
+//import { configStore } from "$lib/utils/stores";
+import { configStore } from "../utils/stores";
 import { get } from "svelte/store";
 
 /**

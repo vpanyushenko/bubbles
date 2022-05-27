@@ -1,4 +1,5 @@
-import { pageStore } from "$lib/stores/page.store";
+//import { pageStore } from "$lib/utils/stores";
+import { pageStore } from "../utils/stores";
 
 const showLoading = (id) => {
   pageStore.update((store) => {

@@ -4,7 +4,7 @@ A Modal is basically a card that will sit on top of all content. It should only 
 
 Modals are set programmatically in Bubbles. Add the `Modal` component to your `__layout.svelte` file as shown [here](/page-wrapper) and then use the helper function `showModal` to bring up the modal. The `showModal` function will add the required components to a the `modalStore`. You can also programmatically hide the modal using the `hideModal` function.
 
-The `modalStore` is a svelte store that controls the modal. You can edit it directly if you wish to manipulate the model, but the `showModal` helper is designed to do that for you.
+The `modalStore` is a svelte store that controls the modal. You can edit it directly if you wish to manipulate the modal, but the `showModal` helper is designed to do that for you.
 
 Generally, your modal will display a form or a message to the user with some buttons.
 
@@ -16,7 +16,7 @@ Generally, your modal will display a form or a message to the user with some but
 
 ## Props
 
-Since you are not using the `Model` component directly and instead the `showModal` function, the props shown are for that.
+Since you are not using the `Modal` component directly and instead the `showModal` function, the props shown are for that.
 
 <br>
 
@@ -41,12 +41,12 @@ The path to an image to display at the top of the modal. Good to use then there 
 ---
 
 options.**message** `string` <br>
-The message you want the modal to display if any. Usually a description of what the model is asking from them.
+The message you want the modal to display if any. Usually a description of what the modal is asking from them.
 
 ---
 
 options.**form** `Array<Input>` <br>
-This lets you pass a whole [form input](/form) into the model if you want to collect data from the user in a modal.
+This lets you pass a whole [form input](/form) into the modal if you want to collect data from the user in a modal.
 
 ---
 

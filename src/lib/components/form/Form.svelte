@@ -3,7 +3,7 @@
   import { scale, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore } from "$lib/utils/stores";
   import Switch from "$lib/components/switch/LabeledSwitch.svelte";
   import Input from "$lib/components/input/Input.svelte";
   import StripeCardInput from "$lib/components/stripe/StripeCardInput.svelte";

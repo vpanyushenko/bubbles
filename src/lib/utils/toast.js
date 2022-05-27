@@ -1,5 +1,6 @@
 import { v4 as uuid } from "@lukeed/uuid";
-import { toastStore } from "$lib/stores/toast.store";
+//import { toastStore } from "$lib/utils/stores";
+import { toastStore } from "../utils/stores";
 
 /**
  * Will show a toast notification
@@ -27,4 +28,4 @@ const showToast = (message = "An error occurred", color = "error") => {
   });
 };
 
-export { showToast, toastStore };
+export { showToast };

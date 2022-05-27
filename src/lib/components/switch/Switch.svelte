@@ -1,5 +1,5 @@
 <script>
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore } from "$lib/utils/stores";
   import { v4 as uuid } from "@lukeed/uuid";
 
   export let id = uuid();

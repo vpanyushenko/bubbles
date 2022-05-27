@@ -19,7 +19,7 @@ const config = {
     }),
   ],
   kit: {
-    adapter: vercel(),
+    adapter: vercel({ edge: true }),
     prerender: {
       enabled: true,
     },
@@ -27,7 +27,6 @@ const config = {
       // plugins: [inlineSvg()],
       resolve: {
         alias: {
-          $lib: path.resolve("./src/lib"),
           $assets: path.resolve("./src/assets"),
         },
       },

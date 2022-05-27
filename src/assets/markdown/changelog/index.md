@@ -265,8 +265,8 @@
 - Removed dev logs from Header
 - IconButton dropdown does not open an empty list with a href
 - IconButton dropdown closes when clicking on the button again
-- Model height and width is now set by the user
-- Model does not show error states when being closed
+- Modal height and width is now set by the user
+- Modal does not show error states when being closed
 - ListItem slots now have their width at 100%
 
 <br>

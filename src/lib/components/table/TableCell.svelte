@@ -1,5 +1,5 @@
 <script>
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore } from "$lib/utils/stores";
   import { navigating } from "$app/stores";
   import Tag from "$lib/components/tag/Tag.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";

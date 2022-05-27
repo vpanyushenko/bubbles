@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { pageStore } from "$lib/stores/stores";
+  import { pageStore } from "$lib/utils/stores";
   import Checkbox from "$lib/components/checkbox/Checkbox.svelte";
   import { addQueryParam } from "$lib/utils/url";
 

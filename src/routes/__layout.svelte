@@ -3,6 +3,24 @@
   import "$assets/css/oceanic.css";
   import "$assets/css/markdown.css";
 
+  // import {
+  //   Header,
+  //   Grid,
+  //   GridItem,
+  //   Row,
+  //   Tag,
+  //   Card,
+  //   CardHeader,
+  //   Table,
+  //   TableRow,
+  //   TableCell,
+  //   Column100,
+  //   showLoading,
+  //   hideLoading,
+  //   Spinner,
+  //   Form,
+  // } from "bubbles-ui";
+
   import icon_arrow from "$assets/icons/arrow.svg";
 
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
@@ -11,7 +29,6 @@
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import sections from "$assets/utils/sidebar-sections";
-  import { configStore } from "$lib/index";
   import store from "$assets/utils/store";
 
   // $configStore.padding = "compact";
