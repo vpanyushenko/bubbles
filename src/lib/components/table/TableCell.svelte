@@ -166,7 +166,7 @@
         </span>
       {:else}
         <p class:h6={large} class:bold class:nowrap={wrap === false} class:mobile__nowrap={mobile_wrap === false}>
-          {text}
+          {@html text}
         </p>
       {/if}
 
@@ -207,7 +207,7 @@
                   href={nested_cell.href}
                   on:click={hrefClicked}
                   class:nowrap={wrap === false}
-                  class:mobile__nowrap={mobile_wrap === false}>{nested_cell.text}</a
+                  class:mobile__nowrap={mobile_wrap === false}>{@html nested_cell.text}</a
                 >
               {:else}
                 <p
@@ -215,7 +215,7 @@
                   class:nowrap={wrap === false}
                   class:mobile__nowrap={mobile_wrap === false}
                 >
-                  {nested_cell.text}
+                  {@html nested_cell.text}
                 </p>
               {/if}
             {/if}
