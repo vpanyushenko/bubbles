@@ -39,6 +39,7 @@ code + code {
   margin-left: 0.3rem;
 }
 
+html.dark .markdown code,
 .markdown code {
   /* text-transform: uppercase; */
   font-size: 0.85rem;
@@ -46,6 +47,10 @@ code + code {
   padding-top: 1px;
   padding-bottom: 1px;
   letter-spacing: 0.3px;
+}
+html.dark pre code,
+pre code {
+  background-color: transparent;
 }
 
 details {
@@ -198,4 +203,8 @@ code.component {
   font-size: xx-large;
   margin-bottom: 2rem !important;
   margin-top: 1rem;
+}
+
+html.dark hr {
+  border-top: 1px solid var(--dark);
 }

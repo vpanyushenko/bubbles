@@ -1,5 +1,6 @@
 <script>
   import { configStore, pageStore } from "$lib/utils/stores";
+  import { SegmentedController } from "$lib/index";
 
   export let options = [];
   export let id = null;
@@ -11,6 +12,7 @@
   export let form_indent = false;
   export let background = false;
   export let focus = false;
+  export let style = "default";
 
   if (background) {
     form_indent = true;
@@ -31,25 +33,38 @@
 
 <div class="form__field__container" {id} class:background>
   <div class="field" class:style__indent={form_indent}>
-    <span>
-      <p class="error" class:hidden={!is_error}>{error}</p>
-      <p class="label" class:hidden={is_error}>{_label}</p>
-      {#if desc}
-        <p class="field__desc">{@html desc}</p>
-      {/if}
-    </span>
+    {#if style === "segments"}
+      <div class="segments">
+        <span>
+          <p class="error" class:hidden={!is_error}>{error}</p>
+          <p class="label" class:hidden={is_error}>{_label}</p>
+          {#if desc}
+            <p class="field__desc">{@html desc}</p>
+          {/if}
+        </span>
+        <SegmentedController segments={options} bind:value />
+      </div>
+    {:else}
+      <span>
+        <p class="error" class:hidden={!is_error}>{error}</p>
+        <p class="label" class:hidden={is_error}>{_label}</p>
+        {#if desc}
+          <p class="field__desc">{@html desc}</p>
+        {/if}
+      </span>
 
-    <div class="options">
-      {#each options as option}
-        <label class="radio">
-          <input type="radio" name={id} value={option.value} bind:group={value} on:focus={focus} />
-          <span class="radio__in">
-            <span class="radio__tick" />
-            <span class="radio__text">{option.label}</span>
-          </span>
-        </label>
-      {/each}
-    </div>
+      <div class="options">
+        {#each options as option}
+          <label class="radio">
+            <input type="radio" name={id} value={option.value} bind:group={value} on:focus={focus} />
+            <span class="radio__in">
+              <span class="radio__tick" />
+              <span class="radio__text">{option.label}</span>
+            </span>
+          </label>
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -193,10 +208,28 @@
     padding-right: 1.375rem;
   }
 
-  .form__field__container:focus,
+  /* .form__field__container:focus,
   .background:focus,
   .background:focus-visible,
   .form__field__container:focus-within {
     border-color: var(--primary);
+  } */
+
+  .segments {
+    display: flex;
+    justify-content: space-between;
+    border-color: none;
+    align-items: center;
+  }
+
+  :global(html.dark) .field {
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .background {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .radio__text {
+    color: var(--gray-light);
   }
 </style>

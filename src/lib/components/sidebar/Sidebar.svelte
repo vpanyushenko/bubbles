@@ -652,4 +652,35 @@
       padding-left: 1.25rem;
     }
   }
+
+  :global(html.dark) nav {
+    background: var(--theme-dark);
+    border-right: 1px solid var(--dark);
+  }
+
+  :global(html.dark) .group__dropdown {
+    color: var(--dark-darker);
+  }
+
+  :global(html.dark) .group__dropdown:hover {
+    color: var(--gray-light);
+  }
+
+  :global(html.dark) .sidebar__item:hover {
+    color: var(--gray-light);
+  }
+
+  :global(html.dark) .sidebar__item.active {
+    color: var(--primary);
+    background: var(--dark-darker);
+  }
+
+  :global(html.dark) nav button:before,
+  :global(html.dark) nav button:after {
+    background: var(--gray);
+  }
+
+  :global(html.dark) .flat.sidebar__group:not(:last-child):before {
+    background: var(--dark);
+  }
 </style>

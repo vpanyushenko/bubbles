@@ -149,6 +149,28 @@
       ],
     },
     {
+      type: "radio",
+      id: "radio",
+      style: "segments",
+      label: "Select your permission",
+      desc: "Select permissions",
+      value: "read",
+      options: [
+        {
+          label: "None",
+          value: null,
+        },
+        {
+          label: "Read",
+          value: "read",
+        },
+        {
+          label: "Write",
+          value: "write",
+        },
+      ],
+    },
+    {
       type: "checkbox-group",
       id: "toppings",
       label: "Select Your Toppings",
@@ -193,9 +215,9 @@
         showLoading(button_id);
 
         try {
-          await validateInputs(formInputs);
           const data = await getFormData(formInputs);
           console.log(data);
+          await validateInputs(formInputs);
         } catch (error) {
           showToast(error.message);
         } finally {

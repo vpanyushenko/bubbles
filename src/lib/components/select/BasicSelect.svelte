@@ -433,4 +433,22 @@
       padding: 1.5rem 1.25rem;
     }
   }
+
+  :global(html.dark) .head {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .head:before {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath fill='white' d='M.293.293A1 1 0 0 1 1.613.21l.094.083L7 5.585 12.293.293a1 1 0 0 1 1.32-.083l.094.083a1 1 0 0 1 .083 1.32l-.083.094-6 6a1 1 0 0 1-1.32.083l-.094-.083-6-6a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E")
+      no-repeat 50% 50%/100% auto;
+  }
+  :global(html.dark) .select.is_list_open .head {
+    background: var(--dark-darker);
+    color: var(--gray-lighter);
+  }
+
+  :global(html.dark) .label,
+  :global(html.dark) .value {
+    color: var(--gray-lighter);
+  }
 </style>

@@ -421,4 +421,14 @@
       margin-left: 3rem;
     }
   }
+
+  /* Dark Mode */
+  :global(html.dark) .header__burger:before,
+  :global(html.dark) .header__burger:after {
+    background: var(--gray-light);
+  }
+
+  :global(html.dark) .breadcrumbs > a {
+    color: var(--gray-light);
+  }
 </style>

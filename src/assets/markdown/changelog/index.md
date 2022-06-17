@@ -1,3 +1,10 @@
+## Version 0.8.0-next
+
+**Added**
+
+- RadioGroups have a segmented style
+- Dark mode
+
 ## Version 0.7.9
 
 **Added**

@@ -202,4 +202,15 @@
   input:focus + .checkbox__in .checkbox__tick {
     border: 1px solid var(--primary);
   }
+
+  :global(html.dark) .field {
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .background {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .field__desc {
+    color: var(--gray);
+  }
 </style>

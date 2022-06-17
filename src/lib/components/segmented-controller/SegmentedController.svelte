@@ -6,12 +6,14 @@
 
   export let segments = [];
   export let style = "default";
+  export let mb = null;
+  export let value;
 
   const selectOptions = segments.map((segment) => {
     return {
       label: segment.label,
       onselect: segment.onclick,
-      value: segment.label,
+      value: segment.value || segment.label,
     };
   });
 
@@ -21,6 +23,14 @@
   let items = [];
   let selected = 0;
   let wrapper, dom_component_width, nav, button_wrapper_width;
+
+  if (value) {
+    const index = selectOptions.findIndex((segment) => segment.value === value);
+
+    if (index > -1) {
+      selected = index;
+    }
+  }
 
   $: selectedItem = items[selected];
   $: left = selectedItem?.getBoundingClientRect().left - wrapper?.getBoundingClientRect().left + 4;
@@ -45,13 +55,25 @@
       expanded = true;
     }
   }
+
+  //Inline styles
+  let css = "";
+
+  if (mb) {
+    if (typeof mb === "number" || typeof Number(mb) === "number") {
+      css += `margin-bottom:${mb}rem;`;
+    } else {
+      css += `margin-bottom:${mb}rem;`;
+    }
+  }
 </script>
 
-<nav
+<div
   bind:clientWidth={dom_component_width}
   class:line={style === "line"}
   class:border={style === "line" && expanded}
   bind:this={nav}
+  style={css}
 >
   {#if expanded}
     <div bind:this={wrapper} class="wrapper" style="--left: {left}px; --width: {width}px;">
@@ -80,6 +102,7 @@
             <button
               class:active={i === selected}
               on:click={() => (selected = i)}
+              on:click={() => (value = segment.value ?? null)}
               bind:this={items[i]}
               on:click={segment.onclick}
               id={segment.id ? segment.id : `${id}_${i}`}
@@ -95,17 +118,17 @@
   {:else}
     <Select options={selectOptions} label="Navigation" value={selectedItem ? selectedItem : selectOptions[0].value} />
   {/if}
-</nav>
+</div>
 
 <style>
-  nav {
+  div {
     position: relative;
-    margin-bottom: 2rem;
+    z-index: 0;
   }
 
   a.segment {
     display: inline-flex;
-    background: aqua;
+    /* background: aqua; */
     align-items: center;
   }
 
@@ -120,6 +143,11 @@
     color: var(--gray);
     min-width: 7rem;
     width: fit-content;
+  }
+
+  a:hover,
+  button:hover {
+    color: var(--gray-darker);
   }
 
   a.active,
@@ -190,15 +218,19 @@
 
   .line a:hover,
   .line button:hover {
-    background-color: var(--input-bg);
+    color: var(--primary-light);
   }
 
   .line a.active,
   .line button.active {
-    color: var(--black);
-    border-bottom: 2px solid var(--black);
-    border-radius: 12px 12px 0 0;
-    transition-duration: 150ms;
+    color: var(--primary);
+    background: var(--gray-lighter);
+    border-radius: 12px;
+    transition-delay: 150ms;
+  }
+
+  .line .wrapper {
+    margin-bottom: 2px;
   }
 
   .line .wrapper:after {
@@ -208,6 +240,11 @@
     position: absolute;
     z-index: -2;
     transition-duration: 150ms;
+  }
+
+  .line .wrapper:before {
+    top: 0px;
+    background-color: var(--gray-lighter);
   }
 
   .line .wrapper {
@@ -220,5 +257,45 @@
     button {
       width: fit-content;
     }
+  }
+
+  :global(html.dark) a,
+  :global(html.dark) button {
+    color: var(--gray-lighter);
+  }
+
+  :global(html.dark) a:hover,
+  :global(html.dark) button:hover {
+    color: var(--primary-light);
+  }
+  :global(html.dark) a.active,
+  :global(html.dark) button.active {
+    color: var(--primary);
+  }
+
+  :global(html.dark) .wrapper:after {
+    background-color: var(--dark);
+  }
+
+  :global(html.dark) .wrapper:before {
+    background-color: var(--dark-darkest);
+  }
+  :global(html.dark) .line .wrapper:after {
+    background-color: var(--theme-dark);
+  }
+  :global(html.dark) .border {
+    border-bottom: 1px solid var(--dark-darkest);
+  }
+
+  :global(html.dark) .line a:hover,
+  :global(html.dark) .line button:hover {
+    color: var(--primary-light);
+  }
+  :global(html.dark) .line a.active,
+  :global(html.dark) .line button.active {
+    color: var(--primary);
+    background-color: var(--dark-darkest);
+    border-bottom: 2px solid var(--dark-dark);
+    transition-delay: 150ms;
   }
 </style>

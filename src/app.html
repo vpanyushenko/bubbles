@@ -5,6 +5,15 @@
     <link rel="icon" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9" />
 
+    <script>
+      const key = "bubbles-color-scheme";
+      if (localStorage[key] === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+
     %sveltekit.head%
   </head>
   <body>

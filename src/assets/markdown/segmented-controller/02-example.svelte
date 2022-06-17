@@ -14,6 +14,7 @@
 <Row>
   <Column>
     <SegmentedController
+      mb="2"
       segments={[
         {
           label: "Section 1",
@@ -55,6 +56,7 @@
 
     <div class="mt-2">
       <SegmentedController
+        mb="2"
         style="line"
         segments={[
           {

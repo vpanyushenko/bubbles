@@ -504,4 +504,22 @@
     /* background-color: var(--dark-lightest); */
     border-radius: 12px;
   }
+
+  :global(html.dark) .options {
+    border: 1px solid var(--dark);
+    background: var(--dark-darker);
+    -webkit-box-shadow: 0 1.25rem 1rem rgba(0, 0, 0, 0);
+    box-shadow: 0 1.25rem 1rem rgba(0, 0, 0, 0);
+  }
+
+  :global(html.dark) hr {
+    color: var(--dark-light);
+    background-color: var(--dark-light);
+  }
+  :global(html.dark) .title {
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .caption {
+    color: var(--gray);
+  }
 </style>

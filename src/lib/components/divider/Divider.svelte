@@ -43,4 +43,12 @@
     clear: both;
     margin-bottom: 1rem;
   }
+
+  :global(html.dark) hr {
+    border-top: 1px solid var(--dark);
+  }
+
+  :global(html.dark) hr span {
+    color: var(--gray-light);
+  }
 </style>

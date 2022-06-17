@@ -240,4 +240,18 @@
     border: 1px solid var(--primary);
     /* background-color: var(--primary-light) !important; */
   }
+
+  :global(html.dark) .field {
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .background {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .field__desc {
+    color: var(--gray);
+  }
+  :global(html.dark) .checkbox__text {
+    color: var(--gray-light);
+  }
 </style>

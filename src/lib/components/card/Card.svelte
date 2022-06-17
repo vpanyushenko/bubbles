@@ -29,7 +29,7 @@
 
   let background = null;
 
-  if (color) {
+  if (color && color !== "white") {
     style += `background:var(--${color});`;
     background = ``;
   }
@@ -94,5 +94,19 @@
     .card {
       padding: 1rem;
     }
+  }
+
+  :global(html.dark) .card {
+    background: var(--theme-dark);
+  }
+
+  :global(html.dark) .border {
+    border: 1px solid var(--dark);
+  }
+
+  :global(html.dark) .shadow {
+    -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2rem;
+    -moz-box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 2rem;
   }
 </style>

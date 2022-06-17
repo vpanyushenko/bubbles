@@ -161,7 +161,7 @@
             {href}
             on:click={hrefClicked}
             class:nowrap={wrap === false}
-            class:mobile__nowrap={mobile_wrap === false}>{text}</a
+            class:mobile__nowrap={mobile_wrap === false}>{@html text}</a
           >
         </span>
       {:else}

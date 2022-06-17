@@ -147,4 +147,8 @@
   .wrap-anywhere {
     overflow-wrap: anywhere;
   }
+
+  :global(html.dark) .list__item {
+    border: 2px solid var(--dark);
+  }
 </style>

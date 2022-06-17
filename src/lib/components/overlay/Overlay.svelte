@@ -155,4 +155,8 @@
     left: 0;
     z-index: -10;
   }
+
+  :global(html.dark) .solid {
+    background: var(--theme-dark);
+  }
 </style>

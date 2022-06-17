@@ -45,7 +45,7 @@
           fontFamily: '"Inter", sans-serif',
           fontSize: "14px",
           fontWeight: 500,
-          color: "var(--black)",
+          color: localStorage["bubbles-color-scheme"] === "dark" ? "#ffffff" : "var(--black)",
         },
         invalid: {
           color: "#FF6628",
@@ -181,5 +181,22 @@
     font-weight: 500;
     line-height: 1.33333;
     color: var(--gray);
+  }
+
+  :global(html.dark) textarea:disabled,
+  :global(html.dark) input:disabled {
+    color: var(--dark);
+  }
+  :global(html.dark) .field__label {
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .field__textarea,
+  :global(html.dark) .field__input {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) input {
+    caret-color: var(--white);
+    color: var(--gray-lighter);
   }
 </style>

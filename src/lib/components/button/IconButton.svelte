@@ -4,6 +4,9 @@
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { addQueryParam, deleteQueryParam } from "$lib/utils/url";
   import { navigating, page, session } from "$app/stores";
+  import { browser } from "$app/env";
+  import { writable } from "svelte/store";
+
   import arrowLeft from "./arrow-left.svg";
   import arrowLeftDouble from "./arrow-left-double.svg";
   import arrowRight from "./arrow-right.svg";
@@ -61,6 +64,22 @@
       color = "gray-lighter";
     }
   }
+
+  // $: console.log($pageStore);
+
+  // $: if (browser && localStorage.getItem("bubbles-color-scheme")) {
+  //   console.log(localStorage.getItem("bubbles-color-scheme"));
+  //   console.log(localStorage.getItem("bubbles-color-scheme"));
+  //   console.log(localStorage.getItem("bubbles-color-scheme"));
+
+  //   if (localStorage.getItem("bubbles-color-scheme") === "dark") {
+  //     color = color.replace("gray", "dark");
+  //     color = color.replace("light", "dark");
+  //   } else {
+  //     color = color.replace("dark", "gray");
+  //     color = color.replace("dark", "light");
+  //   }
+  // }
 
   const dropdown = options.length ? true : false;
 
@@ -470,5 +489,16 @@
       height: 12px;
       font-size: 0;
     } */
+  }
+
+  :global(html.dark) button:hover {
+    -webkit-box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
+  }
+
+  :global(html.dark) .icon__btn.active button {
+    background: #6c5dd3;
+    -webkit-box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
   }
 </style>

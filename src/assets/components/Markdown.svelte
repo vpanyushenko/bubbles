@@ -4,6 +4,10 @@
   export let id = null;
   export let color = null;
   export let height100 = false;
+
+  if (color === "white") {
+    color = null;
+  }
 </script>
 
 <!-- <Card shadow={false} color="gray-lightest" py={2}> -->

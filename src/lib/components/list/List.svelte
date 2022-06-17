@@ -58,4 +58,8 @@
     border-radius: 16px;
     font-weight: 600;
   }
+
+  :global(html.dark) :global(.list.timeline .list__item) {
+    border: 1px solid var(--dark);
+  }
 </style>

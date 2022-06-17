@@ -70,6 +70,8 @@
   --dark-dark: #141518;
   --dark-darker: #0d0e10;
   --dark-darkest: #060708;
+
+  --theme-dark: #242731;
 }
 
 body {
@@ -355,6 +357,10 @@ body {
   color: var(--black);
 }
 
+html.dark body {
+  color: var(--gray-light);
+}
+
 body.noscroll {
   overflow: hidden;
 }
@@ -432,6 +438,18 @@ p {
   /* color: var(--gray-darker); */
 }
 
+html.dark body {
+  color: var(--gray-lightest);
+  background-color: var(--theme-dark);
+}
+
+html.dark ul,
+html.dark ol,
+html.dark li,
+html.dark p {
+  color: var(--gray-lighter);
+}
+
 .caption {
   font-size: 13px;
   font-weight: 600;
@@ -492,6 +510,11 @@ code {
   padding-right: 5px;
   border-radius: 6px;
   font-weight: 600;
+}
+
+html.dark code {
+  background-color: var(--dark);
+  color: var(--gray-lighter);
 }
 
 hr {

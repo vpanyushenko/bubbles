@@ -507,4 +507,21 @@
     top: 1.875rem;
     right: 1.25rem;
   }
+
+  :global(html.dark) textarea:disabled,
+  :global(html.dark) input:disabled {
+    color: var(--gray);
+  }
+  :global(html.dark) .field__label {
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .field__textarea,
+  :global(html.dark) .field__input {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) input {
+    caret-color: var(--white);
+    color: var(--gray-lighter);
+  }
 </style>

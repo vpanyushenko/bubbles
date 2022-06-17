@@ -185,4 +185,16 @@
       opacity: 0.8;
     }
   }
+
+  :global(html.dark) .loading,
+  :global(html.dark) .switch__box {
+    background: var(--theme-dark);
+  }
+  :global(html.dark) .background {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .field__desc {
+    color: var(--gray-light);
+  }
 </style>
