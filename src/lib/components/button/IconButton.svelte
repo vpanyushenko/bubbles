@@ -1,11 +1,9 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/utils/stores";
+  import { pageStore, configStore } from "$lib/utils/stores";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { addQueryParam, deleteQueryParam } from "$lib/utils/url";
   import { navigating, page, session } from "$app/stores";
-  import { browser } from "$app/env";
-  import { writable } from "svelte/store";
 
   import arrowLeft from "./arrow-left.svg";
   import arrowLeftDouble from "./arrow-left-double.svg";
@@ -42,12 +40,14 @@
   export let href = "";
   export let new_page = false;
   export let align = "right";
+  export let radius = "rounded"; //or blocky
+  export let larger = false;
 
   export let color = null;
-  export let border = null;
+  export let dark_mode_invert = $configStore?.dark_mode_invert;
   export let invert_icon = false;
 
-  export let mobile_shadow = false;
+  export let shadow = false;
 
   export let typeahead = null;
   export let debounce = 350;
@@ -55,43 +55,30 @@
   export let __search_id = null;
   export let __search_width_100 = false;
 
-  export let transparent = true; //TODO: deprecated
-
-  if (!transparent) {
-    console.info("[bubbles-ui]: transparent on IconButton is deprecated, add an color property instead");
-
-    if (!color) {
-      color = "gray-lighter";
-    }
-  }
-
-  // $: console.log($pageStore);
-
-  // $: if (browser && localStorage.getItem("bubbles-color-scheme")) {
-  //   console.log(localStorage.getItem("bubbles-color-scheme"));
-  //   console.log(localStorage.getItem("bubbles-color-scheme"));
-  //   console.log(localStorage.getItem("bubbles-color-scheme"));
-
-  //   if (localStorage.getItem("bubbles-color-scheme") === "dark") {
-  //     color = color.replace("gray", "dark");
-  //     color = color.replace("light", "dark");
-  //   } else {
-  //     color = color.replace("dark", "gray");
-  //     color = color.replace("dark", "light");
-  //   }
-  // }
-
   const dropdown = options.length ? true : false;
-
-  let src = icons[icon] ? icons[icon] : icon;
 
   let search_active = false;
   let search_input, search_value, search_focused;
 
+  $: src = icons[icon] ? icons[icon] : icon; //TODO: See if this works
   $: $pageStore.search = search_active === true ? __search_id : null;
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
   $: typeahead_options = [];
+
+  let __icon_inverted = true; //We want to invest initially to make the icon white
+  let __shadow_on_hover = false;
+
+  if (color) {
+    const array = color.split("-");
+
+    if (array.length === 2 && array[1].startsWith("lightest")) {
+      __icon_inverted = false;
+    }
+  } else {
+    __icon_inverted = false;
+    __shadow_on_hover = true;
+  }
 
   function iconClick(event) {
     $pageStore.clicked = id;
@@ -124,11 +111,6 @@
       $pageStore.dropdown = id;
     }
   }
-
-  // function dropdownSelect(event) {
-  //   active = false;
-  //   $pageStore.dropdown = null;
-  // }
 
   function windowClick(event) {
     //if you click outside of the select, we want to close it
@@ -203,10 +185,68 @@
       disabled={is_loading}
       class:disabled={is_loading}
       {id}
-      style:background-color={color ? `var(--${color})` : null}
-      style:outline={border ? `2px solid var(--${border})` : null}
-      style:outline-offset={border ? `-2px` : null}
-      class:mobile_shadow
+      class:shadow
+      class:shadow_on_hover={__shadow_on_hover}
+      class:blocky={radius === "blocky"}
+      class:larger
+      class:dark_mode_invert
+      class:bg-transparent={!color}
+      class:bg-primary-lightest={color === "primary-lightest"}
+      class:bg-primary-lighter={color === "primary-lighter"}
+      class:bg-primary-light={color === "primary-light"}
+      class:bg-primary={color === "primary"}
+      class:bg-primary-dark={color === "primary-dark"}
+      class:bg-primary-darker={color === "primary-darker"}
+      class:bg-primary-darkest={color === "primary-darkest"}
+      class:bg-secondary-lightest={color === "secondary-lightest"}
+      class:bg-secondary-lighter={color === "secondary-lighter"}
+      class:bg-secondary-light={color === "secondary-light"}
+      class:bg-secondary={color === "secondary"}
+      class:bg-secondary-dark={color === "secondary-dark"}
+      class:bg-secondary-darker={color === "secondary-darker"}
+      class:bg-secondary-darkest={color === "secondary-darkest"}
+      class:bg-error-lightest={color === "error-lightest"}
+      class:bg-error-lighter={color === "error-lighter"}
+      class:bg-error-light={color === "error-light"}
+      class:bg-error={color === "error"}
+      class:bg-error-dark={color === "error-dark"}
+      class:bg-error-darker={color === "error-darker"}
+      class:bg-error-darkest={color === "error-darkest"}
+      class:bg-warning-lightest={color === "warning-lightest"}
+      class:bg-warning-lighter={color === "warning-lighter"}
+      class:bg-warning-light={color === "warning-light"}
+      class:bg-warning={color === "warning"}
+      class:bg-warning-dark={color === "warning-dark"}
+      class:bg-warning-darker={color === "warning-darker"}
+      class:bg-warning-darkest={color === "warning-darkest"}
+      class:bg-success-lightest={color === "success-lightest"}
+      class:bg-success-lighter={color === "success-lighter"}
+      class:bg-success-light={color === "success-light"}
+      class:bg-success={color === "success"}
+      class:bg-success-dark={color === "success-dark"}
+      class:bg-success-darker={color === "success-darker"}
+      class:bg-success-darkest={color === "success-darkest"}
+      class:bg-info-lightest={color === "info-lightest"}
+      class:bg-info-lighter={color === "info-lighter"}
+      class:bg-info-light={color === "info-light"}
+      class:bg-info={color === "info"}
+      class:bg-info-dark={color === "info-dark"}
+      class:bg-info-darker={color === "info-darker"}
+      class:bg-info-darkest={color === "info-darkest"}
+      class:bg-gray-lightest={color === "gray-lightest"}
+      class:bg-gray-lighter={color === "gray-lighter"}
+      class:bg-gray-light={color === "gray-light"}
+      class:bg-gray={color === "gray"}
+      class:bg-gray-dark={color === "gray-dark"}
+      class:bg-gray-darker={color === "gray-darker"}
+      class:bg-gray-darkest={color === "gray-darkest"}
+      class:bg-dark-lightest={color === "dark-lightest"}
+      class:bg-dark-lighter={color === "dark-lighter"}
+      class:bg-dark-light={color === "dark-light"}
+      class:bg-dark={color === "dark"}
+      class:bg-dark-dark={color === "dark-dark"}
+      class:bg-dark-darker={color === "dark-darker"}
+      class:bg-dark-darkest={color === "dark-darkest"}
     >
       {#if is_loading}
         <Spinner />
@@ -214,6 +254,7 @@
       {#if icon}
         <img
           class="icon icon-main"
+          class:invert_icon={__icon_inverted}
           {src}
           class:hidden={is_loading}
           alt="icon"
@@ -234,12 +275,70 @@
       class:search_active
       {id}
       disabled={is_loading}
-      style:background-color={dropdown && active ? `var(--primary)` : color ? `var(--${color})` : null}
-      style:outline={dropdown && active ? "" : border ? `2px solid var(--${border})` : null}
-      style:outline-offset={dropdown && active ? "" : border ? `-2px` : null}
-      class:mobile_shadow
+      class:shadow
+      class:shadow_on_hover={__shadow_on_hover}
       class:search={search_active}
       class:w-100={search_active && __search_width_100}
+      class:blocky={radius === "blocky"}
+      class:larger
+      class:dark_mode_invert
+      class:bg-transparent={!color}
+      class:bg-primary-lightest={color === "primary-lightest"}
+      class:bg-primary-lighter={color === "primary-lighter"}
+      class:bg-primary-light={color === "primary-light"}
+      class:bg-primary={color === "primary"}
+      class:bg-primary-dark={color === "primary-dark"}
+      class:bg-primary-darker={color === "primary-darker"}
+      class:bg-primary-darkest={color === "primary-darkest"}
+      class:bg-secondary-lightest={color === "secondary-lightest"}
+      class:bg-secondary-lighter={color === "secondary-lighter"}
+      class:bg-secondary-light={color === "secondary-light"}
+      class:bg-secondary={color === "secondary"}
+      class:bg-secondary-dark={color === "secondary-dark"}
+      class:bg-secondary-darker={color === "secondary-darker"}
+      class:bg-secondary-darkest={color === "secondary-darkest"}
+      class:bg-error-lightest={color === "error-lightest"}
+      class:bg-error-lighter={color === "error-lighter"}
+      class:bg-error-light={color === "error-light"}
+      class:bg-error={color === "error"}
+      class:bg-error-dark={color === "error-dark"}
+      class:bg-error-darker={color === "error-darker"}
+      class:bg-error-darkest={color === "error-darkest"}
+      class:bg-warning-lightest={color === "warning-lightest"}
+      class:bg-warning-lighter={color === "warning-lighter"}
+      class:bg-warning-light={color === "warning-light"}
+      class:bg-warning={color === "warning"}
+      class:bg-warning-dark={color === "warning-dark"}
+      class:bg-warning-darker={color === "warning-darker"}
+      class:bg-warning-darkest={color === "warning-darkest"}
+      class:bg-success-lightest={color === "success-lightest"}
+      class:bg-success-lighter={color === "success-lighter"}
+      class:bg-success-light={color === "success-light"}
+      class:bg-success={color === "success"}
+      class:bg-success-dark={color === "success-dark"}
+      class:bg-success-darker={color === "success-darker"}
+      class:bg-success-darkest={color === "success-darkest"}
+      class:bg-info-lightest={color === "info-lightest"}
+      class:bg-info-lighter={color === "info-lighter"}
+      class:bg-info-light={color === "info-light"}
+      class:bg-info={color === "info"}
+      class:bg-info-dark={color === "info-dark"}
+      class:bg-info-darker={color === "info-darker"}
+      class:bg-info-darkest={color === "info-darkest"}
+      class:bg-gray-lightest={color === "gray-lightest"}
+      class:bg-gray-lighter={color === "gray-lighter"}
+      class:bg-gray-light={color === "gray-light"}
+      class:bg-gray={color === "gray"}
+      class:bg-gray-dark={color === "gray-dark"}
+      class:bg-gray-darker={color === "gray-darker"}
+      class:bg-gray-darkest={color === "gray-darkest"}
+      class:bg-dark-lightest={color === "dark-lightest"}
+      class:bg-dark-lighter={color === "dark-lighter"}
+      class:bg-dark-light={color === "dark-light"}
+      class:bg-dark={color === "dark"}
+      class:bg-dark-dark={color === "dark-dark"}
+      class:bg-dark-darker={color === "dark-darker"}
+      class:bg-dark-darkest={color === "dark-darkest"}
     >
       {#if search_active}
         <div class="field__wrapper" class:focused={search_focused}>
@@ -274,7 +373,6 @@
                 class="icon icon-main icon-close"
                 src={close}
                 alt="close"
-                style:filter={invert_icon ? "invert(1)" : null}
                 on:click={() => {
                   if (search_value) {
                     search_value = "";
@@ -304,13 +402,7 @@
 
       <span class:hidden={is_loading || search_active}>
         <slot>
-          <img
-            class="icon icon-main"
-            {src}
-            class:hidden={is_loading}
-            alt="icon"
-            style:filter={invert_icon ? "invert(1)" : null}
-          />
+          <img class="icon icon-main" class:invert_icon={__icon_inverted} {src} class:hidden={is_loading} alt="icon" />
         </slot>
       </span>
     </button>
@@ -336,6 +428,11 @@
     margin-right: 1rem;
   }
 
+  .shadow {
+    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+  }
+
   button {
     position: relative;
     width: 3rem;
@@ -348,6 +445,15 @@
     place-content: center;
     align-items: center;
     justify-items: center;
+  }
+
+  .larger {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .blocky {
+    border-radius: 1rem;
   }
 
   .disabled {
@@ -363,7 +469,28 @@
     transition: fill 0.25s;
   }
 
+  /* FIXME */
+  /* FIXME */
+  /* FIXME */
+  /* FIXME */
+  /* FIXME */
+  /* FIXME */
+  /* FIXME */
+  /* button:hover {
+    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+  } */
+
   button:hover {
+    opacity: 0.8;
+    -webkit-transition: all 350ms ease;
+    -moz-transition: all 350ms ease;
+    -o-transition: all 350ms ease;
+    -ms-transition: all 350ms ease;
+    transition: all 350ms ease;
+  }
+
+  button.shadow_on_hover:hover {
     -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
     box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
   }
@@ -374,8 +501,17 @@
   }
 
   :global(.table__row:hover button) {
-    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6) !important;
-    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6) !important;
+    -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
+  }
+
+  :global(.button__group) > .icon__btn > button {
+    width: 3rem;
+    height: 3rem;
+  }
+  :global(.button__group) > .icon__btn > button.larger {
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   /* .icon__btn__counter {
@@ -477,11 +613,6 @@
       font-size: 1.25rem;
     }
 
-    .mobile_shadow {
-      -webkit-box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
-      box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
-    }
-
     /* .icon__btn__counter {
       top: 5px;
       right: 5px;
@@ -491,7 +622,7 @@
     } */
   }
 
-  :global(html.dark) button:hover {
+  :global(html.dark) button.shadow_on_hover:hover {
     -webkit-box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
     box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
   }
@@ -500,5 +631,580 @@
     background: #6c5dd3;
     -webkit-box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
     box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
+  }
+
+  :global(html.dark) .field__input {
+    color: var(--gray-lightest);
+  }
+
+  :global(html.dark) .field__wrapper.focused {
+    border-color: var(--primary);
+    background: var(--dark);
+  }
+
+  /* COLORS */
+
+  img.icon {
+    filter: invert();
+  }
+  .bg-transparent img.icon {
+    filter: none;
+  }
+  .dark_mode_invert.bg-transparent img.icon {
+    filter: invert();
+  }
+
+  /* Primary */
+  .bg-primary-lightest {
+    background: var(--primary-lightest);
+  }
+  .bg-primary-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-primary-lighter {
+    background: var(--primary-lighter);
+  }
+
+  .bg-primary-light {
+    background: var(--primary-light);
+  }
+
+  .bg-primary {
+    background: var(--primary);
+  }
+
+  .bg-primary-dark {
+    background: var(--primary-dark);
+  }
+
+  .bg-primary-darker {
+    background: var(--primary-darker);
+  }
+
+  .bg-primary-darkest {
+    background: var(--primary-darkest);
+  }
+
+  /* Secondary */
+  .bg-secondary-lightest {
+    background: var(--secondary-lightest);
+  }
+  .bg-secondary-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-secondary-lighter {
+    background: var(--secondary-lighter);
+  }
+  .bg-secondary-lighter img.icon {
+    filter: none;
+  }
+
+  .bg-secondary-light {
+    background: var(--secondary-light);
+  }
+  .bg-secondary-light img.icon {
+    filter: none;
+  }
+
+  .bg-secondary {
+    background: var(--secondary);
+  }
+  .bg-secondary img.icon {
+    filter: none;
+  }
+
+  .bg-secondary-dark {
+    background: var(--secondary-dark);
+  }
+
+  .bg-secondary-darker {
+    background: var(--secondary-darker);
+  }
+
+  .bg-secondary-darkest {
+    background: var(--secondary-darkest);
+  }
+
+  /* error */
+  .bg-error-lightest {
+    background: var(--error-lightest);
+  }
+  .bg-error-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-error-lighter {
+    background: var(--error-lighter);
+  }
+  .bg-error-lighter img.icon {
+    filter: none;
+  }
+
+  .bg-error-light {
+    background: var(--error-light);
+  }
+  .bg-error-light img.icon {
+    filter: none;
+  }
+
+  .bg-error {
+    background: var(--error);
+  }
+
+  .bg-error-dark {
+    background: var(--error-dark);
+  }
+
+  .bg-error-darker {
+    background: var(--error-darker);
+  }
+
+  .bg-error-darkest {
+    background: var(--error-darkest);
+  }
+
+  /* warning */
+  .bg-warning-lightest {
+    background: var(--warning-lightest);
+  }
+  .bg-warning-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-warning-lighter {
+    background: var(--warning-lighter);
+  }
+  .bg-warning-lighter img.icon {
+    filter: none;
+  }
+
+  .bg-warning-light {
+    background: var(--warning-light);
+  }
+  .bg-warning-light img.icon {
+    filter: none;
+  }
+
+  .bg-warning {
+    background: var(--warning);
+  }
+
+  .bg-warning-dark {
+    background: var(--warning-dark);
+  }
+
+  .bg-warning-darker {
+    background: var(--warning-darker);
+  }
+
+  .bg-warning-darkest {
+    background: var(--warning-darkest);
+  }
+
+  /* success */
+  .bg-success-lightest {
+    background: var(--success-lightest);
+  }
+  .bg-success-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-success-lighter {
+    background: var(--success-lighter);
+  }
+  .bg-success-lighter img.icon {
+    filter: none;
+  }
+
+  .bg-success-light {
+    background: var(--success-light);
+  }
+
+  .bg-success {
+    background: var(--success);
+  }
+
+  .bg-success-dark {
+    background: var(--success-dark);
+  }
+
+  .bg-success-darker {
+    background: var(--success-darker);
+  }
+
+  .bg-success-darkest {
+    background: var(--success-darkest);
+  }
+
+  /* info */
+  .bg-info-lightest {
+    background: var(--info-lightest);
+  }
+  .bg-info-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-info-lighter {
+    background: var(--info-lighter);
+  }
+
+  .bg-info-light {
+    background: var(--info-light);
+  }
+
+  .bg-info {
+    background: var(--info);
+  }
+
+  .bg-info-dark {
+    background: var(--info-dark);
+  }
+
+  .bg-info-darker {
+    background: var(--info-darker);
+  }
+
+  .bg-info-darkest {
+    background: var(--info-darkest);
+  }
+
+  /* gray */
+  .bg-gray-lightest {
+    background: var(--gray-lightest);
+  }
+  .bg-gray-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-gray-lighter {
+    background: var(--gray-lighter);
+  }
+  .bg-gray-lighter img.icon {
+    filter: none;
+  }
+
+  .bg-gray-light {
+    background: var(--gray-light);
+  }
+  .bg-gray-light img.icon {
+    filter: none;
+  }
+
+  .bg-gray {
+    background: var(--gray);
+  }
+
+  .bg-gray-dark {
+    background: var(--gray-dark);
+  }
+
+  .bg-gray-darker {
+    background: var(--gray-darker);
+  }
+
+  .bg-gray-darkest {
+    background: var(--gray-darkest);
+  }
+
+  /* dark */
+  .bg-dark-lightest {
+    background: var(--dark-lightest);
+  }
+  .bg-dark-lightest img.icon {
+    filter: none;
+  }
+
+  .bg-dark-lighter {
+    background: var(--dark-lighter);
+  }
+
+  .bg-dark-light {
+    background: var(--dark-light);
+  }
+
+  .bg-dark {
+    background: var(--dark);
+  }
+
+  .bg-dark-dark {
+    background: var(--dark-dark);
+  }
+
+  .bg-dark-darker {
+    background: var(--dark-darker);
+  }
+
+  .bg-dark-darkest {
+    background: var(--dark-darkest);
+  }
+
+  /* Dark Mode Primary */
+  :global(html.dark) .dark_mode_invert.bg-primary-lightest {
+    background: var(--primary-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-lighter {
+    background: var(--primary-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-light {
+    background: var(--primary-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-dark {
+    background: var(--primary-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-darker {
+    background: var(--primary-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-darkest {
+    background: var(--primary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-darkest img.icon {
+    filter: none;
+  }
+
+  /* Dark Mode secondary */
+  :global(html.dark) .dark_mode_invert.bg-secondary-lightest {
+    background: var(--secondary-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-lighter {
+    background: var(--secondary-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-lighter img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-light {
+    background: var(--secondary-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-light img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-dark {
+    background: var(--secondary-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-dark img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-darker {
+    background: var(--secondary-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-darker img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-darkest {
+    background: var(--secondary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-darkest img.icon {
+    filter: none;
+  }
+
+  /* Dark Mode error */
+  :global(html.dark) .dark_mode_invert.bg-error-lightest {
+    background: var(--error-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-lighter {
+    background: var(--error-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-lighter img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-light {
+    background: var(--error-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-light img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-dark {
+    background: var(--error-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-dark img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-darker {
+    background: var(--error-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-darker img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-darkest {
+    background: var(--error-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-darkest img.icon {
+    filter: none;
+  }
+
+  /* Dark Mode warning */
+  :global(html.dark) .dark_mode_invert.bg-warning-lightest {
+    background: var(--warning-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-lighter {
+    background: var(--warning-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-lighter img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-light {
+    background: var(--warning-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-light img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-dark {
+    background: var(--warning-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-dark img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-darker {
+    background: var(--warning-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-darker img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-darkest {
+    background: var(--warning-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-darkest img.icon {
+    filter: none;
+  }
+
+  /* Dark Mode success */
+  :global(html.dark) .dark_mode_invert.bg-success-lightest {
+    background: var(--success-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-lighter {
+    background: var(--success-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-lighter img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-light {
+    background: var(--success-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-dark {
+    background: var(--success-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-dark img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-darker {
+    background: var(--success-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-darker img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-darkest {
+    background: var(--success-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-darkest img.icon {
+    filter: none;
+  }
+
+  /* Dark Mode info */
+  :global(html.dark) .dark_mode_invert.bg-info-lightest {
+    background: var(--info-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-lighter {
+    background: var(--info-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-light {
+    background: var(--info-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-dark {
+    background: var(--info-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-darker {
+    background: var(--info-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-darker img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-darkest {
+    background: var(--info-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-darkest img.icon {
+    filter: none;
+  }
+
+  /* Dark Mode gray */
+  :global(html.dark) .dark_mode_invert.bg-gray-lightest {
+    background: var(--gray-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-lighter {
+    background: var(--gray-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-lighter img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-light {
+    background: var(--gray-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-light img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-dark {
+    background: var(--gray-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-dark img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-darker {
+    background: var(--gray-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-darker img.icon {
+    filter: none;
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-darkest {
+    background: var(--gray-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-darkest img.icon {
+    filter: none;
+  }
+
+  /* Dark Mode dark */
+  :global(html.dark) .dark_mode_invert.bg-dark-lightest {
+    background: var(--dark-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-lightest img.icon {
+    filter: invert();
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-lighter {
+    background: var(--dark-darker);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-light {
+    background: var(--dark-dark);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-dark {
+    background: var(--dark-light);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-darker {
+    background: var(--dark-lighter);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-darkest {
+    background: var(--dark-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-darkest img.icon {
+    filter: none;
   }
 </style>

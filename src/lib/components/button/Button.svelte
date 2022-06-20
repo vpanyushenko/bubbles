@@ -1,14 +1,16 @@
 <script>
-  import { pageStore } from "$lib/utils/stores";
+  import { pageStore, configStore } from "$lib/utils/stores";
   import { v4 as uuid } from "@lukeed/uuid";
   import { navigating } from "$app/stores";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
+  import IconButton from "./IconButton.svelte";
 
   export let id = uuid();
-  export let label = "Submit";
+  export let label = null;
   export let onclick = null;
   export let onsubmit = null;
-  export let color = "primary";
+  export let background = "__default";
+  export let color = "__default";
   export let mt = false;
   export let mb = false;
   export let wide = true;
@@ -16,11 +18,62 @@
   export let href;
   export let style;
   export let disabled = false;
+  export let icon = null;
+  export let dark_mode_invert = $configStore?.dark_mode_invert;
+
+  //IconButton exclusive
+  export let align = "right";
+  export let border = null;
+  export let invert_icon = false;
+  export let shadow = false;
+  export let typeahead = null;
+  export let debounce = 350;
+  export let search = false;
+  export let __search_id = null;
+  export let __search_width_100 = false;
+  export let radius = "blocky"; //or blocky
+  export let larger = true;
+
+  let component = "IconButton";
+
+  if (label) {
+    component = "Button";
+  }
+
+  if (component === "IconButton" && color === "__default") {
+    color = null;
+  }
+
+  if (component === "Button" && color === "__default") {
+    color = "primary";
+  }
 
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
 </script>
 
-{#if href}
+{#if !label && icon}
+  <IconButton
+    {id}
+    {onclick}
+    {color}
+    {new_page}
+    {href}
+    {disabled}
+    {icon}
+    {align}
+    {border}
+    {invert_icon}
+    {dark_mode_invert}
+    {shadow}
+    {typeahead}
+    {debounce}
+    {search}
+    {__search_id}
+    {__search_width_100}
+    {radius}
+    {larger}
+  />
+{:else if href}
   <a
     class:wide
     {href}
@@ -34,35 +87,69 @@
   >
     <button
       {id}
-      class:primary={color === "primary"}
-      class:secondary={color === "secondary"}
-      class:error={color === "error"}
-      class:warning={color === "warning"}
-      class:success={color === "success"}
-      class:info={color === "info"}
-      class:gray={color === "gray"}
-      class:dark={color === "dark"}
-      class:primary-light={color === "primary-light"}
-      class:secondary-light={color === "secondary-light"}
-      class:error-light={color === "error-light"}
-      class:warning-light={color === "warning-light"}
-      class:success-light={color === "success-light"}
-      class:info-light={color === "info-light"}
-      class:gray-light={color === "gray-light"}
-      class:dark-light={color === "dark-light"}
-      class:primary-border={color === "primary-border"}
-      class:secondary-border={color === "secondary-border"}
-      class:error-border={color === "error-border"}
-      class:warning-border={color === "warning-border"}
-      class:success-border={color === "success-border"}
-      class:info-border={color === "info-border"}
-      class:gray-border={color === "gray-border"}
-      class:dark-border={color === "dark-border"}
       class:mb
       class:mt
       class:wide
       {style}
       disabled={is_loading || disabled}
+      class:larger
+      class:dark_mode_invert
+      class:bg-primary-lightest={color === "primary-lightest"}
+      class:bg-primary-lighter={color === "primary-lighter"}
+      class:bg-primary-light={color === "primary-light"}
+      class:bg-primary={color === "primary"}
+      class:bg-primary-dark={color === "primary-dark"}
+      class:bg-primary-darker={color === "primary-darker"}
+      class:bg-primary-darkest={color === "primary-darkest"}
+      class:bg-secondary-lightest={color === "secondary-lightest"}
+      class:bg-secondary-lighter={color === "secondary-lighter"}
+      class:bg-secondary-light={color === "secondary-light"}
+      class:bg-secondary={color === "secondary"}
+      class:bg-secondary-dark={color === "secondary-dark"}
+      class:bg-secondary-darker={color === "secondary-darker"}
+      class:bg-secondary-darkest={color === "secondary-darkest"}
+      class:bg-error-lightest={color === "error-lightest"}
+      class:bg-error-lighter={color === "error-lighter"}
+      class:bg-error-light={color === "error-light"}
+      class:bg-error={color === "error"}
+      class:bg-error-dark={color === "error-dark"}
+      class:bg-error-darker={color === "error-darker"}
+      class:bg-error-darkest={color === "error-darkest"}
+      class:bg-warning-lightest={color === "warning-lightest"}
+      class:bg-warning-lighter={color === "warning-lighter"}
+      class:bg-warning-light={color === "warning-light"}
+      class:bg-warning={color === "warning"}
+      class:bg-warning-dark={color === "warning-dark"}
+      class:bg-warning-darker={color === "warning-darker"}
+      class:bg-warning-darkest={color === "warning-darkest"}
+      class:bg-success-lightest={color === "success-lightest"}
+      class:bg-success-lighter={color === "success-lighter"}
+      class:bg-success-light={color === "success-light"}
+      class:bg-success={color === "success"}
+      class:bg-success-dark={color === "success-dark"}
+      class:bg-success-darker={color === "success-darker"}
+      class:bg-success-darkest={color === "success-darkest"}
+      class:bg-info-lightest={color === "info-lightest"}
+      class:bg-info-lighter={color === "info-lighter"}
+      class:bg-info-light={color === "info-light"}
+      class:bg-info={color === "info"}
+      class:bg-info-dark={color === "info-dark"}
+      class:bg-info-darker={color === "info-darker"}
+      class:bg-info-darkest={color === "info-darkest"}
+      class:bg-gray-lightest={color === "gray-lightest"}
+      class:bg-gray-lighter={color === "gray-lighter"}
+      class:bg-gray-light={color === "gray-light"}
+      class:bg-gray={color === "gray"}
+      class:bg-gray-dark={color === "gray-dark"}
+      class:bg-gray-darker={color === "gray-darker"}
+      class:bg-gray-darkest={color === "gray-darkest"}
+      class:bg-dark-lightest={color === "dark-lightest"}
+      class:bg-dark-lighter={color === "dark-lighter"}
+      class:bg-dark-light={color === "dark-light"}
+      class:bg-dark={color === "dark"}
+      class:bg-dark-dark={color === "dark-dark"}
+      class:bg-dark-darker={color === "dark-darker"}
+      class:bg-dark-darkest={color === "dark-darkest"}
     >
       <div class="flex">
         <span class="loading" class:hidden={!is_loading}><Spinner /></span>
@@ -78,35 +165,69 @@
     on:click={onclick}
     on:click={onsubmit}
     {id}
-    class:primary={color === "primary"}
-    class:secondary={color === "secondary"}
-    class:error={color === "error"}
-    class:warning={color === "warning"}
-    class:success={color === "success"}
-    class:info={color === "info"}
-    class:gray={color === "gray"}
-    class:dark={color === "dark"}
-    class:primary-light={color === "primary-light"}
-    class:secondary-light={color === "secondary-light"}
-    class:error-light={color === "error-light"}
-    class:warning-light={color === "warning-light"}
-    class:success-light={color === "success-light"}
-    class:info-light={color === "info-light"}
-    class:gray-light={color === "gray-light"}
-    class:dark-light={color === "dark-light"}
-    class:primary-border={color === "primary-border"}
-    class:secondary-border={color === "secondary-border"}
-    class:error-border={color === "error-border"}
-    class:warning-border={color === "warning-border"}
-    class:success-border={color === "success-border"}
-    class:info-border={color === "info-border"}
-    class:gray-border={color === "gray-border"}
-    class:dark-border={color === "dark-border"}
     class:mb
     class:mt
     class:wide
     {style}
     {disabled}
+    class:larger
+    class:dark_mode_invert
+    class:bg-primary-lightest={color === "primary-lightest"}
+    class:bg-primary-lighter={color === "primary-lighter"}
+    class:bg-primary-light={color === "primary-light"}
+    class:bg-primary={color === "primary"}
+    class:bg-primary-dark={color === "primary-dark"}
+    class:bg-primary-darker={color === "primary-darker"}
+    class:bg-primary-darkest={color === "primary-darkest"}
+    class:bg-secondary-lightest={color === "secondary-lightest"}
+    class:bg-secondary-lighter={color === "secondary-lighter"}
+    class:bg-secondary-light={color === "secondary-light"}
+    class:bg-secondary={color === "secondary"}
+    class:bg-secondary-dark={color === "secondary-dark"}
+    class:bg-secondary-darker={color === "secondary-darker"}
+    class:bg-secondary-darkest={color === "secondary-darkest"}
+    class:bg-error-lightest={color === "error-lightest"}
+    class:bg-error-lighter={color === "error-lighter"}
+    class:bg-error-light={color === "error-light"}
+    class:bg-error={color === "error"}
+    class:bg-error-dark={color === "error-dark"}
+    class:bg-error-darker={color === "error-darker"}
+    class:bg-error-darkest={color === "error-darkest"}
+    class:bg-warning-lightest={color === "warning-lightest"}
+    class:bg-warning-lighter={color === "warning-lighter"}
+    class:bg-warning-light={color === "warning-light"}
+    class:bg-warning={color === "warning"}
+    class:bg-warning-dark={color === "warning-dark"}
+    class:bg-warning-darker={color === "warning-darker"}
+    class:bg-warning-darkest={color === "warning-darkest"}
+    class:bg-success-lightest={color === "success-lightest"}
+    class:bg-success-lighter={color === "success-lighter"}
+    class:bg-success-light={color === "success-light"}
+    class:bg-success={color === "success"}
+    class:bg-success-dark={color === "success-dark"}
+    class:bg-success-darker={color === "success-darker"}
+    class:bg-success-darkest={color === "success-darkest"}
+    class:bg-info-lightest={color === "info-lightest"}
+    class:bg-info-lighter={color === "info-lighter"}
+    class:bg-info-light={color === "info-light"}
+    class:bg-info={color === "info"}
+    class:bg-info-dark={color === "info-dark"}
+    class:bg-info-darker={color === "info-darker"}
+    class:bg-info-darkest={color === "info-darkest"}
+    class:bg-gray-lightest={color === "gray-lightest"}
+    class:bg-gray-lighter={color === "gray-lighter"}
+    class:bg-gray-light={color === "gray-light"}
+    class:bg-gray={color === "gray"}
+    class:bg-gray-dark={color === "gray-dark"}
+    class:bg-gray-darker={color === "gray-darker"}
+    class:bg-gray-darkest={color === "gray-darkest"}
+    class:bg-dark-lightest={color === "dark-lightest"}
+    class:bg-dark-lighter={color === "dark-lighter"}
+    class:bg-dark-light={color === "dark-light"}
+    class:bg-dark={color === "dark"}
+    class:bg-dark-dark={color === "dark-dark"}
+    class:bg-dark-darker={color === "dark-darker"}
+    class:bg-dark-darkest={color === "dark-darkest"}
   >
     <div class="flex">
       <span class="loading" class:hidden={!is_loading}><Spinner style="margin: 0 0.5rem 0 0" /></span>
@@ -126,7 +247,7 @@
 
   button {
     min-width: 10rem;
-    height: 3.5rem;
+    height: 3rem;
     padding: 0 1.25rem;
     border-radius: 1rem/1rem;
     font-family: "Inter", sans-serif;
@@ -141,6 +262,19 @@
     text-overflow: ellipsis;
   }
 
+  button:hover {
+    opacity: 0.8;
+    -webkit-transition: all 350ms ease;
+    -moz-transition: all 350ms ease;
+    -o-transition: all 350ms ease;
+    -ms-transition: all 350ms ease;
+    transition: all 350ms ease;
+  }
+
+  .larger {
+    height: 3.5rem;
+  }
+
   .flex {
     display: flex;
     justify-content: center;
@@ -153,284 +287,510 @@
     margin-right: 0.5rem;
   }
 
-  .primary {
-    background: var(--primary);
-    color: var(--white);
-  }
-
-  .primary:focus,
-  .primary:hover {
-    background: var(--primary-dark);
-  }
-
-  .primary-light {
-    background: var(--primary-lightest);
-    color: var(--primary-darkest);
-  }
-
-  .primary-light:focus,
-  .primary-light:hover {
-    background: var(--primary-lighter);
-  }
-
-  .primary-border {
-    border: 3px solid var(--primary);
-    color: var(--primary);
-  }
-
-  .primary-border:focus,
-  .primary-border:hover {
-    background: var(--primary-lightest);
-  }
-
-  .secondary {
-    background: var(--secondary);
-    color: var(--white);
-  }
-
-  .secondary:focus,
-  .secondary:hover {
-    background: var(--secondary-dark);
-  }
-
-  .secondary-light {
-    background: var(--secondary-lightest);
-    color: var(--secondary-darkest);
-  }
-
-  .secondary-light:focus,
-  .secondary-light:hover {
-    background: var(--secondary-lighter);
-  }
-
-  .secondary-border {
-    border: 3px solid var(--secondary);
-    color: var(--secondary);
-  }
-
-  .secondary-border:focus,
-  .secondary-border:hover {
-    background: var(--secondary-lightest);
-  }
-
-  .error {
-    background: var(--error);
-    color: var(--white);
-  }
-
-  .error:focus,
-  .error:hover {
-    background: var(--error-dark);
-  }
-
-  .error-light {
-    background: var(--error-lightest);
-    color: var(--error-darkest);
-  }
-
-  .error-light:focus,
-  .error-light:hover {
-    background: var(--error-lighter);
-  }
-
-  .error-border {
-    border: 3px solid var(--error);
-    color: var(--error);
-  }
-
-  .error-border:focus,
-  .error-border:hover {
-    background: var(--error-lightest);
-  }
-
-  .warning {
-    background: var(--warning);
-    color: var(--white);
-  }
-
-  .warning:focus,
-  .warning:hover {
-    background: var(--warning-dark);
-  }
-
-  .warning-light {
-    background: var(--warning-lightest);
-    color: var(--warning-darkest);
-  }
-
-  .warning-light:focus,
-  .warning-light:hover {
-    background: var(--warning-lighter);
-  }
-
-  .warning-border {
-    border: 3px solid var(--warning);
-    color: var(--warning);
-  }
-
-  .warning-border:focus,
-  .warning-border:hover {
-    background: var(--warning-lightest);
-  }
-
-  .success {
-    background: var(--success);
-    color: var(--white);
-  }
-
-  .success:focus,
-  .success:hover {
-    background: var(--success-dark);
-  }
-
-  .success-light {
-    background: var(--success-lightest);
-    color: var(--success-darkest);
-  }
-
-  .success-light:focus,
-  .success-light:hover {
-    background: var(--success-lighter);
-  }
-
-  .success-border {
-    border: 3px solid var(--success);
-    color: var(--success);
-  }
-
-  .success-border:focus,
-  .success-border:hover {
-    background: var(--success-lightest);
-  }
-
-  .info {
-    background: var(--info);
-    color: var(--white);
-  }
-
-  .info:focus,
-  .info:hover {
-    background: var(--info-dark);
-  }
-
-  .info-light {
-    background: var(--info-lightest);
-    color: var(--info-darkest);
-  }
-
-  .info-light:focus,
-  .info-light:hover {
-    background: var(--info-lighter);
-  }
-
-  .info-border {
-    border: 3px solid var(--info);
-    color: var(--info);
-  }
-
-  .info-border:focus,
-  .info-border:hover {
-    background: var(--info-lightest);
-  }
-
-  .dark {
-    background: var(--dark);
-    color: var(--white);
-  }
-
-  .dark:focus,
-  .dark:hover {
-    background: var(--dark-light);
-  }
-
-  .dark-light {
-    background: var(--dark-lightest);
-    color: var(--dark-darkest);
-  }
-
-  .dark-light:focus,
-  .dark-light:hover {
-    background: var(--dark-light);
-    color: var(--white);
-  }
-
-  .dark-border {
-    border: 3px solid var(--dark);
-    color: var(--dark);
-  }
-
-  .dark-border:focus,
-  .dark-border:hover {
-    background: var(--dark-lightest);
-  }
-
-  .gray {
-    background: var(--gray);
-    color: var(--gray-lightest);
-  }
-
-  .gray:focus,
-  .gray:hover {
-    background: var(--gray-dark);
-  }
-
-  .gray-light {
-    background: var(--gray-lightest);
-    color: var(--gray-grayest);
-  }
-
-  .gray-light:focus,
-  .gray-light:hover {
-    background: var(--gray-light);
-  }
-
-  .gray-border {
-    border: 3px solid var(--gray);
-    color: var(--gray);
-  }
-
-  .gray-border:focus,
-  .gray-border:hover {
-    background: var(--gray-lightest);
-  }
-
   .wide {
-    min-width: 100%;
+    width: 100%;
   }
 
   button:disabled {
     cursor: not-allowed;
+    opacity: 50%;
+  }
+
+  /* COLORS */
+
+  /* Primary */
+  .bg-primary-lightest {
+    background: var(--primary-lightest);
+    color: var(--primary-darkest);
+  }
+
+  .bg-primary-lighter {
+    background: var(--primary-lighter);
+    color: var(--primary-darkest);
+  }
+
+  .bg-primary-light {
+    background: var(--primary-light);
+    color: var(--primary-darkest);
+  }
+
+  .bg-primary {
+    background: var(--primary);
+    color: var(--primary-lightest);
+  }
+
+  .bg-primary-dark {
+    background: var(--primary-dark);
+    color: var(--primary-lightest);
+  }
+
+  .bg-primary-darker {
+    background: var(--primary-darker);
+    color: var(--primary-lightest);
+  }
+
+  .bg-primary-darkest {
+    background: var(--primary-darkest);
+    color: var(--primary-lightest);
+  }
+
+  /* Secondary */
+  .bg-secondary-lightest {
+    background: var(--secondary-lightest);
+    color: var(--secondary-darkest);
+  }
+
+  .bg-secondary-lighter {
+    background: var(--secondary-lighter);
+    color: var(--secondary-darkest);
+  }
+
+  .bg-secondary-light {
+    background: var(--secondary-light);
+    color: var(--secondary-darkest);
+  }
+
+  .bg-secondary {
+    background: var(--secondary);
+    color: var(--secondary-darkest);
+  }
+
+  .bg-secondary-dark {
+    background: var(--secondary-dark);
+    color: var(--secondary-lightest);
+  }
+
+  .bg-secondary-darker {
+    background: var(--secondary-darker);
+    color: var(--secondary-lightest);
+  }
+
+  .bg-secondary-darkest {
+    background: var(--secondary-darkest);
+    color: var(--secondary-lightest);
+  }
+
+  /* error */
+  .bg-error-lightest {
+    background: var(--error-lightest);
+    color: var(--error-darkest);
+  }
+
+  .bg-error-lighter {
+    background: var(--error-lighter);
+    color: var(--error-darkest);
+  }
+
+  .bg-error-light {
+    background: var(--error-light);
+    color: var(--error-darkest);
+  }
+
+  .bg-error {
+    background: var(--error);
+    color: var(--error-lightest);
+  }
+
+  .bg-error-dark {
+    background: var(--error-dark);
+    color: var(--error-lightest);
+  }
+
+  .bg-error-darker {
+    background: var(--error-darker);
+    color: var(--error-lightest);
+  }
+
+  .bg-error-darkest {
+    background: var(--error-darkest);
+    color: var(--error-lightest);
+  }
+
+  /* warning */
+  .bg-warning-lightest {
+    background: var(--warning-lightest);
+    color: var(--warning-darkest);
+  }
+
+  .bg-warning-lighter {
+    background: var(--warning-lighter);
+    color: var(--warning-darkest);
+  }
+
+  .bg-warning-light {
+    background: var(--warning-light);
+    color: var(--warning-darkest);
+  }
+
+  .bg-warning {
+    background: var(--warning);
+    color: var(--warning-darkest);
+  }
+
+  .bg-warning-dark {
+    background: var(--warning-dark);
+    color: var(--warning-lightest);
+  }
+
+  .bg-warning-darker {
+    background: var(--warning-darker);
+    color: var(--warning-lightest);
+  }
+
+  .bg-warning-darkest {
+    background: var(--warning-darkest);
+    color: var(--warning-lightest);
+  }
+
+  /* success */
+  .bg-success-lightest {
+    background: var(--success-lightest);
+    color: var(--success-darkest);
+  }
+
+  .bg-success-lighter {
+    background: var(--success-lighter);
+    color: var(--success-darkest);
+  }
+
+  .bg-success-light {
+    background: var(--success-light);
+    color: var(--success-darkest);
+  }
+
+  .bg-success {
+    background: var(--success);
+    color: var(--success-darkest);
+  }
+
+  .bg-success-dark {
+    background: var(--success-dark);
+    color: var(--success-lightest);
+  }
+
+  .bg-success-darker {
+    background: var(--success-darker);
+    color: var(--success-lightest);
+  }
+
+  .bg-success-darkest {
+    background: var(--success-darkest);
+    color: var(--success-lightest);
+  }
+
+  /* info */
+  .bg-info-lightest {
+    background: var(--info-lightest);
+    color: var(--info-darkest);
+  }
+
+  .bg-info-lighter {
+    background: var(--info-lighter);
+    color: var(--info-darkest);
+  }
+
+  .bg-info-light {
+    background: var(--info-light);
+    color: var(--info-darkest);
+  }
+
+  .bg-info {
+    background: var(--info);
+    color: var(--info-lightest);
+  }
+
+  .bg-info-dark {
+    background: var(--info-dark);
+    color: var(--info-lightest);
+  }
+
+  .bg-info-darker {
+    background: var(--info-darker);
+    color: var(--info-lightest);
+  }
+
+  .bg-info-darkest {
+    background: var(--info-darkest);
+    color: var(--info-lightest);
+  }
+
+  /* gray */
+  .bg-gray-lightest {
+    background: var(--gray-lightest);
+    color: var(--gray-darkest);
+  }
+
+  .bg-gray-lighter {
+    background: var(--gray-lighter);
+    color: var(--gray-darkest);
+  }
+
+  .bg-gray-light {
     background: var(--gray-light);
-    color: var(--gray-dark);
+    color: var(--gray-darkest);
   }
 
-  /* .primary {
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
+  .bg-gray {
+    background: var(--gray);
+    color: var(--gray-lightest);
   }
 
-  .primary::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    border-radius: 1rem;
-    transform: translate3d(-50%, -50%, 0) scale3d(0, 0, 0);
-    transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1), transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
-    background-color: var(--primary-dark);
-    opacity: 0;
+  .bg-gray-dark {
+    background: var(--gray-dark);
+    color: var(--gray-lightest);
   }
 
-  .primary:hover span {
-    color: var(--white);
+  .bg-gray-darker {
+    background: var(--gray-darker);
+    color: var(--gray-lightest);
   }
 
-  .primary:hover::before {
-    opacity: 1;
-    transition-duration: 0.85s;
-    transform: translate3d(-50%, -50%, 0) scale3d(1.2, 1.2, 1.2);
-  } */
+  .bg-gray-darkest {
+    background: var(--gray-darkest);
+    color: var(--gray-lightest);
+  }
+
+  /* dark */
+  .bg-dark-lightest {
+    background: var(--dark-lightest);
+    color: var(--dark-darkest);
+  }
+
+  .bg-dark-lighter {
+    background: var(--dark-lighter);
+    color: var(--dark-dark);
+  }
+
+  .bg-dark-light {
+    background: var(--dark-light);
+    color: var(--dark-lightest);
+  }
+
+  .bg-dark {
+    background: var(--dark);
+    color: var(--dark-lightest);
+  }
+
+  .bg-dark-dark {
+    background: var(--dark-dark);
+    color: var(--dark-lightest);
+  }
+
+  .bg-dark-darker {
+    background: var(--dark-darker);
+    color: var(--dark-lightest);
+  }
+
+  .bg-dark-darkest {
+    background: var(--dark-darkest);
+    color: var(--dark-lightest);
+  }
+
+  /* Dark Mode Primary */
+  :global(html.dark) .dark_mode_invert.bg-primary-lightest {
+    background: var(--primary-darkest);
+    color: var(--primary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-lighter {
+    background: var(--primary-darker);
+    color: var(--primary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-light {
+    background: var(--primary-dark);
+    color: var(--primary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-dark {
+    background: var(--primary-light);
+    color: var(--primary-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-darker {
+    background: var(--primary-lighter);
+    color: var(--primary-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-primary-darkest {
+    background: var(--primary-lightest);
+    color: var(--primary-darkest);
+  }
+
+  /* Dark Mode secondary */
+  :global(html.dark) .dark_mode_invert.bg-secondary-lightest {
+    background: var(--secondary-darkest);
+    color: var(--secondary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-lighter {
+    background: var(--secondary-darker);
+    color: var(--secondary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-light {
+    background: var(--secondary-dark);
+    color: var(--secondary-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-dark {
+    background: var(--secondary-light);
+    color: var(--secondary-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-darker {
+    background: var(--secondary-lighter);
+    color: var(--secondary-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-secondary-darkest {
+    background: var(--secondary-lightest);
+    color: var(--secondary-darkest);
+  }
+
+  /* Dark Mode error */
+  :global(html.dark) .dark_mode_invert.bg-error-lightest {
+    background: var(--error-darkest);
+    color: var(--error-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-lighter {
+    background: var(--error-darker);
+    color: var(--error-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-light {
+    background: var(--error-dark);
+    color: var(--error-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-dark {
+    background: var(--error-light);
+    color: var(--error-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-darker {
+    background: var(--error-lighter);
+    color: var(--error-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-error-darkest {
+    background: var(--error-lightest);
+    color: var(--error-darkest);
+  }
+
+  /* Dark Mode warning */
+  :global(html.dark) .dark_mode_invert.bg-warning-lightest {
+    background: var(--warning-darkest);
+    color: var(--warning-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-lighter {
+    background: var(--warning-darker);
+    color: var(--warning-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-light {
+    background: var(--warning-dark);
+    color: var(--warning-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-dark {
+    background: var(--warning-light);
+    color: var(--warning-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-darker {
+    background: var(--warning-lighter);
+    color: var(--warning-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-warning-darkest {
+    background: var(--warning-lightest);
+    color: var(--warning-darkest);
+  }
+
+  /* Dark Mode success */
+  :global(html.dark) .dark_mode_invert.bg-success-lightest {
+    background: var(--success-darkest);
+    color: var(--success-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-lighter {
+    background: var(--success-darker);
+    color: var(--success-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-light {
+    background: var(--success-dark);
+    color: var(--success-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-dark {
+    background: var(--success-light);
+    color: var(--success-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-darker {
+    background: var(--success-lighter);
+    color: var(--success-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-success-darkest {
+    background: var(--success-lightest);
+    color: var(--success-darkest);
+  }
+
+  /* Dark Mode info */
+  :global(html.dark) .dark_mode_invert.bg-info-lightest {
+    background: var(--info-darkest);
+    color: var(--info-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-lighter {
+    background: var(--info-darker);
+    color: var(--info-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-light {
+    background: var(--info-dark);
+    color: var(--info-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-dark {
+    background: var(--info-light);
+    color: var(--info-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-darker {
+    background: var(--info-lighter);
+    color: var(--info-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-info-darkest {
+    background: var(--info-lightest);
+    color: var(--info-darkest);
+  }
+
+  /* Dark Mode gray */
+  :global(html.dark) .dark_mode_invert.bg-gray-lightest {
+    background: var(--gray-darkest);
+    color: var(--gray-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-lighter {
+    background: var(--gray-darker);
+    color: var(--gray-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-light {
+    background: var(--gray-dark);
+    color: var(--gray-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-dark {
+    background: var(--gray-light);
+    color: var(--gray-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-darker {
+    background: var(--gray-lighter);
+    color: var(--gray-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-gray-darkest {
+    background: var(--gray-lightest);
+    color: var(--gray-darkest);
+  }
+
+  /* Dark Mode dark */
+  :global(html.dark) .dark_mode_invert.bg-dark-lightest {
+    background: var(--dark-darkest);
+    color: var(--dark-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-lighter {
+    background: var(--dark-darker);
+    color: var(--dark-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-light {
+    background: var(--dark-dark);
+    color: var(--dark-lightest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-dark {
+    background: var(--dark-light);
+    color: var(--dark-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-darker {
+    background: var(--dark-lighter);
+    color: var(--dark-darkest);
+  }
+  :global(html.dark) .dark_mode_invert.bg-dark-darkest {
+    background: var(--dark-lightest);
+    color: var(--dark-darkest);
+  }
 </style>
