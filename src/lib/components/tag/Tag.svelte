@@ -1,46 +1,88 @@
 <script>
+  import { configStore } from "$lib/index";
+
   export let label = "";
   export let tooltip = null;
-  export let color = "primary-light";
+  export let color = "__default";
   export let small = false;
   export let min_width = 3;
   export let margin = "0 0 0 0";
+  export let dark_mode_invert = $configStore?.dark_mode_invert;
 
   let _mw = min_width;
 
   if (typeof _mw !== "number") {
     _mw = 3;
   }
+
+  if (color === "__default") {
+    color = "primary-lightest";
+  }
+
+  console.log(color);
 </script>
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <span
   data-tooltip={tooltip}
   style="min-width:{min_width}rem; margin:{margin};"
-  class:primary={color === "primary"}
-  class:secondary={color === "secondary"}
-  class:error={color === "error"}
-  class:warning={color === "warning"}
-  class:success={color === "success"}
-  class:info={color === "info"}
-  class:gray={color === "gray"}
-  class:dark={color === "dark"}
-  class:primary-light={color === "primary-light"}
-  class:secondary-light={color === "secondary-light"}
-  class:error-light={color === "error-light"}
-  class:warning-light={color === "warning-light"}
-  class:success-light={color === "success-light"}
-  class:info-light={color === "info-light"}
-  class:gray-light={color === "gray-light"}
-  class:dark-light={color === "dark-light"}
-  class:primary-border={color === "primary-border"}
-  class:secondary-border={color === "secondary-border"}
-  class:error-border={color === "error-border"}
-  class:warning-border={color === "warning-border"}
-  class:success-border={color === "success-border"}
-  class:info-border={color === "info-border"}
-  class:gray-border={color === "gray-border"}
-  class:dark-border={color === "dark-border"}
+  class:dark_mode_invert
+  class:bg-primary-lightest={color === "primary-lightest"}
+  class:bg-primary-lighter={color === "primary-lighter"}
+  class:bg-primary-light={color === "primary-light"}
+  class:bg-primary={color === "primary"}
+  class:bg-primary-dark={color === "primary-dark"}
+  class:bg-primary-darker={color === "primary-darker"}
+  class:bg-primary-darkest={color === "primary-darkest"}
+  class:bg-secondary-lightest={color === "secondary-lightest"}
+  class:bg-secondary-lighter={color === "secondary-lighter"}
+  class:bg-secondary-light={color === "secondary-light"}
+  class:bg-secondary={color === "secondary"}
+  class:bg-secondary-dark={color === "secondary-dark"}
+  class:bg-secondary-darker={color === "secondary-darker"}
+  class:bg-secondary-darkest={color === "secondary-darkest"}
+  class:bg-error-lightest={color === "error-lightest"}
+  class:bg-error-lighter={color === "error-lighter"}
+  class:bg-error-light={color === "error-light"}
+  class:bg-error={color === "error"}
+  class:bg-error-dark={color === "error-dark"}
+  class:bg-error-darker={color === "error-darker"}
+  class:bg-error-darkest={color === "error-darkest"}
+  class:bg-warning-lightest={color === "warning-lightest"}
+  class:bg-warning-lighter={color === "warning-lighter"}
+  class:bg-warning-light={color === "warning-light"}
+  class:bg-warning={color === "warning"}
+  class:bg-warning-dark={color === "warning-dark"}
+  class:bg-warning-darker={color === "warning-darker"}
+  class:bg-warning-darkest={color === "warning-darkest"}
+  class:bg-success-lightest={color === "success-lightest"}
+  class:bg-success-lighter={color === "success-lighter"}
+  class:bg-success-light={color === "success-light"}
+  class:bg-success={color === "success"}
+  class:bg-success-dark={color === "success-dark"}
+  class:bg-success-darker={color === "success-darker"}
+  class:bg-success-darkest={color === "success-darkest"}
+  class:bg-info-lightest={color === "info-lightest"}
+  class:bg-info-lighter={color === "info-lighter"}
+  class:bg-info-light={color === "info-light"}
+  class:bg-info={color === "info"}
+  class:bg-info-dark={color === "info-dark"}
+  class:bg-info-darker={color === "info-darker"}
+  class:bg-info-darkest={color === "info-darkest"}
+  class:bg-gray-lightest={color === "gray-lightest"}
+  class:bg-gray-lighter={color === "gray-lighter"}
+  class:bg-gray-light={color === "gray-light"}
+  class:bg-gray={color === "gray"}
+  class:bg-gray-dark={color === "gray-dark"}
+  class:bg-gray-darker={color === "gray-darker"}
+  class:bg-gray-darkest={color === "gray-darkest"}
+  class:bg-dark-lightest={color === "dark-lightest"}
+  class:bg-dark-lighter={color === "dark-lighter"}
+  class:bg-dark-light={color === "dark-light"}
+  class:bg-dark={color === "dark"}
+  class:bg-dark-dark={color === "dark-dark"}
+  class:bg-dark-darker={color === "dark-darker"}
+  class:bg-dark-darkest={color === "dark-darkest"}
   class:small
 >
   <slot>
@@ -64,8 +106,6 @@
       pointer-events: none;
       transition: 0.2s ease-out;
       transform: translate(-50%, 5px);
-      /* display: inline-table;
-      white-space: pre-wrap; */
       display: table;
     }
 
@@ -120,18 +160,38 @@
     }
   }
 
+  :global(html.dark) [data-tooltip]:before {
+    background-color: var(--dark);
+    color: var(--gray-lightest);
+  }
+
+  :global(html.dark) [data-tooltip]:after {
+    border-top: 5px solid var(--dark);
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+  }
+
+  :global(html.dark) [data-tooltip]:before,
+  :global(html.dark) [data-tooltip]:after {
+    filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 1));
+  }
+
   span {
     font-family: "Fira Mono";
     display: inline-block;
     white-space: nowrap;
     padding: 3px 0.625rem;
     border-radius: 8px;
-    color: #fff;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     vertical-align: middle;
     text-align: center;
+  }
+
+  .small {
+    font-size: 0.6rem;
+    padding: 0 0.25rem;
   }
 
   .primary {
@@ -252,10 +312,5 @@
   .gray-border {
     color: var(--gray);
     border: 2px solid var(--gray);
-  }
-
-  .small {
-    font-size: 0.6rem;
-    padding: 0 0.25rem;
   }
 </style>

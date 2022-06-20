@@ -655,289 +655,89 @@
   }
 
   /* Primary */
-  .bg-primary-lightest {
-    background: var(--primary-lightest);
-  }
   .bg-primary-lightest img.icon {
     filter: none;
   }
 
-  .bg-primary-lighter {
-    background: var(--primary-lighter);
-  }
-
-  .bg-primary-light {
-    background: var(--primary-light);
-  }
-
-  .bg-primary {
-    background: var(--primary);
-  }
-
-  .bg-primary-dark {
-    background: var(--primary-dark);
-  }
-
-  .bg-primary-darker {
-    background: var(--primary-darker);
-  }
-
-  .bg-primary-darkest {
-    background: var(--primary-darkest);
-  }
-
   /* Secondary */
-  .bg-secondary-lightest {
-    background: var(--secondary-lightest);
-  }
   .bg-secondary-lightest img.icon {
     filter: none;
   }
 
-  .bg-secondary-lighter {
-    background: var(--secondary-lighter);
-  }
   .bg-secondary-lighter img.icon {
     filter: none;
   }
 
-  .bg-secondary-light {
-    background: var(--secondary-light);
-  }
   .bg-secondary-light img.icon {
     filter: none;
   }
 
-  .bg-secondary {
-    background: var(--secondary);
-  }
   .bg-secondary img.icon {
     filter: none;
   }
 
-  .bg-secondary-dark {
-    background: var(--secondary-dark);
-  }
-
-  .bg-secondary-darker {
-    background: var(--secondary-darker);
-  }
-
-  .bg-secondary-darkest {
-    background: var(--secondary-darkest);
-  }
-
   /* error */
-  .bg-error-lightest {
-    background: var(--error-lightest);
-  }
+
   .bg-error-lightest img.icon {
     filter: none;
   }
 
-  .bg-error-lighter {
-    background: var(--error-lighter);
-  }
   .bg-error-lighter img.icon {
     filter: none;
   }
 
-  .bg-error-light {
-    background: var(--error-light);
-  }
   .bg-error-light img.icon {
     filter: none;
   }
 
-  .bg-error {
-    background: var(--error);
-  }
-
-  .bg-error-dark {
-    background: var(--error-dark);
-  }
-
-  .bg-error-darker {
-    background: var(--error-darker);
-  }
-
-  .bg-error-darkest {
-    background: var(--error-darkest);
-  }
-
   /* warning */
-  .bg-warning-lightest {
-    background: var(--warning-lightest);
-  }
+
   .bg-warning-lightest img.icon {
     filter: none;
   }
 
-  .bg-warning-lighter {
-    background: var(--warning-lighter);
-  }
   .bg-warning-lighter img.icon {
     filter: none;
   }
 
-  .bg-warning-light {
-    background: var(--warning-light);
-  }
   .bg-warning-light img.icon {
     filter: none;
   }
 
-  .bg-warning {
-    background: var(--warning);
-  }
-
-  .bg-warning-dark {
-    background: var(--warning-dark);
-  }
-
-  .bg-warning-darker {
-    background: var(--warning-darker);
-  }
-
-  .bg-warning-darkest {
-    background: var(--warning-darkest);
-  }
-
   /* success */
-  .bg-success-lightest {
-    background: var(--success-lightest);
-  }
+
   .bg-success-lightest img.icon {
     filter: none;
   }
 
-  .bg-success-lighter {
-    background: var(--success-lighter);
-  }
   .bg-success-lighter img.icon {
     filter: none;
   }
 
-  .bg-success-light {
-    background: var(--success-light);
-  }
-
-  .bg-success {
-    background: var(--success);
-  }
-
-  .bg-success-dark {
-    background: var(--success-dark);
-  }
-
-  .bg-success-darker {
-    background: var(--success-darker);
-  }
-
-  .bg-success-darkest {
-    background: var(--success-darkest);
-  }
-
   /* info */
-  .bg-info-lightest {
-    background: var(--info-lightest);
-  }
+
   .bg-info-lightest img.icon {
     filter: none;
   }
 
-  .bg-info-lighter {
-    background: var(--info-lighter);
-  }
-
-  .bg-info-light {
-    background: var(--info-light);
-  }
-
-  .bg-info {
-    background: var(--info);
-  }
-
-  .bg-info-dark {
-    background: var(--info-dark);
-  }
-
-  .bg-info-darker {
-    background: var(--info-darker);
-  }
-
-  .bg-info-darkest {
-    background: var(--info-darkest);
-  }
-
   /* gray */
-  .bg-gray-lightest {
-    background: var(--gray-lightest);
-  }
+
   .bg-gray-lightest img.icon {
     filter: none;
   }
 
-  .bg-gray-lighter {
-    background: var(--gray-lighter);
-  }
   .bg-gray-lighter img.icon {
     filter: none;
   }
 
-  .bg-gray-light {
-    background: var(--gray-light);
-  }
   .bg-gray-light img.icon {
     filter: none;
   }
 
-  .bg-gray {
-    background: var(--gray);
-  }
-
-  .bg-gray-dark {
-    background: var(--gray-dark);
-  }
-
-  .bg-gray-darker {
-    background: var(--gray-darker);
-  }
-
-  .bg-gray-darkest {
-    background: var(--gray-darkest);
-  }
-
   /* dark */
-  .bg-dark-lightest {
-    background: var(--dark-lightest);
-  }
+
   .bg-dark-lightest img.icon {
     filter: none;
-  }
-
-  .bg-dark-lighter {
-    background: var(--dark-lighter);
-  }
-
-  .bg-dark-light {
-    background: var(--dark-light);
-  }
-
-  .bg-dark {
-    background: var(--dark);
-  }
-
-  .bg-dark-dark {
-    background: var(--dark-dark);
-  }
-
-  .bg-dark-darker {
-    background: var(--dark-darker);
-  }
-
-  .bg-dark-darkest {
-    background: var(--dark-darkest);
   }
 
   /* Dark Mode Primary */
