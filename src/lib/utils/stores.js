@@ -9,6 +9,7 @@ const configStore = writable({
   padding: "roomy",
   radius: "rounded",
   max_content_width: 1200,
+  dark_mode_invert: true,
 });
 
 const modalStore = writable({ title: "", active: false, form: [], message: "", img: null, footer: [] });
