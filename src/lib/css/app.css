@@ -7,21 +7,29 @@
   --white: #ffffff;
   --black: #11142d;
 
-  --primary-lightest: #dad6f4;
+  /* --primary-lightest: #dad6f4;
   --primary-lighter: #b5aee9;
   --primary-light: #9186de;
   --primary: #6c5dd3;
   --primary-dark: #50459e;
   --primary-darker: #352e69;
-  --primary-darkest: #1b1734;
+  --primary-darkest: #1b1734; */
 
-  --secondary-lightest: #ffe5f8;
-  --secondary-lighter: #ffcbf2;
-  --secondary-light: #ffb2ec;
-  --secondary: #ff98e5;
-  --secondary-dark: #bf71ab;
-  --secondary-darker: #7f4b72;
-  --secondary-darkest: #402639;
+  --primary-lightest: #eaddfa;
+  --primary-lighter: #b98ff0;
+  --primary-light: #9d63ea;
+  --primary: #7320e2;
+  --primary-dark: #50169d;
+  --primary-darker: #390f70;
+  --primary-darkest: #220943;
+
+  --secondary-lightest: #e3fbfa;
+  --secondary-lighter: #a3f4f1;
+  --secondary-light: #7ef0eb;
+  --secondary: #47eae3;
+  --secondary-dark: #31a39e;
+  --secondary-darker: #237471;
+  --secondary-darkest: #154543;
 
   --error-lightest: #ffd9c9;
   --error-lighter: #ffb293;
@@ -450,6 +458,16 @@ html.dark p {
   color: var(--gray-lighter);
 }
 
+/* html.dark::-moz-selection {
+  color: var(--secondary-darkest);
+  background: var(--secondary);
+}
+
+html.dark::selection {
+  color: var(--secondary-darkest);
+  background: var(--secondary);
+} */
+
 .caption {
   font-size: 13px;
   font-weight: 600;
@@ -501,6 +519,17 @@ a:visited,
 a:hover,
 a:active {
   color: var(--info);
+}
+
+html.dark a:active,
+html.dark a:link {
+  color: var(--info);
+}
+html.dark a:hover {
+  color: var(--info-lighter);
+}
+html.dark a:hover {
+  color: var(--primary-light);
 }
 
 code {
