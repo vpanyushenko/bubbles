@@ -188,6 +188,18 @@ const _validation = {
     }
   },
 
+  number: function (val, req) {
+    let num;
+
+    num = Number(val); // tries to convert value to a number. useful if value is coming from form element
+
+    if (typeof num === "number" && !isNaN(num) && typeof val !== "boolean") {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   array: function (val, req) {
     return val instanceof Array;
   },
@@ -270,6 +282,7 @@ const _inputTypes = [
   "hidden",
   "stripe",
   "stripe-card",
+  "file",
 ];
 
 /**
@@ -376,6 +389,9 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
           let obj = array.reduceRight((obj, elem) => ({ [elem]: obj }), value);
 
           data = merge(data, obj);
+          resolve();
+        } else {
+          console.error(`No ID provided for input: ${input?.label}`);
           resolve();
         }
       } else {
