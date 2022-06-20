@@ -73,27 +73,14 @@
     box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
   }
 
+  :global(html.dark .row:hover .__clickable button) {
+    -webkit-box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
+    box-shadow: 0 5px 0.625rem rgba(0, 0, 0, 0.6);
+  }
+
   @media only screen and (max-width: 767px) {
     .row.mobile__nowrap {
       white-space: nowrap;
     }
   }
-
-  /* @media only screen and (max-width: 767px) {
-    .row {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      justify-content: space-between;
-      flex-basis: 100%;
-      width: 100%;
-      position: relative;
-      background: #fff;
-      flex-wrap: none;
-      border-bottom: 1px solid var(--gray-light);
-    }
-  } */
 </style>

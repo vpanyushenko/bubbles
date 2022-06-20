@@ -79,4 +79,8 @@
     -o-transition: all 0.25s;
     transition: all 0.25s;
   }
+
+  :global(html.dark) .checkbox__tick {
+    border: 2px solid var(--gray-dark);
+  }
 </style>

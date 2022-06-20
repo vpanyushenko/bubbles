@@ -226,7 +226,9 @@
 
     {#if formattedButtons.length > 1}
       {#each formattedButtons as button}
-        <IconButton id={button.id} onclick={button.onclick} bind:color={button.color}>{button.label}</IconButton>
+        <IconButton id={button.id} onclick={button.onclick} bind:color={button.color}
+          ><span class="page__number">{button.label}</span></IconButton
+        >
       {/each}
     {:else if count}
       <p class="viewing__page">Viewing page: 1 of 1</p>
@@ -310,5 +312,9 @@
 
   p {
     margin: 0;
+  }
+
+  :global(html.dark) .page__number {
+    color: var(--white);
   }
 </style>

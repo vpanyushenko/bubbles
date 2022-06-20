@@ -451,4 +451,29 @@
   :global(html.dark) .value {
     color: var(--gray-lighter);
   }
+
+  :global(html.dark) .options {
+    border: 1px solid var(--dark);
+    background: var(--dark-darker);
+    -webkit-box-shadow: 0 1.25rem 1rem rgba(0, 0, 0, 0);
+    box-shadow: 0 1.25rem 1rem rgba(0, 0, 0, 0);
+  }
+
+  :global(html.dark) hr {
+    color: var(--dark-light);
+    background-color: var(--dark-light);
+  }
+  :global(html.dark) .title {
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .caption {
+    color: var(--gray);
+  }
+  :global(html.dark) .search {
+    background: var(--dark);
+    color: var(--white);
+  }
+  :global(html.dark) .option.focused {
+    background-color: var(--dark);
+  }
 </style>

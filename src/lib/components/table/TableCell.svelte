@@ -448,4 +448,11 @@
       white-space: nowrap;
     }
   }
+
+  :global(html.dark) .cell {
+    border-bottom: 2px solid var(--dark);
+  }
+  :global(html.dark) .cell p {
+    color: var(--gray-light);
+  }
 </style>

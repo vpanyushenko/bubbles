@@ -164,4 +164,12 @@
       display: none;
     }
   }
+
+  :global(html.dark) .cell {
+    border-bottom: 2px solid var(--dark);
+    color: var(--gray-light);
+  }
+  :global(html.dark) img {
+    filter: invert();
+  }
 </style>

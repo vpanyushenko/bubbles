@@ -48,7 +48,7 @@
     border-top: 1px solid var(--dark);
   }
 
-  :global(html.dark) hr span {
-    color: var(--gray-light);
+  :global(html.dark) span {
+    color: var(--gray);
   }
 </style>

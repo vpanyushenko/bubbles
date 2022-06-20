@@ -187,4 +187,14 @@
       max-height: 100vh;
     }
   }
+
+  :global(html.dark) .container {
+    background: var(--theme-dark);
+  }
+
+  :global(html.dark) .modal header,
+  :global(html.dark) .modal main,
+  :global(html.dark) .modal .title {
+    color: var(--gray-lightest);
+  }
 </style>

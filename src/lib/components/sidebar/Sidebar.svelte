@@ -671,8 +671,8 @@
   }
 
   :global(html.dark) .sidebar__item.active {
-    color: var(--primary);
-    background: var(--dark-darker);
+    color: var(--white);
+    background: var(--dark);
   }
 
   :global(html.dark) nav button:before,

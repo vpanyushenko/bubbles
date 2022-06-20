@@ -226,6 +226,10 @@
           <CheckboxGroup {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
 
+        {#if input.type === "file"}
+          <Input {...input} bind:value={input.value} />
+        {/if}
+
         {#if input.type === "p"}
           <p>{input.value}</p>
         {/if}

@@ -188,6 +188,11 @@
 
   :global(html.dark) .loading,
   :global(html.dark) .switch__box {
+    background: var(--dark);
+  }
+
+  :global(html.dark .form__row) .loading,
+  :global(html.dark .form__row) .switch__box {
     background: var(--theme-dark);
   }
   :global(html.dark) .background {

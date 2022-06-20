@@ -3,6 +3,8 @@
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
+  import { showToast } from "$lib/utils/toast";
+  import { onMount } from "svelte";
 
   export let id;
   export let label;
@@ -20,10 +22,29 @@
   export let vob = $configStore.validate_on_blur;
   export let debounce = 350;
   export let disabled = false;
+  export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
+
+  if (Array.isArray(extensions)) {
+    extensions = extensions.join(",");
+  }
 
   let _label = configLabel(label, validation);
   let focused = false;
   let selectedIndex = 0;
+  let has_file = value ? true : false;
+  let invalid_src, image_hover; //only used for files
+
+  const PREVIEW_TYPES = [
+    "image/png",
+    "image/svg+xml",
+    "image/gif",
+    "image/jpeg",
+    "image/webp",
+    "image/avif",
+    "image/apng",
+    "image/bmp",
+    "image/tiff",
+  ];
 
   $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
 
@@ -37,6 +58,28 @@
   //options for typeahead inside of input or textarea elements
   $: typeahead_options = [];
   $: is_loading = false;
+
+  onMount(() => {
+    if (type === "file" && value) {
+      if (value.startsWith("http") || value.startsWith("https")) {
+        console.log("convert to base64");
+        console.log(value);
+
+        fetch(value, {
+          method: "GET",
+        })
+          .then((res) => {
+            return res.blob();
+          })
+          .then(async (blob) => {
+            console.log(blob);
+
+            value = await toBase64(blob);
+            console.log(value);
+          });
+      }
+    }
+  });
 
   function dateFieldFocused(event) {
     event.currentTarget.type = "date";
@@ -135,6 +178,42 @@
     setTimeout(() => {
       typeahead_options = [];
     }, 100);
+  }
+
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const getExtension = (file) => {
+    const type = file.split(";")[0].split("/")[1];
+  };
+
+  async function fileChanged(event) {
+    value = null;
+    _label = label;
+    invalid_src = false;
+    const input = event.target;
+
+    if (input.files && input.files[0]) {
+      value = await toBase64(input.files[0]);
+      //Check if we can show the preview, or if it's a file that does not support
+      //a preview like a csv or pdf
+
+      // getExtension(value);
+
+      if (!PREVIEW_TYPES.includes(input.files[0].type)) {
+        _label = input.files[0].name;
+        invalid_src = true;
+      }
+      has_file = true;
+    } else {
+      has_file = false;
+    }
   }
 </script>
 
@@ -353,6 +432,44 @@
       {/if}
     </div>
   </div>
+{:else if type === "file"}
+  <div class="form__field__container" {id} class:mb-2={margin}>
+    <div class="field">
+      <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+      <div
+        class="image__preview"
+        class:has_file
+        on:click={(event) => {
+          if (event.currentTarget.classList.contains("has_file")) {
+            event.preventDefault();
+            value = null;
+            has_file = false;
+            _label = label;
+            showToast("File deleted", "success");
+          }
+        }}
+        on:mouseover={(event) => {
+          image_hover = true;
+        }}
+        on:mouseout={(event) => {
+          image_hover = false;
+        }}
+      >
+        {#if !value && !is_error}
+          <span>{_label}</span>
+        {:else if is_error}
+          <span class="error">{error}</span>
+        {/if}
+
+        <input type="file" class="image__upload_button" on:change={fileChanged} {id} accept={extensions} bind:value />
+        {#if value && !invalid_src && !image_hover}
+          <img src={value} alt={_label} />
+        {:else if value && !image_hover}
+          <span>{_label}</span>
+        {/if}
+      </div>
+    </div>
+  </div>
 {:else if type === "hidden"}
   <div class="form__field__container hidden" {id}>
     <div class="field">
@@ -366,7 +483,7 @@
   </div>
 {:else}
   <div class="form__field__container" {id} class:mb-2={margin}>
-    <div class="field" class:active={focused || value}>
+    <div class="field center" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
@@ -421,6 +538,9 @@
     position: relative;
     box-sizing: border-box;
     text-align: left;
+  }
+  .field.center {
+    text-align: center;
   }
 
   .field__textarea {
@@ -508,6 +628,72 @@
     right: 1.25rem;
   }
 
+  .image__preview {
+    width: 100%;
+    height: 200px;
+    padding: 18px 22px;
+    border-radius: 12px;
+    background: rgba(228, 228, 228, 0.3);
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--blue);
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .image__preview:hover {
+    background: var(--black);
+    opacity: 0.82;
+    color: var(--white);
+    transition: all 0.5s;
+    z-index: 99;
+  }
+
+  .image__preview.has_file:hover {
+    background: var(--error);
+    opacity: 0.82;
+    color: var(--white);
+    transition: all 0.5s;
+    z-index: 99;
+  }
+
+  .image__preview.has_file:hover::before {
+    content: "Delete File";
+  }
+
+  .image__preview > img {
+    max-height: 160px;
+    max-width: 100%;
+  }
+
+  .image__preview:hover > img {
+    opacity: 0;
+    display: none;
+    transition: all 0.3s;
+  }
+
+  .image__preview:hover > span {
+    display: block !important;
+    position: relative;
+    z-index: 10;
+    filter: none;
+  }
+
+  .image__upload_button {
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    margin-top: 0px;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+    filter: blur(2px);
+  }
+
   :global(html.dark) textarea:disabled,
   :global(html.dark) input:disabled {
     color: var(--gray);
@@ -516,6 +702,7 @@
     color: var(--gray-lighter);
   }
   :global(html.dark) .field__textarea,
+  :global(html.dark) .image__preview,
   :global(html.dark) .field__input {
     background: var(--dark);
     color: var(--gray-lighter);

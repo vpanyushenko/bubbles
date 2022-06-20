@@ -351,7 +351,7 @@
   .options {
     position: absolute;
     /* left: 0; */
-    z-index: 20;
+    z-index: 9999;
     width: 100%;
     margin: auto;
     margin-top: 8px;
@@ -521,5 +521,15 @@
   }
   :global(html.dark) .caption {
     color: var(--gray);
+  }
+  :global(html.dark) .search {
+    background: var(--dark);
+    color: var(--white);
+  }
+  :global(html.dark) .option.focused {
+    background-color: var(--dark);
+  }
+  :global(html.dark) img {
+    filter: invert();
   }
 </style>
