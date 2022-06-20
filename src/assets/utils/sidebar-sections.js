@@ -114,6 +114,12 @@ export default [
     group: "Components",
   },
   {
+    label: "Gallery",
+    id: "gallery",
+    href: "/gallery",
+    group: "Components",
+  },
+  {
     label: "List",
     id: "list",
     href: "/list",

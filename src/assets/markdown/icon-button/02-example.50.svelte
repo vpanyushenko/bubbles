@@ -4,6 +4,8 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
   import { showLoading, hideLoading } from "$lib/utils/loading";
 
+  let color = "dark";
+
   const iconButtonOptions = [
     {
       label: "Option 1",
@@ -37,7 +39,7 @@
   };
 </script>
 
-<Card height100={true}>
+<!-- <Card height100={true}>
   <CardHeader title="Bundled Icon Options" border={false} />
   <div class="flex">
     <IconButton icon="more" options={iconButtonOptions} align="left" />
@@ -65,6 +67,46 @@
   </div>
   <div class="flex">
     <IconButton icon="edit" options={iconButtonOptions} align="left" />
+    <code>edit</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="trash" options={iconButtonOptions} align="left" />
+    <code>trash</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="filter" options={iconButtonOptions} align="left" />
+    <code>filter</code>
+  </div>
+</Card> -->
+
+<Card height100={true}>
+  <CardHeader title="Colors" border={false} />
+  <div class="flex">
+    <IconButton icon="more" options={iconButtonOptions} align="left" color={`${color}-lightest`} />
+    <code>more</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="add" options={iconButtonOptions} align="left" color={`${color}-lighter`} />
+    <code>add</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="arrowLeft" {onclick} color={`${color}-light`} />
+    <code>arrowLeft</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="arrowRight" {onclick} color={`${color}`} />
+    <code>arrowRight</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="close" options={iconButtonOptions} align="left" color={`${color}-dark`} />
+    <code>close</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="search" options={iconButtonOptions} align="left" color={`${color}-darker`} />
+    <code>search</code>
+  </div>
+  <div class="flex">
+    <IconButton icon="edit" options={iconButtonOptions} align="left" color={`${color}-darkest`} />
     <code>edit</code>
   </div>
   <div class="flex">

@@ -203,6 +203,16 @@
       validation: "required|accepted",
     },
     {
+      type: "file",
+      id: "file",
+      label: "Select a file",
+      desc: "By submitting this form you agree to our terms. <a href='https://google.com' target='_blank'>View Terms</a>.",
+      error: "Please upload an image",
+      validation: "required",
+      extensions: null,
+      value: "https://bubbles-pied.vercel.app/logo.svg",
+    },
+    {
       type: "submit", //The form must have a submit button
       label: "Submit Form", //The label for the submit button,
       onsubmit: async (event) => {

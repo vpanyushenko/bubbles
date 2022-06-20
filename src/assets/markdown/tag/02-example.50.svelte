@@ -22,25 +22,25 @@
 <Card>
   <CardHeader title="Light Colors" border={false} />
 
-  <Tag color="primary-light" label="primary-light" margin="1rem 0 1rem 0" />
-  <Tag color="secondary-light" label="secondary-light" margin="1rem 0 1rem 0" />
-  <Tag color="error-light" label="error-light" margin="1rem 0 1rem 0" />
-  <Tag color="warning-light" label="warning-light" margin="1rem 0 1rem 0" />
-  <Tag color="success-light" label="success-light" margin="1rem 0 1rem 0" />
-  <Tag color="info-light" label="info-light" margin="1rem 0 1rem 0" />
-  <Tag color="gray-light" label="gray-light" margin="1rem 0 1rem 0" />
-  <Tag color="dark-light" label="dark-light" margin="1rem 0 1rem 0" />
+  <Tag color="primary-lighter" label="primary-lighter" margin="1rem 0 1rem 0" />
+  <Tag color="secondary-lighter" label="secondary-lighter" margin="1rem 0 1rem 0" />
+  <Tag color="error-lighter" label="error-lighter" margin="1rem 0 1rem 0" />
+  <Tag color="warning-lighter" label="warning-lighter" margin="1rem 0 1rem 0" />
+  <Tag color="success-lighter" label="success-lighter" margin="1rem 0 1rem 0" />
+  <Tag color="info-lighter" label="info-lighter" margin="1rem 0 1rem 0" />
+  <Tag color="gray-lighter" label="gray-lighter" margin="1rem 0 1rem 0" />
+  <Tag color="dark-lighter" label="dark-lighter" margin="1rem 0 1rem 0" />
 </Card>
 
 <Card>
-  <CardHeader title="Border Colors" border={false} />
+  <CardHeader title="Dark Colors" border={false} />
 
-  <Tag color="primary-border" label="primary-border" margin="1rem 0 1rem 0" />
-  <Tag color="secondary-border" label="secondary-border" margin="1rem 0 1rem 0" />
-  <Tag color="error-border" label="error-border" margin="1rem 0 1rem 0" />
-  <Tag color="warning-border" label="warning-border" margin="1rem 0 1rem 0" />
-  <Tag color="success-border" label="success-border" margin="1rem 0 1rem 0" />
-  <Tag color="info-border" label="info-border" margin="1rem 0 1rem 0" />
-  <Tag color="gray-border" label="gray-border" margin="1rem 0 1rem 0" />
-  <Tag color="dark-border" label="dark-border" margin="1rem 0 1rem 0" />
+  <Tag color="primary-darker" label="primary-darker" margin="1rem 0 1rem 0" />
+  <Tag color="secondary-darker" label="secondary-darker" margin="1rem 0 1rem 0" />
+  <Tag color="error-darker" label="error-darker" margin="1rem 0 1rem 0" />
+  <Tag color="warning-darker" label="warning-darker" margin="1rem 0 1rem 0" />
+  <Tag color="success-darker" label="success-darker" margin="1rem 0 1rem 0" />
+  <Tag color="info-darker" label="info-darker" margin="1rem 0 1rem 0" />
+  <Tag color="gray-darker" label="gray-darker" margin="1rem 0 1rem 0" />
+  <Tag color="dark-darker" label="dark-darker" margin="1rem 0 1rem 0" />
 </Card>
