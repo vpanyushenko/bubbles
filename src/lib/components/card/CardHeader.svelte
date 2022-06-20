@@ -14,6 +14,7 @@
   export let buttons = [];
   export let center = false;
   export let border = false;
+  export let px = false;
 
   const id = `card_header_${uuid()}`;
 
@@ -65,6 +66,7 @@
     class:filters={filters.length > 0}
     {id}
     class:justify-end={$pageStore.search === id}
+    class:px
   >
     <div class="flex">
       {#if title || caption}
@@ -154,6 +156,13 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
+
+  .px {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  /* padding: 0.625rem 2rem 0.625rem; */
 
   .border {
     border-bottom: 1px solid var(--gray-light);
