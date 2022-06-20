@@ -16,6 +16,7 @@
   export let height100 = false;
   export let center = false;
   export let radius = $configStore.radius || "rounded";
+  export let hide_overflow = false;
 
   let style = "";
 
@@ -43,6 +44,7 @@
   class:shadow
   class:border
   class:center
+  class:overflow-hidden={hide_overflow}
   class:height-100={height100}
   {style}
   class:blocky={radius === "blocky"}
@@ -66,6 +68,10 @@
     border-radius: 1.5rem;
     background: var(--white);
     width: -webkit-fill-available;
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
   }
 
   .center {
