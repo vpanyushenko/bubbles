@@ -128,7 +128,6 @@
 
   a.segment {
     display: inline-flex;
-    /* background: aqua; */
     align-items: center;
   }
 
@@ -261,16 +260,16 @@
 
   :global(html.dark) a,
   :global(html.dark) button {
-    color: var(--gray-lighter);
+    color: var(--gray);
   }
 
   :global(html.dark) a:hover,
   :global(html.dark) button:hover {
-    color: var(--primary-light);
+    color: var(--gray-lightest);
   }
   :global(html.dark) a.active,
   :global(html.dark) button.active {
-    color: var(--primary);
+    color: var(--gray-lightest);
   }
 
   :global(html.dark) .wrapper:after {
@@ -289,11 +288,11 @@
 
   :global(html.dark) .line a:hover,
   :global(html.dark) .line button:hover {
-    color: var(--primary-light);
+    color: var(--gray-lightest);
   }
   :global(html.dark) .line a.active,
   :global(html.dark) .line button.active {
-    color: var(--primary);
+    color: var(--gray-lightest);
     background-color: var(--dark-darkest);
     border-bottom: 2px solid var(--dark-dark);
     transition-delay: 150ms;

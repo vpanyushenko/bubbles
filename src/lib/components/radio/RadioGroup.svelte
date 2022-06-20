@@ -232,4 +232,8 @@
   :global(html.dark) .radio__text {
     color: var(--gray-light);
   }
+
+  :global(html.dark).radio__tick {
+    background: var(--gray-dark);
+  }
 </style>

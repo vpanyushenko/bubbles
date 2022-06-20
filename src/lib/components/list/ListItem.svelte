@@ -151,4 +151,13 @@
   :global(html.dark) .list__item {
     border: 2px solid var(--dark);
   }
+  :global(html.dark) .label {
+    color: var(--gray-light);
+  }
+  :global(html.dark) img {
+    filter: invert();
+  }
+  :global(html.dark) img:hover {
+    filter: invert();
+  }
 </style>

@@ -60,6 +60,10 @@
   }
 
   :global(html.dark) :global(.list.timeline .list__item) {
-    border: 1px solid var(--dark);
+    border: 2px solid var(--dark);
+  }
+
+  :global(html.dark) .timeline:before {
+    border-left: 2px dashed var(--gray);
   }
 </style>
