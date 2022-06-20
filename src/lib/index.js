@@ -54,6 +54,7 @@ import Overlay from "./components/overlay/Overlay.svelte";
 import Spinner from "./components/spinner/Spinner.svelte";
 import Divider from "./components/divider/Divider.svelte";
 import Dropdown from "./components/dropdown/Dropdown.svelte";
+import Gallery from "./components/gallery/Gallery.svelte";
 import SegmentedController from "./components/segmented-controller/SegmentedController.svelte";
 
 export {
@@ -77,11 +78,13 @@ export {
   Divider,
   Dropdown,
   SegmentedController,
+  Gallery,
 };
 
 //input
 import Button from "./components/button/Button.svelte";
 import IconButton from "./components/button/IconButton.svelte";
+import ButtonGroup from "./components/button/ButtonGroup.svelte";
 import Input from "./components/input/Input.svelte";
 import Select from "./components/select/Select.svelte";
 import BasicSelect from "./components/select/BasicSelect.svelte";
@@ -96,6 +99,7 @@ import StripeCard from "./components/stripe/StripeCardInput.svelte";
 export {
   Button,
   IconButton,
+  ButtonGroup,
   Input,
   Select,
   BasicSelect,
