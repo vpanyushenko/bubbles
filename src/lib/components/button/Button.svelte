@@ -9,7 +9,6 @@
   export let label = null;
   export let onclick = null;
   export let onsubmit = null;
-  export let background = "__default";
   export let color = "__default";
   export let mt = false;
   export let mb = false;
@@ -246,7 +245,7 @@
   }
 
   button {
-    min-width: 10rem;
+    /* min-width: 10rem; */
     height: 3rem;
     padding: 0 1.25rem;
     border-radius: 1rem/1rem;

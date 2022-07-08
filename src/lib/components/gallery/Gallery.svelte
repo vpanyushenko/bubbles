@@ -1,6 +1,5 @@
 <script>
   import { uuid, Overlay, Button, ButtonGroup } from "$lib/index";
-  import BasicSelect from "../select/BasicSelect.svelte";
 
   import icon_add from "./add.svg";
 
@@ -19,11 +18,23 @@
   let show_details = false;
   let selected_image;
 
-  $: selected_image_index = images.findIndex((image) => image === selected_image);
-
   if (!images) {
     images = [];
   }
+
+  if (!grid) {
+    grid = "1x1";
+  }
+
+  let columns = 1;
+  let rows = 1;
+  let style = "";
+  let items_per_page = columns * rows;
+  let total_pages = Math.ceil(images.length / items_per_page) || 1;
+  let paginated_images = [[]];
+  let __current_page = 1;
+
+  $: selected_image_index = images.findIndex((image) => image === selected_image);
 
   if (new_image && !images.find((a) => a === "add")) {
     images.push("add");
@@ -47,48 +58,55 @@
     calculated_page = page;
   }
 
-  $: console.log(selected_image);
+  $: if (images) {
+    //reset values
+    show_details = false;
 
-  let columns = 1;
-  let rows = 1;
-  let style = "";
+    paginated_images = [[]];
+    __current_page = 1;
 
-  //Create the dynamic style
-  let fr_columns = [];
-  let fr_rows = [];
+    //Create the dynamic style
+    let fr_columns = [];
+    let fr_rows = [];
 
-  const split = grid.toLowerCase().split("x");
-  if (split.length == 2) {
-    columns = split[0];
-    rows = split[1];
-  }
+    const split = grid ? grid.toLowerCase().split("x") : ["1", "1"];
+    console.log(split, "split");
 
-  for (let i = 0; i < columns; i++) {
-    fr_columns.push("1fr");
-  }
-
-  for (let i = 0; i < rows; i++) {
-    fr_rows.push("1fr");
-  }
-
-  style += `grid-template-columns: ${fr_columns.join(" ")};`;
-  style += `grid-template-rows: ${fr_rows.join(" ")};`;
-
-  //create the pagination for images
-  const items_per_page = columns * rows;
-  const total_pages = Math.ceil(images.length / items_per_page);
-  const paginated_images = [[]];
-  let __current_page = 1;
-  images.forEach((image, index) => {
-    let page = Math.ceil((index + 1) / (columns * rows));
-
-    if (page > __current_page) {
-      paginated_images.push([]);
-      __current_page = page;
+    if (split.length == 2) {
+      columns = split[0];
+      rows = split[1];
     }
 
-    paginated_images[page - 1].push(image);
-  });
+    for (let i = 0; i < columns; i++) {
+      fr_columns.push("1fr");
+    }
+
+    for (let i = 0; i < rows; i++) {
+      fr_rows.push("1fr");
+    }
+
+    items_per_page = columns * rows;
+    total_pages = Math.ceil(images.length / items_per_page) || 1;
+    style += `grid-template-columns: ${fr_columns.join(" ")};`;
+    style += `grid-template-rows: ${fr_rows.join(" ")};`;
+
+    if (new_image && !images.find((a) => a === "add")) {
+      images.push("add");
+    }
+
+    images.forEach((image, index) => {
+      let page = Math.ceil((index + 1) / (columns * rows));
+
+      if (page > __current_page) {
+        paginated_images.push([]);
+        __current_page = page;
+      }
+
+      paginated_images[page - 1].push(image);
+    });
+
+    paginated_images = paginated_images;
+  }
 
   function keydown(event) {
     let __selected_image_index = selected_image_index;
@@ -126,13 +144,7 @@
         let next_image = images[selected_image_index - 1];
         __selected_image_index--;
 
-        console.log(next_image);
-
         if (next_image === "add") {
-          console.log("add");
-          console.log("add");
-          console.log("add");
-          console.log("add");
           next_image = images[selected_image_index - 2];
           __selected_image_index--;
         }
@@ -167,7 +179,7 @@
             <img src={icon_add} alt="Add File" />
           </div>
         {:else}
-          <img src={image} alt={`Gallery Image ${i}`} on:click={() => viewImageDetails(image)} />
+          <img src={image} alt={`Gallery Image ${i}`} on:click={() => viewImageDetails(image)} loading="lazy" />
         {/if}
       </div>
     {/each}
@@ -179,7 +191,7 @@
     <div class="buttons">
       <ButtonGroup>
         {#each buttons as button, i}
-          <Button icon="more" color="gray-lighter" {...button} />
+          <Button icon="more" color="gray-lighter" id={selected_image} {...button} />
         {/each}
         {#if buttons && buttons.length > 0 && buttons.find((btn) => btn.larger === false)}
           <Button icon="close" color="gray-lighter" larger={false} />
@@ -188,7 +200,7 @@
         {/if}
       </ButtonGroup>
     </div>
-    <img class="details" src={selected_image} alt={`Gallery photo ${selected_image + 1}`} />
+    <img class="details" src={selected_image} alt={`Gallery photo ${selected_image + 1}`} loading="lazy" />
   </Overlay>
 {/if}
 

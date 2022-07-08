@@ -12,7 +12,7 @@ type: code
   import "bubbles-ui/css/app.css";
 
   // Import the components
-  import { SidebarPageWrapper, Sidebar, Modal, ToastContainer } from "bubbles-ui";
+  import { SidebarPageWrapper, Sidebar, ModalContainer, ToastContainer } from "bubbles-ui";
 
   // Import the stores, just separated for cleaner code
   import { toastStore } from "bubbles-ui";
@@ -47,5 +47,5 @@ type: code
 
 <!-- Modals usually are on top of everything. It's easy to add them here and then add content to
      then and toggle them through included utility functions. More on this in the modal section -->
-<Modal />
+<ModalContainer />
 ```

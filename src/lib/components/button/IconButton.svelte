@@ -3,7 +3,10 @@
   import { pageStore, configStore } from "$lib/utils/stores";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { addQueryParam, deleteQueryParam } from "$lib/utils/url";
+
+  import { onMount } from "svelte";
   import { navigating, page, session } from "$app/stores";
+  import { browser } from "$app/env";
 
   import arrowLeft from "./arrow-left.svg";
   import arrowLeftDouble from "./arrow-left-double.svg";
@@ -45,7 +48,7 @@
 
   export let color = null;
   export let dark_mode_invert = $configStore?.dark_mode_invert;
-  export let invert_icon = false;
+  // export let invert_icon = false;
 
   export let shadow = false;
 
@@ -65,6 +68,25 @@
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
   $: typeahead_options = [];
+
+  //Stop the loading animation
+  $: if ($pageStore.loading.includes(id) && browser) {
+    if (window.location.href === $page.url.href) {
+      $pageStore.loading = [...$pageStore.loading.filter((id) => id !== id)];
+    }
+  }
+
+  onMount(() => {
+    if (search) {
+      const value = $page.url.searchParams.get("search");
+
+      if (value) {
+        search_value = value;
+        search_active = true;
+        $pageStore.search = __search_id;
+      }
+    }
+  });
 
   let __icon_inverted = true; //We want to invest initially to make the icon white
   let __shadow_on_hover = false;
@@ -252,14 +274,7 @@
         <Spinner />
       {/if}
       {#if icon}
-        <img
-          class="icon icon-main"
-          class:invert_icon={__icon_inverted}
-          {src}
-          class:hidden={is_loading}
-          alt="icon"
-          style:filter={invert_icon ? "invert(1)" : null}
-        />
+        <img class="icon icon-main" class:invert_icon={__icon_inverted} {src} class:hidden={is_loading} alt="icon" />
       {:else}
         <span class:hidden={is_loading}>
           <slot />
@@ -647,10 +662,11 @@
   img.icon {
     filter: invert();
   }
-  .bg-transparent img.icon {
+
+  .dark_mode_invert.bg-transparent img.icon {
     filter: none;
   }
-  .dark_mode_invert.bg-transparent img.icon {
+  :global(html.dark) .dark_mode_invert.bg-transparent img.icon {
     filter: invert();
   }
 
@@ -721,7 +737,6 @@
   }
 
   /* gray */
-
   .bg-gray-lightest img.icon {
     filter: none;
   }
@@ -735,12 +750,12 @@
   }
 
   /* dark */
-
   .bg-dark-lightest img.icon {
     filter: none;
   }
 
   /* Dark Mode Primary */
+
   :global(html.dark) .dark_mode_invert.bg-primary-lightest {
     background: var(--primary-darkest);
   }

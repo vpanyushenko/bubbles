@@ -15,6 +15,7 @@
   export let large = false;
   export let bold = false;
   export let empty = false;
+  export let code = false;
 
   if (empty) {
     text = " ";
@@ -160,12 +161,19 @@
             sveltekit:prefetch
             {href}
             on:click={hrefClicked}
+            class:code
             class:nowrap={wrap === false}
             class:mobile__nowrap={mobile_wrap === false}>{@html text}</a
           >
         </span>
       {:else}
-        <p class:h6={large} class:bold class:nowrap={wrap === false} class:mobile__nowrap={mobile_wrap === false}>
+        <p
+          class:h6={large}
+          class:bold
+          class:nowrap={wrap === false}
+          class:mobile__nowrap={mobile_wrap === false}
+          class:code
+        >
           {@html text}
         </p>
       {/if}
@@ -376,6 +384,10 @@
 
   .bold {
     font-weight: bold;
+  }
+
+  .code {
+    font-family: "Fira Mono";
   }
 
   .no-width {

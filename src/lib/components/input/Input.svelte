@@ -62,9 +62,6 @@
   onMount(() => {
     if (type === "file" && value) {
       if (value.startsWith("http") || value.startsWith("https")) {
-        console.log("convert to base64");
-        console.log(value);
-
         fetch(value, {
           method: "GET",
         })
@@ -72,10 +69,7 @@
             return res.blob();
           })
           .then(async (blob) => {
-            console.log(blob);
-
             value = await toBase64(blob);
-            console.log(value);
           });
       }
     }

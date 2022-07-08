@@ -22,8 +22,6 @@
   $: pokemon = $store.pokemon ? $store.pokemon : [];
 
   const types = [
-    "All",
-    "break",
     "Normal",
     "Fire",
     "Water",
@@ -128,14 +126,12 @@ filters={[
             id: "type",
             label: "Type",
             value: "",
+            reset_label: "All",
+            break_after_reset: true,
             options: types.map((type) => {
-              if (type === "break") {
-                return "break";
-              }
-
               return {
                 label: type,
-                value: type === "All" ? "" : type.toLowerCase(),
+                value: type.toLowerCase(),
               };
             }),
           },

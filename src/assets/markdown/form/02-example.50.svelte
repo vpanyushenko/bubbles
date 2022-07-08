@@ -20,6 +20,17 @@
       vob: true,
     },
     {
+      type: "text",
+      id: "confirmation",
+      label: "Confirmation",
+      value: null,
+      desc: "Type 'confirmation' to proceed",
+      error: "Invalid input",
+      validation: "string|required|match:confirmation",
+      validate_on_blur: true,
+      vob: true,
+    },
+    {
       type: "number", //Will ensure that getFormData will return this as a number
       id: "age",
       label: "Age",
@@ -213,6 +224,19 @@
       value: "https://bubbles-pied.vercel.app/logo.svg",
     },
     {
+      type: "button-group",
+      buttons: [
+        {
+          type: "button",
+          icon: "arrowLeft",
+        },
+        {
+          type: "button",
+          label: "Label",
+        },
+      ],
+    },
+    {
       type: "submit", //The form must have a submit button
       label: "Submit Form", //The label for the submit button,
       onsubmit: async (event) => {
@@ -227,7 +251,8 @@
         try {
           const data = await getFormData(formInputs);
           console.log(data);
-          await validateInputs(formInputs);
+          const errors = await validateInputs(formInputs);
+          showToast("Success", "success");
         } catch (error) {
           showToast(error.message);
         } finally {

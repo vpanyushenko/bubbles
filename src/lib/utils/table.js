@@ -48,4 +48,8 @@ const deselectTableRows = (table_id = null) => {
   }
 };
 
-export { getSelectedTableRows, deselectTableRows };
+const getTableRowID = (element) => {
+  return element.closest(".js-bubbles-table-row")?.id ?? null;
+};
+
+export { getSelectedTableRows, deselectTableRows, getTableRowID };

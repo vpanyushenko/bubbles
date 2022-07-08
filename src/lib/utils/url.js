@@ -48,9 +48,7 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
       if (show_loading) {
         showLoading(show_loading);
 
-        setTimeout(() => {
-          hideLoading(show_loading);
-        }, 2000);
+        //The loading animation is stopped in the component itself
       }
 
       if (goto) {

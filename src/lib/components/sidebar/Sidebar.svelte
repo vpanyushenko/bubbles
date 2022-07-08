@@ -530,7 +530,6 @@
 
   .sidebar__item.active .sidebar__icon img {
     opacity: 1;
-    filter: var(--sidebar-hover-filter);
   }
   .group__dropdown:hover img,
   .sidebar__item:hover img {
@@ -660,6 +659,10 @@
 
   :global(html.dark) .group__dropdown {
     color: var(--dark-darker);
+  }
+
+  :global(html.dark) .sidebar__icon img {
+    filter: invert(1);
   }
 
   :global(html.dark) .group__dropdown:hover {

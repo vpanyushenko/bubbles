@@ -3,16 +3,17 @@
   import { scale, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/utils/stores";
   import Switch from "$lib/components/switch/LabeledSwitch.svelte";
   import Input from "$lib/components/input/Input.svelte";
   import StripeCardInput from "$lib/components/stripe/StripeCardInput.svelte";
   import Select from "$lib/components/select/Select.svelte";
   import Button from "$lib/components/button/Button.svelte";
+  import ButtonGroup from "$lib/components/button/ButtonGroup.svelte";
   import Divider from "$lib/components/divider/Divider.svelte";
   import RadioGroup from "$lib/components/radio/RadioGroup.svelte";
   import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
+
   import { createEventDispatcher } from "svelte";
 
   export let inputs = [];
@@ -123,42 +124,6 @@
       return input;
     });
   }
-
-  // $: if (dom_component_width < 500) {
-  //   mobile = true;
-  // } else {
-  //   mobile = false;
-  // }
-
-  // $: console.log(formatted_inputs);
-  // onMount(() => {
-  //   const ro = new ResizeObserver((entries) => {
-  //     for (let entry of entries) {
-  //       const cr = entry.contentRect;
-  //       console.log(`Element size: ${cr.width}px x ${cr.height}px`);
-  //     }
-  //   });
-
-  //   const testing = document.getElementById(id);
-
-  //   console.log(testing);
-
-  //   // Observe one or multiple elements
-  //   ro.observe(testing);
-  // });
-
-  // in:scale={{
-  //         duration: 750,
-  //         opacity: 0,
-  //         start: 0.5,
-  //         easing: quintOut,
-  //       }}
-  //       out:scale={{
-  //         duration: 750,
-  //         opacity: 0,
-  //         start: 0,
-  //         easing: quintOut,
-  //       }}
 </script>
 
 <div class="form" {id}>
@@ -208,6 +173,10 @@
           <Button {...input} wide={true} />
         {:else if input.type === "submit"}
           <Button {...input} wide={true} />
+        {/if}
+
+        {#if input.type === "button-group" || input.type === "buttons"}
+          <ButtonGroup buttons={input.buttons} />
         {/if}
 
         {#if input.type === "divider"}

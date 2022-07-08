@@ -66,7 +66,7 @@
           if (search) {
             pagination.count = filtered.length;
           }
-          hideLoading();
+          // hideLoading();
 
           return {
             props: {
@@ -114,7 +114,7 @@
           if (search) {
             pagination.count = filtered.length;
           }
-          hideLoading();
+          // hideLoading();
 
           return {
             props: {

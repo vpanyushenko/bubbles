@@ -4,7 +4,7 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
   import { showLoading, hideLoading } from "$lib/utils/loading";
 
-  let color = "dark";
+  let color = "gray";
 
   const iconButtonOptions = [
     {

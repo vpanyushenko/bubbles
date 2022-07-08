@@ -18,8 +18,6 @@
   if (color === "__default") {
     color = "primary-lightest";
   }
-
-  console.log(color);
 </script>
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -27,6 +25,7 @@
   data-tooltip={tooltip}
   style="min-width:{min_width}rem; margin:{margin};"
   class:dark_mode_invert
+  class:bg-transparent={!color}
   class:bg-primary-lightest={color === "primary-lightest"}
   class:bg-primary-lighter={color === "primary-lighter"}
   class:bg-primary-light={color === "primary-light"}
@@ -86,7 +85,7 @@
   class:small
 >
   <slot>
-    {label}
+    {@html label}
   </slot>
 </span>
 
@@ -178,12 +177,12 @@
 
   span {
     font-family: "Fira Mono";
+    font-weight: 700;
     display: inline-block;
     white-space: nowrap;
     padding: 3px 0.625rem;
     border-radius: 8px;
     font-size: 0.75rem;
-    font-weight: 700;
     text-transform: uppercase;
     vertical-align: middle;
     text-align: center;
@@ -192,125 +191,5 @@
   .small {
     font-size: 0.6rem;
     padding: 0 0.25rem;
-  }
-
-  .primary {
-    background: var(--primary);
-    color: var(--white);
-  }
-
-  .primary-light {
-    background: var(--primary-lightest);
-    color: var(--primary-darker);
-  }
-
-  .primary-border {
-    color: var(--primary);
-    border: 2px solid var(--primary);
-  }
-
-  .secondary {
-    background: var(--secondary);
-    color: var(--white);
-  }
-
-  .secondary-light {
-    background: var(--secondary-lightest);
-    color: var(--secondary-darker);
-  }
-
-  .secondary-border {
-    color: var(--secondary);
-    border: 2px solid var(--secondary);
-  }
-
-  .error {
-    background: var(--error);
-    color: var(--white);
-  }
-
-  .error-light {
-    background: var(--error-lightest);
-    color: var(--error-darker);
-  }
-
-  .error-border {
-    color: var(--error);
-    border: 2px solid var(--error);
-  }
-
-  .warning {
-    background: var(--warning);
-    color: var(--white);
-  }
-
-  .warning-light {
-    background: var(--warning-lightest);
-    color: var(--warning-darker);
-  }
-
-  .warning-border {
-    color: var(--warning);
-    border: 2px solid var(--warning);
-  }
-
-  .success {
-    background: var(--success);
-    color: var(--white);
-  }
-
-  .success-light {
-    background: var(--success-lightest);
-    color: var(--success-darker);
-  }
-
-  .success-border {
-    color: var(--success);
-    border: 2px solid var(--success);
-  }
-
-  .info {
-    background: var(--info);
-    color: var(--white);
-  }
-
-  .info-light {
-    background: var(--info-lightest);
-    color: var(--info-darker);
-  }
-
-  .info-border {
-    color: var(--info);
-    border: 2px solid var(--info);
-  }
-
-  .dark {
-    background: var(--dark);
-    color: var(--white);
-  }
-
-  .dark-light {
-    background: var(--dark-lightest);
-    color: var(--dark-darker);
-  }
-
-  .dark-border {
-    color: var(--dark);
-    border: 2px solid var(--dark);
-  }
-
-  .gray {
-    background: var(--gray);
-    color: var(--gray-lightest);
-  }
-
-  .gray-light {
-    background: var(--gray-lightest);
-    color: var(--gray-grayest);
-  }
-
-  .gray-border {
-    color: var(--gray);
-    border: 2px solid var(--gray);
   }
 </style>

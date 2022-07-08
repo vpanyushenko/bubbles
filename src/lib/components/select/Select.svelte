@@ -4,6 +4,8 @@
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
+  import { page } from "$app/stores";
+  import { browser } from "$app/env";
 
   const _uuid = uuid();
 
@@ -14,11 +16,13 @@
   export let desc = null;
   export let id = _uuid;
   export let search = options.length > 5 ? true : false;
+  export let search_threshold = 0.3;
   export let type = "select";
   export let validation = null;
   export let validate_on_blur = $configStore.validate_on_blur;
   export let vob = $configStore.validate_on_blur;
   export let min_width = true;
+  export let debug = false;
 
   /**
    * @prop {Function} onselect - A function that will be provided with the value of the selected option
@@ -42,8 +46,18 @@
     }, $configStore.error_delay);
   }
 
+  //Stop the loading animation if the page is no longer loading
+  $: if ($pageStore.loading.includes(id) && browser) {
+    if (window.location.href === $page.url.href) {
+      $pageStore.loading = [...$pageStore.loading.filter((id) => id !== id)];
+    }
+  }
+
   $: if (value !== undefined) {
     const option = options.find((item) => item.value === value);
+    if (debug) {
+      console.log("Selected options", option);
+    }
 
     if (option?.label) {
       title = option.label;
@@ -147,6 +161,7 @@
     <Dropdown
       bind:options
       {search}
+      {search_threshold}
       bind:value
       {type}
       on:select={(event) => {
@@ -223,7 +238,7 @@
     -ms-transform: none;
     transform: none;
     position: absolute;
-    top: 40%;
+    top: 35%;
     right: 1.25rem;
     box-sizing: border-box;
     width: 1.25rem;
@@ -271,7 +286,7 @@
     color: var(--black);
   }
 
-  .select.is_list_open .head:before {
+  .select.is_list_open .head:not(.is_loading):before {
     -webkit-transform: translateY(-50%) rotate(180deg);
     -ms-transform: translateY(-50%) rotate(180deg);
     transform: translateY(-50%) rotate(180deg);

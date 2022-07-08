@@ -83,6 +83,11 @@ If you want the select element to be searchable. By default, if you have more th
 
 ---
 
+**search_threshold** `number` <code class="blue">0.3</code> <br>
+How strict you want the search to be. A number of 0 would mean an exact match while 1 would be a very lax match that would max everything
+
+---
+
 **onselect** `function(value)` <br>
 A function that will fire every time an item is selected. The function will be provided one argument, which will be the value of the value of the selected option.
 

@@ -7,12 +7,14 @@
   import { onMount } from "svelte";
 
   const id = `dropdown-${uuid()}`;
+  const search_input_id = uuid();
 
   const dispatch = createEventDispatcher();
 
   export let value = null;
   export let options = [];
   export let search = options.length > 5 ? true : false;
+  export let search_threshold = 0.3;
   export let type = null;
   export let align = "left";
 
@@ -43,7 +45,7 @@
     shouldSort: false,
     keys: ["label", "caption"],
     minMatchCharLength: 2,
-    threshold: 0.4,
+    threshold: search_threshold ?? 0.3,
   });
 
   function selectOption(event) {
@@ -101,6 +103,15 @@
 
   function keydown(event) {
     if (is_list_open) {
+      if (event.key.toLowerCase() === "a" && event.metaKey === true) {
+        event.preventDefault();
+        event.stopPropagation();
+        const input = document.getElementById(search_input_id);
+        input.focus();
+        input.select();
+        return;
+      }
+
       switch (event.key) {
         case "ArrowDown": {
           event.preventDefault();
@@ -184,6 +195,7 @@
 
           break;
         }
+
         case "Escape": {
           is_list_open = false;
           break;
@@ -265,6 +277,7 @@
   <div class="options" class:left={align === "left"} class:right={align === "right"} {id} on:mousemove={mousemove}>
     {#if search}
       <input
+        id={search_input_id}
         class="search"
         type="text"
         placeholder="Start typing to search..."

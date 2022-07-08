@@ -1,6 +1,8 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/utils/stores";
+  import { page } from "$app/stores";
+  import { browser } from "$app/env";
 
   const _uuid = uuid();
 
@@ -21,6 +23,13 @@
 
     if (option?.label) {
       title = option.label.toString();
+    }
+  }
+
+  //Stop the loading animation if the page is no longer loading
+  $: if ($pageStore.loading.includes(id) && browser) {
+    if (window.location.href === $page.url.href) {
+      $pageStore.loading = [...$pageStore.loading.filter((id) => id !== id)];
     }
   }
 

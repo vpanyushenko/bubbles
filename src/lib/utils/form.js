@@ -240,6 +240,24 @@ const _validation = {
     return String(parseInt(val, 10)) === String(val);
   },
 
+  match: function (val, req) {
+    req = req.split(":")[1];
+
+    if (req) {
+      req = req.toString().toLowerCase();
+    }
+
+    if (val) {
+      val = val.toString().toLowerCase();
+    }
+
+    if (val === req) {
+      return true;
+    }
+
+    return false;
+  },
+
   regex: function (val, req) {
     req = req.split(":")[1];
     let mod = /[g|i|m]{1,3}$/;

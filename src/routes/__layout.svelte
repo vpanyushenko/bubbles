@@ -25,11 +25,14 @@
 
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
   import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
-  import Modal from "$lib/components/modal/Modal.svelte";
+
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import sections from "$assets/utils/sidebar-sections";
   import store from "$assets/utils/store";
+  import ModalContainer from "$lib/components/modal/ModalContainer.svelte";
+
+  import icon from "$assets/icons/arrow.svg";
 
   // $configStore.padding = "compact";
   // $configStore.radius = "blocky";
@@ -39,6 +42,7 @@
     flat: $store.flat,
     padding: $store.sidebar_padding,
     sections: sections.map((section) => {
+      // section.icon = icon;
       // delete section.group;
       return section;
     }),
@@ -63,7 +67,7 @@
   <slot />
 </SidebarPageWrapper>
 
-<Modal />
+<ModalContainer />
 
 {#if y > 1000}
   <div>

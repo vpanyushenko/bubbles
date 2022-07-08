@@ -2,35 +2,39 @@
   import { browser } from "$app/env";
   import { v4 as uuid } from "@lukeed/uuid";
   import { fly, fade } from "svelte/transition";
+  import { modalStore } from "$lib/utils/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
+  import Button from "$lib/components/button/Button.svelte";
+  import Form from "$lib/components/form/Form.svelte";
+  import FileForm from "$lib/components/form/FileForm.svelte";
 
-  export let title = "";
-  export let hideModal;
-  export let id = uuid();
-  export let height;
-  export let lock_scroll = true;
-  export let hide_on_overlay_click = true;
+  const id = uuid();
 
   let style = "";
 
-  function _hideModal() {
-    lock_scroll = false;
-    hideModal();
+  function hideModal() {
+    $modalStore = {};
   }
 
   function keydown(event) {
-    if (event.key === "Escape") {
-      _hideModal();
+    if (event.key === "Escape" && $modalStore.active) {
+      hideModal();
     }
   }
 
-  $: if (height) {
-    style = `height: ${height}vh;max-height: none;`;
+  $: if ($modalStore.height) {
+    style = `height: ${$modalStore.height}vh;max-height: none;`;
   } else {
     style = "max-height: 80vh";
   }
 
-  $: if (lock_scroll && browser) {
+  $: if ($modalStore.form && $modalStore.form.length) {
+    setTimeout(() => {
+      document.getElementById(id).querySelector(".field__input").focus();
+    }, 0);
+  }
+
+  $: if ($modalStore.active && browser) {
     document.body.classList.add("noscroll");
   } else if (browser) {
     document.body.classList.remove("noscroll");
@@ -39,33 +43,46 @@
 
 <svelte:window on:keydown={keydown} />
 
-<div
-  class="overlay"
-  tabindex="-1"
-  on:click|stopPropagation={() => {
-    if (hide_on_overlay_click) {
-      _hideModal();
-    }
-  }}
-  transition:fade={{ duration: 400 }}
->
-  <div class="modal js-bubbles-modal" {id}>
-    <div class="container" {style} transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
-      <header>
-        <h6 class="title">{title}</h6>
-        <IconButton icon="close" onclick={_hideModal} />
-      </header>
+{#if $modalStore.active}
+  <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
+    <div class="modal js-bubbles-modal" {id}>
+      <div class="container" {style} transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
+        <header>
+          <h6 class="title">{$modalStore.title}</h6>
+          <IconButton icon="close" onclick={hideModal} />
+        </header>
 
-      <main>
-        <slot />
-      </main>
+        <main>
+          {#if $modalStore.img}
+            <div class="image__container">
+              <img src={$modalStore.img} alt="Modal" />
+            </div>
+          {/if}
 
-      <footer class="modal__footer">
-        <slot name="footer" />
-      </footer>
+          {#if $modalStore.message}
+            <p>{@html $modalStore.message}</p>
+          {/if}
+
+          {#if $modalStore.form}
+            <Form inputs={$modalStore.form} />
+          {/if}
+
+          {#if $modalStore.file}
+            <FileForm {...$modalStore.file} />
+          {/if}
+        </main>
+
+        {#if $modalStore.footer && $modalStore.footer.length > 0}
+          <footer class="modal__footer">
+            {#each $modalStore.footer as button}
+              <Button {...button} wide={true} />
+            {/each}
+          </footer>
+        {/if}
+      </div>
     </div>
   </div>
-</div>
+{/if}
 
 <style>
   .overlay {

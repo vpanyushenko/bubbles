@@ -17,6 +17,7 @@
   class:success={color === "success"}
   class:info={color === "info"}
   class:gray={color === "gray"}
+  class:white={color === "white"}
   class:dark={color === "dark"}
 />
 

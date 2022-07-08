@@ -42,7 +42,7 @@
     </div>
   </span>
 
-  {#if label || text}
+  {#if label || text || text === 0}
     <div class="content">
       <div class="label">{label}</div>
       {#if href}

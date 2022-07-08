@@ -1,11 +1,12 @@
 <script>
   // import { scale, fade } from "svelte/transition";
-  import { pageStore } from "$lib/utils/stores";
-  import IconButton from "$lib/components/button/IconButton.svelte";
-  import Select from "$lib/components/select/Select.svelte";
-  import { addQueryParam } from "$lib/utils/url";
+  import { pageStore, addQueryParam, uuid, Select, IconButton } from "$lib/index";
+  // import { pageStore } from "$lib/utils/stores";
+  // import IconButton from "$lib/components/button/IconButton.svelte";
+  // import Select from "$lib/components/select/Select.svelte";
+  // import { addQueryParam } from "$lib/utils/url";
+  // import { v4 as uuid } from "@lukeed/uuid";
   import { page } from "$app/stores";
-  import { v4 as uuid } from "@lukeed/uuid";
   import { browser } from "$app/env";
 
   export let filters = [];
@@ -22,11 +23,10 @@
     return filter.id;
   });
 
-  filters.forEach((filter) => {
-    const query_value = $page.url.searchParams.get(filter.id);
-
-    if (query_value) {
-      filter.value = query_value;
+  $: formatted_filters = filters.map((filter) => {
+    if (!filter.options) {
+      console.log("Your filter does not have any options");
+      filter.options = [];
     }
 
     filter.options.forEach((option) => {
@@ -38,11 +38,33 @@
         };
       }
     });
-  });
 
-  //buttons 100
-  //actions 100
-  //search button 100
+    if (filter.reset_label && !filter.options.find((option) => option.label === filter.reset_label)) {
+      if (filter.reset_label && filter.break_after_reset === true) {
+        filter.options.unshift({ break: true });
+      }
+
+      const option = {
+        label: filter.reset_label,
+        value: null,
+        onselect: () => {
+          addQueryParam(filter.id, "", { show_loading: filter.id, keep_only: filterIds, goto: true });
+        },
+      };
+
+      filter.options.unshift(option);
+    }
+
+    const query_value = $page.url.searchParams.get(filter.id);
+
+    if (query_value) {
+      filter.value = query_value;
+    } else {
+      filter.value = null;
+    }
+
+    return filter;
+  });
 </script>
 
 {#if $pageStore?.table?.selected_table_rows && $pageStore?.table?.id && browser && $pageStore.table.id === document
@@ -59,11 +81,11 @@
       <IconButton icon="more" options={$pageStore.table.checkbox_options} color="gray-lighter" />
     {/if}
   </div>
-{:else if filters.length || title || caption || buttons.length}
+{:else if formatted_filters.length || title || caption || buttons.length}
   <div
     class="header"
     class:border={border === true || border === "true"}
-    class:filters={filters.length > 0}
+    class:filters={formatted_filters.length > 0}
     {id}
     class:justify-end={$pageStore.search === id}
     class:px
@@ -78,11 +100,11 @@
             <p>{@html caption}</p>
           {/if}
         </div>
-      {:else if filters.length > 0 && $pageStore.search !== id}
+      {:else if formatted_filters.length > 0 && $pageStore.search !== id}
         <div class="filters" class:mt={title || caption}>
           {#each filters as filter}
             <div class="filter">
-              <Select {...filter} />
+              <Select {...filter} value={$page.url.searchParams.get(filter.id)} />
             </div>
           {/each}
         </div>
@@ -97,17 +119,17 @@
       </div>
     </div>
 
-    {#if filters.length > 0 && $pageStore.search !== id && (title || caption)}
+    {#if formatted_filters.length > 0 && $pageStore.search !== id && (title || caption)}
       <div class="filters" class:mt={title || caption}>
         {#each filters as filter}
           <div class="filter">
-            <Select {...filter} />
+            <Select {...filter} value={$page.url.searchParams.get(filter.id)} />
           </div>
         {/each}
       </div>
     {/if}
 
-    <!-- {#if filters.length > 0}{:else if title || caption}
+    <!-- {#if formatted_filters.length > 0}{:else if title || caption}
       <div class="title" class:center class:searching={$pageStore.search === id}>
         {#if title}
           <h6>{title}</h6>
@@ -128,7 +150,7 @@
       </div>
     {/if}
 
-    {#if filters.length === 0}
+    {#if formatted_filters.length === 0}
       <div class="buttons">
         {#each buttons as button}
           <div class="action">
@@ -254,5 +276,9 @@
     .searching {
       display: none;
     }
+  }
+
+  :global(html.dark) .border {
+    border-bottom: 2px solid var(--dark);
   }
 </style>

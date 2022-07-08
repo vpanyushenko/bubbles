@@ -1,12 +1,15 @@
 <script>
   import Card from "$lib/components/card/Card.svelte";
   import CardHeader from "$lib/components/card/CardHeader.svelte";
+  import { Modal } from "$lib/index";
 
   import Button from "$lib/components/button/Button.svelte";
   import { showModal, hideModal } from "$lib/utils/modal";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { getFormData, validateInputs } from "$lib/utils/form";
   import { showToast } from "$lib/utils/toast";
+
+  let show_modal = false;
 
   const form = [
     {
@@ -525,4 +528,16 @@
         form: form,
       })}
   />
+
+  <Button label="User Controlled Modal" onclick={() => (show_modal = true)} />
 </Card>
+
+{#if show_modal}
+  <Modal title="Custom Modal" hideModal={() => (show_modal = false)} hide_on_overlay_click={false}>
+    <h2>You can slot whatever content you want in here</h2>
+
+    <footer slot="footer">
+      <Button label="Footer Button" />
+    </footer>
+  </Modal>
+{/if}

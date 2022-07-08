@@ -42,7 +42,7 @@
   {#if label}
     <div class="content">
       <div class="label">{label}</div>
-      {#if text}
+      {#if text || text === 0}
         {#if href}
           <a class="wrap-anywhere" {href} {target}>{text}</a>
         {:else}
