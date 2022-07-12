@@ -393,6 +393,10 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
           if (typeof input.multiply_by === "number") {
             value = input.multiply_by * value;
           }
+        } else if (type === "date") {
+          if (input.to_js_date === true) {
+            value = new Date(value);
+          }
         } else if (type === "stripe" || type === "stripe-card") {
           //We'll need to find the stripe element that was created in the dom and get the token for the user
           try {

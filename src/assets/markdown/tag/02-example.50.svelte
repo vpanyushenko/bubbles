@@ -3,6 +3,8 @@
   import CardHeader from "$lib/components/card/CardHeader.svelte";
 
   import Tag from "$lib/components/tag/Tag.svelte";
+
+  let label = "OPTIONS";
 </script>
 
 <Card>
@@ -18,6 +20,14 @@
   <Tag color="dark" margin="1rem 0 1rem 0">dark</Tag>
   <Tag color={null} margin="1rem 0 1rem 0">No Color</Tag>
   <Tag color="primary" margin="1rem 0 1rem 0" tooltip="Hello, you can do a tooltip">tooltip</Tag>
+  <Tag
+    {label}
+    margin="1rem 0 1rem 0"
+    color_options={[
+      { label: "OPTIONS", color: "dark" },
+      { label: "testing", color: "success" },
+    ]}
+  />
 </Card>
 
 <Card>

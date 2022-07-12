@@ -1,13 +1,13 @@
 <script>
-  import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/utils/stores";
   import { page } from "$app/stores";
   import { browser } from "$app/env";
-  import IconButton from "$lib/components/button/IconButton.svelte";
+  import { uuid, pageStore, IconButton } from "$lib/index";
 
   export let title = "";
   export let subtitle = "";
   export let caption = "";
+
+  let __title = title;
 
   /**
    * @prop {Boolean|Array<Object>} - false to disable. {label: String, href: String} for custom ones.
@@ -20,6 +20,10 @@
   export let buttons = [];
   export let breadcrumb_labels = [];
   // export let sticky = true;
+
+  $: if (title && title.length > 20) {
+    title = title.substring(0, 20) + "...";
+  }
 
   $: if (!subtitle) {
     subtitle = caption;
@@ -89,14 +93,21 @@
         }
 
         if (pathArray.length - 1 === index && $pageStore.title) {
-          crumb = $pageStore.title;
+          crumb = __title;
         }
 
         if (breadcrumb_labels && breadcrumb_labels.length > 0 && breadcrumb_labels[index]) {
           crumb = breadcrumb_labels[index];
         }
 
+        const title = crumb;
+
+        if (crumb.length > 20) {
+          crumb = crumb.substring(0, 20) + "...";
+        }
+
         const obj = {
+          title: title,
           label: pathArray.length - 3 >= index ? "..." : crumb,
           href: href,
         };
@@ -126,7 +137,7 @@
 <header id={header_id} style="opacity: {intersection_ratio * 3}" class:sticky={_sticky}>
   <div class="header__row">
     <div class="text">
-      <div class="header__title">
+      <div class="header__title" title={__title}>
         {#if breadcrumbs && _breadcrumbs && _breadcrumbs.length}
           <span class="back__icon">
             <IconButton icon="arrowLeft" href={back} id={icon_id} />
@@ -159,8 +170,11 @@
         {:else if !subtitle && breadcrumbs && _breadcrumbs && _breadcrumbs.length}
           <p class="breadcrumbs">
             {#each _breadcrumbs as breadcrumb, index}
-              <a sveltekit:prefetch href={breadcrumb.href} on:click={() => ($pageStore.clicked = icon_id)}
-                >{breadcrumb.label}</a
+              <a
+                sveltekit:prefetch
+                href={breadcrumb.href}
+                on:click={() => ($pageStore.clicked = icon_id)}
+                title={breadcrumb.title}>{breadcrumb.label}</a
               >
               {#if index !== _breadcrumbs.length - 1}
                 <span> / </span>

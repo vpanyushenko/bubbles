@@ -75,6 +75,7 @@
       desc: null,
       error: "Add your Date of Birth",
       validation: "required|date", //date validator is built in
+      to_js_date: true,
     },
     {
       type: "textarea", //the textarea / text field input

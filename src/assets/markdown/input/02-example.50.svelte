@@ -39,6 +39,18 @@
       validation="required|date"
       desc="This is a date field"
       margin={true}
+      show_calendar={true}
+    />
+
+    <Input
+      id="start_end"
+      type="date-range"
+      label="Start / End Date"
+      error="This is not a valid date"
+      validation="required|date"
+      desc="This is a date field"
+      margin={true}
+      show_calendar={true}
     />
 
     <Input

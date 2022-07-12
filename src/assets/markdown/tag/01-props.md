@@ -22,6 +22,11 @@ Pass a color variable
 
 ---
 
+**color_options** `Array<{label: String, color: String}>` <code class="blue">[]</code><br>
+Often you may want to change the color of your tag depending on the label. Instead of passing in a color, you can pass in an array of options. If there is no match, it will default to the color property.
+
+---
+
 **small** `boolean` <code class="blue">false</code><br>
 A boolean to make the tag small. By default this is false but is helpful if you are using it inline with text like in a Table.
 

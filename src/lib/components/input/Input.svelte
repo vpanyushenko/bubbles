@@ -5,6 +5,7 @@
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
   import { showToast } from "$lib/utils/toast";
   import { onMount } from "svelte";
+  import DatePicker from "$lib/components/calendar/DatePicker.svelte";
 
   export let id;
   export let label;
@@ -23,6 +24,9 @@
   export let debounce = 350;
   export let disabled = false;
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
+  export let multply_by;
+  export let to_js_date = false;
+  export let show_calendar = false;
 
   if (Array.isArray(extensions)) {
     extensions = extensions.join(",");
@@ -33,6 +37,8 @@
   let selectedIndex = 0;
   let has_file = value ? true : false;
   let invalid_src, image_hover; //only used for files
+  let show_datepicker = false;
+  // let DatePicker;
 
   const PREVIEW_TYPES = [
     "image/png",
@@ -75,11 +81,30 @@
     }
   });
 
-  function dateFieldFocused(event) {
+  async function dateFieldFocused(event) {
+    console.log(DatePicker);
+    if (show_calendar) {
+      // if (!DatePicker) {
+      //   console.log("importing datepicker");
+      //   DatePicker = await import("$lib/components/calendar/DatePicker.svelte");
+      // }
+      show_datepicker = true;
+      console.log("show calendar");
+      console.log("show calendar");
+      console.log("show calendar");
+      console.log("show calendar");
+      console.log("show calendar");
+      console.log("show calendar");
+    }
     event.currentTarget.type = "date";
   }
 
   function dateFieldBlurred(event) {
+    // show_datepicker = false;
+    console.log(event.currentTarget);
+    console.log(event.currentTarget.type);
+    console.log(event.currentTarget.value);
+
     if (!event.currentTarget.value) {
       event.currentTarget.type = "text";
     }
@@ -335,11 +360,65 @@
           on:blur={dateFieldBlurred}
           {disabled}
         />
+        {#if show_datepicker}
+          <svelte:component this={DatePicker} />
+        {/if}
       </div>
       {#if desc}
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
+  </div>
+{:else if type === "date-range"}
+  <div class="form__field__container date__range" {id} class:mb-2={margin}>
+    <div class="fields">
+      <div class="field" class:active={focused || value}>
+        <div class="field__label">
+          <span class:hidden={is_error}>Start</span>
+          <span class="error hidden" class:hidden={!is_error}>{error}</span>
+        </div>
+        <div class="field__wrap">
+          <input
+            class="field__input"
+            class:error={is_error}
+            autocomplete={autocomplete ? "on" : "nope"}
+            type="text"
+            bind:value
+            on:focus={inputFocused}
+            on:focus={dateFieldFocused}
+            on:blur={inputBlurred}
+            on:blur={dateFieldBlurred}
+            {disabled}
+          />
+        </div>
+      </div>
+      <div class="field" class:active={focused || value}>
+        <div class="field__label">
+          <span class:hidden={is_error}>End</span>
+          <span class="error hidden" class:hidden={!is_error}>{error}</span>
+        </div>
+        <div class="field__wrap">
+          <input
+            class="field__input"
+            class:error={is_error}
+            autocomplete={autocomplete ? "on" : "nope"}
+            type="text"
+            bind:value
+            on:focus={inputFocused}
+            on:focus={dateFieldFocused}
+            on:blur={inputBlurred}
+            on:blur={dateFieldBlurred}
+            {disabled}
+          />
+        </div>
+      </div>
+    </div>
+    {#if show_datepicker}
+      <svelte:component this={DatePicker} />
+    {/if}
+    {#if desc}
+      <p class="field__desc">{@html desc}</p>
+    {/if}
   </div>
 {:else if type === "number"}
   <div class="form__field__container" {id} class:mb-2={margin}>
@@ -506,9 +585,16 @@
     -webkit-appearance: none;
     margin: 0;
   }
+
   :global(input[type="time"]::-webkit-calendar-picker-indicator) {
     background: none;
     display: none;
+  }
+
+  :global(input[type="date"])::-webkit-inner-spin-button,
+  :global(input[type="date"])::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
   }
 
   input[type="number"] {
@@ -523,6 +609,21 @@
 
   .form__field__container {
     width: 100%;
+  }
+
+  .form__field__container.date__range .fields {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .date__range .fields .field {
+    width: 50%;
+  }
+  .date__range .fields .field:first-child {
+    margin-right: 1rem;
+  }
+  .date__range .fields .field:last-child {
+    margin-left: 1rem;
   }
   .mb-2 {
     margin-bottom: 2rem;

@@ -154,5 +154,10 @@ The value of a numeric input will be multiplied by this number when calling the 
 
 ---
 
+**to_js_date** `boolean` <code class="red">date</code><br>
+If set to true, it will convert the date string into a JS Date object
+
+---
+
 **stripe_key_name** `string` <code class="red">stripe-input</code><br>
 To initialize Stripe, you'll need to pass in your stripe public_key. This variable is safe to expose to front end code. Save it in your .env file, and pass in the name of the key. The default key Bubbles will check for is "VITE_STRIPE_PUBLIC_KEY". Remember, only keys prefixed with `VITE-` are exposed to the front end by default, unless you have made a change to this.
