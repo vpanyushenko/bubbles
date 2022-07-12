@@ -191,6 +191,11 @@
             option.onselect(event);
           }
 
+          dispatch("select", {
+            value: value,
+            index: selected_index,
+          });
+
           is_list_open = false;
 
           break;

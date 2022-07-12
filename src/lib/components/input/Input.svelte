@@ -27,6 +27,7 @@
   export let multply_by;
   export let to_js_date = false;
   export let show_calendar = false;
+  export let onselect = null;
 
   if (Array.isArray(extensions)) {
     extensions = extensions.join(",");
@@ -34,10 +35,9 @@
 
   let _label = configLabel(label, validation);
   let focused = false;
-  let selectedIndex = 0;
   let has_file = value ? true : false;
   let invalid_src, image_hover; //only used for files
-  let show_datepicker = false;
+  // let show_datepicker = false;
   // let DatePicker;
 
   const PREVIEW_TYPES = [
@@ -250,7 +250,16 @@
         {/if}
 
         {#if typeahead_options && typeahead_options.length > 0}
-          <Dropdown bind:options={typeahead_options} search={false} bind:value />
+          <Dropdown
+            bind:options={typeahead_options}
+            search={false}
+            bind:value
+            on:select={(event) => {
+              if (onselect) {
+                onselect(event?.detail?.value);
+              }
+            }}
+          />
         {/if}
       </div>
       {#if desc}
@@ -350,9 +359,6 @@
           on:blur={dateFieldBlurred}
           {disabled}
         />
-        {#if show_datepicker}
-          <svelte:component this={DatePicker} />
-        {/if}
       </div>
       {#if desc}
         <p class="field__desc">{@html desc}</p>
@@ -436,7 +442,16 @@
         {/if}
 
         {#if typeahead_options && typeahead_options.length > 0}
-          <Dropdown bind:options={typeahead_options} search={false} bind:value />
+          <Dropdown
+            bind:options={typeahead_options}
+            search={false}
+            bind:value
+            on:select={(event) => {
+              if (onselect) {
+                onselect(event?.detail?.value);
+              }
+            }}
+          />
         {/if}
       </div>
       {#if desc}
