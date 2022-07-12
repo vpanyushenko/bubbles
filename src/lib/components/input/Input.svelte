@@ -5,7 +5,7 @@
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
   import { showToast } from "$lib/utils/toast";
   import { onMount } from "svelte";
-  import DatePicker from "$lib/components/calendar/DatePicker.svelte";
+  // import DatePicker from "$lib/components/calendar/DatePicker.svelte";
 
   export let id;
   export let label;
@@ -82,28 +82,18 @@
   });
 
   async function dateFieldFocused(event) {
-    console.log(DatePicker);
     if (show_calendar) {
       // if (!DatePicker) {
       //   console.log("importing datepicker");
       //   DatePicker = await import("$lib/components/calendar/DatePicker.svelte");
       // }
       show_datepicker = true;
-      console.log("show calendar");
-      console.log("show calendar");
-      console.log("show calendar");
-      console.log("show calendar");
-      console.log("show calendar");
-      console.log("show calendar");
     }
     event.currentTarget.type = "date";
   }
 
   function dateFieldBlurred(event) {
-    // show_datepicker = false;
-    console.log(event.currentTarget);
-    console.log(event.currentTarget.type);
-    console.log(event.currentTarget.value);
+    show_datepicker = false;
 
     if (!event.currentTarget.value) {
       event.currentTarget.type = "text";
@@ -368,57 +358,6 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "date-range"}
-  <div class="form__field__container date__range" {id} class:mb-2={margin}>
-    <div class="fields">
-      <div class="field" class:active={focused || value}>
-        <div class="field__label">
-          <span class:hidden={is_error}>Start</span>
-          <span class="error hidden" class:hidden={!is_error}>{error}</span>
-        </div>
-        <div class="field__wrap">
-          <input
-            class="field__input"
-            class:error={is_error}
-            autocomplete={autocomplete ? "on" : "nope"}
-            type="text"
-            bind:value
-            on:focus={inputFocused}
-            on:focus={dateFieldFocused}
-            on:blur={inputBlurred}
-            on:blur={dateFieldBlurred}
-            {disabled}
-          />
-        </div>
-      </div>
-      <div class="field" class:active={focused || value}>
-        <div class="field__label">
-          <span class:hidden={is_error}>End</span>
-          <span class="error hidden" class:hidden={!is_error}>{error}</span>
-        </div>
-        <div class="field__wrap">
-          <input
-            class="field__input"
-            class:error={is_error}
-            autocomplete={autocomplete ? "on" : "nope"}
-            type="text"
-            bind:value
-            on:focus={inputFocused}
-            on:focus={dateFieldFocused}
-            on:blur={inputBlurred}
-            on:blur={dateFieldBlurred}
-            {disabled}
-          />
-        </div>
-      </div>
-    </div>
-    {#if show_datepicker}
-      <svelte:component this={DatePicker} />
-    {/if}
-    {#if desc}
-      <p class="field__desc">{@html desc}</p>
-    {/if}
   </div>
 {:else if type === "number"}
   <div class="form__field__container" {id} class:mb-2={margin}>
