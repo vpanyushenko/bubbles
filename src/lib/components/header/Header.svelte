@@ -1,6 +1,6 @@
 <script>
   import { page } from "$app/stores";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { uuid, pageStore, IconButton } from "$lib/index";
 
   export let title = "";
@@ -171,7 +171,7 @@
           <p class="breadcrumbs">
             {#each _breadcrumbs as breadcrumb, index}
               <a
-                sveltekit:prefetch
+                data-sveltekit-prefetch
                 href={breadcrumb.href}
                 on:click={() => ($pageStore.clicked = icon_id)}
                 title={breadcrumb.title}>{breadcrumb.label}</a

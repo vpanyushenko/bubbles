@@ -1,5 +1,5 @@
 <script>
-  import { dev } from "$app/env";
+  import { dev } from "$app/environment";
   import { scale, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import { v4 as uuid } from "@lukeed/uuid";

@@ -6,7 +6,7 @@
 
   import { onMount } from "svelte";
   import { navigating, page } from "$app/stores";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
 
   import arrowLeft from "./arrow-left.svg";
   import arrowLeftDouble from "./arrow-left-double.svg";
@@ -216,7 +216,7 @@
 {#if href}
   <a
     class="icon__btn js-bubbles-icon-button"
-    sveltekit:prefetch
+    data-sveltekit-prefetch
     target={new_page ? "_blank" : ""}
     {href}
     on:click={iconClick}

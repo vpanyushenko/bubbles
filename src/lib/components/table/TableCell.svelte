@@ -164,7 +164,7 @@
             data-tooltip={tooltip}
             class:h6={large}
             class:bold
-            sveltekit:prefetch
+            data-sveltekit-prefetch
             {href}
             on:click={hrefClicked}
             class:code
@@ -218,7 +218,7 @@
             {#if nested_cell.text}
               {#if nested_cell.href}
                 <a
-                  sveltekit:prefetch
+                  data-sveltekit-prefetch
                   href={nested_cell.href}
                   on:click={hrefClicked}
                   class:nowrap={wrap === false}
@@ -250,7 +250,7 @@
 {#if _type === "image"}
   <div class="cell image" class:mobile__hidden={mobile_hidden} class:hidden {style} bind:this={_dom_element}>
     {#if href}
-      <a sveltekit:prefetch {href}>
+      <a data-sveltekit-prefetch {href}>
         <picture>
           <img src={img.src} alt={img.alt} />
         </picture>

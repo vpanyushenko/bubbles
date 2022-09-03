@@ -1,5 +1,5 @@
 <script>
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { v4 as uuid } from "@lukeed/uuid";
   import { fly, fade } from "svelte/transition";
   import IconButton from "$lib/components/button/IconButton.svelte";

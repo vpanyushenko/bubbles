@@ -6,9 +6,9 @@ import path from "path";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  extensions: [".svelte", ".md", ".svelte.md", ".svx"],
+  extensions: [".svelte", ".md"],
   preprocess: [
-    mdsvex({ extensions: [".svelte.md", ".md", ".svx"], smartypants: false }),
+    mdsvex({ extensions: [".md"], smartypants: false }),
     preprocess({
       lang: "css",
       postcss: {
@@ -16,6 +16,7 @@ const config = {
       },
     }),
   ],
+  package: {},
   kit: {
     alias: {
       $assets: "./src/assets",

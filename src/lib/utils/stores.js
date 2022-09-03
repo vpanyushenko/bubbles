@@ -1,5 +1,5 @@
 import { writable, derived } from "svelte/store";
-import { browser } from "$app/env";
+import { browser } from "$app/environment";
 
 const configStore = writable({
   validate_on_blur: true,

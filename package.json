@@ -6,15 +6,16 @@
     "dev": "vite dev --port 3001",
     "build": "vite build",
     "preview": "vite preview",
-    "package": "svelte-kit package",
+    "package": "svelte-package",
     "publish": "npm install && npm run package && npm publish ./package --tag next",
     "publish:prod": "npm install && svelte-kit package && npm publish ./package --tag latest"
   },
   "devDependencies": {
-    "@sveltejs/adapter-vercel": "^1.0.0-next.58",
+    "@sveltejs/adapter-vercel": "^1.0.0-next.72",
+    "@sveltejs/kit": "^1.0.0-next.464",
+    "@sveltejs/package": "^1.0.0-next.3",
     "@sveltejs/svelte-scroller": "^2.0.7",
-    "autoprefixer": "^10.4.0",
-    "mdsvex": "^0.9.8",
+    "mdsvex": "^0.10.6",
     "prettier": "^2.6.1",
     "prettier-plugin-svelte": "^2.6.0",
     "rollup-plugin-inline-svg": "^2.0.0",
@@ -41,6 +42,6 @@
     "@fontsource/poppins": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
     "@stripe/stripe-js": "^1.22.0",
-    "@sveltejs/kit": "^1.0.0-next.430"
+    "autoprefixer": "^10.4.8"
   }
 }

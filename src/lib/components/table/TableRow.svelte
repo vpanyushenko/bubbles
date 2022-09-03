@@ -15,7 +15,7 @@
     class="row js-bubbles-table-row"
     class:nowrap={wrap === false}
     class:mobile__nowrap={mobile_wrap == false}
-    sveltekit:prefetch
+    data-sveltekit-prefetch
     {href}
     {id}
     on:click={onclick}

@@ -83,7 +83,7 @@
             <a
               class="segment"
               href={segment.href}
-              sveltekit:prefetch
+              data-sveltekit-prefetch
               class:active={i === selected}
               on:click={() => (selected = i)}
               bind:this={items[i]}

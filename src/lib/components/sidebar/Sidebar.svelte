@@ -1,7 +1,7 @@
 <script>
   import { pageStore, configStore, Spinner, uuid } from "$lib/index";
   import { navigating, page } from "$app/stores";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { onMount } from "svelte";
 
   // import { hexToRgb, getColorFilter } from "$lib/utils/colors";
@@ -208,7 +208,7 @@
                 <a
                   class="sidebar__item cursor-pointer"
                   class:active={obj.active}
-                  sveltekit:prefetch
+                  data-sveltekit-prefetch
                   href={obj.href}
                   on:click={() => {
                     sidebarItemSelected(obj);

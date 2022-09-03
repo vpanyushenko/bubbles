@@ -2,7 +2,7 @@
   import { v4 as uuid } from "@lukeed/uuid";
   import { fade } from "svelte/transition";
   import { onDestroy, onMount } from "svelte";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { gradient } from "$lib/utils/colors";
 
   /**

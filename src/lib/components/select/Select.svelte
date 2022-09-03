@@ -5,7 +5,7 @@
   import { configLabel } from "$lib/utils/config";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
   import { page } from "$app/stores";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
 
   const _uuid = uuid();
 

@@ -1,8 +1,6 @@
-import { browser } from "$app/env";
-// import { session } from "$app/stores";
-//import { showLoading, hideLoading } from "$lib/utils/loading";
+import { browser } from "$app/environment";
 import { showLoading, hideLoading } from "../utils/loading";
-import { invalidate } from "$app/navigation";
+import { invalidateAll } from "$app/navigation";
 
 /**
  * Adds a url query param based on a key value pair
@@ -53,7 +51,7 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
       }
 
       if (goto) {
-        invalidate();
+        invalidateAll();
       }
     }
   }
@@ -108,7 +106,7 @@ const deleteQueryParam = (param) => {
     }
 
     if (deleted) {
-      invalidate();
+      invalidateAll();
     }
   }
 };

@@ -7,7 +7,7 @@
   // import { addQueryParam } from "$lib/utils/url";
   // import { v4 as uuid } from "@lukeed/uuid";
   import { page } from "$app/stores";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
 
   export let filters = [];
   export let title = "";

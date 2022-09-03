@@ -1,4 +1,4 @@
-import { browser } from "$app/env";
+import { browser } from "$app/environment";
 //import { pageStore } from "$lib/utils/stores";
 import { pageStore } from "../utils/stores";
 

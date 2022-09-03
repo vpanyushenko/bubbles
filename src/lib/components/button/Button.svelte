@@ -121,7 +121,7 @@
   <a
     class:wide
     {href}
-    sveltekit:prefetch
+    data-sveltekit-prefetch
     target={new_page ? "_blank" : ""}
     on:click={() => {
       if (disabled) return;

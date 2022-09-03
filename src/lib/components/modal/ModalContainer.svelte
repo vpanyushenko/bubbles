@@ -1,5 +1,5 @@
 <script>
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { v4 as uuid } from "@lukeed/uuid";
   import { fly, fade } from "svelte/transition";
   import { modalStore } from "$lib/utils/stores";
