@@ -2,6 +2,8 @@
   import CardHeader from "./CardHeader.svelte";
   import CardFooter from "./CardFooter.svelte";
   import { configStore } from "$lib/index";
+  import { scale, fade } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
 
   // import { scale, fade, fly } from "svelte/transition";
   // import { quintOut } from "svelte/easing";
@@ -17,6 +19,7 @@
   export let center = false;
   export let radius = $configStore.radius || "rounded";
   export let hide_overflow = false;
+  export let animate = false;
 
   let style = "";
 
@@ -48,6 +51,18 @@
   class:height-100={height100}
   {style}
   class:blocky={radius === "blocky"}
+  in:scale|local={{
+    duration: animate ? 750 : 0,
+    opacity: 0,
+    start: 0.5,
+    easing: quintOut,
+  }}
+  out:scale|local={{
+    duration: animate ? 750 : 0,
+    opacity: 0,
+    start: 0,
+    easing: quintOut,
+  }}
 >
   {#if header && Object.keys(header).length}
     <CardHeader {...header} />

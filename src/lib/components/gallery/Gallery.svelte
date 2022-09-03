@@ -70,7 +70,6 @@
     let fr_rows = [];
 
     const split = grid ? grid.toLowerCase().split("x") : ["1", "1"];
-    console.log(split, "split");
 
     if (split.length == 2) {
       columns = split[0];

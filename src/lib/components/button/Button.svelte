@@ -5,32 +5,77 @@
   import Spinner from "$lib/components/spinner/Spinner.svelte";
   import IconButton from "./IconButton.svelte";
 
+  /** @prop {?String} id */
   export let id = uuid();
+
+  /**@prop {?String} label - This is the text that will be shown on the button */
   export let label = null;
+
+  /**@prop {?Function} onclick - The function to run when this button is clicked */
   export let onclick = null;
+
+  /**@prop {?Function} onsubmit - This is the same as on click but should be used in a form so that the use can press enter to submit the details. */
   export let onsubmit = null;
+
+  /**@prop {String} color - The CSS color variable */
   export let color = "__default";
+
+  /**@prop {Boolean} [mt=false] - If you want to add margin to the top of this button */
   export let mt = false;
+
+  /**@prop {Boolean} [mb=false] - If you want to add margin to the bottom of this button */
   export let mb = false;
+
+  /**@prop {Boolean} [wide=true] - If you want the button to take the full width of the container */
   export let wide = true;
+
+  /**@prop {Boolean} [new_page=false] - If you want this button to open a new page. You should only use this if you're also using the href value. */
   export let new_page = false;
+
+  /**@prop {?String} [href=null] - If you want this button to link to another web page. You should use href instead of onclick because you'll get link prefetching which will make the UX faster. */
   export let href;
+
+  //TODO: Types. Maybe we should update this to style props
   export let style;
+
+  /**@prop {?Boolean} [disabled=false] - if this button should be disabled */
   export let disabled = false;
+
+  /**@prop {?"arrowLeft"|"arrowLeftDouble"|"arrowRight"|"arrowRightDouble"|"more"|"add"|"close"|"search"|"edit"|"trash"|"filter"|String} [icon=null] - The icon to add to this button. */
   export let icon = null;
+
+  /**@prop {?Boolean} [dark_mode_invert=$configStore?.dark_mode_invert] - If the button colors should be inverted if the theme changes to dark mode */
   export let dark_mode_invert = $configStore?.dark_mode_invert;
 
   //IconButton exclusive
+  //TODO: Do we need this? Should the button be aligned or the container it's in. Are we using a naked button
   export let align = "right";
+
+  //TODO: I think we don't have this property anymore
   export let border = null;
+
+  //TODO: I think this happens automatically now.
   export let invert_icon = false;
+
+  /**@prop {?Boolean} [shadow=false] - Applies to buttons without labels only! If the icon button should have a shadow */
   export let shadow = false;
+
+  /**@prop {?Function} [typeahead=null] - Applies to buttons without labels only! A function that will take in the value of a search input and give users options to choose from. This  can only be used if `search` is set to true. */
   export let typeahead = null;
+
+  /**@prop {?Number} [debounce=350] - Applies to buttons without labels only! Duration in milliseconds. If using typeahead, this will allow you to only trigger the function after a certain amount if time. */
   export let debounce = 350;
+
+  /**@prop {Boolean} [search=false] - Applies to buttons without labels only! If this button will transform into a search input when clicked. */
   export let search = false;
+
   export let __search_id = null;
   export let __search_width_100 = false;
-  export let radius = "blocky"; //or blocky
+
+  /**@prop {"blocky"|"rounded"} [radius="blocky"] - Applies to buttons without labels only! If the radius of the button will be blocky or rounded. This will only apply to a button without a label. */
+  export let radius = "blocky"; //or rounded
+
+  /**@prop {Boolean} [larger=true] - Applies to buttons without labels only! Will ensure that the button without a label has the same height as the button with a label */
   export let larger = true;
 
   let component = "IconButton";
@@ -79,10 +124,17 @@
     sveltekit:prefetch
     target={new_page ? "_blank" : ""}
     on:click={() => {
+      if (disabled) return;
       $pageStore.clicked = id;
     }}
-    on:click={onclick}
-    on:click={onsubmit}
+    on:click={(event) => {
+      if (disabled) return;
+      if (typeof onclick === "function") onclick(event);
+    }}
+    on:click={(event) => {
+      if (disabled) return;
+      if (typeof onsubmit === "function") onsubmit(event);
+    }}
   >
     <button
       {id}
@@ -159,10 +211,17 @@
 {:else}
   <button
     on:click={() => {
+      if (disabled) return;
       $pageStore.clicked = id;
     }}
-    on:click={onclick}
-    on:click={onsubmit}
+    on:click={(event) => {
+      if (disabled) return;
+      if (typeof onclick === "function") onclick(event);
+    }}
+    on:click={(event) => {
+      if (disabled) return;
+      if (typeof onsubmit === "function") onsubmit(event);
+    }}
     {id}
     class:mb
     class:mt

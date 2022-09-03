@@ -406,6 +406,19 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
           }
         }
 
+        if (input.split) {
+          if (typeof value === "text") {
+            value = value
+              .split(input.split)
+              .filter(Boolean)
+              .map((a) => a.trim());
+          }
+
+          if (typeof value === "number") {
+            value = [value];
+          }
+        }
+
         if (id) {
           let array = id.split(".").filter(Boolean);
           let obj = array.reduceRight((obj, elem) => ({ [elem]: obj }), value);
@@ -498,7 +511,7 @@ const validateInputs = (inputs) => {
           // Some inputs may be dependent on others. If any dependant inputs were removed from the dom,
           // we should not validate them
           if (input.is_hidden) {
-            console.log("hidden", input.id);
+            // console.log("hidden", input.id);
             return resolve();
           }
 

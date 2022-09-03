@@ -141,7 +141,7 @@
 <svelte:body on:keydown={keydown} />
 
 <div
-  class="form__field__container select"
+  class="form__field__container select js-bubbles-field-container js-bubbles-select"
   class:is_list_open
   class:min__width={min_width}
   {id}

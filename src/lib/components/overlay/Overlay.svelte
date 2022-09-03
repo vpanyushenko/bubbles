@@ -31,7 +31,7 @@
   export let img = null;
 
   /**
-   * @type {"solid"|"gradient"|"null"} [background=null] - Sets up the background
+   * @type {?"solid"|"gradient"} [background=null] - Sets up the background
    */
   export let background = null;
 

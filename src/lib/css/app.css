@@ -515,11 +515,9 @@ a:active {
   color: var(--info);
 }
 
+html.dark a,
 html.dark a:active,
 html.dark a:link {
-  color: var(--info);
-}
-html.dark a:hover {
   color: var(--info-lighter);
 }
 html.dark a:hover {

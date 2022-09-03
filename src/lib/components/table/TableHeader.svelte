@@ -13,6 +13,7 @@
    * @prop {Array<Cell>} cells - the details for the header cells.
    */
   export let cells = [];
+  export let hidden = false;
 
   if (!$pageStore.table) {
     $pageStore.table = {};
@@ -56,7 +57,7 @@
   }
 </script>
 
-<div class="row header" bind:this={header}>
+<div class="row header" bind:this={header} class:hidden>
   {#each cells as cell}
     <div
       class="cell"

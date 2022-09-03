@@ -1,7 +1,8 @@
 import { browser } from "$app/env";
-import { session } from "$app/stores";
+// import { session } from "$app/stores";
 //import { showLoading, hideLoading } from "$lib/utils/loading";
 import { showLoading, hideLoading } from "../utils/loading";
+import { invalidate } from "$app/navigation";
 
 /**
  * Adds a url query param based on a key value pair
@@ -52,10 +53,7 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
       }
 
       if (goto) {
-        session.update((obj) => {
-          obj.timestamp = Date.now();
-          return obj;
-        });
+        invalidate();
       }
     }
   }
@@ -97,14 +95,20 @@ const deleteQueryParam = (param) => {
     const all_query_params = Object.fromEntries(queryParams.entries());
 
     const param_keys = Object.keys(all_query_params);
+    let deleted = false;
 
     if (param_keys) {
       param_keys.forEach((key) => {
-        if (key === "search") {
+        if (key === param) {
+          deleted = true;
           queryParams.delete(key);
           history.replaceState(null, null, "?" + queryParams.toString());
         }
       });
+    }
+
+    if (deleted) {
+      invalidate();
     }
   }
 };

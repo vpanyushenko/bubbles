@@ -15,11 +15,12 @@
       value: null,
       desc: "You'll be able to change this name later",
       error: "A name is required",
-      validation: "string|required|min:3",
       validate_on_blur: true,
       vob: true,
+      width: 50,
     },
     {
+      width: 50,
       type: "text",
       id: "confirmation",
       label: "Confirmation",
@@ -39,6 +40,24 @@
       error: "You must be at least 13 years old",
       validation: "numeric|required|min:13",
       bounds: [0, 120], //Set the min and max values for this input. If you only want the min or max, you can do something like: [0, null]
+    },
+    {
+      type: "number", //Will ensure that getFormData will return this as a number
+      id: "length",
+      label: "length",
+      width: 33,
+    },
+    {
+      type: "number", //Will ensure that getFormData will return this as a number
+      id: "width",
+      label: "width",
+      width: 33,
+    },
+    {
+      type: "number", //Will ensure that getFormData will return this as a number
+      id: "height",
+      label: "height",
+      width: 33,
     },
     {
       type: "switch",
@@ -111,6 +130,11 @@
           value: "user",
         },
       ],
+    },
+    {
+      type: "divider",
+      label: "Details, Details, Details, Details, Details, Details, Details",
+      image: "https://picsum.photos/200/300",
     },
     {
       type: "select-number", //This is a special type of select in case you need to select only from number elements. Use this if all values in a select need to be numbers (Floats or integers)
@@ -223,19 +247,6 @@
       validation: "required",
       extensions: null,
       value: "https://bubbles-pied.vercel.app/logo.svg",
-    },
-    {
-      type: "button-group",
-      buttons: [
-        {
-          type: "button",
-          icon: "arrowLeft",
-        },
-        {
-          type: "button",
-          label: "Label",
-        },
-      ],
     },
     {
       type: "submit", //The form must have a submit button

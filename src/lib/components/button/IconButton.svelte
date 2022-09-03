@@ -5,7 +5,7 @@
   import { addQueryParam, deleteQueryParam } from "$lib/utils/url";
 
   import { onMount } from "svelte";
-  import { navigating, page, session } from "$app/stores";
+  import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
 
   import arrowLeft from "./arrow-left.svg";
@@ -37,7 +37,7 @@
   };
 
   export let id = uuid();
-  export let icon = more;
+  export let icon = "more";
   export let onclick = null;
   export let options = [];
   export let href = "";
@@ -63,21 +63,27 @@
   let search_active = false;
   let search_input, search_value, search_focused;
 
-  $: src = icons[icon] ? icons[icon] : icon; //TODO: See if this works
+  $: src = icons[icon] || icon || icons.more;
   $: $pageStore.search = search_active === true ? __search_id : null;
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
+  $: navigating_to_new_page = $navigating?.from?.href === $navigating?.to?.href ? false : true;
+
   $: typeahead_options = [];
 
-  //Stop the loading animation
+  //Stop the loading animation fo search
   $: if ($pageStore.loading.includes(id) && browser) {
-    if (window.location.href === $page.url.href) {
+    if (search && window.location.href === $page.url.href) {
       $pageStore.loading = [...$pageStore.loading.filter((id) => id !== id)];
     }
   }
 
   onMount(() => {
     if (search) {
+      if ($page.url.searchParams.get("search")) {
+        search_active = true;
+      }
+
       const value = $page.url.searchParams.get("search");
 
       if (value) {
@@ -138,9 +144,17 @@
     //if you click outside of the select, we want to close it
     if (!event.target.closest(".icon__btn")) {
       active = false;
-      search_active = false;
       typeahead_options = [];
       $pageStore.dropdown = null;
+
+      if (!search_value && search) {
+        search_active = false;
+        if ($page.url.searchParams.get("search")) {
+          $page.url.searchParams.get("search");
+          deleteQueryParam("search");
+          showLoading(id);
+        }
+      }
     }
   }
 
@@ -150,10 +164,8 @@
     if (event.currentTarget.value) {
       addQueryParam("search", event.currentTarget.value);
       showLoading(id);
-      $session.timestamp = Date.now();
     } else {
       deleteQueryParam("search");
-      $session.timestamp = Date.now();
     }
   }
 
@@ -202,7 +214,13 @@
 <svelte:window on:click={windowClick} />
 
 {#if href}
-  <a class="icon__btn" sveltekit:prefetch target={new_page ? "_blank" : ""} {href} on:click={iconClick}>
+  <a
+    class="icon__btn js-bubbles-icon-button"
+    sveltekit:prefetch
+    target={new_page ? "_blank" : ""}
+    {href}
+    on:click={iconClick}
+  >
     <button
       disabled={is_loading}
       class:disabled={is_loading}
@@ -283,7 +301,7 @@
     </button>
   </a>
 {:else}
-  <div class="icon__btn" class:active={dropdown && active}>
+  <div class="icon__btn js-bubbles-icon-button" class:active={dropdown && active}>
     <button
       on:click={iconClick}
       on:click={onclick}
@@ -395,7 +413,6 @@
                   } else {
                     search_active = false;
                     deleteQueryParam("search");
-                    $session.timestamp = Date.now();
                     typeahead_options = [];
                   }
                 }}

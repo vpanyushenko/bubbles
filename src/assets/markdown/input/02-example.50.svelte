@@ -9,6 +9,19 @@
 <Card height100={true}>
   <CardHeader title="Examples" border={false} />
   <div>
+    <!-- <Input
+      id="tags"
+      type="tags"
+      label="States"
+      error="Please add your name"
+      validation="string|required|min:3"
+      vob={true}
+      desc="This is a text input that has validation that checks for a string with a minimum length of 3"
+      margin={true}
+      typeahead_options={["testing", "long test"]}
+      value={["testing"]}
+    /> -->
+
     <Input
       id="name"
       type="text"
@@ -50,7 +63,7 @@
       validation="required|number|min:13|max:150"
       desc="Type a number between 13 and 150"
       margin={true}
-      bounds="{[13, 150]},"
+      bounds={[13, 150]}
     />
 
     <Input

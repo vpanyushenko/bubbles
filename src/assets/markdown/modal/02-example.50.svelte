@@ -507,8 +507,11 @@
             vob: "true",
             validation: "required|string",
           },
+        ],
+
+        footer: [
           {
-            type: "button",
+            type: "submit",
             label: "Submit",
             onsubmit: () => {
               hideModal();

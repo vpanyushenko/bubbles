@@ -1,4 +1,5 @@
 import { writable, derived } from "svelte/store";
+import { browser } from "$app/env";
 
 const configStore = writable({
   validate_on_blur: true,
@@ -35,6 +36,7 @@ const pageStore = writable({
     id: null,
   },
   search: null,
+  dark_mode: browser && localStorage.getItem("bubbles-color-scheme") === "dark" ? true : false,
 });
 
 const noscrollStore = derived([modalStore, pageStore], ([$modalStore, $pageStore]) => {

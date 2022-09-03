@@ -5,6 +5,7 @@
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Checkbox from "$lib/components/checkbox/Checkbox.svelte";
   import Spinner from "$lib/components/spinner/Spinner.svelte";
+  import Switch from "$lib/components/switch/Switch.svelte";
   import { onMount } from "svelte";
   import { showLoading } from "$lib/utils/loading";
 
@@ -16,6 +17,7 @@
   export let bold = false;
   export let empty = false;
   export let code = false;
+  export let tooltip = null;
 
   if (empty) {
     text = " ";
@@ -45,6 +47,7 @@
   export let tag = null;
   export let button = null;
   export let checkbox = null;
+  export let sw = null;
 
   let _table_row_icon_button_id = false;
   let _dom_element;
@@ -63,6 +66,8 @@
     _type = "button";
   } else if (checkbox) {
     _type = "checkbox";
+  } else if (sw) {
+    _type = "switch";
   }
 
   let mobile_hidden = false;
@@ -156,6 +161,7 @@
             <Spinner style="margin: 0 0.5rem 0 0" />
           {/if}
           <a
+            data-tooltip={tooltip}
             class:h6={large}
             class:bold
             sveltekit:prefetch
@@ -168,6 +174,7 @@
         </span>
       {:else}
         <p
+          data-tooltip={tooltip}
           class:h6={large}
           class:bold
           class:nowrap={wrap === false}
@@ -280,6 +287,18 @@
   </div>
 {/if}
 
+{#if _type === "switch"}
+  <div
+    class="cell"
+    class:mobile__hidden={mobile_hidden}
+    class:hidden
+    {style}
+    class:right={align === "right" || align === "end"}
+  >
+    <Switch {...sw} />
+  </div>
+{/if}
+
 {#if _type === "checkbox"}
   <div class="cell no-width" class:mobile__hidden={mobile_hidden} class:hidden {style} bind:this={_checkbox_cell}>
     <div class="flex">
@@ -303,6 +322,73 @@
 {/if}
 
 <style>
+  @media only screen and (min-width: 767px) {
+    [data-tooltip] {
+      position: relative;
+      z-index: 10;
+    }
+
+    [data-tooltip]:before,
+    [data-tooltip]:after {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s ease-out;
+      transform: translate(-50%, 5px);
+      display: table;
+    }
+
+    [data-tooltip]:before {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      margin-bottom: 5px;
+      padding: 7px;
+      width: 100%;
+      min-width: 70px;
+      max-width: 250px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      background-color: var(--white);
+      color: var(--dark);
+      content: attr(data-tooltip);
+      text-align: center;
+      font-size: 0.75rem;
+      line-height: 1.2;
+      transition: 0.2s ease-out;
+      font-family: "Inter", sans-serif;
+      text-transform: none;
+      filter: drop-shadow(0px 6px 6px rgba(227, 230, 236, 1));
+    }
+
+    [data-tooltip]:after {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      width: 0;
+      border-top: 5px solid var(--white);
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+      content: " ";
+      font-size: 0;
+      line-height: 0;
+      filter: drop-shadow(0px 6px 6px rgba(227, 230, 236, 1));
+    }
+
+    [data-tooltip]:hover:before,
+    [data-tooltip]:hover:after {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    [data-tooltip="false"]:hover:before,
+    [data-tooltip="false"]:hover:after {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
   .flex {
     display: flex;
     flex-direction: column;

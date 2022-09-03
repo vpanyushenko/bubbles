@@ -15,6 +15,7 @@ import fuzzySearch from "./utils/fuzzy-search";
 import merge from "./utils/merge";
 import { api_url } from "./utils/fetch";
 import sort from "./utils/sort";
+import { setDarkMode, unsetDarkMode } from "./utils/dark-mode";
 export {
   getFormData,
   isValidInput,
@@ -37,6 +38,8 @@ export {
   api_url,
   sort,
   getButtonIDFromDropdownOption,
+  setDarkMode,
+  unsetDarkMode,
 };
 
 import Header from "./components/header/Header.svelte";

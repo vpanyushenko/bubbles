@@ -182,7 +182,14 @@
 <svelte:window on:click={windowClick} />
 <svelte:body on:keydown={keydown} />
 
-<div class="select" class:is_list_open {id} tabindex="0" on:focus={selectFocused} on:blur={selectBlurred}>
+<div
+  class="select js-bubbles-select"
+  class:is_list_open
+  {id}
+  tabindex="0"
+  on:focus={selectFocused}
+  on:blur={selectBlurred}
+>
   <!-- <div> -->
   <div class="head" class:is_loading on:click={toggleSelectWithClick}>
     <span class="value">{_title}</span>

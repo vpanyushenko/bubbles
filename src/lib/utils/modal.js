@@ -18,7 +18,15 @@ const showModal = (title, options = { message: "", form: [], footer: [], img: nu
     data.form = options.form || [];
     data.file = options.file || null;
     data.message = options.message || null;
-    data.footer = options.footer;
+    data.footer = Array.isArray(options.footer)
+      ? options.footer.map((button, index) => {
+          if (!button.id) {
+            button.id = `__modal--button${index}`;
+          }
+
+          return button;
+        })
+      : [];
     data.img = options.img || null;
     data.height = options.height || null;
     return data;

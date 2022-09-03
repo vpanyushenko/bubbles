@@ -1,10 +1,8 @@
 import vercel from "@sveltejs/adapter-vercel";
 import autoprefixer from "autoprefixer";
 import preprocess from "svelte-preprocess";
-import path from "path";
 import { mdsvex } from "mdsvex";
-// import svg from "rollup-plugin-svg";
-// import inlineSvg from "rollup-plugin-inline-svg";
+import path from "path";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -14,25 +12,18 @@ const config = {
     preprocess({
       lang: "css",
       postcss: {
-        plugins: [autoprefixer],
+        plugins: [autoprefixer()],
       },
     }),
   ],
   kit: {
+    alias: {
+      $assets: "./src/assets",
+      "$assets/*": "./src/assets/*",
+    },
     adapter: vercel({ edge: true }),
     prerender: {
       enabled: true,
-    },
-    vite: {
-      // plugins: [inlineSvg()],
-      resolve: {
-        alias: {
-          $assets: path.resolve("./src/assets"),
-        },
-      },
-      optimizeDeps: {
-        include: ["highlight.js/lib/core"],
-      },
     },
   },
 };

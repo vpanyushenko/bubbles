@@ -32,6 +32,7 @@
         value: "circle",
         caption: "No corners!",
         img: icon_circle,
+        color: "error",
       },
       {
         break: true,

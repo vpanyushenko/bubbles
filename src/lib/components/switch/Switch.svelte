@@ -168,6 +168,10 @@
     transition: all 0.25s;
   }
 
+  :global(.js-bubbles-table .cell > .switch) {
+    padding-top: 0.4rem;
+  }
+
   .switch.active .loading:before {
     left: 42px;
     background: var(--primary);

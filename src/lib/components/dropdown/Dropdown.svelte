@@ -7,20 +7,38 @@
   import { onMount } from "svelte";
 
   const id = `dropdown-${uuid()}`;
-  const search_input_id = uuid();
 
   const dispatch = createEventDispatcher();
 
   export let value = null;
+  export let placeholder = "Start typing to search...";
   export let options = [];
   export let search = options.length > 5 ? true : false;
+  export let create_option = false;
   export let search_threshold = 0.3;
   export let type = null;
   export let align = "left";
 
+  $: formatted_options = options
+    .map((option) => {
+      if (option.break === false) {
+        return null;
+      }
+
+      if (typeof option === "string") {
+        return {
+          label: option,
+          value: option,
+        };
+      } else {
+        return option;
+      }
+    })
+    .filter(Boolean);
+
   $: search_value = "";
-  $: filtered_options = !search_value ? options : fuse.search(search_value).map((obj) => obj.item);
-  $: is_list_open = options ? true : false;
+  $: filtered_options = !search_value ? formatted_options : fuse.search(search_value).map((obj) => obj.item);
+  $: is_list_open = formatted_options ? true : false;
 
   let height, y; //window bindings
 
@@ -37,11 +55,13 @@
     is_search_focused = false;
     search_value = "";
     selected_index = 0;
+    dispatch("active", true);
   } else {
     filtered_options = [];
+    dispatch("active", false);
   }
 
-  const fuse = new Fuse(options, {
+  $: fuse = new Fuse(formatted_options, {
     shouldSort: false,
     keys: ["label", "caption"],
     minMatchCharLength: 2,
@@ -54,13 +74,13 @@
     if (type === "select-number") {
       value = Number(option.querySelector("input").value);
     } else {
-      value = option.querySelector("input").value || null;
+      value = option.querySelector("input").value ?? null;
     }
 
     if (!value) {
       //There was no value, so the value could have been anything falsy, we want find it by the title
       let title = option.querySelector(".title").innerText;
-      selected_index = options.findIndex((item) => item.label === title);
+      selected_index = formatted_options.findIndex((item) => item.label === title);
       value = filtered_options[selected_index].value;
     }
 
@@ -88,11 +108,11 @@
       }
 
       if (value) {
-        selected_index = options.findIndex((item) => item.value === _value);
+        selected_index = formatted_options.findIndex((item) => item.value === _value);
       } else {
         //There was no value, so the value could have been anything falsy, we want find it by the title
         let title = option.querySelector(".title").innerText;
-        selected_index = options.findIndex((item) => item.label === title);
+        selected_index = formatted_options.findIndex((item) => item.label === title);
       }
     }
   }
@@ -104,9 +124,10 @@
   function keydown(event) {
     if (is_list_open) {
       if (event.key.toLowerCase() === "a" && event.metaKey === true) {
+        const input = event.target;
         event.preventDefault();
         event.stopPropagation();
-        const input = document.getElementById(search_input_id);
+
         input.focus();
         input.select();
         return;
@@ -121,7 +142,7 @@
             //So on this first moment, if the index is 0, we'll leave it at zero.
           }
 
-          if (selected_index === options.length - 1) {
+          if (selected_index === formatted_options.length - 1) {
             selected_index = 0;
           } else {
             if (is_using_pointer_device) {
@@ -156,7 +177,7 @@
           is_using_pointer_device = false;
 
           if (selected_index === 0) {
-            selected_index = options.length - 1;
+            selected_index = formatted_options.length - 1;
           } else {
             selected_index--;
 
@@ -176,8 +197,23 @@
         }
         case "Enter": {
           event.preventDefault();
-          const option = filtered_options[selected_index];
+          let option = filtered_options[selected_index];
           value = option?.value;
+
+          if (!value && create_option) {
+            option = {
+              label: search_value,
+              value: search_value,
+            };
+            options = [...options, option];
+            value = search_value;
+            selected_index = options.length - 1;
+
+            dispatch("created", {
+              value: value,
+              index: selected_index,
+            });
+          }
 
           if (option.href) {
             window.open(option.href, option.new_page ? "_blank" : "_self");
@@ -224,7 +260,7 @@
         }
 
         default: {
-          if (type && search) {
+          if (search) {
             if (!is_search_focused && event.key.length === 1) {
               selected_index = 0;
               search_value += event.key;
@@ -243,6 +279,19 @@
             break;
           }
         }
+      }
+    }
+  }
+
+  function bodyClicked(event) {
+    if (is_list_open) {
+      const dropdown_clicked = event.target.closest(`.js-bubbles-dropdown`);
+      const field_clicked = event.target.closest(`.js-bubbles-field-container`);
+      const select_clicked = event.target.closest(`.js-bubbles-select`);
+      const icon_clicked = event.target.closest(`.js-bubbles-icon-button`);
+
+      if (!dropdown_clicked && !field_clicked && !select_clicked && !icon_clicked && is_list_open) {
+        is_list_open = false;
       }
     }
   }
@@ -275,17 +324,22 @@
   });
 </script>
 
-<svelte:body on:keydown={keydown} />
+<svelte:body on:keydown={keydown} on:click={bodyClicked} />
 <svelte:window bind:innerHeight={height} bind:scrollY={y} />
 
 {#if (filtered_options && filtered_options.length) || is_list_open}
-  <div class="options" class:left={align === "left"} class:right={align === "right"} {id} on:mousemove={mousemove}>
+  <div
+    class="options js-bubbles-dropdown"
+    class:left={align === "left"}
+    class:right={align === "right"}
+    {id}
+    on:mousemove={mousemove}
+  >
     {#if search}
       <input
-        id={search_input_id}
         class="search"
         type="text"
-        placeholder="Start typing to search..."
+        {placeholder}
         bind:value={search_value}
         on:focus|preventDefault|stopPropagation={(event) => {
           is_search_focused = true;
@@ -299,7 +353,7 @@
     <!-- svelte-ignore a11y-mouse-events-have-key-events -->
     {#each filtered_options as option, index}
       {#if option.hidden !== true}
-        {#if option === "break" || option.break === true}
+        {#if option === "break" || option.break === true || option.divider === true}
           <hr tabindex="-1" />
         {:else if option.href}
           <a

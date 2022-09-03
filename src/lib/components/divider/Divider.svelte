@@ -1,17 +1,24 @@
 <script>
   export let label;
+  export let image = null;
 </script>
 
-<div>
+<div class="divider">
   <hr class="left" />
-  {#if label}
-    <span>{label}</span>
-  {/if}
+  <div class="flex">
+    {#if image}
+      <img src={image} alt={label} />
+    {/if}
+
+    {#if label}
+      <span>{label}</span>
+    {/if}
+  </div>
   <hr class="right" />
 </div>
 
 <style>
-  div {
+  .divider {
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
     align-items: center;
@@ -19,6 +26,22 @@
     flex-direction: row;
     width: 100%;
     display: flex;
+  }
+
+  .flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 15rem;
+    text-align: center;
+  }
+
+  img {
+    width: 10rem;
+    height: 5rem;
+    margin-bottom: 0.5rem;
+    object-fit: cover;
   }
 
   span {

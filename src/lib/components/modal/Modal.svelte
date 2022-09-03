@@ -3,9 +3,10 @@
   import { v4 as uuid } from "@lukeed/uuid";
   import { fly, fade } from "svelte/transition";
   import IconButton from "$lib/components/button/IconButton.svelte";
+  import { modalStore } from "$lib/utils/stores";
 
   export let title = "";
-  export let hideModal;
+  export let hideModal = () => ($modalStore = {});
   export let id = uuid();
   export let height;
   export let lock_scroll = true;

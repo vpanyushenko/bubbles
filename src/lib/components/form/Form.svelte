@@ -13,12 +13,15 @@
   import RadioGroup from "$lib/components/radio/RadioGroup.svelte";
   import LabeledCheckbox from "$lib/components/checkbox/LabeledCheckbox.svelte";
   import CheckboxGroup from "$lib/components/checkbox/CheckboxGroup.svelte";
+  import { modalStore } from "$lib/utils/stores";
 
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
 
   export let inputs = [];
   export let id = uuid();
+  export let breakpoint = 380;
   let row_width = 0;
+  let is_mobile_width = false;
 
   const submitButton = inputs.find((a) => a.type === "submit");
   const dispatch = createEventDispatcher();
@@ -28,24 +31,28 @@
   }
 
   function keydown(event) {
+    //let active_element = document.activeElement;
+    let active_element = event.target;
+
     setTimeout(() => {
       if (
         event.key === "Enter" &&
-        document.activeElement.closest(".form") &&
+        active_element.closest(".form") &&
         !event.defaultPrevented &&
-        !document.activeElement.classList.contains("select") &&
-        document.activeElement.type !== "checkbox" &&
-        document.activeElement.type !== "radio"
+        !active_element.classList.contains("select") &&
+        active_element.type !== "checkbox" &&
+        active_element.type !== "radio"
       ) {
-        if (
-          document.activeElement.closest(".form").id === id ||
-          document.activeElement.closest(".form").id === `form_btn_${id}`
-        ) {
-          const submitButton = inputs.find((a) => a.type === "submit");
-          const buttonElement = document.getElementById(submitButton.id);
+        if (active_element.closest(".form").id === id || active_element.closest(".form").id === `form_btn_${id}`) {
+          let submitButton = inputs.find((a) => a.type === "submit");
 
-          if (submitButton && buttonElement) {
-            buttonElement.click();
+          //Check if we are in a modal and the submit button is in the footer
+          if (!submitButton && $modalStore.footer) {
+            submitButton = $modalStore.footer.find((a) => a.type === "submit");
+          }
+
+          if (submitButton) {
+            document.getElementById(submitButton.id).click();
           }
         }
       }
@@ -53,16 +60,21 @@
   }
 
   //determine if any inputs are dependent on other inputs
-  $: formatted_inputs = formatInputs(inputs);
+  $: formatted_inputs = formatInputs(inputs, is_mobile_width);
 
   $: if (inputs) {
     dispatch("update", inputs);
   }
 
-  function formatInputs(inputs, mobile = false) {
+  function formatInputs(inputs, is_mobile_width) {
     return inputs.map((input) => {
       if (dev && input?.hidden_if && input.hidden_if.length && input?.hidden_unless && input.hidden_unless.length) {
         console.log("There may negative side effects when using both hidden_if and hidden_unless on the same input");
+      }
+
+      if (!input.id) {
+        console.log("Form input missing id, so one is being assigned");
+        input.id = uuid();
       }
 
       if (!input.hidden_if) {
@@ -74,19 +86,25 @@
       }
 
       //calculate row widths in case the user wants to use nested inputs
+      if (!is_mobile_width) {
+        if (!input.width) {
+          input.width = 100;
+        } else if (input.width === 33) {
+          input.width = 33.333333;
+        }
 
-      if (!input.width) {
-        input.width = 100;
-      } else if (input.width === 33) {
-        input.width = 33.333333;
+        row_width += input.width;
+      } else {
+        row_width = 100;
       }
 
-      row_width += input.width;
       //row_width += mobile && input.mobile_width ? input.mobile_width : input.width;
 
       if (row_width >= 98) {
         row_width = 0;
         input.last_row = true;
+      } else {
+        input.last_row = false;
       }
 
       input.is_hidden = false;
@@ -124,17 +142,37 @@
       return input;
     });
   }
+
+  function getFormWidth() {
+    const form = document.getElementById(id);
+
+    if (typeof breakpoint !== "number") {
+      breakpoint = 380;
+    }
+
+    if (form.getBoundingClientRect().width < breakpoint) {
+      is_mobile_width = true;
+    } else {
+      is_mobile_width = false;
+    }
+  }
+
+  onMount(() => {
+    getFormWidth();
+  });
 </script>
 
-<div class="form" {id}>
+<svelte:window on:resize={getFormWidth} />
+
+<div class="form js-bubbles-form" {id}>
   {#each formatted_inputs as input}
     {#if !input.is_hidden}
       <span
         class="form__row"
         class:hidden={input.type === "hidden"}
-        class:form__row__inline={input.width !== 100 ? true : false}
-        class:form__row__inline__last__row={input.last_row}
-        style="width: {input.width}%"
+        class:form__row__inline={input.width !== 100 && !is_mobile_width ? true : false}
+        class:form__row__inline__last__row={is_mobile_width ? true : input.last_row}
+        style="width: {is_mobile_width ? 100 : input.width}%"
         in:scale|local={{
           duration: 750,
           opacity: 0,
@@ -213,6 +251,14 @@
 <style>
   :global(.form .select) {
     width: 100%;
+  }
+
+  :global(.card > .body > .form) {
+    padding-top: 2rem;
+  }
+
+  :global(.card > .body > .header + .form) {
+    padding-top: 0rem;
   }
 
   :global(.form .style__indent) {

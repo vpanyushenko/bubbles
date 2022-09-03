@@ -3,8 +3,10 @@
   import { isValidInput } from "$lib/utils/form";
   import { configLabel } from "$lib/utils/config";
   import Dropdown from "$lib/components/dropdown/Dropdown.svelte";
+  import Tag from "./TagInput.svelte";
   import { showToast } from "$lib/utils/toast";
   import { onMount } from "svelte";
+
   // import DatePicker from "$lib/components/calendar/DatePicker.svelte";
 
   export let id;
@@ -24,16 +26,18 @@
   export let debounce = 350;
   export let disabled = false;
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
-  export let multply_by;
+  export let multiply_by;
   export let to_js_date = false;
-  export let show_calendar = false;
+  export let typeahead_options = [];
+  // export let show_calendar = false;
   export let onselect = null;
+  export let allow_multiple_files = true;
 
   if (Array.isArray(extensions)) {
     extensions = extensions.join(",");
   }
 
-  let _label = configLabel(label, validation);
+  $: _label = configLabel(label, validation);
   let focused = false;
   let has_file = value ? true : false;
   let invalid_src, image_hover; //only used for files
@@ -62,7 +66,7 @@
   }
 
   //options for typeahead inside of input or textarea elements
-  $: typeahead_options = [];
+  // $: typeahead_options = [];
   $: is_loading = false;
 
   onMount(() => {
@@ -82,19 +86,10 @@
   });
 
   async function dateFieldFocused(event) {
-    if (show_calendar) {
-      // if (!DatePicker) {
-      //   console.log("importing datepicker");
-      //   DatePicker = await import("$lib/components/calendar/DatePicker.svelte");
-      // }
-      show_datepicker = true;
-    }
     event.currentTarget.type = "date";
   }
 
   function dateFieldBlurred(event) {
-    show_datepicker = false;
-
     if (!event.currentTarget.value) {
       event.currentTarget.type = "text";
     }
@@ -209,11 +204,17 @@
     const input = event.target;
 
     if (input.files && input.files[0]) {
-      value = await toBase64(input.files[0]);
-      //Check if we can show the preview, or if it's a file that does not support
-      //a preview like a csv or pdf
+      const base64_values_promises = [...input.files].map(async (file) => {
+        return toBase64(file);
+      });
 
-      // getExtension(value);
+      const base64_values = await Promise.all(base64_values_promises);
+
+      if (base64_values.length === 1) {
+        value = base64_values[0];
+      } else {
+        value = base64_values;
+      }
 
       if (!PREVIEW_TYPES.includes(input.files[0].type)) {
         _label = input.files[0].name;
@@ -224,10 +225,29 @@
       has_file = false;
     }
   }
+
+  //tags
+
+  let is_adding_tags = false;
+  let tags = ["testing", "a long test", "a long test", "a long test", "a long test"];
+
+  function toggleTags(event) {
+    if (is_adding_tags) {
+      is_adding_tags = false;
+    } else {
+      is_adding_tags = true;
+    }
+  }
+
+  function tagCreated(new_value) {
+    console.log(value);
+
+    value = [...new Set([...value, new_value])];
+  }
 </script>
 
 {#if type === "text"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -268,7 +288,7 @@
     </div>
   </div>
 {:else if type === "email"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -292,7 +312,7 @@
     </div>
   </div>
 {:else if type === "tel" || type === "phone"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -316,7 +336,7 @@
     </div>
   </div>
 {:else if type === "password"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -340,7 +360,7 @@
     </div>
   </div>
 {:else if type === "date"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -352,6 +372,7 @@
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
           type="text"
+          max="9999-12-31"
           bind:value
           on:focus={inputFocused}
           on:focus={dateFieldFocused}
@@ -366,7 +387,7 @@
     </div>
   </div>
 {:else if type === "number"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -392,7 +413,7 @@
     </div>
   </div>
 {:else if type === "time"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -418,7 +439,7 @@
     </div>
   </div>
 {:else if type === "textarea"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -460,7 +481,7 @@
     </div>
   </div>
 {:else if type === "file"}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field">
       <!-- svelte-ignore a11y-mouse-events-have-key-events -->
       <div
@@ -488,17 +509,90 @@
           <span class="error">{error}</span>
         {/if}
 
-        <input type="file" class="image__upload_button" on:change={fileChanged} {id} accept={extensions} bind:value />
-        {#if value && !invalid_src && !image_hover}
+        <input
+          type="file"
+          class="image__upload_button"
+          on:change={fileChanged}
+          {id}
+          accept={extensions}
+          bind:value
+          multiple={allow_multiple_files}
+        />
+        {#if value && !invalid_src && !image_hover && !Array.isArray(value)}
           <img src={value} alt={_label} />
+        {:else if value && !invalid_src && !image_hover && Array.isArray(value)}
+          <span>{value.length} files selected</span>
         {:else if value && !image_hover}
           <span>{_label}</span>
         {/if}
       </div>
     </div>
   </div>
+{:else if type === "tags" || type === "tag"}
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+    <div class="field" class:active={tags && tags.length}>
+      <div class="field__label">
+        <span class:hidden={is_error}>{_label}</span>
+        <span class="error hidden" class:hidden={!is_error}>{error}</span>
+      </div>
+
+      <div class="field__wrap">
+        <div class="field__tags" on:mousedown={toggleTags}>
+          {#if Array.isArray(value)}
+            {#each value as label}
+              <Tag
+                {label}
+                margin="0 .5rem 0.5rem 0"
+                on:click={(event) => {
+                  // event.preventDefault();
+                  console.log(event.detail);
+
+                  const label = event.detail.label;
+                  console.log(label);
+                  console.log(value);
+                  value = value.filter((item) => item !== label);
+                  console.log(value);
+                }}
+              />
+            {/each}
+          {/if}
+        </div>
+
+        {#if is_loading}
+          <span class="spinner" />
+        {/if}
+
+        {#if is_adding_tags && typeahead_options && typeahead_options.length > 0}
+          <Dropdown
+            bind:options={typeahead_options}
+            placeholder="Type to add a tag..."
+            {type}
+            search_threshold={0}
+            search={true}
+            create_option={true}
+            on:created={(event) => {
+              console.log(event.detail);
+              tagCreated(event?.detail?.value);
+            }}
+            on:select={(event) => {
+              console.log(event.detail);
+              tagCreated(event?.detail?.value);
+            }}
+            on:active={(event) => {
+              if (event.detail === false) {
+                is_adding_tags = false;
+              }
+            }}
+          />
+        {/if}
+      </div>
+      {#if desc}
+        <p class="field__desc">{@html desc}</p>
+      {/if}
+    </div>
+  </div>
 {:else if type === "hidden"}
-  <div class="form__field__container hidden" {id}>
+  <div class="form__field__container js-bubbles-field-container hidden" {id}>
     <div class="field">
       <div class="field__wrap">
         <input class="field__input" type="hidden" bind:value />
@@ -509,7 +603,7 @@
     </div>
   </div>
 {:else}
-  <div class="form__field__container" {id} class:mb-2={margin}>
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field center" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -565,7 +659,7 @@
     width: 100%;
   }
 
-  .form__field__container.date__range .fields {
+  .form__field__container .date__range .fields {
     display: flex;
     justify-content: space-between;
   }
@@ -645,6 +739,22 @@
     height: 157px;
     padding: 15px 23px;
     resize: none;
+  }
+
+  .field__tags {
+    width: 100%;
+    padding: 2.5rem 1.375rem 0 !important;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: rgba(228, 228, 228, 0.3);
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--black);
+    transition: all 0.2s;
+    padding: 15px 23px;
+    min-height: 5rem;
+    transition: all 0.2s;
   }
 
   .field__textarea:focus,

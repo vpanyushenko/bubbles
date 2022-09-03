@@ -4,7 +4,8 @@
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
-      "$assets/*": ["src/assets/*"]
+      "$assets/*": ["src/assets/*"],
+      "$types": ["src/types/jsdoc.js"]
     }
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"],

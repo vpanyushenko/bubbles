@@ -3,10 +3,12 @@
   import { navigating, page } from "$app/stores";
   import { browser } from "$app/env";
   import { onMount } from "svelte";
+
   // import { hexToRgb, getColorFilter } from "$lib/utils/colors";
 
   export let sections = [];
   export let logo = null;
+  export let logo_dark = null;
   export let href = "/";
   export let onclick = null;
   export let padding = $configStore.padding || "roomy";
@@ -165,8 +167,14 @@
   <section class="top">
     {#if href}
       <a {href} on:click={onclick}>
-        <img src={logo} alt="Logo" />
+        {#if $pageStore.dark_mode && logo_dark}
+          <img src={logo_dark} alt="Logo" />
+        {:else}
+          <img src={logo} alt="Logo" />
+        {/if}
       </a>
+    {:else if $pageStore.dark_mode && logo_dark}
+      <img src={logo_dark} alt="Logo" on:click={onclick} />
     {:else}
       <img src={logo} alt="Logo" on:click={onclick} />
     {/if}

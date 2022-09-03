@@ -1,16 +1,18 @@
 <script>
   import { configStore, uuid } from "$lib/index";
+  import { createEventDispatcher } from "svelte";
 
   export let id = uuid();
   export let label = "";
-  export let tooltip = null;
+  export let tooltip = "Click to delete";
   export let color = "__default";
   export let color_options = [];
   export let small = false;
   export let min_width = 3;
   export let margin = "0 0 0 0";
   export let dark_mode_invert = $configStore?.dark_mode_invert;
-  export let __delete = false;
+
+  const dispatch = createEventDispatcher();
 
   let _mw = min_width;
 
@@ -33,6 +35,9 @@
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <span
+  on:click={(event) => {
+    dispatch("click", { id, label });
+  }}
   {id}
   data-tooltip={tooltip}
   style="min-width:{min_width}rem; margin:{margin};"
@@ -198,6 +203,12 @@
     text-transform: uppercase;
     vertical-align: middle;
     text-align: center;
+  }
+
+  span:hover {
+    cursor: pointer;
+    background-color: var(--error-lightest);
+    color: var(--error-darker);
   }
 
   .small {

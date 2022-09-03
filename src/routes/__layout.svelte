@@ -39,6 +39,7 @@
 
   $: sidebarConfig = {
     logo: "/logo.svg",
+    logo_dark: "/logo-dark-mode.svg",
     flat: $store.flat,
     padding: $store.sidebar_padding,
     sections: sections.map((section) => {
