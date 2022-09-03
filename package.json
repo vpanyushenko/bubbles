@@ -4,15 +4,14 @@
   "description": "Opinionated Svelte Kit UI Components",
   "scripts": {
     "dev": "vite dev --port 3001",
-    "build": "svelte-kit build",
-    "preview": "svelte-kit preview",
+    "build": "vite build",
+    "preview": "vite preview",
     "package": "svelte-kit package",
     "publish": "npm install && npm run package && npm publish ./package --tag next",
     "publish:prod": "npm install && svelte-kit package && npm publish ./package --tag latest"
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "^1.0.0-next.58",
-    "@sveltejs/kit": "^1.0.0-next.405",
     "@sveltejs/svelte-scroller": "^2.0.7",
     "autoprefixer": "^10.4.0",
     "mdsvex": "^0.9.8",
@@ -41,6 +40,7 @@
     "@fontsource/inter": "^4.5.1",
     "@fontsource/poppins": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
-    "@stripe/stripe-js": "^1.22.0"
+    "@stripe/stripe-js": "^1.22.0",
+    "@sveltejs/kit": "^1.0.0-next.430"
   }
 }
