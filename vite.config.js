@@ -5,9 +5,14 @@ import path from "path";
 /** @type {import('vite').UserConfig} */
 const config = {
   plugins: [sveltekit()],
+  server: {
+    fs: {
+      strict: false,
+    },
+  },
   resolve: {
     alias: {
-      $assets: path.resolve("./src/assets"),
+      $docs: path.resolve("./src/docs"),
     },
   },
 };

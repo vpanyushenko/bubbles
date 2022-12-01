@@ -4,7 +4,7 @@
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
-      "$assets/*": ["src/assets/*"],
+      "$docs/*": ["src/docs/*"],
       "$types": ["src/types/jsdoc.js"]
     }
   },
