@@ -15,6 +15,7 @@
     "@sveltejs/kit": "^1.0.0-next.570",
     "@sveltejs/package": "^1.0.0-next.6",
     "@sveltejs/svelte-scroller": "^2.0.7",
+    "autoprefixer": "^10.4.13",
     "mdsvex": "^0.10.6",
     "prettier": "^2.6.1",
     "prettier-plugin-svelte": "^2.6.0",
@@ -42,7 +43,6 @@
     "@fontsource/inter": "^4.5.1",
     "@fontsource/poppins": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
-    "@stripe/stripe-js": "^1.22.0",
-    "autoprefixer": "^10.4.8"
+    "@stripe/stripe-js": "^1.22.0"
   }
 }
