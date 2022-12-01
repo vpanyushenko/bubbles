@@ -2,7 +2,7 @@ export default [
   {
     label: "Welcome",
     id: "welcome",
-    href: "/",
+    href: "/welcome",
     group: "Getting Started",
   },
   {
