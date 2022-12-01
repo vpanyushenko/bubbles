@@ -270,21 +270,24 @@
         {#if is_loading}
           <span class="spinner" />
         {/if}
+        <!-- 
+        {#if typeahead_options && typeahead_options.length > 0} -->
+        <Dropdown
+          bind:options={typeahead_options}
+          bind:is_list_open
+          search={false}
+          bind:value
+          on:select={(event) => {
+            was_typeahead_options_selected = true;
+            typeahead_options.length = 0;
+            is_list_open = false;
 
-        {#if typeahead_options && typeahead_options.length > 0}
-          <Dropdown
-            bind:options={typeahead_options}
-            bind:is_list_open
-            search={false}
-            bind:value
-            on:select={(event) => {
-              was_typeahead_options_selected = true;
-              if (onselect) {
-                onselect(event?.detail?.value, event);
-              }
-            }}
-          />
-        {/if}
+            if (onselect) {
+              onselect(event?.detail?.value, event);
+            }
+          }}
+        />
+        <!-- {/if} -->
       </div>
       {#if desc}
         <p class="field__desc">{@html desc}</p>
@@ -474,6 +477,7 @@
             bind:value
             on:select={(event) => {
               was_typeahead_options_selected = true;
+              typeahead_options.length = 0;
               if (onselect) {
                 onselect(event?.detail?.value, event);
               }
