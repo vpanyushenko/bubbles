@@ -144,6 +144,12 @@ export default [
     group: "Components",
   },
   {
+    label: "Pulse",
+    id: "pulse",
+    href: "/pulse",
+    group: "Components",
+  },
+  {
     label: "Radio",
     id: "radio",
     href: "/radio",
