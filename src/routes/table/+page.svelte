@@ -10,10 +10,6 @@
 
   $store.pokemon = data.pokemon;
   $store.pagination = data.pagination;
-
-  $: console.log("COUNT:" + $store.pokemon.length);
 </script>
-
-<Header title="Table" />
 
 <Rows {rows} />

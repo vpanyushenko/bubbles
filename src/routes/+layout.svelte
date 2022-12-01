@@ -14,16 +14,9 @@
     ToastContainer,
     IconButton,
     ModalContainer,
+    fuzzySearch,
   } from "bubbles-ui";
 
-  console.log(Header);
-
-  // import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
-  // import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
-
-  // import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
-  // import IconButton from "$lib/components/button/IconButton.svelte";
-  // import ModalContainer from "$lib/components/modal/ModalContainer.svelte";
   import sections from "$docs/utils/sidebar-sections";
   import store from "$docs/utils/store";
 
@@ -89,6 +82,20 @@
       .join(" ")}
     buttons={[
       {
+        icon: "search",
+        color: "gray-lighter",
+        search: true,
+        typeahead: async (input) => {
+          const filtered = fuzzySearch(input, sections, { keys: ["id"], sort: true });
+
+          return Promise.resolve(
+            filtered.map((obj) => {
+              return { label: obj.label, value: obj.id, href: `/${obj.id}`, new_page: false };
+            })
+          );
+        },
+      },
+      {
         icon: "more",
         color: "gray-lighter",
         options: [
@@ -104,6 +111,34 @@
             onclick: () => {
               console.log("Dark mode");
               setDarkMode();
+            },
+          },
+          {
+            label: "padding:compact",
+            caption: $store.sidebar_padding === "compact" ? "Selected" : null,
+            onselect: () => {
+              $store.sidebar_padding = "compact";
+            },
+          },
+          {
+            label: "padding:roomy",
+            caption: $store.sidebar_padding === "roomy" ? "Selected" : null,
+            onselect: () => {
+              $store.sidebar_padding = "roomy";
+            },
+          },
+          {
+            label: "flat:true",
+            caption: $store.flat === true ? "Selected" : null,
+            onselect: () => {
+              $store.flat = true;
+            },
+          },
+          {
+            label: "flat:false",
+            caption: $store.flat === false ? "Selected" : null,
+            onselect: () => {
+              $store.flat = false;
             },
           },
         ],

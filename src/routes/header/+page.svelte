@@ -8,32 +8,4 @@
   const rows = formatPosts(all_posts);
 </script>
 
-<Header
-  title="Header"
-  breadcrumbs={[
-    { label: "Hello", href: "/header" },
-    { label: "World", href: "/header" },
-  ]}
-  buttons={[
-    {
-      id: "search-id-example",
-      icon: "search",
-      color: "gray-lighter",
-      search: true,
-      onselect: (value) => {
-        console.log(value);
-      },
-      typeahead: (input) => {
-        const filtered = fuzzySearch(input, sections, { keys: ["id"], sort: true });
-
-        return Promise.resolve(
-          filtered.map((obj) => {
-            return { label: obj.label, value: obj.id };
-          })
-        );
-      },
-    },
-  ]}
-/>
-
 <Rows {rows} />

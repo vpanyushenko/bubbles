@@ -6,6 +6,6 @@
   const rows = formatPosts(all_posts);
 </script>
 
-<Header title="List" />
+
 
 <Rows {rows} />

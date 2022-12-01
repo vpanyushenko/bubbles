@@ -4,10 +4,8 @@
   import { formatPosts } from "$docs/utils/posts";
   const all_posts = import.meta.glob(`../../docs/markdown/page-column/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
-  import { Row, Column100, Column50, Column, Card } from "$lib/index";
+  import { Row, Column100, Column50, Column, Card } from "bubbles-ui";
 </script>
-
-<Header title="Page Column" />
 
 <Rows {rows} />
 

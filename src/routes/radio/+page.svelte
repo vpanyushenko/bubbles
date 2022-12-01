@@ -6,6 +6,4 @@
   const rows = formatPosts(all_posts);
 </script>
 
-<Header title="Radio" />
-
 <Rows {rows} />

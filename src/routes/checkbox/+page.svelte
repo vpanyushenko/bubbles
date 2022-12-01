@@ -6,6 +6,5 @@
   const rows = formatPosts(all_posts);
 </script>
 
-<Header title="Checkbox" />
 
 <Rows {rows} />
