@@ -441,6 +441,7 @@
                 bind:is_list_open={is_list_open_typeahead}
                 on:select={(event) => {
                   was_typeahead_options_selected = true;
+                  is_list_open_typeahead = false;
                   if (onselect) {
                     if (reset_on_select) {
                       setTimeout(() => {
@@ -472,7 +473,16 @@
     </button>
 
     {#if is_list_open && active}
-      <Dropdown {options} {align} {search} bind:is_list_open />
+      <Dropdown
+        {options}
+        {align}
+        {search}
+        bind:is_list_open
+        on:select={() => {
+          is_list_open = false;
+          active = false;
+        }}
+      />
     {/if}
   </div>
 {/if}
