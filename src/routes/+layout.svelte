@@ -1,3 +1,5 @@
+
+
 <script>
   import "$lib/css/app.css";
   import "$assets/css/oceanic.css";
@@ -14,14 +16,17 @@
   import store from "$assets/utils/store";
   import ModalContainer from "$lib/components/modal/ModalContainer.svelte";
 
-  import icon from "$assets/icons/arrow.svg";
+  import logo from "$assets/icons/logo.svg";
+  import logo_dark_mode from "$assets/icons/logo-dark-mode.svg";
 
   // $configStore.padding = "compact";
   // $configStore.radius = "blocky";
 
   $: sidebarConfig = {
-    logo: "/logo.svg",
-    logo_dark: "/logo-dark-mode.svg",
+    //logo: "/logo.svg",
+    //logo_dark: "/logo-dark-mode.svg", //IDK why this doesn't work
+    logo: logo,
+    logo_dark: logo_dark_mode,
     flat: $store.flat,
     padding: $store.sidebar_padding,
     sections: sections.map((section) => {
@@ -30,8 +35,6 @@
       return section;
     }),
   };
-
-  $: console.log(sidebarConfig);
 
   // $: if ($store.sidebar_index) {
   //   setTimeout(() => {

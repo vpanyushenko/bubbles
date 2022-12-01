@@ -91,6 +91,7 @@
 </script>
 
 <Header
+  title="Pokemon"
   buttons={[
     { icon: "more", color: "gray-lighter" },
     { icon: "more", color: "gray-lighter" },
@@ -145,7 +146,6 @@
             },
             { label: null },
             { label: "Name", sort: { id: "name" } },
-            { label: "Alt Name", sort: { id: "name" } },
             { label: "Weight", sort: { id: "weight" } },
             { label: "Type(s)" },
             { label: "Possible Moves", align: "end" },
@@ -159,13 +159,7 @@
             <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} />
             <TableCell
               text={poke.name}
-              href={`/examples/nested/table/${poke.name}`}
-              caption={`Pokedex Number: ${poke.id}`}
-              bold={true}
-            />
-            <TableCell
-              text={poke.name}
-              href={`/examples/nested/table/${poke.name}`}
+              href={`/examples/nested/table/${poke.name}/test`}
               caption={`Pokedex Number: ${poke.id}`}
               bold={true}
             />

@@ -1,7 +1,8 @@
 <script>
   import { Header } from "$lib/index";
-
   import { page } from "$app/stores";
+
+  console.log("LOADING DETAILS");
 </script>
 
-<Header title={$page.params.pokemon} />
+<Header title={`TEST`} />

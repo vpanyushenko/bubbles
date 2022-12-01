@@ -2,7 +2,7 @@
   import Rows from "$assets/components/Rows.svelte";
   import Header from "$lib/components/header/Header.svelte";
   import { formatPosts } from "$assets/utils/posts";
-  import { fuzzySearch } from "$lib/index";
+  import { fuzzySearch, pageStore } from "$lib/index";
   import sections from "$assets/utils/sidebar-sections";
   const all_posts = import.meta.glob(`../../assets/markdown/header/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
@@ -16,15 +16,19 @@
   ]}
   buttons={[
     {
+      id: "search-id-example",
       icon: "search",
       color: "gray-lighter",
       search: true,
+      onselect: (value) => {
+        console.log(value);
+      },
       typeahead: (input) => {
         const filtered = fuzzySearch(input, sections, { keys: ["id"], sort: true });
 
         return Promise.resolve(
           filtered.map((obj) => {
-            return { label: obj.label, value: obj.id, href: `/${obj.id}`, new_page: false };
+            return { label: obj.label, value: obj.id };
           })
         );
       },
