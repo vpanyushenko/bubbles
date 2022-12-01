@@ -26,12 +26,11 @@
   export let debounce = 350;
   export let disabled = false;
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
-  // export let multiply_by;
-  // export let to_js_date = false;
   export let typeahead_options = [];
-  // export let show_calendar = false;
   export let onselect = null;
   export let allow_multiple_files = true;
+
+  $: is_list_open = typeahead_options.length > 0 ? true : false;
 
   if (Array.isArray(extensions)) {
     extensions = extensions.join(",");
@@ -275,6 +274,7 @@
         {#if typeahead_options && typeahead_options.length > 0}
           <Dropdown
             bind:options={typeahead_options}
+            bind:is_list_open
             search={false}
             bind:value
             on:select={(event) => {
@@ -469,6 +469,7 @@
         {#if typeahead_options && typeahead_options.length > 0}
           <Dropdown
             bind:options={typeahead_options}
+            bind:is_list_open
             search={false}
             bind:value
             on:select={(event) => {
@@ -570,6 +571,7 @@
         {#if is_adding_tags && typeahead_options && typeahead_options.length > 0}
           <Dropdown
             bind:options={typeahead_options}
+            bind:is_list_open
             placeholder="Type to add a tag..."
             {type}
             search_threshold={0}
@@ -607,53 +609,6 @@
       {/if}
     </div>
   </div>
-  <!-- {:else if type === "code"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
-    <div class="field" class:active={focused || value || value === 0 || value === "0"}>
-      <div class="field__label">
-        <span class:hidden={is_error}>{_label}</span>
-        <span class="error hidden" class:hidden={!is_error}>{error}</span>
-      </div>
-      <div class="field__wrap">
-        <textarea
-          spellcheck="false"
-          class="field__textarea"
-          {rows}
-          class:error={is_error}
-          autocomplete={autocomplete ? "on" : "nope"}
-          on:focus={inputFocused}
-          on:blur={inputBlurred}
-          on:input={typeaheadOnInput}
-          {disabled}
-          bind:value
-        />
-        <pre id="highlighting" aria-hidden="true">
-            <code class="language-html" id="highlighting-content" />
-        </pre>
-
-        {#if is_loading}
-          <span class="spinner" />
-        {/if}
-
-        {#if typeahead_options && typeahead_options.length > 0}
-          <Dropdown
-            bind:options={typeahead_options}
-            search={false}
-            bind:value
-            on:select={(event) => {
-              was_typeahead_options_selected = true;
-              if (onselect) {
-                onselect(event?.detail?.value, event);
-              }
-            }}
-          />
-        {/if}
-      </div>
-      {#if desc}
-        <p class="field__desc">{@html desc}</p>
-      {/if}
-    </div>
-  </div> -->
 {:else}
   <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field center" class:active={focused || value}>

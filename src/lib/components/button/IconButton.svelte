@@ -48,7 +48,6 @@
 
   export let color = null;
   export let dark_mode_invert = $configStore?.dark_mode_invert;
-  // export let invert_icon = false;
 
   export let shadow = false;
 
@@ -59,6 +58,15 @@
   export let reset_on_select = true;
   export let __search_id = null;
   export let __search_width_100 = false;
+
+  $: is_list_open = options.length ? true : false;
+  $: is_list_open_typeahead = typeahead_options.length ? true : false;
+
+  // $: console.log(options.length, "otiojs");
+  // $: console.log(typeahead_options.length, "typeahead_options.length");
+  // $: console.log(is_search_active);
+  // $: console.log(dropdown, "dropdown");
+  // $: console.log(active, "active");
 
   const dropdown = options.length ? true : false;
 
@@ -430,6 +438,7 @@
                 bind:options={typeahead_options}
                 search={false}
                 bind:value={search_value}
+                bind:is_list_open={is_list_open_typeahead}
                 on:select={(event) => {
                   was_typeahead_options_selected = true;
                   if (onselect) {
@@ -461,8 +470,9 @@
         </slot>
       </span>
     </button>
-    {#if active && dropdown}
-      <Dropdown {options} {align} {search} />
+
+    {#if is_list_open && active}
+      <Dropdown {options} {align} {search} bind:is_list_open />
     {/if}
   </div>
 {/if}
