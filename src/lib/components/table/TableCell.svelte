@@ -157,7 +157,7 @@
     <div class="flex align-items-center">
       {#if href}
         <span class="href-container">
-          {#if $navigating && $navigating?.to?.pathname === href && !_table_row_icon_button_id}
+          {#if $navigating && $navigating?.to?.url?.pathname === href && !_table_row_icon_button_id}
             <Spinner style="margin: 0 0.5rem 0 0" />
           {/if}
           <a
