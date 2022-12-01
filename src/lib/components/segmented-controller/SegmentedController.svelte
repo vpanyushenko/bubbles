@@ -4,9 +4,15 @@
   import { Spinner } from "$lib/index";
   import { navigating } from "$app/stores";
 
+  /** @prop {Array.<{href: String, onclick: Function, label: String}>} segments */
   export let segments = [];
+  /** @prop {"default"|"line"} style */
   export let style = "default";
+  /** @prop {number} mb */
   export let mb = null;
+  /** @prop {number} mt */
+  export let mt = null;
+  /** @prop {string} value */
   export let value;
 
   const selectOptions = segments.map((segment) => {
@@ -66,6 +72,14 @@
       css += `margin-bottom:${mb}rem;`;
     }
   }
+
+  if (mt) {
+    if (typeof mt === "number" || typeof Number(mt) === "number") {
+      css += `margin-top:${mt}rem;`;
+    } else {
+      css += `margin-top:${mt}rem;`;
+    }
+  }
 </script>
 
 <div
@@ -91,7 +105,7 @@
               id={segment.id ? segment.id : `${id}_${i}`}
             >
               <span>
-                {#if $navigating?.to?.pathname === segment?.href}
+                {#if $navigating?.to?.url?.pathname === segment?.href}
                   <Spinner size={1} />
                 {:else}
                   {segment.label}
