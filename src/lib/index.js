@@ -64,6 +64,7 @@ import Divider from "./components/divider/Divider.svelte";
 import Dropdown from "./components/dropdown/Dropdown.svelte";
 import Gallery from "./components/gallery/Gallery.svelte";
 import SegmentedController from "./components/segmented-controller/SegmentedController.svelte";
+import Pulse from "./components/pulse/Pulse.svelte";
 
 export {
   Header,
@@ -88,6 +89,7 @@ export {
   Dropdown,
   SegmentedController,
   Gallery,
+  Pulse,
 };
 
 //input
