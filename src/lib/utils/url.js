@@ -8,13 +8,14 @@ import { invalidateAll } from "$app/navigation";
  * @param {String} value - The value for the key
  * @param {Object} options - Additional options
  * @param {Function} [options.goto=true] - the imported svelte kit goto function. Passing this will indicate that you want to load function to be rerun
+ * @param {Function} [options.invalidate=true] - If the data on the page should be invalidated
  * @param {String} [options.show_loading] - The ID of an element you want to shoe the animation for. The loading state will automatically stop when the load function completes it's promise.
  * @param {Array<String>} [options.keep_only=[]] - An array of query parameter strings that you want to keep. If the array is empty, then no query parameters will be deleted
  */
-const addQueryParam = (key, value, options = { goto: true, show_loading: "", keep_only: [] }) => {
-  const goto = options.goto || true;
+const addQueryParam = (key, value, options = { goto: false, show_loading: "", keep_only: [], invalidate: true }) => {
   const show_loading = options.show_loading || null;
   const keep_only = options.keep_only || [];
+  const invalidate = options.invalidate || true;
 
   if (browser) {
     const queryParams = new URLSearchParams(window.location.search);
@@ -43,16 +44,15 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
       }
     }
 
-    if (goto || show_loading) {
-      if (show_loading) {
-        showLoading(show_loading);
+    if (show_loading) showLoading(show_loading);
 
-        //The loading animation is stopped in the component itself
-      }
+    if (options.goto) {
+      console.log("[DEPRECATED] goto is deprecated. Please use invalidate instead");
+      invalidateAll();
+    }
 
-      if (goto) {
-        invalidateAll();
-      }
+    if (invalidate) {
+      invalidateAll();
     }
   }
 };
@@ -64,7 +64,7 @@ const addQueryParam = (key, value, options = { goto: true, show_loading: "", kee
  * @returns {String|Object} - If you pass in a key, the return will be the value of the param. Without a key, an Object is returned for all of the query params
  */
 const getQueryParam = (url, key = null) => {
-  const query_params = url.searchParams;
+  const query_params = url?.searchParams ?? new URL(url).searchParams;
   const all_query_params = Object.fromEntries(query_params.entries());
   const param_keys = Object.keys(all_query_params);
 
