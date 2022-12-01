@@ -1,13 +1,13 @@
 <script>
-  export let label;
+  export let label = null;
   export let image = null;
 </script>
 
-<div class="divider">
+<div class="divider" tabindex="-1">
   <hr class="left" />
   <div class="flex">
     {#if image}
-      <img src={image} alt={label} />
+      <img src={image} alt={label || "Divider"} />
     {/if}
 
     {#if label}
