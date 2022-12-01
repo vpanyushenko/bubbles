@@ -36,6 +36,7 @@ const pageStore = writable({
     id: null,
   },
   search: null,
+  is_search_active: false,
   dark_mode: browser && localStorage.getItem("bubbles-color-scheme") === "dark" ? true : false,
 });
 
