@@ -49,7 +49,7 @@
       ? document.querySelector(".sidebar").classList.toggle("active", $pageStore.sidebar.is_toggled)
       : null;
 
-  $: _breadcrumbs = Array.isArray(breadcrumbs) ? breadcrumbs : calcBreadcrumbs($page.routeId, $page.params);
+  $: _breadcrumbs = Array.isArray(breadcrumbs) ? breadcrumbs : calcBreadcrumbs($page.route.id, $page.params);
 
   $: back = null;
 
