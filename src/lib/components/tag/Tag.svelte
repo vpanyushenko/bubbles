@@ -5,7 +5,7 @@
   export let label = "";
   export let tooltip = null;
   export let color = "__default";
-  export let color_options = [];
+  export let colors = [];
   export let small = false;
   export let min_width = 3;
   export let margin = "0 0 0 0";
@@ -22,12 +22,10 @@
     color = "primary-lightest";
   }
 
-  $: if (Array.isArray(color_options) && label) {
-    const match = color_options.find((option) => option?.label?.toLowerCase() === label?.toLowerCase());
+  $: if (Array.isArray(colors) && label) {
+    const match = colors.find((option) => option?.label?.toLowerCase() === label?.toLowerCase());
 
-    if (match) {
-      color = match.color;
-    }
+    if (match) color = match.color;
   }
 </script>
 
@@ -202,6 +200,6 @@
 
   .small {
     font-size: 0.6rem;
-    padding: 0 0.25rem;
+    /* padding: 3px 0.625rem; */
   }
 </style>
