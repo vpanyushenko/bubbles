@@ -1,6 +1,6 @@
 <script>
   import { dev } from "$app/environment";
-  import { scale, fade } from "svelte/transition";
+  import { scale } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import { v4 as uuid } from "@lukeed/uuid";
   import Switch from "$lib/components/switch/LabeledSwitch.svelte";
@@ -186,7 +186,7 @@
           easing: quintOut,
         }}
       >
-        {#if input.type === "text" || input.type === "email" || input.type === "password" || input.type === "date" || input.type === "number" || input.type === "textarea" || input.type === "tel" || input.type === "phone" || input.type === "time"}
+        {#if ["text", "email", "password", "date", "number", "textarea", "tel", "phone", "time", "tag", "chip"].includes(input.type)}
           <Input {...input} bind:value={input.value} />
         {/if}
 
@@ -238,7 +238,11 @@
         {/if}
 
         {#if input.type === "p"}
-          <p>{input.value}</p>
+          <p>{@html input.value ?? input.text}</p>
+        {/if}
+
+        {#if input.type === "caption"}
+          <p class="field__desc">{@html input.value ?? input.text}</p>
         {/if}
       </span>
     {/if}
@@ -286,5 +290,17 @@
     width: 100%;
     align-items: center;
     vertical-align: top;
+  }
+
+  .field__desc {
+    padding: 0.625rem 1.375rem 0;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33333;
+    color: var(--gray);
+  }
+
+  p.field__desc {
+    margin-bottom: 0;
   }
 </style>
