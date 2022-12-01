@@ -53,23 +53,26 @@
   export let shadow = false;
 
   export let typeahead = null;
+  export let onselect = null;
   export let debounce = 350;
   export let search = false;
+  export let reset_on_select = true;
   export let __search_id = null;
   export let __search_width_100 = false;
 
   const dropdown = options.length ? true : false;
 
-  let search_active = false;
+  let is_search_active = false;
   let search_input, search_value, search_focused;
 
   $: src = icons[icon] || icon || icons.more;
-  $: $pageStore.search = search_active === true ? __search_id : null;
+  $: $pageStore.search = is_search_active === true ? __search_id : null;
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
-  $: navigating_to_new_page = $navigating?.from?.href === $navigating?.to?.href ? false : true;
+  //$: navigating_to_new_page = $navigating?.from?.url?.href === $navigating?.to?.url?.href ? false : true;
 
   $: typeahead_options = [];
+  let was_typeahead_options_selected = false;
 
   //Stop the loading animation fo search
   $: if ($pageStore.loading.includes(id) && browser) {
@@ -81,14 +84,14 @@
   onMount(() => {
     if (search) {
       if ($page.url.searchParams.get("search")) {
-        search_active = true;
+        is_search_active = true;
       }
 
       const value = $page.url.searchParams.get("search");
 
       if (value) {
         search_value = value;
-        search_active = true;
+        is_search_active = true;
         $pageStore.search = __search_id;
       }
     }
@@ -117,9 +120,9 @@
       iconElement = iconElement.closest(".icon__btn");
     }
 
-    if (search === true && !search_active) {
+    if (search === true && !is_search_active) {
       $pageStore.search = __search_id;
-      search_active = true;
+      is_search_active = true;
 
       setTimeout(() => {
         if (search_input) {
@@ -148,7 +151,7 @@
       $pageStore.dropdown = null;
 
       if (!search_value && search) {
-        search_active = false;
+        is_search_active = false;
         if ($page.url.searchParams.get("search")) {
           $page.url.searchParams.get("search");
           deleteQueryParam("search");
@@ -159,7 +162,8 @@
   }
 
   function onsearch(event) {
-    typeahead_options = [];
+    //We only need to search globally when not presenting options
+    if (typeahead) return;
 
     if (event.currentTarget.value) {
       addQueryParam("search", event.currentTarget.value);
@@ -171,6 +175,7 @@
 
   async function typeaheadOnInput(event) {
     const typeahead_value = event.target.value;
+    was_typeahead_options_selected = false;
 
     await new Promise((resolve) => setTimeout(resolve, debounce));
 
@@ -179,7 +184,8 @@
       typeahead(typeahead_value)
         .then((options) => {
           is_loading = false;
-          if (options && options.length) {
+
+          if (options && options.length && was_typeahead_options_selected === false) {
             //check if the typeahead options that were passed were strings and format them correctly
             typeahead_options = options.map((option) => {
               if (typeof option === "string") {
@@ -305,13 +311,13 @@
     <button
       on:click={iconClick}
       on:click={onclick}
-      class:search_active
+      class:search_active={is_search_active}
       {id}
       disabled={is_loading}
       class:shadow
       class:shadow_on_hover={__shadow_on_hover}
-      class:search={search_active}
-      class:w-100={search_active && __search_width_100}
+      class:search={is_search_active}
+      class:w-100={is_search_active && __search_width_100}
       class:blocky={radius === "blocky"}
       class:larger
       class:dark_mode_invert
@@ -373,7 +379,7 @@
       class:bg-dark-darker={color === "dark-darker"}
       class:bg-dark-darkest={color === "dark-darkest"}
     >
-      {#if search_active}
+      {#if is_search_active}
         <div class="field__wrapper" class:focused={search_focused}>
           <input
             bind:this={search_input}
@@ -387,52 +393,69 @@
             on:blur={() => (search_focused = false)}
           />
 
-          {#if search_active}
-            {#if is_loading}
-              <span
-                style="margin-right: 1rem;"
-                on:click|stopPropagation={() => {
-                  hideLoading(id);
-                  search_value = "";
-                  search_input.focus();
-                }}
-              >
-                <Spinner />
-              </span>
-            {/if}
+          {#if is_loading}
+            <span
+              style="margin-right: 1rem;"
+              on:click|stopPropagation={() => {
+                hideLoading(id);
+                search_value = "";
+                search_input.focus();
+              }}
+            >
+              <Spinner />
+            </span>
+          {/if}
 
-            <span class:hidden={is_loading}>
-              <img
-                class="icon icon-main icon-close"
-                src={close}
-                alt="close"
-                on:click={() => {
-                  if (search_value) {
-                    search_value = "";
-                    typeahead_options = [];
-                  } else {
-                    search_active = false;
-                    deleteQueryParam("search");
-                    typeahead_options = [];
+          <span class:hidden={is_loading}>
+            <img
+              class="icon icon-main icon-close"
+              src={close}
+              alt="close"
+              on:click={() => {
+                if (search_value) {
+                  search_value = "";
+                  typeahead_options = [];
+                } else {
+                  is_search_active = false;
+                  deleteQueryParam("search");
+                  typeahead_options = [];
+                }
+              }}
+            />
+          </span>
+
+          {#if typeahead_options && typeahead_options.length > 0}
+            <div class="typeahead">
+              <Dropdown
+                bind:options={typeahead_options}
+                search={false}
+                bind:value={search_value}
+                on:select={(event) => {
+                  was_typeahead_options_selected = true;
+                  if (onselect) {
+                    if (reset_on_select) {
+                      setTimeout(() => {
+                        search_value = "";
+                        is_search_active = false;
+                        typeahead_options = [];
+                        $pageStore.dropdown = null;
+                      }, 0);
+                    }
+
+                    onselect(event?.detail?.value, event);
                   }
                 }}
               />
-            </span>
-
-            {#if typeahead_options && typeahead_options.length > 0}
-              <div class="typeahead">
-                <Dropdown bind:options={typeahead_options} search={false} bind:value={search_value} />
-              </div>
-            {/if}
+            </div>
           {/if}
         </div>
       {/if}
 
-      {#if is_loading && !search_active}
+      {#if is_loading && !is_search_active}
         <Spinner />
       {/if}
 
-      <span class:hidden={is_loading || search_active}>
+      <span class:hidden={is_loading || is_search_active}>
         <slot>
           <img class="icon icon-main" class:invert_icon={__icon_inverted} {src} class:hidden={is_loading} alt="icon" />
         </slot>
@@ -520,6 +543,10 @@
     -o-transition: all 350ms ease;
     -ms-transition: all 350ms ease;
     transition: all 350ms ease;
+  }
+
+  button.search_active:hover {
+    opacity: 1;
   }
 
   button.shadow_on_hover:hover {
