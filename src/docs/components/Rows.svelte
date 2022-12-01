@@ -2,7 +2,7 @@
   import Row from "$lib/layouts/Row.svelte";
   import Column100 from "$lib/layouts/Column100.svelte";
   import Column50 from "$lib/layouts/Column50.svelte";
-  import Card from "$assets/components/Card.svelte";
+  import Card from "$docs/components/Card.svelte";
 
   export let rows;
 </script>

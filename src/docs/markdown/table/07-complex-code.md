@@ -18,7 +18,7 @@ type: code
     sort,
   } from "bubbles-ui";
 
-  import store from "$assets/utils/store";
+  import store from "$docs/utils/store";
   import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
 
   $: pagination = $store?.pagination ? $store.pagination : {};

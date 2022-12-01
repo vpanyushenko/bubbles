@@ -9,7 +9,7 @@ type: code
   //This is the example for adding the icon buttons into the Header or CardHeader component.
 
   import { Header, fuzzySearch } from "bubbles-ui";
-  import sections from "$assets/utils/sidebar-sections"; //Just for the demo, since there is a search element here
+  import sections from "$docs/utils/sidebar-sections"; //Just for the demo, since there is a search element here
 
   const props = {
     title: "IconButton", //This will automatically set the page title for you unless you overwrite it with svelte:head

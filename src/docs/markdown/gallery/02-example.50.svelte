@@ -1,14 +1,14 @@
 <script>
   import { Gallery, Card, CardHeader, CardFooter, showModal, getFormData, showLoading, hideLoading } from "$lib/index";
 
-  import image1 from "$assets/icons/gallery/1.jpg";
-  import image2 from "$assets/icons/gallery/2.jpg";
-  import image3 from "$assets/icons/gallery/3.jpg";
-  import image4 from "$assets/icons/gallery/4.jpg";
-  import image5 from "$assets/icons/gallery/5.jpg";
-  import image6 from "$assets/icons/gallery/6.jpg";
-  import image7 from "$assets/icons/gallery/7.jpg";
-  import image8 from "$assets/icons/gallery/8.jpg";
+  import image1 from "$docs/icons/gallery/1.jpg";
+  import image2 from "$docs/icons/gallery/2.jpg";
+  import image3 from "$docs/icons/gallery/3.jpg";
+  import image4 from "$docs/icons/gallery/4.jpg";
+  import image5 from "$docs/icons/gallery/5.jpg";
+  import image6 from "$docs/icons/gallery/6.jpg";
+  import image7 from "$docs/icons/gallery/7.jpg";
+  import image8 from "$docs/icons/gallery/8.jpg";
 
   let page = 1;
   let images = [image1, image2, image3, image4, image5, image6, image7, image8];

@@ -2,11 +2,11 @@
   import Card from "$lib/components/card/Card.svelte";
   import CardHeader from "$lib/components/card/CardHeader.svelte";
 
-  import icon_circle from "$assets/icons/shapes/circle.svg";
-  import icon_square from "$assets/icons/shapes/square.svg";
-  import icon_triangle from "$assets/icons/shapes/triangle.svg";
-  import icon_pentagon from "$assets/icons/shapes/pentagon.svg";
-  import icon_star from "$assets/icons/shapes/star.svg";
+  import icon_circle from "$docs/icons/shapes/circle.svg";
+  import icon_square from "$docs/icons/shapes/square.svg";
+  import icon_triangle from "$docs/icons/shapes/triangle.svg";
+  import icon_pentagon from "$docs/icons/shapes/pentagon.svg";
+  import icon_star from "$docs/icons/shapes/star.svg";
 
   import Select from "$lib/components/select/Select.svelte";
 </script>

@@ -3,7 +3,7 @@
   import Grid from "$lib/layouts/Grid.svelte";
   import GridItem from "$lib/layouts/GridItem.svelte";
 
-  import img from "$assets/icons/app.png";
+  import img from "$docs/icons/app.png";
 </script>
 
 <!-- svelte-ignore component-name-lowercase -->

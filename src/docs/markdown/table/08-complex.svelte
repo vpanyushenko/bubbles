@@ -14,7 +14,7 @@
 
   import Pagination from "$lib/components/pagination/Pagination.svelte";
 
-  import store from "$assets/utils/store";
+  import store from "$docs/utils/store";
   import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
   import { sort } from "$lib/index";
 
