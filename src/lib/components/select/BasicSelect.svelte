@@ -1,7 +1,7 @@
 <script>
   import { v4 as uuid } from "@lukeed/uuid";
   import { pageStore } from "$lib/utils/stores";
-  import { page } from "$app/stores";
+  import { page, navigating } from "$app/stores";
   import { browser } from "$app/environment";
 
   const _uuid = uuid();
