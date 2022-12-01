@@ -1,10 +1,16 @@
 <script>
-  import Rows from "$assets/components/Rows.svelte";
+  import Rows from "$docs/components/Rows.svelte";
   import Header from "$lib/components/header/Header.svelte";
-  import { formatPosts } from "$assets/utils/posts";
+  import { formatPosts } from "$docs/utils/posts";
   import { setDarkMode, unsetDarkMode } from "$lib/index";
+  import { page } from "$app/stores";
   const all_posts = import.meta.glob(`../assets/markdown/welcome/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
+
+  $: console.log($page);
+
+  $: test = import.meta.glob(`../assets/markdown/installation/**/*`, { eager: true });
+  $: console.log(test);
 </script>
 
 <Header

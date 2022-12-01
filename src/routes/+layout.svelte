@@ -1,23 +1,21 @@
-
-
 <script>
   import "$lib/css/app.css";
-  import "$assets/css/oceanic.css";
-  import "$assets/css/markdown.css";
+  import "$docs/css/oceanic.css";
+  import "$docs/css/markdown.css";
 
-  import icon_arrow from "$assets/icons/arrow.svg";
+  import icon_arrow from "$docs/icons/arrow.svg";
 
   import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
   import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
 
   import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
   import IconButton from "$lib/components/button/IconButton.svelte";
-  import sections from "$assets/utils/sidebar-sections";
-  import store from "$assets/utils/store";
+  import sections from "$docs/utils/sidebar-sections";
+  import store from "$docs/utils/store";
   import ModalContainer from "$lib/components/modal/ModalContainer.svelte";
 
-  import logo from "$assets/icons/logo.svg";
-  import logo_dark_mode from "$assets/icons/logo-dark-mode.svg";
+  import logo from "$docs/icons/logo.svg";
+  import logo_dark_mode from "$docs/icons/logo-dark-mode.svg";
 
   // $configStore.padding = "compact";
   // $configStore.radius = "blocky";
