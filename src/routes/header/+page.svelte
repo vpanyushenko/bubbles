@@ -4,7 +4,7 @@
   import { formatPosts } from "$docs/utils/posts";
   import { fuzzySearch, pageStore } from "$lib/index";
   import sections from "$docs/utils/sidebar-sections";
-  const all_posts = import.meta.glob(`../../assets/markdown/header/**/*`, { eager: true });
+  const all_posts = import.meta.glob(`../../docs/markdown/header/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
 </script>
 

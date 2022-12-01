@@ -3,7 +3,7 @@ import path from "path";
 // import { read_file } from "$lib/docs/server";
 import { error } from "@sveltejs/kit";
 
-const base = "../../assets";
+const base = "../../docs";
 
 import breadcumbs from "$lib/utils/breadcrumbs";
 console.log(fs.existsSync("../../lib/utils/breadcrumbs"));

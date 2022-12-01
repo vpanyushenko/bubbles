@@ -5,17 +5,32 @@
 
   import icon_arrow from "$docs/icons/arrow.svg";
 
-  import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
-  import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
+  import {
+    Header,
+    unsetDarkMode,
+    setDarkMode,
+    Sidebar,
+    SidebarPageWrapper,
+    ToastContainer,
+    IconButton,
+    ModalContainer,
+  } from "bubbles-ui";
 
-  import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
-  import IconButton from "$lib/components/button/IconButton.svelte";
+  console.log(Header);
+
+  // import Sidebar from "$lib/components/sidebar/Sidebar.svelte";
+  // import SidebarPageWrapper from "$lib/layouts/SidebarPageWrapper.svelte";
+
+  // import ToastContainer from "$lib/components/toast/ToastContainer.svelte";
+  // import IconButton from "$lib/components/button/IconButton.svelte";
+  // import ModalContainer from "$lib/components/modal/ModalContainer.svelte";
   import sections from "$docs/utils/sidebar-sections";
   import store from "$docs/utils/store";
-  import ModalContainer from "$lib/components/modal/ModalContainer.svelte";
 
   import logo from "$docs/icons/logo.svg";
   import logo_dark_mode from "$docs/icons/logo-dark-mode.svg";
+
+  import { page } from "$app/stores";
 
   // $configStore.padding = "compact";
   // $configStore.radius = "blocky";
@@ -41,6 +56,21 @@
   // }
 
   let y = 0;
+
+  /**
+   * Converts string to title case
+   * @param {String} str - the string
+   * @param {Number} [length=2] - The minimum length of the string to check
+   * @returns {String}
+   */
+  const titleCase = (str, length = 2) => {
+    if (!str) return "";
+    if (str.length < length) return str;
+
+    return str.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+    });
+  };
 </script>
 
 <svelte:window bind:scrollY={y} />
@@ -50,6 +80,37 @@
 <Sidebar {...sidebarConfig} />
 
 <SidebarPageWrapper>
+  <Header
+    title={$page.route.id
+      .split("/")
+      .at(-1)
+      .split("-")
+      .map((s) => titleCase(s))
+      .join(" ")}
+    buttons={[
+      {
+        icon: "more",
+        color: "gray-lighter",
+        options: [
+          {
+            label: "Light Mode",
+            onclick: () => {
+              console.log("Light mode");
+              unsetDarkMode();
+            },
+          },
+          {
+            label: "Dark Mode",
+            onclick: () => {
+              console.log("Dark mode");
+              setDarkMode();
+            },
+          },
+        ],
+      },
+    ]}
+  />
+
   <slot />
 </SidebarPageWrapper>
 

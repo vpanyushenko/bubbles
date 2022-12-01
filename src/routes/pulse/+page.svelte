@@ -2,10 +2,10 @@
   import Rows from "$docs/components/Rows.svelte";
   import Header from "$lib/components/header/Header.svelte";
   import { formatPosts } from "$docs/utils/posts";
-  const all_posts = import.meta.glob(`../../docs/markdown/list/**/*`, { eager: true });
+  const all_posts = import.meta.glob(`../../docs/markdown/pulse/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
 </script>
 
-<Header title="List" />
+<Header title="Pulse" />
 
 <Rows {rows} />

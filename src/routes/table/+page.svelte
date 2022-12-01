@@ -3,7 +3,7 @@
   import Header from "$lib/components/header/Header.svelte";
   import { formatPosts } from "$docs/utils/posts";
   import store from "$docs/utils/store";
-  const all_posts = import.meta.glob(`../../assets/markdown/table/**/*`, { eager: true });
+  const all_posts = import.meta.glob(`../../docs/markdown/table/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
 
   export let data;

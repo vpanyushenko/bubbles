@@ -4,7 +4,7 @@
   import { formatPosts } from "$docs/utils/posts";
   import { fuzzySearch } from "$lib/index";
   import sections from "$docs/utils/sidebar-sections";
-  const all_posts = import.meta.glob(`../../assets/markdown/fuzzy-search/**/*`, { eager: true });
+  const all_posts = import.meta.glob(`../../docs/markdown/fuzzy-search/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
 </script>
 

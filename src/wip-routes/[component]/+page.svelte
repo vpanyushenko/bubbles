@@ -5,12 +5,12 @@
   import { setDarkMode, unsetDarkMode } from "$lib/index";
   import { page } from "$app/stores";
 
-  // const all_posts = import.meta.glob(`../assets/markdown/welcome/**/*`, { eager: true });
+  // const all_posts = import.meta.glob(`../docs/markdown/welcome/**/*`, { eager: true });
 
   // const rows = formatPosts(all_posts);
   // $: console.log($page);
 
-  // const test = import.meta.glob(`../assets/markdown/${components[$page.component]}/**/*`, { eager: true });
+  // const test = import.meta.glob(`../docs/markdown/${components[$page.component]}/**/*`, { eager: true });
   // console.log(test);
 
   import markdown from "$docs/markdown/installation/01-overview.md";
