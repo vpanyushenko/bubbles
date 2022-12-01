@@ -18,4 +18,4 @@ If this is not the project you are envisioning, then this UI Kit is probably not
 
 **What does Bubbles do that other don't**
 
-Bubbles is set up to make working with data pretty easy. There are lots of helpful utilities that validate form data, add query parameters for filters on fetch requests, and force you to user a pretty minimalist design so the data remains highly readable. Once neat features are the `Table` components which use a stacked row approach for better data density. It also has Stripe built in.
+Bubbles is set up to make working with data pretty easy. There are lots of helpful utilities that validate form data, add query parameters for filters on fetch requests, and force you to user a pretty minimalist design so the data remains highly readable. One neat features are the `Table` components which use a stacked row approach for better data density. It also has Stripe built in.
