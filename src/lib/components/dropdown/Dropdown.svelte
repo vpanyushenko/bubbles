@@ -43,9 +43,6 @@
       ? formatted_options
       : fuzzySearch(search_value, formatted_options, { threshold: search_threshold ?? 0.3, keys: ["label"] });
 
-  // fuse.search(search_value).map((obj) => obj.item);
-  // $: is_list_open = options ? true : false;
-
   let height, y; //window bindings
 
   let is_focused = false;
@@ -61,48 +58,6 @@
     is_search_focused = false;
     search_value = "";
     selected_index = 0;
-
-    // // check to see if inside of a model
-    // // if we are, we should adjust the dropdown so it's visible in the modal
-    // console.log(id);
-    // console.log(id);
-    // console.log(id);
-    // console.log(id);
-    // const dropdown = document.getElementById(id);
-    // const modal = dropdown ? dropdown.closest(".js-bubbles-modal") : null;
-    // const rect = dropdown ? dropdown.getBoundingClientRect() : null;
-
-    // console.log("&");
-    // console.log("&");
-    // console.log("&");
-    // console.log(document);
-    // console.log(dropdown);
-    // console.log(modal);
-    // console.log(rect);
-
-    // if (!modal) {
-    //   if (rect.bottom + y + 100 > height + y) {
-    //     let diff = rect.bottom + 100 - height;
-
-    //     y += diff;
-    //   }
-    // } else if (rect) {
-    //   const modal_rect = modal.querySelector("main").getBoundingClientRect();
-
-    //   let scroll = rect.bottom - modal_rect.bottom;
-
-    //   console.log(rect);
-    //   console.log(rect.height);
-    //   console.log(modal_rect);
-
-    //   //dropdown.scrollIntoView({ behavior: "smooth", block: "end" });
-
-    //   if (scroll > 25) {
-    //     modal.querySelector("main").scroll({ top: scroll + rect.height, behavior: "smooth" });
-    //   }
-    // }
-
-    // console.log("list open");
 
     dispatch("active", true);
   } else {
