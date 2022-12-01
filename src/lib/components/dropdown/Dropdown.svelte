@@ -1,23 +1,24 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import Fuse from "$lib/utils/fuze";
+  import { Tag, pageStore, fuzzySearch, Divider } from "$lib/index";
   import icon_arrowRight from "./arrow-right.svg";
   import { v4 as uuid } from "@lukeed/uuid";
-  import { pageStore } from "$lib/utils/stores";
   import { onMount } from "svelte";
-
-  const id = `dropdown-${uuid()}`;
 
   const dispatch = createEventDispatcher();
 
+  export let id = `dropdown-${uuid()}`;
   export let value = null;
-  export let placeholder = "Start typing to search...";
   export let options = [];
   export let search = options.length > 5 ? true : false;
+  export let placeholder = "Start typing to search...";
+  export let empty = "No results found";
   export let create_option = false;
   export let search_threshold = 0.3;
   export let type = null;
   export let align = "left";
+  export let parent;
+  export let is_list_open = false;
 
   $: formatted_options = options
     .map((option) => {
@@ -37,8 +38,13 @@
     .filter(Boolean);
 
   $: search_value = "";
-  $: filtered_options = !search_value ? formatted_options : fuse.search(search_value).map((obj) => obj.item);
-  $: is_list_open = formatted_options ? true : false;
+  $: filtered_options =
+    !search_value && is_list_open
+      ? formatted_options
+      : fuzzySearch(search_value, formatted_options, { threshold: search_threshold ?? 0.3, keys: ["label"] });
+
+  // fuse.search(search_value).map((obj) => obj.item);
+  // $: is_list_open = options ? true : false;
 
   let height, y; //window bindings
 
@@ -55,18 +61,53 @@
     is_search_focused = false;
     search_value = "";
     selected_index = 0;
+
+    // // check to see if inside of a model
+    // // if we are, we should adjust the dropdown so it's visible in the modal
+    // console.log(id);
+    // console.log(id);
+    // console.log(id);
+    // console.log(id);
+    // const dropdown = document.getElementById(id);
+    // const modal = dropdown ? dropdown.closest(".js-bubbles-modal") : null;
+    // const rect = dropdown ? dropdown.getBoundingClientRect() : null;
+
+    // console.log("&");
+    // console.log("&");
+    // console.log("&");
+    // console.log(document);
+    // console.log(dropdown);
+    // console.log(modal);
+    // console.log(rect);
+
+    // if (!modal) {
+    //   if (rect.bottom + y + 100 > height + y) {
+    //     let diff = rect.bottom + 100 - height;
+
+    //     y += diff;
+    //   }
+    // } else if (rect) {
+    //   const modal_rect = modal.querySelector("main").getBoundingClientRect();
+
+    //   let scroll = rect.bottom - modal_rect.bottom;
+
+    //   console.log(rect);
+    //   console.log(rect.height);
+    //   console.log(modal_rect);
+
+    //   //dropdown.scrollIntoView({ behavior: "smooth", block: "end" });
+
+    //   if (scroll > 25) {
+    //     modal.querySelector("main").scroll({ top: scroll + rect.height, behavior: "smooth" });
+    //   }
+    // }
+
+    // console.log("list open");
+
     dispatch("active", true);
   } else {
-    filtered_options = [];
     dispatch("active", false);
   }
-
-  $: fuse = new Fuse(formatted_options, {
-    shouldSort: false,
-    keys: ["label", "caption"],
-    minMatchCharLength: 2,
-    threshold: search_threshold ?? 0.3,
-  });
 
   function selectOption(event) {
     const option = event.currentTarget;
@@ -90,8 +131,6 @@
 
     is_focused = true;
     is_list_open = false;
-    $pageStore.clicked = null;
-    $pageStore.dropdown = null;
 
     dispatch("select", {
       value: value,
@@ -156,7 +195,11 @@
               selected_index++;
             }
 
-            if (filtered_options[selected_index] === "break" || filtered_options[selected_index]?.break === true) {
+            if (
+              filtered_options[selected_index] === "break" ||
+              filtered_options[selected_index]?.break === true ||
+              filtered_options[selected_index]?.divider === true
+            ) {
               selected_index++;
             }
           }
@@ -181,7 +224,11 @@
           } else {
             selected_index--;
 
-            if (filtered_options[selected_index] === "break") {
+            if (
+              filtered_options[selected_index] === "break" ||
+              filtered_options[selected_index]?.break === true ||
+              filtered_options[selected_index]?.divider === true
+            ) {
               selected_index--;
             }
           }
@@ -284,141 +331,179 @@
   }
 
   function bodyClicked(event) {
+    let parent_clicked = false;
+
+    if (parent) {
+      try {
+        if (event.target && event.target.closest(`#${parent}`)) {
+          parent_clicked = true;
+        }
+      } catch (error) {
+        if (event?.target?.parentElement && event?.target?.parentElement?.id === parent) {
+          parent_clicked = true;
+        }
+      }
+    }
+
     if (is_list_open) {
       const dropdown_clicked = event.target.closest(`.js-bubbles-dropdown`);
       const field_clicked = event.target.closest(`.js-bubbles-field-container`);
       const select_clicked = event.target.closest(`.js-bubbles-select`);
       const icon_clicked = event.target.closest(`.js-bubbles-icon-button`);
 
-      if (!dropdown_clicked && !field_clicked && !select_clicked && !icon_clicked && is_list_open) {
+      if (!parent_clicked && !dropdown_clicked && !field_clicked && !select_clicked && !icon_clicked) {
         is_list_open = false;
+      }
+    } else {
+      if (parent_clicked) {
+        is_list_open = true;
       }
     }
   }
 
-  onMount(() => {
-    //check to see if inside of a model
-    //if we are, we should adjust the dropdown so it's visible in the modal
-    const dropdown = document.getElementById(id);
-    const modal = dropdown ? dropdown.closest(".js-bubbles-modal") : null;
-    const rect = dropdown ? dropdown.getBoundingClientRect() : null;
+  // onMount(() => {
+  //   //check to see if inside of a model
+  //   //if we are, we should adjust the dropdown so it's visible in the modal
+  //   const dropdown = document.getElementById(id);
+  //   const modal = dropdown ? dropdown.closest(".js-bubbles-modal") : null;
+  //   const rect = dropdown ? dropdown.getBoundingClientRect() : null;
 
-    //TODO: Not sure why scrollintoView not working
-    //dropdown.scrollIntoView({ behavior: "smooth", block: "end" });
+  //   if (!modal) {
+  //     if (rect.bottom + y + 100 > height + y) {
+  //       let diff = rect.bottom + 100 - height;
 
-    if (!modal) {
-      if (rect.bottom + y + 100 > height + y) {
-        let diff = rect.bottom + 100 - height;
+  //       y += diff;
+  //     }
+  //   } else if (rect) {
+  //     const modal_rect = modal.querySelector("main").getBoundingClientRect();
 
-        y += diff;
-      }
-    } else if (rect) {
-      const modal_rect = modal.querySelector("main").getBoundingClientRect();
+  //     let scroll = rect.bottom - modal_rect.bottom;
 
-      let scroll = rect.bottom - modal_rect.bottom;
-
-      if (scroll > 25) {
-        modal.querySelector("main").scroll({ top: scroll + rect.height, behavior: "smooth" });
-      }
-    }
-  });
+  //     if (scroll > 25) {
+  //       modal.querySelector("main").scroll({ top: scroll + rect.height, behavior: "smooth" });
+  //     }
+  //   }
+  // });
 </script>
 
 <svelte:body on:keydown={keydown} on:click={bodyClicked} />
 <svelte:window bind:innerHeight={height} bind:scrollY={y} />
 
-{#if (filtered_options && filtered_options.length) || is_list_open}
-  <div
-    class="options js-bubbles-dropdown"
-    class:left={align === "left"}
-    class:right={align === "right"}
-    {id}
-    on:mousemove={mousemove}
-  >
-    {#if search}
-      <input
-        class="search"
-        type="text"
-        {placeholder}
-        bind:value={search_value}
-        on:focus|preventDefault|stopPropagation={(event) => {
-          is_search_focused = true;
-        }}
-        on:blur|preventDefault|stopPropagation={(event) => {
-          is_search_focused = false;
-        }}
-      />
-    {/if}
+<!-- {#if is_list_open} -->
+<div
+  class:hidden={!is_list_open}
+  class="options js-bubbles-dropdown"
+  class:left={align === "left"}
+  class:right={align === "right"}
+  {id}
+  on:mousemove={mousemove}
+>
+  {#if search}
+    <input
+      class="search"
+      type="text"
+      {placeholder}
+      bind:value={search_value}
+      on:focus|preventDefault|stopPropagation={(event) => {
+        is_search_focused = true;
+      }}
+      on:blur|preventDefault|stopPropagation={(event) => {
+        is_search_focused = false;
+      }}
+    />
+  {/if}
 
-    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    {#each filtered_options as option, index}
-      {#if option.hidden !== true}
-        {#if option === "break" || option.break === true || option.divider === true}
-          <hr tabindex="-1" />
-        {:else if option.href}
-          <a
-            class="option"
-            class:selected={option.value === value}
-            class:focused={selected_index === index && !is_using_pointer_device}
-            href={option.href}
-            target={option.new_page ? "_blank" : ""}
-            data-sveltekit-prefetch
-            on:mousedown={() => ($pageStore.is_fetching = true)}
-            on:mousedown={option.onselect}
-            on:mouseover={hoverOption}
-          >
-            <div class="option__content">
-              {#if option.img}
-                <img class="option__img" src={option.img} alt={option.label} />
-              {/if}
-
-              <div class="text">
-                <div class="title">{option.label}</div>
-                <input class="hidden" type="hidden" value={option.value} />
-                {#if option.caption}
-                  <div class="select__info caption">{option.caption}</div>
-                {/if}
-              </div>
-            </div>
-
-            {#if option.icon !== null}
-              <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
+  <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+  {#each filtered_options as option, index}
+    {#if option.hidden !== true}
+      {#if option === "break" || option.break === true || option.divider === true}
+        <Divider {...option} />
+      {:else if option.href}
+        <a
+          class="option"
+          class:selected={option.value === value}
+          class:focused={selected_index === index && !is_using_pointer_device}
+          href={option.href}
+          target={option.new_page ? "_blank" : ""}
+          data-sveltekit-prefetch
+          on:mousedown={() => ($pageStore.is_fetching = true)}
+          on:mousedown={option.onselect}
+          on:mouseover={hoverOption}
+        >
+          <div class="option__content">
+            {#if option.img}
+              <img class="option__img" src={option.img} alt={option.label} />
             {/if}
-          </a>
-        {:else}
-          <div
-            class="option"
-            on:mousedown={option.onclick}
-            on:mousedown={option.onselect}
-            on:mousedown={selectOption}
-            on:mouseover={hoverOption}
-            class:selected={option.value === value}
-            class:focused={selected_index === index && !is_using_pointer_device}
-          >
-            <div class="option__content">
-              {#if option.img}
-                <img class="option__img" src={option.img} alt={option.label} />
+
+            <div class="text">
+              <div class="title" style={option.color ? `color: --var(${option.color})` : ""}>{option.label}</div>
+              <input class="hidden" type="hidden" value={option.value} />
+              {#if option.caption}
+                <div class="select__info caption">{option.caption}</div>
               {/if}
-
-              <div class="text">
-                <div class="title">{option.label}</div>
-                <input class="hidden" type="hidden" value={option.value} />
-                {#if option.caption}
-                  <div class="select__info caption">{option.caption}</div>
-                {/if}
-              </div>
             </div>
+          </div>
 
-            {#if option.icon !== null}
-              <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
+          <div class="tag">
+            {#if option?.tag?.label}
+              <Tag {...option.tag} />
             {/if}
           </div>
-        {/if}
-      {/if}
-    {/each}
-  </div>
-{/if}
 
+          {#if option.icon !== null}
+            <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
+          {/if}
+        </a>
+      {:else}
+        <div
+          class="option"
+          on:mousedown={option.onclick}
+          on:mousedown={option.onselect}
+          on:mousedown={selectOption}
+          on:mouseover={hoverOption}
+          class:selected={option.value === value}
+          class:focused={selected_index === index && !is_using_pointer_device}
+        >
+          <div class="option__content">
+            {#if option.img}
+              <img class="option__img" src={option.img} alt={option.label} />
+            {/if}
+
+            <div class="text">
+              <div class="title" class:error={option.color === "error"} class:success={option.color === "success"}>
+                {option.label}
+              </div>
+              <input class="hidden" type="hidden" value={option.value} />
+              {#if option.caption}
+                <div class="select__info caption">{option.caption}</div>
+              {/if}
+            </div>
+          </div>
+
+          <div class="tag">
+            {#if option?.tag?.label}
+              <Tag {...option.tag} />
+            {/if}
+          </div>
+
+          {#if option.icon !== null}
+            <img class="icon" src={option.icon || icon_arrowRight} alt="Option Indicator" />
+          {/if}
+        </div>
+      {/if}
+    {/if}
+  {:else}
+    <div class="option empty">
+      <div class="option__content">
+        <div class="text">
+          <div class="title">{empty}</div>
+        </div>
+      </div>
+    </div>
+  {/each}
+</div>
+
+<!-- {/if} -->
 <style>
   .options {
     position: absolute;
@@ -477,8 +562,8 @@
     justify-content: space-between;
     width: 100%;
     text-align: left;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -500,12 +585,23 @@
   }
 
   .option:focus img.icon,
-  .option:hover img.icon {
+  .option:hover img.icon,
+  .option:focus .tag,
+  .option:hover .tag {
     transform: translateX(5px);
   }
 
   .text {
-    display: block;
+    min-height: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .tag {
+    justify-content: right;
+    margin-left: auto;
+    transition: transform 0.25s;
   }
 
   hr {
@@ -563,7 +659,7 @@
   .option:hover .title,
   .option.focused .title,
   .option:hover .select__info {
-    color: #6c5dd3;
+    color: var(--primary);
   }
 
   /* .border .option:hover, */
@@ -575,6 +671,31 @@
   .option.selected {
     /* background-color: var(--dark-lightest); */
     border-radius: 12px;
+  }
+
+  .option.empty.selected .title,
+  .option.empty.selected .title,
+  .option.empty:hover .title,
+  .option.empty.focused .title,
+  .option.empty:hover .select__info {
+    color: var(--gray);
+  }
+
+  /* .border .option.empty:hover, */
+  .option.empty.focused {
+    background-color: var(--gray-lightest);
+    border-radius: 12px;
+  }
+
+  .option.empty.selected {
+    /* background-color: var(--dark-lightest); */
+    border-radius: 12px;
+  }
+  .error {
+    color: var(--error);
+  }
+  .success {
+    color: var(--success);
   }
 
   :global(html.dark) .options {
