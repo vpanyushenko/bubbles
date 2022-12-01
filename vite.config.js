@@ -8,11 +8,13 @@ const config = {
   server: {
     fs: {
       strict: false,
+      allow: [".."],
     },
   },
   resolve: {
     alias: {
       $docs: path.resolve("./src/docs"),
+      // "bubbles-ui": path.resolve("./package"),
     },
   },
 };
