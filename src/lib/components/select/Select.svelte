@@ -24,9 +24,7 @@
   export let min_width = true;
   export let debug = false;
 
-  /**
-   * @prop {Function} onselect - A function that will be provided with the value of the selected option
-   */
+  /** @prop {Function} onselect - A function that will be provided with the value of the selected option */
   export let onselect = null;
 
   const _label = configLabel(label, validation);
@@ -157,20 +155,25 @@
     <span class="value">{title}</span>
   </div>
 
-  {#if is_list_open}
-    <Dropdown
-      bind:options
-      {search}
-      {search_threshold}
-      bind:value
-      {type}
-      on:select={(event) => {
-        if (onselect) {
-          onselect(event?.detail?.value);
-        }
-      }}
-    />
-  {/if}
+  <Dropdown
+    bind:is_list_open
+    bind:options
+    {search}
+    {search_threshold}
+    bind:value
+    {type}
+    on:select={(event) => {
+      if (onselect) {
+        onselect(event?.detail?.value, event);
+      }
+    }}
+  />
+
+  <!-- on:select={(event) => {
+    if (onselect) {
+      onselect(event?.detail?.value, event);
+    }
+  }} -->
 
   {#if desc}
     <p class="field__desc">{@html desc}</p>
