@@ -301,6 +301,8 @@ const _inputTypes = [
   "stripe",
   "stripe-card",
   "file",
+  "tag",
+  "chip",
 ];
 
 /**
@@ -620,6 +622,9 @@ const submitForm = (
 
     showLoading(options?.loading);
 
+    const loading_button = document.getElementById(options?.loading);
+    if (loading_button) loading_button.disabled = true;
+
     const api = endpoint.startsWith("http") ? endpoint : `${api_url}${endpoint}`;
 
     if (options?.debug) {
@@ -670,6 +675,7 @@ const submitForm = (
       })
       .then((res) => {
         hideLoading(options?.loading);
+        if (loading_button) loading_button.disabled = false;
 
         if (options?.debug) {
           console.log(res.message);
@@ -751,6 +757,8 @@ const submitForm = (
           return data;
         });
         hideLoading(options?.loading);
+        if (loading_button) loading_button.disabled = false;
+
         reject(err);
       });
   });
