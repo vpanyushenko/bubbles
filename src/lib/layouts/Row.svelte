@@ -3,12 +3,11 @@
 
   export let style = "";
   export let mobile_reverse = false;
-  export let padding = $configStore.padding || "roomy";
+  export let padding;
   export let border = false;
 
-  if (padding === "compact") {
-    border = false;
-  }
+  if (!padding) padding = $configStore.padding || "roomy";
+  if (padding === "compact") border = false;
 </script>
 
 <div class="page__row" {style} class:reverse={mobile_reverse} class:compact={padding === "compact"} class:border>
