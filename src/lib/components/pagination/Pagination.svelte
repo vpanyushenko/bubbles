@@ -6,24 +6,16 @@
   import { page } from "$app/stores";
 
   export let id = uuid();
-  /**
-   * @prop {Array<Integers>} rows_per_page - The different limits you want to support
-   */
+  /** @prop {Array<Integers>} rows_per_page - The different limits you want to support */
   export let rows_per_page = [10, 25, 50, 100];
 
-  /**
-   * @prop {?Integer} limit - The current limit you are supporting. Will get it from query params or use the first value from `rows_per_page`
-   */
+  /** @prop {?Integer} limit - The current limit you are supporting. Will get it from query params or use the first value from `rows_per_page` */
   export let limit = null;
 
-  /**
-   * @prop {?Integer} count - the total number of documents known.
-   */
+  /** @prop {?Integer} count - the total number of documents known.*/
   export let count = null;
 
-  /**
-   * @prop {Integer} [max_buttons=10] - The maximum buttons that will be displayed to the end user.
-   */
+  /** @prop {Integer} [max_buttons=10] - The maximum buttons that will be displayed to the end user. */
   export let max_buttons = 10;
   export let arrows = true;
   export let first_last_arrows = false;
@@ -86,14 +78,14 @@
               label: row,
               value: row,
               onselect: (event) => {
-                addQueryParam(page_query_name, 1, { goto: false });
-                addQueryParam(limit_query_name, row, { show_loading: id, goto: true });
+                // addQueryParam(page_query_name, 1, { invalidate: false });
+                addQueryParam(limit_query_name, row, { show_loading: id, invalidate: true });
               },
             };
           } else {
             const _onselect = (event) => {
-              addQueryParam(page_query_name, "1", { goto: false });
-              addQueryParam(limit_query_name, row.value, { show_loading: id, goto: true });
+              // addQueryParam(page_query_name, "1", { invalidate: false });
+              addQueryParam(limit_query_name, row.value, { show_loading: id, invalidate: true });
             };
 
             return {
@@ -168,15 +160,15 @@
           id: id,
           label: button,
           onclick: () => {
-            addQueryParam(limit_query_name, limit, { goto: false });
-            addQueryParam(page_query_name, button, { show_loading: id, goto: true });
+            // addQueryParam(limit_query_name, limit, { invalidate: false });
+            addQueryParam(page_query_name, button, { show_loading: id, invalidate: true });
           },
           color: current_page.toString() !== button.toString() ? "" : "gray-lighter",
         };
       } else {
         const _onclick = () => {
-          addQueryParam(limit_query_name, limit, { goto: false });
-          addQueryParam(page_query_name, button, { show_loading: id, goto: true });
+          // addQueryParam(limit_query_name, limit, { invalidate: false });
+          addQueryParam(page_query_name, button, { show_loading: id, invalidate: true });
         };
 
         return {
@@ -204,7 +196,7 @@
         icon="arrowLeftDouble"
         id={_first}
         onclick={() => {
-          addQueryParam(page_query_name, 1, { show_loading: _first, goto: true });
+          addQueryParam(page_query_name, 1, { show_loading: _first, invalidate: true });
         }}
       />
     {/if}
@@ -217,7 +209,7 @@
           if (current_page > 1) {
             addQueryParam(page_query_name, Number(current_page) - 1, {
               show_loading: _prev,
-              goto: true,
+              invalidate: true,
             });
           }
         }}
@@ -248,7 +240,7 @@
           if (current_page < total_pages || has_more) {
             addQueryParam(page_query_name, Number(current_page) + 1, {
               show_loading: _next,
-              goto: true,
+              invalidate: true,
             });
           }
         }}
@@ -260,7 +252,7 @@
         icon="arrowRightDouble"
         id={_last}
         onclick={() => {
-          addQueryParam(page_query_name, total_pages, { show_loading: _last, goto: true });
+          addQueryParam(page_query_name, total_pages, { show_loading: _last, invalidate: true });
         }}
       />
     {/if}
