@@ -114,29 +114,33 @@
             },
           },
           {
-            label: "padding:compact",
-            caption: $store.sidebar_padding === "compact" ? "Selected" : null,
+            divider: true,
+            label: "Sidebar Options",
+          },
+          {
+            label: "Compact",
+            caption: $store.sidebar_padding === "compact" ? "(Selected)" : null,
             onselect: () => {
               $store.sidebar_padding = "compact";
             },
           },
           {
-            label: "padding:roomy",
-            caption: $store.sidebar_padding === "roomy" ? "Selected" : null,
+            label: "Roomy",
+            caption: $store.sidebar_padding === "roomy" ? "(Selected)" : null,
             onselect: () => {
               $store.sidebar_padding = "roomy";
             },
           },
           {
-            label: "flat:true",
-            caption: $store.flat === true ? "Selected" : null,
+            label: "Flat",
+            caption: $store.flat === true ? "(Selected)" : null,
             onselect: () => {
               $store.flat = true;
             },
           },
           {
-            label: "flat:false",
-            caption: $store.flat === false ? "Selected" : null,
+            label: "Not Flat (Nested)",
+            caption: $store.flat === false ? "(Selected)" : null,
             onselect: () => {
               $store.flat = false;
             },
