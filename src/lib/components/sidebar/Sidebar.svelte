@@ -13,6 +13,7 @@
   export let onclick = null;
   export let padding = $configStore.padding || "roomy";
   export let flat = sections.find((a) => a.group) ? false : true;
+  export let invert_dark_mode = true;
 
   $: sections = sections
     .map((section, index) => {
@@ -28,6 +29,7 @@
   let activeSection = false;
   let open_section = null;
   let is_loading = false;
+  let pathname_matched_during_load = false;
 
   $: if ($page.url.pathname) {
     path = $page.url.pathname;
@@ -37,10 +39,10 @@
   $: if (!$navigating) {
     $pageStore.sidebar.is_toggled = false;
     is_loading = false;
+    pathname_matched_during_load = false;
   } else {
-    if ($navigating) {
-      is_loading = true;
-    }
+    if ($navigating.to.url.pathname === href) pathname_matched_during_load = true;
+    if ($navigating) is_loading = true;
   }
 
   sections.forEach((section, index) => {
@@ -164,7 +166,7 @@
 </script>
 
 <nav class="sidebar" class:active={$pageStore.sidebar.is_toggled} class:compact={padding === "compact"}>
-  <section class="top">
+  <section class="top" class:cursor-wait={browser && $navigating && pathname_matched_during_load}>
     {#if href}
       <a {href} on:click={onclick}>
         {#if $pageStore.dark_mode && logo_dark}
@@ -215,17 +217,17 @@
                   }}
                 >
                   {#if (obj.icon && flat) || (obj.icon && groups[group].length === 1)}
-                    <div class="sidebar__icon">
-                      {#if !is_loading && !obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked !== obj.id}
+                    <div class="sidebar__icon" class:invert_dark_mode>
+                      {#if !is_loading && !obj.href_aliases.includes($navigating?.to?.url?.pathname) && $pageStore.clicked !== obj.id}
                         <!-- Hide the icon when the page is navigating and the to path and href are the same -->
                         <img src={obj.icon} alt="Icon" />
-                      {:else if is_loading && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
+                      {:else if is_loading && obj.href_aliases.includes($navigating?.to?.url?.pathname) && $pageStore.clicked === obj.id}
                         <Spinner />
                       {:else}
                         <img src={obj.icon} alt="Icon" />
                       {/if}
                     </div>
-                  {:else if is_loading && obj.href_aliases.includes($navigating?.to?.pathname) && $pageStore.clicked === obj.id}
+                  {:else if is_loading && obj.href_aliases.includes($navigating?.to?.url?.pathname) && $pageStore.clicked === obj.id}
                     <span class="loading">
                       <Spinner />
                     </span>
@@ -283,6 +285,11 @@
     max-width: 176px;
     max-height: 2.5rem;
     justify-content: flex-start;
+  }
+
+  .cursor-wait img,
+  .cursor-wait {
+    cursor: wait;
   }
 
   .sidebar.active .top img {
@@ -669,7 +676,7 @@
     color: var(--dark-darker);
   }
 
-  :global(html.dark) .sidebar__icon img {
+  :global(html.dark) .sidebar__icon.invert_dark_mode img {
     filter: invert(1);
   }
 
