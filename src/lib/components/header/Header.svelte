@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import { browser } from "$app/environment";
   import { uuid, pageStore, IconButton } from "$lib/index";
+  import Button from "../button/Button.svelte";
 
   export let title = "";
   export let subtitle = "";
@@ -48,7 +49,7 @@
       ? document.querySelector(".sidebar").classList.toggle("active", $pageStore.sidebar.is_toggled)
       : null;
 
-  $: _breadcrumbs = Array.isArray(breadcrumbs) ? breadcrumbs : calcBreadcrumbs($page.url.pathname);
+  $: _breadcrumbs = Array.isArray(breadcrumbs) ? breadcrumbs : calcBreadcrumbs($page.routeId, $page.params);
 
   $: back = null;
 
@@ -61,8 +62,18 @@
     $pageStore.sidebar.is_toggled = !$pageStore.sidebar.is_toggled ? true : false;
   }
 
-  function calcBreadcrumbs(path) {
-    const pathArray = path.split("/").filter(Boolean);
+  function calcBreadcrumbs(path, params) {
+    if (!path) return [];
+
+    const pathArray = path
+      .split("/")
+      .filter((string) => !string.startsWith("(") && !string.endsWith(")"))
+      .filter(Boolean)
+      .map((string) => {
+        if (string.startsWith("[")) string = string.substring(1, string.length - 1);
+        if (string.endsWith("]")) string = string.substring(0, string.length - 1);
+        return string;
+      });
 
     if (pathArray.length > 0 && !$pageStore.title) {
       pageStore.update((data) => {
@@ -85,9 +96,9 @@
             }
           } else {
             if (href.slice(-1) === "/") {
-              href += pathArray[i];
+              href += params?.[pathArray[i]] ?? pathArray[i];
             } else {
-              href += `/${pathArray[i]}`;
+              href += `/${params?.[pathArray[i]] ?? pathArray[i]}`;
             }
           }
         }
