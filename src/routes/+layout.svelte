@@ -74,6 +74,8 @@
 
 <SidebarPageWrapper>
   <Header
+    caption="Version {__version__}"
+    breadcrumbs={false}
     title={$page.route.id
       .split("/")
       .at(-1)
