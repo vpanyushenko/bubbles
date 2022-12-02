@@ -23,6 +23,15 @@
     /> -->
 
     <Input
+      id="camera"
+      type="camera"
+      label="Take An Image"
+      error="Please all an image"
+      desc="Add an image"
+      margin={true}
+    />
+
+    <Input
       id="name"
       type="text"
       label="Full Name"

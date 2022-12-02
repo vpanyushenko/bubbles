@@ -237,6 +237,10 @@
           <Input {...input} bind:value={input.value} />
         {/if}
 
+        {#if input.type === "camera"}
+          <Input {...input} bind:value={input.value} />
+        {/if}
+
         {#if input.type === "p"}
           <p>{@html input.value ?? input.text}</p>
         {/if}

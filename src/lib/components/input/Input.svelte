@@ -41,6 +41,7 @@
   let has_file = value ? true : false;
   let invalid_src, image_hover; //only used for files
   let was_typeahead_options_selected = false;
+  let media_stream = null;
   // let show_datepicker = false;
   // let DatePicker;
 
@@ -521,7 +522,7 @@
 
         <input
           type="file"
-          class="image__upload_button"
+          class="media__upload__button"
           on:change={fileChanged}
           {id}
           accept={extensions}
@@ -538,7 +539,71 @@
       </div>
     </div>
   </div>
-{:else if type === "chip" || type === "tag"}
+{:else if type === "camera"}
+  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+    <div class="field">
+      <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+      <div
+        class="image__preview video"
+        class:has_file
+        on:click={async () => {
+          media_stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          let video = document.querySelector(`#video--${id}`);
+          video.srcObject = media_stream;
+        }}
+        on:click={(event) => {
+          if (event.currentTarget.classList.contains("has_file")) {
+            event.preventDefault();
+            value = null;
+            has_file = false;
+            _label = label;
+            showToast("File deleted", "success");
+          }
+        }}
+        on:mouseover={(event) => {
+          image_hover = true;
+        }}
+        on:mouseout={(event) => {
+          image_hover = false;
+        }}
+      >
+        <!-- svelte-ignore a11y-media-has-caption -->
+        <video class="media__upload__button" id={`video--${id}`} autoplay />
+        <canvas class="media__upload__button" id={`canvas--${id}`} />
+
+        {#if !value && !is_error}
+          <span>{_label}</span>
+        {:else if is_error}
+          <span class="error">{error}</span>
+        {/if}
+
+        {#if value && !invalid_src && !image_hover && !Array.isArray(value)}
+          <img src={value} alt={_label} />
+        {:else if value && !invalid_src && !image_hover && Array.isArray(value)}
+          <span>{value.length} files selected</span>
+        {:else if value && !image_hover}
+          <span>{_label}</span>
+        {/if}
+      </div>
+    </div>
+    <div class="video__controls">
+      <p
+        class="field__desc video__control"
+        on:mousedown={() => {
+          media_stream.getTracks().forEach((track) => {
+            track.stop();
+          });
+        }}
+      >
+        Stop Camera
+      </p>
+    </div>
+
+    {#if desc}
+      <p class="field__desc">{@html desc}</p>
+    {/if}
+  </div>
+  <!-- {:else if type === "chip" || type === "tag"}
   <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={tags && tags.length}>
       <div class="field__label">
@@ -601,7 +666,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
+  </div> -->
 {:else if type === "hidden"}
   <div class="form__field__container js-bubbles-field-container hidden" {id}>
     <div class="field">
@@ -853,7 +918,11 @@
     filter: none;
   }
 
-  .image__upload_button {
+  .video.image__preview {
+    background: none;
+  }
+
+  .media__upload__button {
     position: absolute;
     width: 100%;
     height: 200px;
@@ -862,6 +931,19 @@
     opacity: 0;
     cursor: pointer;
     filter: blur(2px);
+  }
+
+  canvas.media__upload__button,
+  video.media__upload__button {
+    opacity: 1;
+    filter: none;
+  }
+  canvas,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
   }
 
   :global(html.dark) textarea:disabled,
