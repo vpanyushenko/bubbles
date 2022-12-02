@@ -26,6 +26,11 @@ const config = {
   define: {
     __version__: JSON.stringify(pkg.version),
   },
+  build: {
+    rollupOptions: {
+      external: ["bubbles-ui"],
+    },
+  },
 };
 
 export default config;
