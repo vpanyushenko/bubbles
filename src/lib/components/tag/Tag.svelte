@@ -100,8 +100,6 @@
 </span>
 
 <style>
-  @import "@fontsource/fira-mono/700.css";
-
   @media only screen and (min-width: 767px) {
     [data-tooltip] {
       position: relative;
