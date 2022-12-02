@@ -24,6 +24,7 @@ const config = {
   },
   define: {
     __version__: JSON.stringify(pkg.version),
+    __kit_version__: JSON.stringify(pkg.devDependencies["@sveltejs/kit"]),
   },
 };
 

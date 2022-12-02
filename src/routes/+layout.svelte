@@ -66,7 +66,7 @@
 <SidebarPageWrapper>
   <!-- svelte-ignore missing-declaration -->
   <Header
-    caption="Version {__version__}"
+    caption="Version {__version__} for Svelte Kit {__kit_version__}"
     breadcrumbs={false}
     title={$page.route.id
       .split("/")
