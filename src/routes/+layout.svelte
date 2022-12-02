@@ -73,6 +73,7 @@
 <Sidebar {...sidebarConfig} />
 
 <SidebarPageWrapper>
+  <!-- svelte-ignore missing-declaration -->
   <Header
     caption="Version {__version__}"
     breadcrumbs={false}
