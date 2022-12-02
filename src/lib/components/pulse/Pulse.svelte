@@ -1,6 +1,7 @@
 <script>
   import { pageStore, configStore } from "$lib/utils/stores";
 
+  /** @type {Boolean} animate - If the pulse should show the animation*/
   export let animate = true;
   export let color = "__default";
   export let dark_mode_invert = $configStore?.dark_mode_invert;
