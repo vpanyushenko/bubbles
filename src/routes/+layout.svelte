@@ -15,7 +15,7 @@
     IconButton,
     ModalContainer,
     fuzzySearch,
-  } from "bubbles-ui";
+  } from "$lib/index";
 
   import sections from "$docs/utils/sidebar-sections";
   import store from "$docs/utils/store";
@@ -24,9 +24,6 @@
   import logo_dark_mode from "$docs/icons/logo-dark-mode.svg";
 
   import { page } from "$app/stores";
-
-  // $configStore.padding = "compact";
-  // $configStore.radius = "blocky";
 
   $: sidebarConfig = {
     //logo: "/logo.svg",
@@ -41,12 +38,6 @@
       return section;
     }),
   };
-
-  // $: if ($store.sidebar_index) {
-  //   setTimeout(() => {
-  //     $pageStore.sidebar.active_item = sidebarConfig.sections[$store.sidebar_index].id;
-  //   }, 750);
-  // }
 
   let y = 0;
 

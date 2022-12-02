@@ -1,5 +1,5 @@
 <script>
-  import { Card, CardHeader, Pulse } from "bubbles-ui";
+  import { Card, CardHeader, Pulse } from "$lib/index";
 </script>
 
 <Card height100={true}>

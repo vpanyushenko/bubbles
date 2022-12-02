@@ -4,7 +4,7 @@
   import { formatPosts } from "$docs/utils/posts";
   const all_posts = import.meta.glob(`../../docs/markdown/page-column/**/*`, { eager: true });
   const rows = formatPosts(all_posts);
-  import { Row, Column100, Column50, Column, Card } from "bubbles-ui";
+  import { Row, Column100, Column50, Column, Card } from "$lib/index";
 </script>
 
 <Rows {rows} />

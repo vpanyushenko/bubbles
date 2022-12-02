@@ -20,16 +20,10 @@ const config = {
   resolve: {
     alias: {
       $docs: path.resolve("./src/docs"),
-      // "bubbles-ui": path.resolve("./package"),
     },
   },
   define: {
     __version__: JSON.stringify(pkg.version),
-  },
-  build: {
-    rollupOptions: {
-      external: ["bubbles-ui"],
-    },
   },
 };
 
