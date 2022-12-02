@@ -97,7 +97,7 @@
             <a
               class="segment"
               href={segment.href}
-              data-sveltekit-prefetch
+              data-sveltekit-preload-data="hover"
               class:active={i === selected}
               on:click={() => (selected = i)}
               bind:this={items[i]}

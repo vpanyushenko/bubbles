@@ -18,6 +18,8 @@
   export let empty = false;
   export let code = false;
   export let tooltip = null;
+  /**@type {"hover"|"tap"|"off"} [href=null] - If you want this button to link to another web page. You should use href instead of onclick because you'll get link prefetching which will make the UX faster. */
+  export let preload = "hover";
 
   if (empty) {
     text = " ";
@@ -164,7 +166,7 @@
             data-tooltip={tooltip}
             class:h6={large}
             class:bold
-            data-sveltekit-prefetch
+            data-sveltekit-preload-data={preload || "hover"}
             {href}
             on:click={hrefClicked}
             class:code
@@ -218,7 +220,7 @@
             {#if nested_cell.text}
               {#if nested_cell.href}
                 <a
-                  data-sveltekit-prefetch
+                  data-sveltekit-preload-data={preload || "hover"}
                   href={nested_cell.href}
                   on:click={hrefClicked}
                   class:nowrap={wrap === false}
@@ -250,7 +252,7 @@
 {#if _type === "image"}
   <div class="cell image" class:mobile__hidden={mobile_hidden} class:hidden {style} bind:this={_dom_element}>
     {#if href}
-      <a data-sveltekit-prefetch {href}>
+      <a data-sveltekit-preload-data={preload || "hover"} {href}>
         <picture>
           <img src={img.src} alt={img.alt} />
         </picture>

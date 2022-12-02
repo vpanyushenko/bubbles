@@ -15,7 +15,7 @@
     class="row js-bubbles-table-row"
     class:nowrap={wrap === false}
     class:mobile__nowrap={mobile_wrap == false}
-    data-sveltekit-prefetch
+    data-sveltekit-preload-data="hover"
     {href}
     {id}
     on:click={onclick}

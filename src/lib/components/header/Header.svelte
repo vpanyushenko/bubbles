@@ -182,7 +182,7 @@
           <p class="breadcrumbs">
             {#each _breadcrumbs as breadcrumb, index}
               <a
-                data-sveltekit-prefetch
+                data-sveltekit-preload-data="hover"
                 href={breadcrumb.href}
                 on:click={() => ($pageStore.clicked = icon_id)}
                 title={breadcrumb.title}>{breadcrumb.label}</a

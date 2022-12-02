@@ -230,7 +230,7 @@
 {#if href}
   <a
     class="icon__btn js-bubbles-icon-button"
-    data-sveltekit-prefetch
+    data-sveltekit-preload-data="hover"
     target={new_page ? "_blank" : ""}
     {href}
     on:click={iconClick}

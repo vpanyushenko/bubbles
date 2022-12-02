@@ -210,7 +210,7 @@
                 <a
                   class="sidebar__item cursor-pointer"
                   class:active={obj.active}
-                  data-sveltekit-prefetch
+                  data-sveltekit-preload-data="hover"
                   href={obj.href}
                   on:click={() => {
                     sidebarItemSelected(obj);

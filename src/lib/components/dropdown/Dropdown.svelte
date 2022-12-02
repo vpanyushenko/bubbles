@@ -380,7 +380,7 @@
           class:focused={selected_index === index && !is_using_pointer_device}
           href={option.href}
           target={option.new_page ? "_blank" : ""}
-          data-sveltekit-prefetch
+          data-sveltekit-preload-data="hover"
           on:mousedown={() => ($pageStore.is_fetching = true)}
           on:mousedown={option.onselect}
           on:mouseover={hoverOption}
