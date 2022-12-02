@@ -5,6 +5,8 @@
   export let mt = false;
   /**@type {Boolean} [mb=false] - If you want to add margin to the button of this button */
   export let mb = false;
+  /**@type {Boolean} [larger=true] - if the buttons should be larger */
+  export let larger = true;
 
   export let buttons = [];
 </script>
@@ -12,7 +14,7 @@
 <div class="button__group" class:mb class:mt>
   {#if Array.isArray(buttons) && buttons.length > 0}
     {#each buttons as button}
-      <Button {...button} type="button" />
+      <Button {...button} type="button" {larger} />
     {/each}
   {:else}
     <slot />

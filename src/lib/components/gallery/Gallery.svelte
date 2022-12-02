@@ -205,15 +205,11 @@
 {#if show_details}
   <Overlay onclick={() => (show_details = false)} transition_duration={200}>
     <div class="buttons">
-      <ButtonGroup>
+      <ButtonGroup larger={false}>
         {#each overlay_buttons as button, i}
-          <Button icon="more" color="gray-lighter" id={selected_image} {...button} />
+          <Button icon="more" color="gray-lighter" id={selected_image} {...button} larger={false} />
         {/each}
-        {#if overlay_buttons && buttons.length > 0 && buttons.find((btn) => btn.larger === false)}
-          <Button icon="close" color="gray-lighter" larger={false} />
-        {:else}
-          <Button icon="close" color="gray-lighter" />
-        {/if}
+        <Button icon="close" color="gray-lighter" larger={false} />
       </ButtonGroup>
     </div>
     <img class="details" src={selected_image} alt={`Gallery photo ${selected_image + 1}`} loading="lazy" />
