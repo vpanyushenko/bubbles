@@ -1,4 +1,9 @@
-## Props
+## Components
+
+The Gallery is made up of the main `Gallery` component and two optional components.
+
+- Gallery - the main component for the images
+- GalleryCard - this is an instance of the `Card` component with prebuilt margins.
 
 <br>
 
@@ -7,47 +12,47 @@ You can pass in an ID to the component if you need to reference it later. If you
 
 ---
 
-**label** `string` <code class="blue">Submit</code><br>
-This is the text label that the button will have. Defaults to "Submit".
+**images** `Array.<String>` <code class="blue">[]</code><br>
+All of of the images for the gallery.
 
 ---
 
-**color** `string` <code class="blue">primary</code><br>
-Pass in one of the named color variables like `success` or `error-light`.
+**grid** `string` <code class="blue">1x1</code><br>
+All the grid size for the gallery like 1x1, 2x2, 3x3, etc..
 
 ---
 
-**onclick** `function`<br>
-Pass a function that you would like to run when this button is clicked
+**page** `integer` <code class="blue">1</code><br>
+The page to start with, defaults to 1
 
 ---
 
-**onsubmit** `function`<br>
-If you are using the button as part of a `Form` element, use onsubmit _instead_ of onclick.
+**overlay_buttons** `array.<Button>`<br>
+Buttons that will show up when an image from the gallery is clicked.
 
 ---
 
-**href** `string`<br>
-If this button will taking a user to a different page, use href instead of directing them to the page with onclick. This will prefetch the data on hover to make the navigation faster.
+**new_image** `array.<Button>`<br>
+A function that can be added which will add a section on the last gallery image that will let the user add a new image.
 
 ---
 
-**new_page** `boolean` <code class="blue">false</code><br>
-Pass `true` if you want this button to open the page contents in a new page.
+<br>
+<br>
+
+**The rest of these properties work the the header of the `Gallery`, so it's advised to wrap the Gallery in the `GalleryCard` if you're using these.**
+<br>
+<br>
+
+**title** `String` <code class="blue">Gallery</code><br>
+The title to add to the Gallery
 
 ---
 
-**wide** `boolean` <code class="blue">true</code><br>
-Pass `true` if you want the button to take the full width of it's parent container.
+**pagination** `boolean` <code class="blue">true</code><br>
+If you want pagination to be enabled. If there are more images than your grid, this will add pagination as buttons in the header.
 
 ---
 
-**mt** `number` <code class="blue">0</code><br>
-The top margin in `rem` values.
-
----
-
-**mb** `number` <code class="blue">0</code><br>
-The bottom margin in `rem` values.
-
----
+**buttons** `Array.<Button>` <code class="blue">[]</code><br>
+Button to add the the header in the gallery. These will be added next to the pagination buttons if pagination is enabled.

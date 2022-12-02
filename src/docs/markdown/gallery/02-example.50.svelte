@@ -1,5 +1,5 @@
 <script>
-  import { Gallery, Card, CardHeader, CardFooter, showModal, getFormData, showLoading, hideLoading } from "$lib/index";
+  import { Gallery, GalleryCard, showModal, getFormData, showLoading, hideLoading } from "$lib/index";
 
   import image1 from "$docs/icons/gallery/1.jpg";
   import image2 from "$docs/icons/gallery/2.jpg";
@@ -10,9 +10,10 @@
   import image7 from "$docs/icons/gallery/7.jpg";
   import image8 from "$docs/icons/gallery/8.jpg";
 
-  let page = 1;
   let images = [image1, image2, image3, image4, image5, image6, image7, image8];
-  const buttons = [
+  let page = 1;
+
+  const overlay_buttons = [
     {
       icon: "trash",
       color: "error",
@@ -29,16 +30,6 @@
       larger: false,
     },
   ];
-
-  function updatePage(string) {
-    if (string === "prev") {
-      page--;
-    }
-
-    if (string === "next") {
-      page++;
-    }
-  }
 
   const new_image = () => {
     const form = [
@@ -68,14 +59,14 @@
   };
 </script>
 
-<Card px={0} py={0} hide_overflow={true}>
-  <CardHeader
-    title="Gallery"
-    px={2}
-    buttons={[
-      { icon: "arrowLeft", onclick: () => updatePage("prev") },
-      { icon: "arrowRight", onclick: () => updatePage("next") },
-    ]}
+<GalleryCard>
+  <Gallery
+    title="Images"
+    pagination={true}
+    bind:page
+    {images}
+    grid="2x2"
+    new_image={() => new_image()}
+    {overlay_buttons}
   />
-  <Gallery {page} {images} grid="2x2" new_image={() => new_image()} {buttons} />
-</Card>
+</GalleryCard>

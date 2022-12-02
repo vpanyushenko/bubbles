@@ -1,5 +1,5 @@
 <script>
-  import { uuid, Overlay, Button, ButtonGroup } from "$lib/index";
+  import { uuid, Overlay, Button, ButtonGroup, CardHeader } from "$lib/index";
 
   import icon_add from "./add.svg";
 
@@ -7,11 +7,13 @@
   export let images = [];
   export let grid = "1x1";
   export let page = 1;
+  export let overlay_buttons = [];
+  export let title = "Gallery";
+  export let pagination = true;
   export let buttons = [];
-
-  /**
-   * @prop {?Function} new_image - A function to add a new image
-   */
+  export let previous_icon = "__default";
+  export let next_icon = "__default";
+  /**@type {?Function} new_image - A function to add a new image */
   export let new_image = null;
 
   let calculated_page = 1;
@@ -33,6 +35,17 @@
   let total_pages = Math.ceil(images.length / items_per_page) || 1;
   let paginated_images = [[]];
   let __current_page = 1;
+
+  const pagination_buttons = [
+    { icon: previous_icon === "__default" ? "arrowLeft" : previous_icon, onclick: () => page-- },
+    { icon: next_icon === "__default" ? "arrowRight" : next_icon, onclick: () => page++ },
+  ];
+
+  if (!Array.isArray(buttons)) buttons = [];
+
+  $: if (pagination && images.length + 1 > items_per_page) {
+    buttons = buttons.concat(pagination_buttons);
+  }
 
   $: selected_image_index = images.findIndex((image) => image === selected_image);
 
@@ -169,6 +182,10 @@
 
 <svelte:body on:keydown={keydown} />
 
+{#if title || (Array.isArray(buttons) && buttons.length)}
+  <CardHeader {title} px={2} {buttons} />
+{/if}
+
 <div class="gallery" {style} {id}>
   {#if calculated_page > 0 && calculated_page <= total_pages}
     {#each paginated_images[calculated_page - 1] as image, i}
@@ -189,10 +206,10 @@
   <Overlay onclick={() => (show_details = false)} transition_duration={200}>
     <div class="buttons">
       <ButtonGroup>
-        {#each buttons as button, i}
+        {#each overlay_buttons as button, i}
           <Button icon="more" color="gray-lighter" id={selected_image} {...button} />
         {/each}
-        {#if buttons && buttons.length > 0 && buttons.find((btn) => btn.larger === false)}
+        {#if overlay_buttons && buttons.length > 0 && buttons.find((btn) => btn.larger === false)}
           <Button icon="close" color="gray-lighter" larger={false} />
         {:else}
           <Button icon="close" color="gray-lighter" />

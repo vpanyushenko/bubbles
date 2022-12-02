@@ -62,9 +62,10 @@ import Overlay from "./components/overlay/Overlay.svelte";
 import Spinner from "./components/spinner/Spinner.svelte";
 import Divider from "./components/divider/Divider.svelte";
 import Dropdown from "./components/dropdown/Dropdown.svelte";
-import Gallery from "./components/gallery/Gallery.svelte";
 import SegmentedController from "./components/segmented-controller/SegmentedController.svelte";
 import Pulse from "./components/pulse/Pulse.svelte";
+import Gallery from "./components/gallery/Gallery.svelte";
+import GalleryCard from "./components/gallery/GalleryCard.svelte";
 
 export {
   Header,
@@ -88,8 +89,9 @@ export {
   Divider,
   Dropdown,
   SegmentedController,
-  Gallery,
   Pulse,
+  Gallery,
+  GalleryCard,
 };
 
 //input
