@@ -35,6 +35,7 @@
   let total_pages = Math.ceil(images.length / items_per_page) || 1;
   let paginated_images = [[]];
   let __current_page = 1;
+  let __pagination_added = false;
 
   const pagination_buttons = [
     { icon: previous_icon === "__default" ? "arrowLeft" : previous_icon, onclick: () => page-- },
@@ -43,7 +44,8 @@
 
   if (!Array.isArray(buttons)) buttons = [];
 
-  $: if (pagination && images.length + 1 > items_per_page) {
+  $: if (pagination && images.length > 0 && images.length + 1 > items_per_page && !__pagination_added) {
+    __pagination_added = true;
     buttons = buttons.concat(pagination_buttons);
   }
 
