@@ -409,7 +409,7 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
         }
 
         if (input.split) {
-          if (typeof value === "text") {
+          if (typeof value === "string") {
             value = value
               .split(input.split)
               .filter(Boolean)
