@@ -153,7 +153,8 @@
 
   function windowClick(event) {
     //if you click outside of the select, we want to close it
-    if (!event.target.closest(".icon__btn")) {
+
+    if (!event.target.closest(".js-bubbles-icon-button")) {
       active = false;
       typeahead_options = [];
       $pageStore.dropdown = null;
@@ -481,6 +482,7 @@
         on:select={() => {
           is_list_open = false;
           active = false;
+          $pageStore.dropdown = null;
         }}
       />
     {/if}
