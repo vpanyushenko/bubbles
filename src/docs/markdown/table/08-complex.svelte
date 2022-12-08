@@ -16,7 +16,7 @@
 
   import store from "$docs/utils/store";
   import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
-  import { sort } from "$lib/index";
+  import { showModal, sort, pageStore } from "$lib/index";
 
   $: pagination = $store?.pagination ? $store.pagination : {};
   $: pokemon = $store.pokemon ? $store.pokemon : [];
@@ -215,14 +215,16 @@ filters={[
                     href: poke.location_area_encounters,
                     caption: "Areas you can find this pokemon",
                   },
-                  "break",
+                  { break: true },
                   {
                     label: "View JSON",
                     href: poke.species.url,
                   },
                   {
                     label: "Shiny Sprite",
-                    href: poke.sprites.front_shiny,
+                    onclick: () => {
+                      showModal("Shiny Sprite", { img: poke.sprites.front_shiny });
+                    },
                   },
                 ],
               }}
