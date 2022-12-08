@@ -5,7 +5,8 @@ type: code
 ---
 
 ```svelte
-  import { Gallery, GalleryHeader, GalleryCard, showModal, getFormData, showLoading, hideLoading } from "bubbles-ui";
+<script>
+  import { Gallery, GalleryCard, showModal, getFormData, showLoading, hideLoading } from "$lib/index";
 
   import image1 from "$docs/icons/gallery/1.jpg";
   import image2 from "$docs/icons/gallery/2.jpg";
@@ -19,7 +20,7 @@ type: code
   let images = [image1, image2, image3, image4, image5, image6, image7, image8];
   let page = 1;
 
-  const buttons = [
+  const overlay_buttons = [
     {
       icon: "trash",
       color: "error",
@@ -66,7 +67,14 @@ type: code
 </script>
 
 <GalleryCard>
-  <GalleryHeader title="Images" bind:page />
-  <Gallery bind:page {images} grid="2x2" new_image={() => new_image()} {buttons} />
+  <Gallery
+    title="Images"
+    pagination={true}
+    bind:page
+    {images}
+    grid="2x2"
+    new_image={() => new_image()}
+    {overlay_buttons}
+  />
 </GalleryCard>
 ```
