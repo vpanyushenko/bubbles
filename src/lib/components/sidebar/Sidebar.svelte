@@ -467,6 +467,10 @@
     transition: all 0.25s;
   }
 
+  .group__dropdown__text {
+    color: var(--gray);
+  }
+
   .sidebar.compact .sidebar__item {
     height: 3rem;
   }
@@ -701,4 +705,10 @@
   :global(html.dark) .flat.sidebar__group:not(:last-child):before {
     background: var(--dark);
   }
+
+  /* :global(html.dark) .group__dropdown + .sidebar__menu .sidebar__item:before {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 14 14'%3E%3Cpath d='M1 1v4a8 8 0 0 0 8 8h4' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+      no-repeat 50% 50%/100% auto;
+    color: var(--gray);
+  } */
 </style>
