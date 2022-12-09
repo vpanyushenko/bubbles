@@ -67,7 +67,7 @@
           caption: "This is the highest position", //This is optional to add more context to the option,
           value: "owner", //This is the actual value the user is selecting
         },
-        "break", //if you pass a string that says break, Bubbles will add a line break between these options for you
+        { divider: true }, //if you pass a string that says break, Bubbles will add a line break between these options for you
         {
           label: "Collaborator", //The label is the main option the user is picking,
           value: "collaborator", //This is the actual value the user is selecting

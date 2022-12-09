@@ -32,7 +32,7 @@ type: code
           value: "token_9012",
           caption: "Expires: 11/26",
         },
-        "break",
+        { divider: true },
         {
           label: "Add New Card",
           value: "",

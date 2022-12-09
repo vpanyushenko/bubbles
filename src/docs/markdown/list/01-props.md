@@ -35,6 +35,6 @@ An array items items that list list will have. Each item is an object. You only 
 | item[].**pulse** `string`<br> If the list type is a `timeline`, and the item is active, it will be pulsing. You can turn this off by passing false to this attribute.                                         |
 | item[].**color** `string`<br> If the list type is a `timeline`, you can edit the color of the dot.                                                                                                            |
 
-> To add a line break between filter options, you can just add an option with a string value of "break"
+> To add a line break between filter options, you can just add an option with a string value of `{ divider: true }`
 
 </details><br>
