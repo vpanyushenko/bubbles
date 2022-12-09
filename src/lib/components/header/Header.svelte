@@ -1,7 +1,7 @@
 <script>
   import { page } from "$app/stores";
   import { browser } from "$app/environment";
-  import { uuid, pageStore, IconButton } from "$lib/index";
+  import { uuid, pageStore, IconButton, configStore } from "$lib/index";
   import Button from "../button/Button.svelte";
 
   export let title = "";
@@ -53,8 +53,9 @@
 
   $: back = null;
 
-  $: if (_breadcrumbs.length > 1) {
+  $: if (_breadcrumbs.length > 1 && browser) {
     const backObject = _breadcrumbs[_breadcrumbs.length - 2];
+    //back = $configStore.back_nav === "breadcrumbs" ? backObject.href : "javascript:history.go(-1)";
     back = backObject.href;
   }
 
