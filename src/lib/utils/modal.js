@@ -11,7 +11,10 @@ import { modalStore } from "../utils/stores";
  * @param {?Object} options.file - File form inputs
  * @param {?Array} options.footer - An array of buttons for the modal footer. Usually cancel and confirm combos.
  */
-const showModal = (title, options = { message: "", form: [], footer: [], img: null, height: null, file: null }) => {
+const showModal = (
+  title,
+  options = { message: "", form: [], footer: [], img: null, height: null, file: null, type: null }
+) => {
   modalStore.update((data) => {
     data.title = title;
     data.active = true;
@@ -29,6 +32,15 @@ const showModal = (title, options = { message: "", form: [], footer: [], img: nu
       : [];
     data.img = options.img || null;
     data.height = options.height || null;
+
+    if (data.form.length > 0 && !options.type) {
+      data.type = "side";
+    }
+
+    if (options.type) {
+      data.type = options.type;
+    }
+
     return data;
   });
 };
