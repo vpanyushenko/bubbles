@@ -2,4 +2,4 @@
   import { Header } from "$lib/index";
 </script>
 
-<Header title="Examples" />
+<Header title="Nested" />

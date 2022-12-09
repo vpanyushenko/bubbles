@@ -68,12 +68,14 @@
   <Header
     caption="Version {__version__} for Svelte Kit {__kit_version__}"
     breadcrumbs={false}
-    title={$page.route.id
-      .split("/")
-      .at(-1)
-      .split("-")
-      .map((s) => titleCase(s))
-      .join(" ")}
+    title={$page?.route?.id
+      ? $page?.route?.id
+          .split("/")
+          .at(-1)
+          .split("-")
+          .map((s) => titleCase(s))
+          .join(" ")
+      : "Welcome"}
     buttons={[
       {
         icon: "search",
