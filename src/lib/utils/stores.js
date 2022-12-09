@@ -11,6 +11,7 @@ const configStore = writable({
   radius: "rounded",
   max_content_width: 1200,
   dark_mode_invert: true,
+  back_nav: "history",
 });
 
 const modalStore = writable({ title: "", active: false, form: [], message: "", img: null, footer: [] });
