@@ -30,6 +30,7 @@
   const _label = configLabel(label, validation);
 
   let timestamp = 0;
+  let kd_timestamp = 0; //TODO: keydown fires three times so this is a hack to fix it for now
 
   let title = "Select an option";
   let is_focused = false;
@@ -77,9 +78,7 @@
   function toggleSelectWithClick(event) {
     event.preventDefault();
 
-    if (!is_focused) {
-      is_focused = true;
-    }
+    if (!is_focused) is_focused = true;
 
     //the focus event fires before the click event
     //check to make sure the focus event didn't open
@@ -128,12 +127,19 @@
     }
   }
 
-  function keydown(event) {
-    if ((event.key === "Enter" || event.key === " ") && is_focused && !is_list_open) {
+  const keydown = async (event) => {
+    if (
+      event.target.id === id &&
+      event.timeStamp - kd_timestamp > 200 &&
+      (event.key === "Enter" || event.key === " ")
+    ) {
       event.preventDefault();
-      is_list_open = true;
+      setTimeout(() => {
+        kd_timestamp = event.timeStamp;
+        if (!is_list_open) is_list_open = true;
+      }, 0);
     }
-  }
+  };
 </script>
 
 <svelte:body on:keydown={keydown} />
@@ -158,22 +164,19 @@
   <Dropdown
     bind:is_list_open
     bind:options
+    bind:is_parent_focused={is_focused}
     {search}
     {search_threshold}
     bind:value
     {type}
     on:select={(event) => {
+      is_list_open = false;
+      kd_timestamp = event.timeStamp;
       if (onselect) {
         onselect(event?.detail?.value, event);
       }
     }}
   />
-
-  <!-- on:select={(event) => {
-    if (onselect) {
-      onselect(event?.detail?.value, event);
-    }
-  }} -->
 
   {#if desc}
     <p class="field__desc">{@html desc}</p>

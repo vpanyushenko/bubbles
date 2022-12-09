@@ -19,6 +19,7 @@
   export let align = "left";
   export let parent;
   export let is_list_open = false;
+  export let is_parent_focused = false;
 
   $: formatted_options = options
     .map((option) => {
@@ -45,7 +46,6 @@
 
   let height, y; //window bindings
 
-  let is_focused = false;
   let selected_index = 0;
   let is_search_focused = false;
   let is_using_pointer_device = true;
@@ -65,32 +65,42 @@
   }
 
   function selectOption(event) {
-    const option = event.currentTarget;
+    let option = filtered_options[selected_index];
+    value = option?.value;
 
-    if (type === "select-number") {
-      value = Number(option.querySelector("input").value);
-    } else {
-      value = option.querySelector("input").value ?? null;
+    if (!value && create_option) {
+      option = {
+        label: search_value,
+        value: search_value,
+      };
+      options = [...options, option];
+      value = search_value;
+      selected_index = options.length - 1;
+
+      dispatch("created", {
+        value: value,
+        index: selected_index,
+      });
     }
 
-    if (!value) {
-      //There was no value, so the value could have been anything falsy, we want find it by the title
-      let title = option.querySelector(".title").innerText;
-      selected_index = formatted_options.findIndex((item) => item.label === title);
-      value = filtered_options[selected_index].value;
+    if (option.href) {
+      window.open(option.href, option.new_page ? "_blank" : "_self");
     }
 
-    if (value === undefined) {
-      value = null;
+    if (option.onclick) {
+      option.onclick(event);
     }
 
-    is_focused = true;
-    is_list_open = false;
+    if (option.onselect) {
+      option.onselect(event);
+    }
 
     dispatch("select", {
       value: value,
       index: selected_index,
     });
+
+    is_list_open = false;
   }
 
   function hoverOption(event) {
@@ -199,43 +209,7 @@
         }
         case "Enter": {
           event.preventDefault();
-          let option = filtered_options[selected_index];
-          value = option?.value;
-
-          if (!value && create_option) {
-            option = {
-              label: search_value,
-              value: search_value,
-            };
-            options = [...options, option];
-            value = search_value;
-            selected_index = options.length - 1;
-
-            dispatch("created", {
-              value: value,
-              index: selected_index,
-            });
-          }
-
-          if (option.href) {
-            window.open(option.href, option.new_page ? "_blank" : "_self");
-          }
-
-          if (option.onclick) {
-            option.onclick(event);
-          }
-
-          if (option.onselect) {
-            option.onselect(event);
-          }
-
-          dispatch("select", {
-            value: value,
-            index: selected_index,
-          });
-
-          is_list_open = false;
-
+          selectOption();
           break;
         }
 
@@ -255,7 +229,6 @@
           if (type) {
             if (is_search_focused) {
               is_list_open = false;
-              is_focused = false;
             }
             break;
           }
@@ -271,17 +244,20 @@
           }
         }
       }
-    } else {
-      //Open a select if it's not in focus
-      if (is_focused && type) {
-        switch (event.key) {
-          case "Enter": {
-            event.preventDefault();
-            is_list_open = true;
-            break;
-          }
-        }
-      }
+      // } else {
+      //   //Open a select if it's not in focus
+
+      //   // console.log(is_parent_focused, type);
+
+      //   // if (is_parent_focused && type) {
+      //   //   switch (event.key) {
+      //   //     case "Enter": {
+      //   //       event.preventDefault();
+      //   //       is_list_open = true;
+      //   //       break;
+      //   //     }
+      //   //   }
+      //   // }
     }
   }
 
@@ -382,7 +358,6 @@
           target={option.new_page ? "_blank" : ""}
           data-sveltekit-preload-data="hover"
           on:mousedown={() => ($pageStore.is_fetching = true)}
-          on:mousedown={option.onselect}
           on:mouseover={hoverOption}
         >
           <div class="option__content">
@@ -412,8 +387,6 @@
       {:else}
         <div
           class="option"
-          on:mousedown={option.onclick}
-          on:mousedown={option.onselect}
           on:mousedown={selectOption}
           on:mouseover={hoverOption}
           class:selected={option.value === value}
