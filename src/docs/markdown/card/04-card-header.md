@@ -57,7 +57,7 @@ An array of filters that should be used if you have a `Table` inside of your `Ca
 | filter[].option[].**value** `string`<br> The value that will be added for the url query param |
 | filter[].option[].**caption** `string`<br> Optional explanation for the choice                |
 
-> To add a line break between filter options, you can just add an option with a string value of "break"
+> To add a line break between filter options, you can just add an option with a an object `{divider: true}`, which will inject a divider component.
 
 </details><br>
 

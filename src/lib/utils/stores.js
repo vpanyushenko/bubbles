@@ -14,7 +14,15 @@ const configStore = writable({
   back_nav: "history",
 });
 
-const modalStore = writable({ title: "", active: false, form: [], message: "", img: null, footer: [] });
+const modalStore = writable({
+  title: "",
+  active: false,
+  form: [],
+  message: "",
+  img: null,
+  footer: [],
+  type: "default",
+});
 
 const pageStore = writable({
   title: null,

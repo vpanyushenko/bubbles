@@ -25,7 +25,7 @@
 
   const types = [
     "All",
-    "break",
+    { divider: true },
     "Normal",
     "Fire",
     "Water",
@@ -116,7 +116,7 @@
             value: "",
             options: types.map((type) => {
               if (type === "break") {
-                return "break";
+                return { divider: true };
               }
 
               return {
@@ -198,7 +198,7 @@
                     href: poke.location_area_encounters,
                     caption: "Areas you can find this pokemon",
                   },
-                  "break",
+                  { divider: true },
                   {
                     label: "View JSON",
                     href: poke.species.url,

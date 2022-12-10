@@ -86,7 +86,7 @@ type: code
             value: "",
             options: types.map((type) => {
               if (type === "break") {
-                return "break";
+                return { divider: true };
               }
 
               return {
@@ -174,7 +174,7 @@ type: code
                     href: poke.location_area_encounters,
                     caption: "Areas you can find this pokemon",
                   },
-                  "break",
+                  { divider: true },
                   {
                     label: "View JSON",
                     href: poke.species.url,

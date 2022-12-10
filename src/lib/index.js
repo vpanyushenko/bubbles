@@ -51,7 +51,6 @@ import ListItem from "./components/list/ListItem.svelte";
 import ListItemTimeline from "./components/list/ListItemTimeline.svelte";
 import Sidebar from "./components/sidebar/Sidebar.svelte";
 import Form from "./components/form/Form.svelte";
-import FileForm from "./components/form/FileForm.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import ModalContainer from "./components/modal/ModalContainer.svelte";
 import Toast from "./components/toast/Toast.svelte";
@@ -81,7 +80,6 @@ export {
   Toast,
   ToastContainer,
   Form,
-  FileForm,
   Tag,
   Error,
   Overlay,

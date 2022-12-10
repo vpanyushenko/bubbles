@@ -50,7 +50,7 @@
             value: "filter1",
             caption: "Most popular",
           },
-          "break",
+          { divider: true },
           {
             label: "Filter 2",
             value: "filter2",

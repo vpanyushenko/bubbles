@@ -1,12 +1,11 @@
 <script>
   import { browser } from "$app/environment";
   import { v4 as uuid } from "@lukeed/uuid";
-  import { fly, fade } from "svelte/transition";
+  import { fly } from "svelte/transition";
   import { modalStore } from "$lib/utils/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Button from "$lib/components/button/Button.svelte";
   import Form from "$lib/components/form/Form.svelte";
-  import FileForm from "$lib/components/form/FileForm.svelte";
 
   const id = uuid();
 
@@ -22,6 +21,10 @@
     }
   }
 
+  $: if ($modalStore.type === "side") {
+    $modalStore.height = 100;
+  }
+
   $: if ($modalStore.height) {
     style = `height: ${$modalStore.height}vh;max-height: none;`;
   } else {
@@ -30,7 +33,9 @@
 
   $: if ($modalStore.form && $modalStore.form.length) {
     setTimeout(() => {
-      document.getElementById(id).querySelector(".field__input").focus();
+      if (document.getElementById(id).querySelector(".field__input")) {
+        document.getElementById(id).querySelector(".field__input").focus();
+      }
     }, 0);
   }
 
@@ -44,9 +49,14 @@
 <svelte:window on:keydown={keydown} />
 
 {#if $modalStore.active}
-  <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal} transition:fade={{ duration: 400 }}>
-    <div class="modal js-bubbles-modal" {id}>
-      <div class="container" {style} transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
+  <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal}>
+    <div
+      class="modal js-bubbles-modal"
+      {id}
+      class:side={$modalStore.type === "side"}
+      transition:fly={$modalStore.type === "side" ? { x: 500, duration: 400 } : { y: 200, duration: 400 }}
+    >
+      <div class="container" {style} on:click|stopPropagation class:side={$modalStore.type === "side"}>
         <header>
           <h6 class="title">{$modalStore.title}</h6>
           <IconButton icon="close" onclick={hideModal} />
@@ -65,10 +75,6 @@
 
           {#if $modalStore.form}
             <Form inputs={$modalStore.form} />
-          {/if}
-
-          {#if $modalStore.file}
-            <FileForm {...$modalStore.file} />
           {/if}
         </main>
 
@@ -103,10 +109,16 @@
     overflow-y: auto;
   }
 
+  .modal.side {
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
   .container {
     width: 31rem;
     max-height: 80vh;
-    /* min-height: 50vh; */
     overflow-y: scroll;
     overflow-x: hidden;
     box-sizing: border-box;
@@ -115,6 +127,16 @@
     background: #fff;
     display: flex;
     flex-direction: column;
+  }
+
+  .container.side {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .model.side .container {
+    height: 100vh;
+    max-height: 100vh;
   }
 
   header {
@@ -182,6 +204,7 @@
       bottom: 0px;
     }
     .container {
+      border-radius: 1.5rem;
       width: 100%;
       min-height: 50vh !important;
       max-height: 100vh;

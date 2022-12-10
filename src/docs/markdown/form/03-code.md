@@ -90,7 +90,7 @@ type: code
           caption: "This is the highest position",
           value: "owner",
         },
-        "break",
+        { divider: true },
         {
           label: "Collaborator",
           value: "collaborator",
