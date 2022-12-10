@@ -33,7 +33,11 @@ const showModal = (
     data.img = options.img || null;
     data.height = options.height || null;
 
-    if (data.form.length > 0 && !options.type) {
+    if (
+      !options.type &&
+      data.form.length &&
+      (data.form.length > 3 || data.form.find((input) => input.type.startsWith("select")))
+    ) {
       data.type = "side";
     }
 
