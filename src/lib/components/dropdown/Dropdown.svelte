@@ -299,7 +299,7 @@
       const rect = dropdown ? dropdown.getBoundingClientRect() : null;
       const modal = dropdown ? dropdown.closest(".js-bubbles-modal") : null;
 
-      if (!modal) {
+      if (!modal && rect) {
         if (rect.bottom + y + 100 > height + y) {
           let diff = rect.bottom + 100 - height;
           y += diff;
