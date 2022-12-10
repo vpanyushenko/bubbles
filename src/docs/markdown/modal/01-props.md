@@ -35,6 +35,11 @@ The height in <code>vh</code> values that you want the modal to be.
 
 ---
 
+options.**type** `"default"|"side"` <br>
+The default modal is displayed in the middle, but a modal can also be full height on the side. A modal that has a form component with more than 2 inputs, or 1 select input, will default to the side.
+
+---
+
 options.**img** `string` <br>
 The path to an image to display at the top of the modal. Good to use then there is not a lot of content in the modal.
 
