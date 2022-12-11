@@ -1,11 +1,5 @@
 <script>
-  // import { scale, fade } from "svelte/transition";
   import { pageStore, addQueryParam, uuid, Select, IconButton } from "$lib/index";
-  // import { pageStore } from "$lib/utils/stores";
-  // import IconButton from "$lib/components/button/IconButton.svelte";
-  // import Select from "$lib/components/select/Select.svelte";
-  // import { addQueryParam } from "$lib/utils/url";
-  // import { v4 as uuid } from "@lukeed/uuid";
   import { page } from "$app/stores";
   import { browser } from "$app/environment";
 
@@ -17,9 +11,11 @@
   export let border = false;
   export let px = false;
 
+  let dom_component_width = 1000;
+
   const id = `card_header_${uuid()}`;
 
-  const filterIds = filters.map((filter) => {
+  const filter_ids = filters.map((filter) => {
     return filter.id;
   });
 
@@ -34,7 +30,7 @@
         return option;
       } else {
         option.onselect = () => {
-          addQueryParam(filter.id, option.value, { show_loading: filter.id, keep_only: filterIds, goto: true });
+          addQueryParam(filter.id, option.value, { show_loading: filter.id, keep_only: filter_ids, invalidate: true });
         };
       }
     });
@@ -48,7 +44,7 @@
         label: filter.reset_label,
         value: null,
         onselect: () => {
-          addQueryParam(filter.id, "", { show_loading: filter.id, keep_only: filterIds, goto: true });
+          addQueryParam(filter.id, "", { show_loading: filter.id, keep_only: filter_ids, invalidate: true });
         },
       };
 
@@ -83,6 +79,7 @@
   </div>
 {:else if formatted_filters.length || title || caption || buttons.length}
   <div
+    bind:clientWidth={dom_component_width}
     class="header"
     class:border={border === true || border === "true"}
     class:filters={formatted_filters.length > 0}
@@ -100,7 +97,7 @@
             <p>{@html caption}</p>
           {/if}
         </div>
-      {:else if formatted_filters.length > 0 && $pageStore.search !== id}
+      {:else if formatted_filters.length > 0 && $pageStore.search !== id && dom_component_width >= 750}
         <div class="filters" class:mt={title || caption}>
           {#each filters as filter}
             <div class="filter">
@@ -111,15 +108,27 @@
       {/if}
 
       <div class="buttons">
+        {#if formatted_filters.length > 0 && $pageStore.search !== id && dom_component_width < 750}
+          {#each formatted_filters as filter}
+            <div class="action">
+              <IconButton
+                icon="filter"
+                {...filter}
+                color={$page.url.searchParams.get(filter.id) ? "primary" : filter.color}
+              />
+            </div>
+          {/each}
+        {/if}
+
         {#each buttons as button}
           <div class="action">
-            <IconButton {...button} __search_id={id} />
+            <IconButton {...button} __search_id={id} bind:dom_component_width />
           </div>
         {/each}
       </div>
     </div>
 
-    {#if formatted_filters.length > 0 && $pageStore.search !== id && (title || caption)}
+    {#if formatted_filters.length > 0 && $pageStore.search !== id && (title || caption) && dom_component_width >= 750}
       <div class="filters" class:mt={title || caption}>
         {#each filters as filter}
           <div class="filter">
@@ -128,41 +137,6 @@
         {/each}
       </div>
     {/if}
-
-    <!-- {#if formatted_filters.length > 0}{:else if title || caption}
-      <div class="title" class:center class:searching={$pageStore.search === id}>
-        {#if title}
-          <h6>{title}</h6>
-        {/if}
-        {#if caption}
-          <p>{@html caption}</p>
-        {/if}
-      </div>
-    {/if}
-
-    {#if $pageStore.search !== id}
-      <div class="filters" class:mt={title || caption} transition:scale>
-        {#each filters as filter}
-          <div class="filter">
-            <Select {...filter} />
-          </div>
-        {/each}
-      </div>
-    {/if}
-
-    {#if formatted_filters.length === 0}
-      <div class="buttons">
-        {#each buttons as button}
-          <div class="action">
-            {#if button.search}
-              <IconButton {...button} __search_id={id} __search_width_100={false} />
-            {:else}
-              <IconButton {...button} />
-            {/if}
-          </div>
-        {/each}
-      </div>
-    {/if} -->
   </div>
 {:else}
   <div class="header" class:border {id}>
