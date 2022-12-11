@@ -83,15 +83,15 @@
       });
     }
 
-    if (option.href) {
+    if (option?.href) {
       window.open(option.href, option.new_page ? "_blank" : "_self");
     }
 
-    if (option.onclick) {
+    if (option?.onclick) {
       option.onclick(event);
     }
 
-    if (option.onselect) {
+    if (option?.onselect) {
       option.onselect(event);
     }
 
@@ -112,11 +112,11 @@
       }
 
       if (value) {
-        selected_index = formatted_options.findIndex((item) => item.value === _value);
+        selected_index = filtered_options.findIndex((item) => item.value === _value);
       } else {
         //There was no value, so the value could have been anything falsy, we want find it by the title
         let title = option.querySelector(".title").innerText;
-        selected_index = formatted_options.findIndex((item) => item.label === title);
+        selected_index = filtered_options.findIndex((item) => item.label === title);
       }
     }
   }
