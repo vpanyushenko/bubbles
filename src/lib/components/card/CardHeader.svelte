@@ -1,7 +1,7 @@
 <script>
   import { pageStore, addQueryParam, uuid, Select, IconButton } from "$lib/index";
   import { page } from "$app/stores";
-  import { browser } from "$app/environment";
+  import { browser, dev } from "$app/environment";
 
   export let filters = [];
   export let title = "";
@@ -53,10 +53,11 @@
 
     const query_value = $page.url.searchParams.get(filter.id);
 
-    if (query_value) {
-      filter.value = query_value;
-    } else {
-      filter.value = null;
+    if (query_value) filter.value = query_value;
+    else filter.value = null;
+
+    if (!filter.icon && dev) {
+      console.log(`[Filter: ${filter.id}] You filter does not have an icon for mobile screens, will use the default icon.`); //prettier-ignore
     }
 
     return filter;
@@ -112,7 +113,7 @@
           {#each formatted_filters as filter}
             <div class="action">
               <IconButton
-                icon="filter"
+                icon={filter.icon || "filter"}
                 {...filter}
                 color={$page.url.searchParams.get(filter.id) ? "primary" : filter.color}
               />
