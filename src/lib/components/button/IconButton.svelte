@@ -58,6 +58,7 @@
   export let reset_on_select = true;
   export let __search_id = null;
   export let __search_width_100 = false;
+  export let dom_component_width;
 
   $: is_list_open = options.length ? true : false;
   $: is_list_open_typeahead = typeahead_options.length ? true : false;
