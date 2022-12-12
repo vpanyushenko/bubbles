@@ -22,6 +22,7 @@ const modalStore = writable({
   img: null,
   footer: [],
   type: "default",
+  gallery: null,
 });
 
 const pageStore = writable({
@@ -39,6 +40,7 @@ const pageStore = writable({
   errors: [],
   host: null,
   is_mobile: false,
+  focused_gallery_id: null,
   table: {
     selected_table_rows: 0,
     checkbox_options: [],

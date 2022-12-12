@@ -45,6 +45,18 @@ const showModal = (
       data.type = options.type;
     }
 
+    if (options.gallery && options.gallery.images) {
+      data.gallery = {
+        images: options.gallery.images,
+        grid: options.gallery.grid,
+        overlay_buttons: options.gallery.overlay_buttons,
+        title: options.gallery.title,
+        pagination: options.gallery.pagination,
+        previous_icon: options.gallery.previous_icon,
+        next_icon: options.gallery.next_icon,
+      };
+    }
+
     return data;
   });
 };
