@@ -2,10 +2,11 @@
   import { browser } from "$app/environment";
   import { v4 as uuid } from "@lukeed/uuid";
   import { fly } from "svelte/transition";
-  import { modalStore } from "$lib/utils/stores";
+  import { modalStore, pageStore } from "$lib/utils/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Button from "$lib/components/button/Button.svelte";
   import Form from "$lib/components/form/Form.svelte";
+  import { Gallery } from "$lib/index";
 
   const id = uuid();
 
@@ -15,8 +16,8 @@
     $modalStore = {};
   }
 
-  function keydown(event) {
-    if (event.key === "Escape" && $modalStore.active) {
+  async function keydown(event) {
+    if (event.key === "Escape" && $modalStore.active && !$pageStore.focused_gallery_id) {
       hideModal();
     }
   }
@@ -66,6 +67,12 @@
           {#if $modalStore.img}
             <div class="image__container">
               <img src={$modalStore.img} alt="Modal" />
+            </div>
+          {/if}
+
+          {#if $modalStore.gallery}
+            <div class="image__container">
+              <Gallery {...$modalStore.gallery} />
             </div>
           {/if}
 
