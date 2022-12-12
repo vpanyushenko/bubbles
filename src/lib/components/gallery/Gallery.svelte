@@ -1,15 +1,15 @@
 <script>
-  import { uuid, Overlay, Button, ButtonGroup, CardHeader } from "$lib/index";
+  import { uuid, Overlay, Button, ButtonGroup, CardHeader, pageStore } from "$lib/index";
 
   import icon_add from "./add.svg";
 
   export let id = uuid();
   export let images = [];
-  export let grid = "1x1";
+  export let grid = null;
   export let page = 1;
   export let overlay_buttons = [];
-  export let title = "Gallery";
-  export let pagination = true;
+  export let title = null;
+  export let pagination = false;
   export let buttons = [];
   export let previous_icon = "__default";
   export let next_icon = "__default";
@@ -19,14 +19,10 @@
   let calculated_page = 1;
   let show_details = false;
   let selected_image;
+  $pageStore.focused_gallery_id = null;
 
-  if (!images) {
-    images = [];
-  }
-
-  if (!grid) {
-    grid = "1x1";
-  }
+  if (!images) images = [];
+  if (!grid) grid = "1x1";
 
   let columns = 1;
   let rows = 1;
@@ -122,17 +118,24 @@
     paginated_images = paginated_images;
   }
 
-  function keydown(event) {
+  async function keydown(event) {
     let __selected_image_index = selected_image_index;
 
+    //wait for 50 ms in case we are inside of a modal to make sure the modal is not dismissed since
+    //we have two overlays on top of each other
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
     if (event.code === "Escape" && show_details) {
+      event.preventDefault();
       show_details = false;
       selected_image = null;
+      $pageStore.focused_gallery_id = null;
       return;
     }
 
     if (event.code === "ArrowRight") {
-      if (show_details) {
+      if (show_details && $pageStore.focused_gallery_id === id) {
+        event.preventDefault();
         let next_image = images[selected_image_index + 1];
         __selected_image_index++;
 
@@ -149,12 +152,14 @@
           selected_image_index = 0;
         }
       } else {
-        page++;
+        event.preventDefault();
+        if (document.querySelectorAll(".js-bubbles-gallery")?.length === 1) page++;
       }
     }
 
     if (event.code === "ArrowLeft") {
-      if (show_details) {
+      if (show_details && $pageStore.focused_gallery_id === id) {
+        event.preventDefault();
         let next_image = images[selected_image_index - 1];
         __selected_image_index--;
 
@@ -171,24 +176,26 @@
           selected_image_index = images.length - 1 === "add" ? images.length - 2 : images.length - 1;
         }
       } else {
-        page--;
+        event.preventDefault();
+        if (document.querySelectorAll(".js-bubbles-gallery")?.length === 1) page--;
       }
     }
   }
 
-  function viewImageDetails(image) {
+  function viewImageDetails(image, gallery_id) {
     show_details = true;
     selected_image = image;
+    $pageStore.focused_gallery_id = gallery_id;
   }
 </script>
 
-<svelte:body on:keydown={keydown} />
+<svelte:body on:keydown|preventDefault={keydown} />
 
 {#if title || (Array.isArray(buttons) && buttons.length)}
   <CardHeader {title} px={2} {buttons} />
 {/if}
 
-<div class="gallery" {style} {id}>
+<div class="gallery js-bubbles-gallery" {style} {id}>
   {#if calculated_page > 0 && calculated_page <= total_pages}
     {#each paginated_images[calculated_page - 1] as image, i}
       <div class="grid__img">
@@ -197,7 +204,7 @@
             <img src={icon_add} alt="Add File" />
           </div>
         {:else}
-          <img src={image} alt={`Gallery Image ${i}`} on:click={() => viewImageDetails(image)} loading="lazy" />
+          <img src={image} alt={`Gallery Image ${i}`} on:click={() => viewImageDetails(image, id)} loading="lazy" />
         {/if}
       </div>
     {/each}
