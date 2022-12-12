@@ -16,7 +16,7 @@
 
   import store from "$docs/utils/store";
   import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
-  import { showModal, sort, pageStore } from "$lib/index";
+  import { showModal, sort, pageStore, Gallery } from "$lib/index";
 
   $: pagination = $store?.pagination ? $store.pagination : {};
   $: pokemon = $store.pokemon ? $store.pokemon : [];
@@ -140,6 +140,13 @@
           <TableRow id={poke.id}>
             <TableCell checkbox={{ value: false }} />
             <TableCell img={{ src: poke?.sprites?.front_default, alt: "Sprite" }} mobile_width={10} />
+            <!-- <TableCell>
+              <Gallery
+                images={Object.values(poke?.sprites).filter((s) => typeof s === "string")}
+                pagination={null}
+                title={null}
+              />
+            </TableCell> -->
             <TableCell
               text={poke.name}
               href={`/examples/pokedex/${poke.name}`}

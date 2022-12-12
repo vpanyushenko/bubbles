@@ -9,6 +9,9 @@
   import { getFormData, validateInputs } from "$lib/utils/form";
   import { showToast } from "$lib/utils/toast";
 
+  import image1 from "$docs/icons/gallery/1.jpg";
+  import image2 from "$docs/icons/gallery/2.jpg";
+
   let show_modal = false;
 
   const form = [
@@ -468,7 +471,9 @@
     mb={true}
     onclick={() =>
       showModal("Message Modal", {
-        img: "/favicon.png",
+        gallery: {
+          images: [image1, image2],
+        },
         message: "This is a message modal. Good for things like confirming an un-doable action for the user",
         footer: [
           {
