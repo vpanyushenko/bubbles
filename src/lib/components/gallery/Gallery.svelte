@@ -189,7 +189,7 @@
   }
 </script>
 
-<svelte:body on:keydown|preventDefault={keydown} />
+<svelte:body on:keydown={keydown} />
 
 {#if title || (Array.isArray(buttons) && buttons.length)}
   <CardHeader {title} px={2} {buttons} />
