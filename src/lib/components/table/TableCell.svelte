@@ -458,6 +458,11 @@
     width: 3rem;
     height: 3rem;
   }
+
+  :global(.cell .gallery .grid__img) {
+    max-width: 3rem;
+    max-height: 3rem;
+  }
   /* Utility Styles */
   .text-gray {
     color: var(--gray);
