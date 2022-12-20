@@ -74,7 +74,7 @@
   if (caption) {
     _captions = [caption];
   } else if (Array.isArray(captions)) {
-    _captions = captions;
+    _captions = captions.filter(Boolean);
   }
 
   let mobile_hidden = false;
