@@ -77,8 +77,6 @@
     _captions = captions;
   }
 
-  console.log(_captions);
-
   let mobile_hidden = false;
   let hidden = false;
   let style = "";
