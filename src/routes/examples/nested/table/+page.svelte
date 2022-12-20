@@ -121,7 +121,7 @@
 
               return {
                 label: type,
-                value: type === "All" ? "" : type.toLowerCase(),
+                value: type === "All" ? "" : `${type}`.toLowerCase(),
               };
             }),
           },

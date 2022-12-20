@@ -16,7 +16,7 @@
 
   import store from "$docs/utils/store";
   import { getSelectedTableRows, deselectTableRows } from "$lib/utils/table";
-  import { showModal, sort, pageStore, Gallery } from "$lib/index";
+  import { showModal, sort, pageStore, Gallery, Tag } from "$lib/index";
 
   $: pagination = $store?.pagination ? $store.pagination : {};
   $: pokemon = $store.pokemon ? $store.pokemon : [];
@@ -150,34 +150,28 @@
             <TableCell
               text={poke.name}
               href={`/examples/pokedex/${poke.name}`}
-              caption={`Pokedex Number: ${poke.id}`}
+              captions={[`Pokedex Number: ${poke.id}`]}
               bold={true}
               mobile_width={70}
             />
             <TableCell text={`${poke.weight} lbs`} mobile_width={0} />
-            <TableCell
-              mobile_width={0}
-              rows={[
-                [
-                  {
-                    tag: {
-                      label: poke?.types[0]?.type?.name,
-                      color: typeColor(poke?.types[0]?.type?.name),
-                      margin: "0 0 .25rem 0",
-                    },
-                  },
-                ],
-                [
-                  {
-                    tag: {
-                      label: poke?.types[1]?.type?.name,
-                      color: typeColor(poke?.types[1]?.type?.name),
-                      margin: "0.25rem 0 0 0",
-                    },
-                  },
-                ],
-              ]}
-            />
+            <TableCell mobile_width={0}>
+              {#if poke?.types[0]}
+                <Tag
+                  label={poke?.types[0]?.type?.name}
+                  color={typeColor(poke?.types[0]?.type?.name)}
+                  margin="0 0 .25rem 0"
+                />
+              {/if}
+
+              {#if poke?.types[1]}
+                <Tag
+                  label={poke?.types[1]?.type?.name}
+                  color={typeColor(poke?.types[1]?.type?.name)}
+                  margin="0 0 .25rem 0"
+                />
+              {/if}
+            </TableCell>
 
             <TableCell
               tag={{ label: poke.moves.length, color: "primary", min_width: 2.75 }}

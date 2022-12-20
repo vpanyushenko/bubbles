@@ -74,24 +74,19 @@ type: code
       <CardHeader
         title="Complex Table Example"
         caption="This example uses an external API for data, which may run slowly especially when using the search."
-        buttons={[
-          { icon: "search", color: "gray-lighter", search: true },
-          { icon: "more", color: "gray-lighter" },
-        ]}
+        buttons={[{ icon: "search", color: "gray-lighter", search: true }]}
         border={false}
         filters={[
           {
             id: "type",
             label: "Type",
             value: "",
+            reset_label: "All",
+            break_after_reset: true,
             options: types.map((type) => {
-              if (type === "break") {
-                return { divider: true };
-              }
-
               return {
                 label: type,
-                value: type === "All" ? "" : type.toLowerCase(),
+                value: type.toLowerCase(),
               };
             }),
           },
@@ -116,12 +111,13 @@ type: code
             },
             { label: null },
             { label: "Name", sort: { id: "name" } },
-            { label: "Weight", sort: { id: "weight" } },
-            { label: "Type(s)" },
-            { label: "Possible Moves", align: "end" },
+            { label: "Weight", sort: { id: "weight" }, mobile_width: 0 },
+            { label: "Type(s)", mobile_width: 0 },
+            { label: "Possible Moves", align: "end", mobile_width: 0 },
             { label: null, align: "end" },
           ]}
         />
+
         {#each pokemon as poke}
           <TableRow id={poke.id}>
             <TableCell checkbox={{ value: false }} />
@@ -129,34 +125,28 @@ type: code
             <TableCell
               text={poke.name}
               href={`/examples/pokedex/${poke.name}`}
-              caption={`Pokedex Number: ${poke.id}`}
+              captions={[`Pokedex Number: ${poke.id}`, `evolutions: ${poke.evo}`]}
               bold={true}
               mobile_width={70}
             />
             <TableCell text={`${poke.weight} lbs`} mobile_width={0} />
-            <TableCell
-              mobile_width={0}
-              rows={[
-                [
-                  {
-                    tag: {
-                      label: poke?.types[0]?.type?.name,
-                      color: typeColor(poke?.types[0]?.type?.name),
-                      margin: "0 0 .25rem 0",
-                    },
-                  },
-                ],
-                [
-                  {
-                    tag: {
-                      label: poke?.types[1]?.type?.name,
-                      color: typeColor(poke?.types[1]?.type?.name),
-                      margin: "0.25rem 0 0 0",
-                    },
-                  },
-                ],
-              ]}
-            />
+            <TableCell mobile_width={0}>
+              {#if poke?.types[0]}
+                <Tag
+                  label={poke?.types[0]?.type?.name}
+                  color={typeColor(poke?.types[0]?.type?.name)}
+                  margin="0 0 .25rem 0"
+                />
+              {/if}
+
+              {#if poke?.types[1]}
+                <Tag
+                  label={poke?.types[1]?.type?.name}
+                  color={typeColor(poke?.types[1]?.type?.name)}
+                  margin="0 0 .25rem 0"
+                />
+              {/if}
+            </TableCell>
 
             <TableCell
               tag={{ label: poke.moves.length, color: "primary", min_width: 2.75 }}
@@ -174,14 +164,16 @@ type: code
                     href: poke.location_area_encounters,
                     caption: "Areas you can find this pokemon",
                   },
-                  { divider: true },
+                  { break: true },
                   {
                     label: "View JSON",
                     href: poke.species.url,
                   },
                   {
                     label: "Shiny Sprite",
-                    href: poke.sprites.front_shiny,
+                    onclick: () => {
+                      showModal("Shiny Sprite", { img: poke.sprites.front_shiny });
+                    },
                   },
                 ],
               }}

@@ -13,6 +13,7 @@
   export let href = null;
   export let text = "";
   export let caption = "";
+  export let captions = null;
   export let large = false;
   export let bold = false;
   export let empty = false;
@@ -44,7 +45,6 @@
   export let mobile_wrap = true;
 
   //conditions passed for custom cell types
-  export let rows = [];
   export let img = null;
   export let tag = null;
   export let button = null;
@@ -55,11 +55,10 @@
   let _dom_element;
   let _type = null;
   let _checkbox_cell;
+  let _captions = null;
 
   if (text) {
     _type = "text";
-  } else if (rows.length) {
-    _type = "stacked";
   } else if (img) {
     _type = "image";
   } else if (tag) {
@@ -71,6 +70,14 @@
   } else if (sw) {
     _type = "switch";
   }
+
+  if (caption) {
+    _captions = [caption];
+  } else if (Array.isArray(captions)) {
+    _captions = captions;
+  }
+
+  console.log(_captions);
 
   let mobile_hidden = false;
   let hidden = false;
@@ -187,64 +194,13 @@
         </p>
       {/if}
 
-      {#if caption}
-        <p class="text-gray" class:nowrap={wrap === false} class:mobile__nowrap={mobile_wrap === false}>
-          {@html caption}
-        </p>
+      {#if _captions}
+        {#each _captions as caption}
+          <p class="text-gray" class:nowrap={wrap === false} class:mobile__nowrap={mobile_wrap === false}>
+            {@html caption}
+          </p>
+        {/each}
       {/if}
-    </div>
-  </div>
-{/if}
-
-{#if _type === "stacked"}
-  <div
-    class="cell"
-    class:mobile__hidden={mobile_hidden}
-    class:hidden
-    class:right={align === "right" || align === "end"}
-    class:nowrap={wrap === false}
-    class:mobile__nowrap={mobile_wrap === false}
-    {style}
-    bind:this={_dom_element}
-  >
-    <div class="d-flex align-items-center">
-      {#each rows as nested_row}
-        <div class="nested__row">
-          {#each nested_row as nested_cell}
-            {#if nested_cell.tag?.label}
-              <span class="tag">
-                <Tag {...nested_cell.tag} small={true} margin=".2rem .25rem 0 0" />
-              </span>
-            {/if}
-
-            {#if nested_cell.text}
-              {#if nested_cell.href}
-                <a
-                  data-sveltekit-preload-data={preload || "hover"}
-                  href={nested_cell.href}
-                  on:click={hrefClicked}
-                  class:nowrap={wrap === false}
-                  class:mobile__nowrap={mobile_wrap === false}>{@html nested_cell.text}</a
-                >
-              {:else}
-                <p
-                  class:text-gray={nested_cell.text_gray}
-                  class:nowrap={wrap === false}
-                  class:mobile__nowrap={mobile_wrap === false}
-                >
-                  {@html nested_cell.text}
-                </p>
-              {/if}
-            {/if}
-
-            {#if nested_cell.tag?.label && (nested_cell.tag?.align === "right" || nested_cell.tag?.align === "end")}
-              <span class="tag">
-                <Tag {...nested_cell.tag} small={true} margin="0 0 .2rem .25rem" />
-              </span>
-            {/if}
-          {/each}
-        </div>
-      {/each}
     </div>
   </div>
 {/if}
