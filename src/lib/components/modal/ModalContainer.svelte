@@ -34,7 +34,7 @@
 
   $: if ($modalStore.form && $modalStore.form.length) {
     setTimeout(() => {
-      if (document.getElementById(id).querySelector(".field__input")) {
+      if (document.getElementById(id)?.querySelector(".field__input")) {
         document.getElementById(id).querySelector(".field__input").focus();
       }
     }, 0);
