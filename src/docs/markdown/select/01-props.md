@@ -38,6 +38,17 @@ An array that will contain the options the user can select.
 
 ---
 
+**prefix_options** `array<Object>`<br>
+This takes the same properties as the options array above. The difference is that the options passed in here will be added to the front of the list.
+
+The reason that you may want to do things this way is because when you fetch data from an API, you might already have an array. In that case you would typically just `map` over the array to create the options.
+
+However, if you're building some kind of filter, you might want to add some additional options like "All", "None", etc. In that case, it's a little annoying to add those to your array and you get extra code, it's sloppy, and typescript will yell at you. You end up with a lot of JS in your `script` tag just to format the options.
+
+So this will let you add those manual, handcrafted options.
+
+---
+
 **value** `boolean`<br>
 If the component is checked or not.
 
