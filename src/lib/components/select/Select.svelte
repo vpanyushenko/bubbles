@@ -28,7 +28,7 @@
   /** @prop {Function} onselect - A function that will be provided with the value of the selected option */
   export let onselect = null;
 
-  if (Array.isArray(prefix_options) && prefix_options.length) {
+  $: if (Array.isArray(prefix_options) && prefix_options.length) {
     options = [...prefix_options, ...options];
   }
 
