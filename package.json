@@ -12,12 +12,12 @@
     "publish:prod": "npm install && svelte-kit package && npm publish ./package --tag latest"
   },
   "devDependencies": {
-    "@sveltejs/adapter-vercel": "^1.0.0-next.84",
-    "@sveltejs/kit": "^1.0.0-next.570",
-    "@sveltejs/package": "^1.0.0-next.6",
+    "@sveltejs/adapter-vercel": "^1.0.0",
+    "@sveltejs/kit": "^1.0.1",
+    "@sveltejs/package": "^1.0.1",
     "@sveltejs/svelte-scroller": "^2.0.7",
-    "bubbles-ui": "file:./package",
     "autoprefixer": "^10.4.13",
+    "bubbles-ui": "file:./package",
     "mdsvex": "^0.10.6",
     "prettier": "^2.6.1",
     "prettier-plugin-svelte": "^2.6.0",
@@ -26,8 +26,8 @@
     "svelte": "^3.46.4",
     "svelte-highlight": "^5.1.3",
     "svelte-preprocess": "^4.10.6",
-    "svelte2tsx": "^0.5.10",
-    "vite": "^3.2.4"
+    "svelte2tsx": "^0.6.0",
+    "vite": "^4.0.3"
   },
   "type": "module",
   "license": "MIT",
