@@ -111,7 +111,7 @@
         _value = Number(_value);
       }
 
-      if (value) {
+      if (_value) {
         selected_index = filtered_options.findIndex((item) => item.value === _value);
       } else {
         //There was no value, so the value could have been anything falsy, we want find it by the title
