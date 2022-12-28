@@ -13,9 +13,10 @@
   export let error = "An error occurred";
   export let value = null;
   export let options = [];
+  export let prefix_options = [];
   export let desc = null;
   export let id = _uuid;
-  export let search = options.length > 5 ? true : false;
+  export let search = options.length + prefix_options.length > 5 ? true : false;
   export let search_threshold = 0.3;
   export let type = "select";
   export let validation = null;
@@ -26,6 +27,10 @@
 
   /** @prop {Function} onselect - A function that will be provided with the value of the selected option */
   export let onselect = null;
+
+  if (Array.isArray(prefix_options) && prefix_options.length) {
+    options = [...prefix_options, ...options];
+  }
 
   const _label = configLabel(label, validation);
 
