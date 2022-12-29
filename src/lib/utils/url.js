@@ -7,8 +7,7 @@ import { invalidateAll } from "$app/navigation";
  * @param {String} key - The key for the url param you want to add
  * @param {String} value - The value for the key
  * @param {Object} options - Additional options
- * @param {Function} [options.goto=true] - the imported svelte kit goto function. Passing this will indicate that you want to load function to be rerun
- * @param {Function} [options.invalidate=true] - If the data on the page should be invalidated
+ * @param {Boolean} [options.invalidate=true] - If the data on the page should be invalidated
  * @param {String} [options.show_loading] - The ID of an element you want to shoe the animation for. The loading state will automatically stop when the load function completes it's promise.
  * @param {Array<String>} [options.keep_only=[]] - An array of query parameter strings that you want to keep. If the array is empty, then no query parameters will be deleted
  */
