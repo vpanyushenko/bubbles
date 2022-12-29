@@ -24,9 +24,18 @@
   export let limit_query_name = "limit";
 
   let dom_component_width, dom_component_is_small, _max_buttons;
+  let prev_limit = limit;
 
   $: current_page = Number($page.url.searchParams.get(page_query_name)) || 1;
   $: current_limit = Number($page.url.searchParams.get(limit_query_name)) || limit ? limit : rows_per_page[0];
+
+  $: if (current_limit) {
+    if (prev_limit !== current_limit && current_page) {
+      console.log("Resetting page to 1 because limit changed");
+      prev_limit = current_limit;
+      addQueryParam(page_query_name, 1, { invalidate: true });
+    }
+  }
 
   const _first = uuid();
   const _prev = uuid();
@@ -78,14 +87,12 @@
               label: row,
               value: row,
               onselect: (event) => {
-                // addQueryParam(page_query_name, 1, { invalidate: false });
-                addQueryParam(limit_query_name, row, { show_loading: id, invalidate: true });
+                addQueryParam(limit_query_name, row, { show_loading: id, invalidate: false });
               },
             };
           } else {
             const _onselect = (event) => {
-              // addQueryParam(page_query_name, "1", { invalidate: false });
-              addQueryParam(limit_query_name, row.value, { show_loading: id, invalidate: true });
+              addQueryParam(limit_query_name, row.value, { show_loading: id, invalidate: false });
             };
 
             return {
@@ -160,15 +167,19 @@
           id: id,
           label: button,
           onclick: () => {
-            // addQueryParam(limit_query_name, limit, { invalidate: false });
-            addQueryParam(page_query_name, button, { show_loading: id, invalidate: true });
+            addQueryParam(page_query_name, button, {
+              show_loading: `${button}` !== `${current_page}` ? id : null,
+              invalidate: `${button}` !== `${current_page}` ? true : false,
+            });
           },
           color: current_page.toString() !== button.toString() ? "" : "gray-lighter",
         };
       } else {
         const _onclick = () => {
-          // addQueryParam(limit_query_name, limit, { invalidate: false });
-          addQueryParam(page_query_name, button, { show_loading: id, invalidate: true });
+          addQueryParam(page_query_name, button, {
+            show_loading: `${button}` !== `${current_page}` ? id : null,
+            invalidate: `${button}` !== `${current_page}` ? true : false,
+          });
         };
 
         return {
