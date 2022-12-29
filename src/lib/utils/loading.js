@@ -1,4 +1,3 @@
-//import { pageStore } from "$lib/utils/stores";
 import { pageStore } from "../utils/stores";
 
 const showLoading = (id) => {
