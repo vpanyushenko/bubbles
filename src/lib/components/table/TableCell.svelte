@@ -71,7 +71,7 @@
     _type = "switch";
   }
 
-  if (caption) {
+  $: if (caption) {
     _captions = [caption];
   } else if (Array.isArray(captions)) {
     _captions = captions.filter(Boolean);
