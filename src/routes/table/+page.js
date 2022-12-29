@@ -1,7 +1,7 @@
-import search from "$lib/utils/fuzzy-search";
+import { hideLoading, fuzzySearch } from "$lib/index";
 
 function searchPokemon(search_value, pokemon) {
-  return search(search_value, pokemon, { keys: ["name"] });
+  return fuzzySearch(search_value, pokemon, { keys: ["name"] });
 }
 
 export async function load({ url, fetch }) {
@@ -64,7 +64,7 @@ export async function load({ url, fetch }) {
         if (search) {
           pagination.count = filtered.length;
         }
-        // hideLoading();
+        hideLoading();
 
         return {
           pokemon: filtered,
@@ -110,7 +110,7 @@ export async function load({ url, fetch }) {
         if (search) {
           pagination.count = filtered.length;
         }
-        // hideLoading();
+        hideLoading();
 
         return {
           pokemon: filtered,
