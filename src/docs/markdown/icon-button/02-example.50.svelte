@@ -12,6 +12,7 @@
       label: "Option 1",
       caption: "onclick example",
       onclick: (event) => {
+        alert("Icon button option 1 clicked");
         const icon_button_id = getButtonIDFromDropdownOption(event.target);
 
         showLoading(icon_button_id);

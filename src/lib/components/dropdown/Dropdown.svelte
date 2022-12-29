@@ -106,7 +106,7 @@
   function hoverOption(event) {
     if (is_using_pointer_device) {
       const option = event.currentTarget;
-      let _value = option.querySelector("input").value;
+      let _value = option.querySelector("input")?.value;
       if (type === "select-number") {
         _value = Number(_value);
       }
@@ -399,7 +399,11 @@
               <div class="title" class:error={option.color === "error"} class:success={option.color === "success"}>
                 {option.label}
               </div>
-              <input class="hidden" type="hidden" value={option.value} />
+              {#if option.value}
+                <input class="hidden" type="hidden" value={option.value} />
+              {:else}
+                <input class="hidden" type="hidden" />
+              {/if}
               {#if option.caption}
                 <div class="select__info caption">{option.caption}</div>
               {/if}
