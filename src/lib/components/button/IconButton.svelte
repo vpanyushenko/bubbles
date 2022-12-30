@@ -59,15 +59,12 @@
   export let __search_id = null;
   export let __search_width_100 = false;
   export let dom_component_width;
+  export let href_listener = null;
+
+  let dom_ref;
 
   $: is_list_open = options.length ? true : false;
   $: is_list_open_typeahead = typeahead_options.length ? true : false;
-
-  // $: console.log(options.length, "otiojs");
-  // $: console.log(typeahead_options.length, "typeahead_options.length");
-  // $: console.log(is_search_active);
-  // $: console.log(dropdown, "dropdown");
-  // $: console.log(active, "active");
 
   const dropdown = options.length ? true : false;
 
@@ -77,7 +74,10 @@
   $: src = icons[icon] || icon || icons.more;
   $: $pageStore.search = is_search_active === true ? __search_id : null;
   $: active = $pageStore.dropdown === id && $pageStore.dropdown !== null ? true : false;
-  $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
+  $: is_loading =
+    ($pageStore.clicked === id && $navigating) ||
+    $pageStore.loading.includes(id) ||
+    (href_listener && href_listener.includes($navigating?.to?.url?.pathname));
   //$: navigating_to_new_page = $navigating?.from?.url?.href === $navigating?.to?.url?.href ? false : true;
 
   $: typeahead_options = [];
@@ -103,6 +103,12 @@
         is_search_active = true;
         $pageStore.search = __search_id;
       }
+    }
+
+    //If the button is inside of a TableCell and the TableRow parent has an href, the button needs to respond when that href is pressed
+
+    if (dom_ref.parentElement.classList.contains("cell")) {
+      href_listener = dom_ref.parentElement.closest(".js-bubbles-table-row").href;
     }
   });
 
@@ -236,6 +242,7 @@
     target={new_page ? "_blank" : ""}
     {href}
     on:click={iconClick}
+    bind:this={dom_ref}
   >
     <button
       disabled={is_loading}
@@ -317,7 +324,7 @@
     </button>
   </a>
 {:else}
-  <div class="icon__btn js-bubbles-icon-button" class:active={dropdown && active}>
+  <div class="icon__btn js-bubbles-icon-button" class:active={dropdown && active} bind:this={dom_ref}>
     <button
       on:click={iconClick}
       on:click={onclick}
@@ -404,6 +411,7 @@
           />
 
           {#if is_loading}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <span
               style="margin-right: 1rem;"
               on:click|stopPropagation={() => {
@@ -417,6 +425,7 @@
           {/if}
 
           <span class:hidden={is_loading}>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <img
               class="icon icon-main icon-close"
               src={close}
