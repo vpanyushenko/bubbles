@@ -77,7 +77,7 @@
   $: is_loading =
     ($pageStore.clicked === id && $navigating) ||
     $pageStore.loading.includes(id) ||
-    (href_listener && href_listener.includes($navigating?.to?.url?.pathname));
+    (href_listener && href_listener.endsWith($navigating?.to?.url?.pathname));
   //$: navigating_to_new_page = $navigating?.from?.url?.href === $navigating?.to?.url?.href ? false : true;
 
   $: typeahead_options = [];
