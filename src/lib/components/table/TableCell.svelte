@@ -19,26 +19,16 @@
   export let empty = false;
   export let code = false;
   export let tooltip = null;
-  /**@type {"hover"|"tap"|"off"} [href=null] - If you want this button to link to another web page. You should use href instead of onclick because you'll get link prefetching which will make the UX faster. */
+  /**@type {"hover"|"tap"|"off"} [preload=null] - If you want this button to link to another web page. You should use href instead of onclick because you'll get link prefetching which will make the UX faster. */
   export let preload = "hover";
 
-  if (empty) {
-    text = " ";
-  }
-
-  /**
-   * @prop {("left"|"right")} [align="left"] - aligns the text in the cell to the left or right (end) of the cell
-   */
+  /** @type {("left"|"right")} [align="left"] - aligns the text in the cell to the left or right (end) of the cell  */
   export let align = "left";
 
-  /**
-   * @prop {?Number} [mobile_width=null]
-   */
+  /** @type {?Number} [mobile_width=null] */
   export let mobile_width = null;
 
-  /**
-   * @prop {Number} [mobile_order=0]
-   */
+  /** @type {Number} [mobile_order=0] */
   export let mobile_order = 0;
   export let width = null;
   export let wrap = true;
@@ -57,67 +47,44 @@
   let _checkbox_cell;
   let _captions = null;
 
-  if (text) {
-    _type = "text";
-  } else if (img) {
-    _type = "image";
-  } else if (tag) {
-    _type = "tag";
-  } else if (button) {
-    _type = "button";
-  } else if (checkbox) {
-    _type = "checkbox";
-  } else if (sw) {
-    _type = "switch";
-  }
-
-  $: if (caption) {
-    _captions = [caption];
-  } else if (Array.isArray(captions)) {
-    _captions = captions.filter(Boolean);
-  }
-
   let mobile_hidden = false;
   let hidden = false;
   let style = "";
 
-  if (isNaN(mobile_width) === false && mobile_width && mobile_width !== null) {
+  $: if (text) _type = "text";
+  else if (img) _type = "image";
+  else if (tag) _type = "tag";
+  else if (button) _type = "button";
+  else if (checkbox) _type = "checkbox";
+  else if (sw) _type = "switch";
+
+  $: if (caption) _captions = [caption];
+  else if (Array.isArray(captions)) _captions = captions.filter(Boolean);
+
+  $: if (empty || (!text && Array.isArray(_captions) && _captions.length)) text = " ";
+
+  $: if (isNaN(mobile_width) === false && mobile_width && mobile_width !== null) {
     style += `flex:${mobile_width}%;`;
   }
 
-  if (mobile_width === "min") {
-    style += `flex:0%;`;
-  }
-
-  if (mobile_width === 0) {
-    mobile_hidden = true;
-  }
-
-  if (mobile_order) {
-    style += `order:${mobile_order};`;
-  }
-
-  if (width === "min") {
-    style += `width:0%;`;
-  }
-
-  if (width === 0) {
-    hidden = true;
-  }
-
-  if (width && width !== "min") {
-    if (isNaN(width)) {
-      style += `width:${width};`;
-    } else {
-      style += `width:${width}%;`;
-    }
+  $: if (mobile_width === "min") style += `flex:0%;`;
+  $: if (mobile_width === 0) mobile_hidden = true;
+  $: if (mobile_order) style += `order:${mobile_order};`;
+  $: if (width === "min") style += `width:0%;`;
+  $: if (width === 0) hidden = true;
+  $: if (width && width !== "min") {
+    if (isNaN(width)) style += `width:${width};`;
+    else style += `width:${width}%;`;
   }
 
   onMount(() => {
     //find the nearest table (js-bubbles-table)
     //see if the table has an icon button to show a loading animation for
     if (_dom_element && href) {
-      _table_row_icon_button_id = _dom_element.closest(".row").querySelector(".icon__btn").querySelector("button").id;
+      _table_row_icon_button_id = _dom_element
+        .closest(".js-bubbles-table-row")
+        .querySelector(".icon__btn")
+        .querySelector("button").id;
     }
   });
 
