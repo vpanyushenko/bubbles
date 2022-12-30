@@ -29,6 +29,7 @@
     {/if}
   </a>
 {:else}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     class="row js-bubbles-table-row"
     class:cursor-pointer={onclick}
@@ -39,11 +40,7 @@
   >
     {#if cells && cells.length}
       {#each cells as cell}
-        {#if cell.button}
-          <TableCell {...cell} />
-        {:else}
-          <TableCell {...cell} />
-        {/if}
+        <TableCell {...cell} />
       {/each}
     {:else}
       <slot><TableCell><p>--</p></TableCell></slot>
