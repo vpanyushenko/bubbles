@@ -11,6 +11,7 @@
   export let height;
   export let lock_scroll = true;
   export let hide_on_overlay_click = true;
+  export let type = "center";
 
   let style = "";
 
@@ -23,6 +24,10 @@
     if (event.key === "Escape") {
       _hideModal();
     }
+  }
+
+  $: if (type === "side") {
+    height = 100;
   }
 
   $: if (height) {
@@ -40,6 +45,7 @@
 
 <svelte:window on:keydown={keydown} />
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
   class="overlay"
   tabindex="-1"
@@ -50,8 +56,14 @@
   }}
   transition:fade={{ duration: 400 }}
 >
-  <div class="modal js-bubbles-modal" {id}>
-    <div class="container" {style} transition:fly={{ y: 200, duration: 400 }} on:click|stopPropagation>
+  <div class="modal js-bubbles-modal" {id} class:side={type === "side"}>
+    <div
+      class="container"
+      {style}
+      transition:fly={{ y: 200, duration: 400 }}
+      on:click|stopPropagation
+      class:side={type === "side"}
+    >
       <header>
         <h6 class="title">{title}</h6>
         <IconButton icon="close" onclick={_hideModal} />
@@ -87,6 +99,13 @@
     overflow-y: auto;
   }
 
+  .modal.side {
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
   .container {
     width: 31rem;
     max-height: 80vh;
@@ -99,6 +118,16 @@
     background: #fff;
     display: flex;
     flex-direction: column;
+  }
+
+  .container.side {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .model.side .container {
+    height: 100vh;
+    max-height: 100vh;
   }
 
   header {
