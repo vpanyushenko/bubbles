@@ -50,6 +50,7 @@
 <svelte:window on:keydown={keydown} />
 
 {#if $modalStore.active}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="overlay" tabindex="-1" on:click|stopPropagation={hideModal}>
     <div
       class="modal js-bubbles-modal"

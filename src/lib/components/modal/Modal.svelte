@@ -60,7 +60,7 @@
     <div
       class="container"
       {style}
-      transition:fly={{ y: 200, duration: 400 }}
+      transition:fly={type === "side" ? { x: 500, duration: 400 } : { y: 200, duration: 400 }}
       on:click|stopPropagation
       class:side={type === "side"}
     >
