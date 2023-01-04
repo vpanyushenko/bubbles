@@ -10,7 +10,9 @@
   export let min_width = 3;
   export let margin = "0 0 0 0";
   export let dark_mode_invert = $configStore?.dark_mode_invert;
-  export let __delete = false;
+  export let onclick = null;
+  export let onhover = null;
+  export let onblur = null;
 
   let _mw = min_width;
 
@@ -31,6 +33,9 @@
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <span
+  on:mousedown={onclick ? (event) => onclick(event) : null}
+  on:mouseenter={onhover ? (event) => onhover(event) : null}
+  on:mouseleave={onblur ? (event) => onblur(event) : null}
   {id}
   data-tooltip={tooltip}
   style="min-width:{min_width}rem; margin:{margin};"
@@ -93,6 +98,7 @@
   class:bg-dark-darker={color === "dark-darker"}
   class:bg-dark-darkest={color === "dark-darkest"}
   class:small
+  class:hover={onhover || onclick}
 >
   <slot>
     {@html label}
@@ -183,6 +189,7 @@
     filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 1));
   }
 
+  button,
   span {
     font-family: "Fira Mono";
     font-weight: 700;
@@ -199,5 +206,9 @@
   .small {
     font-size: 0.6rem;
     /* padding: 3px 0.625rem; */
+  }
+
+  .hover {
+    cursor: pointer;
   }
 </style>

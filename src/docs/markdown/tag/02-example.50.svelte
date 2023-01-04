@@ -28,6 +28,18 @@
       { label: "testing", color: "success" },
     ]}
   />
+  <Tag
+    color="primary"
+    margin="1rem 0 1rem 0"
+    tooltip="This one acts link a button"
+    onclick={() => alert("You clicked me")}
+    onhover={(event) => {
+      event.currentTarget.style.backgroundColor = `var(--primary-darker)`;
+    }}
+    onblur={(event) => {
+      event.currentTarget.style.backgroundColor = null;
+    }}>Button</Tag
+  >
 </Card>
 
 <Card>

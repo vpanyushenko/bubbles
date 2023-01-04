@@ -1,6 +1,6 @@
 {
   "name": "bubbles-ui",
-  "version": "0.9.0-next.25",
+  "version": "0.9.0-next.26",
   "description": "Opinionated Svelte Kit UI Components",
   "scripts": {
     "dev": "vite dev --port 3001",
