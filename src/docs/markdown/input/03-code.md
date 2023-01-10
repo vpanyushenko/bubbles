@@ -7,7 +7,6 @@ type: code
 ```svelte
 <script>
   import { Input, fuzzySearch } from "bubbles-ui";
-
 </script>
 
 <Input
@@ -93,7 +92,7 @@ type: code
         name: "Alaska",
         abbreviation: "AK",
       },
-      ...,
+      //...,
       {
         name: "Wyoming",
         abbreviation: "WY",
@@ -106,12 +105,12 @@ type: code
 />
 
 <Input
-    id="stripe"
-    type="stripe-card"
-    desc="Enter your credit card information. Stripe will load completely asynchronously when you request the component, after everything else mounts. You don't have to worry about performance issues."
-    margin={true}
-    stripe_key_name="VITE_STRIPE_PUBLIC_KEY"
-  />
+  id="stripe"
+  type="stripe-card"
+  desc="Enter your credit card information. Stripe will load completely asynchronously when you request the component, after everything else mounts. You don't have to worry about performance issues."
+  margin={true}
+  stripe_key_name="VITE_STRIPE_PUBLIC_KEY"
+/>
 
 <Input
   id="disabled"
@@ -121,5 +120,15 @@ type: code
   margin={true}
   disabled={true}
   value="This is disabled"
+/>
+
+<Input
+  id="loading"
+  type="text"
+  label="Loading"
+  error="Please add your name"
+  margin={true}
+  disabled={true}
+  desc="Inputs can show a loading state by adding their ID to the loading store."
 />
 ```

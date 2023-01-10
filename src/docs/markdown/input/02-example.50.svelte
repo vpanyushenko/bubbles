@@ -4,6 +4,9 @@
   import Input from "$lib/components/input/Input.svelte";
   import StripeInput from "$lib/components/stripe/StripeCardInput.svelte";
   import fuzzySearch from "$lib/utils/fuzzy-search";
+  import { showLoading } from "$lib/utils/loading";
+
+  showLoading("loading");
 </script>
 
 <Card height100={true}>
@@ -374,6 +377,16 @@
       margin={true}
       disabled={true}
       value="This is disabled"
+    />
+
+    <Input
+      id="loading"
+      type="text"
+      label="Loading"
+      error="Please add your name"
+      margin={true}
+      disabled={true}
+      desc="Inputs can show a loading state by adding their ID to the loading store."
     />
   </div>
 </Card>

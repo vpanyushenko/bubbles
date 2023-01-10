@@ -6,6 +6,7 @@
   import Tag from "./TagInput.svelte";
   import { showToast } from "$lib/utils/toast";
   import { onMount } from "svelte";
+  import { showLoading, hideLoading } from "$lib/index";
 
   // import DatePicker from "$lib/components/calendar/DatePicker.svelte";
 
@@ -67,7 +68,7 @@
 
   //options for typeahead inside of input or textarea elements
   // $: typeahead_options = [];
-  $: is_loading = false;
+  $: is_loading = $pageStore.loading.includes(id);
 
   onMount(() => {
     if (type === "file" && value) {
@@ -112,10 +113,10 @@
     await new Promise((resolve) => setTimeout(resolve, debounce));
 
     if (typeahead && typeahead_value === value && value) {
-      is_loading = true;
+      showLoading(id);
       typeahead(typeahead_value)
         .then((options) => {
-          is_loading = false;
+          hideLoading(id);
 
           if (options && options.length && was_typeahead_options_selected === false) {
             //check if the typeahead options that were passed were strings and format them correctly
@@ -137,13 +138,13 @@
         })
         .catch((err) => {
           console.error(err);
-          is_loading = false;
+          hideLoading(id);
           typeahead_options = [];
         });
     }
 
     if (!value) {
-      is_loading = false;
+      hideLoading(id);
       typeahead_options = [];
     }
   }
@@ -270,8 +271,7 @@
         {#if is_loading}
           <span class="spinner" />
         {/if}
-        <!-- 
-        {#if typeahead_options && typeahead_options.length > 0} -->
+
         <Dropdown
           bind:options={typeahead_options}
           bind:is_list_open
@@ -287,7 +287,6 @@
             }
           }}
         />
-        <!-- {/if} -->
       </div>
       {#if desc}
         <p class="field__desc">{@html desc}</p>
