@@ -32,4 +32,7 @@ This is the label that the user will see
 segment[].**onclick** `function` <br>
 This is the function that will fire that will determine the logic for your segment. Typically you will want to hide some sections and show others.
 
+segment[].**tag** `Tag` <br>
+Will add a tag to the right side of the text
+
 ---

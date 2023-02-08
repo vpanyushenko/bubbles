@@ -1,5 +1,6 @@
 <script>
   import Select from "$lib/components/select/Select.svelte";
+  import { Tag } from "$lib/index";
   import { v4 as uuid } from "@lukeed/uuid";
   import { Spinner } from "$lib/index";
   import { navigating } from "$app/stores";
@@ -109,6 +110,10 @@
                   <Spinner size={1} />
                 {:else}
                   {segment.label}
+
+                  {#if segment.tag}
+                    <Tag min_width={0} margin="0 0 0 0.5rem" {...segment.tag} />
+                  {/if}
                 {/if}
               </span>
             </a>
@@ -123,6 +128,10 @@
             >
               <span>
                 {segment.label}
+
+                {#if segment.tag}
+                  <Tag min_width={0} margin="0 0 0 0.5rem" {...segment.tag} />
+                {/if}
               </span>
             </button>
           {/if}
