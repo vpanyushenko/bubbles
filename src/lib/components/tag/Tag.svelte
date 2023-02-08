@@ -25,7 +25,7 @@
   }
 
   $: if (Array.isArray(colors) && label) {
-    const match = colors.find((option) => option?.label?.toLowerCase() === label?.toLowerCase());
+    const match = colors.find((option) => `${option?.label}`?.toLowerCase() === `${label}`?.toLowerCase());
 
     if (match) color = match.color;
   }
