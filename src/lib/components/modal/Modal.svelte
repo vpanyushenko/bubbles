@@ -64,18 +64,20 @@
       on:click|stopPropagation
       class:side={type === "side"}
     >
-      <header>
-        <h6 class="title">{title}</h6>
-        <IconButton icon="close" onclick={_hideModal} />
-      </header>
+      {#if title}
+        <header>
+          <h6 class="title">{title}</h6>
+          <IconButton icon="close" onclick={_hideModal} />
+        </header>
+      {/if}
 
       <main>
         <slot />
       </main>
 
-      <footer class="modal__footer">
+      <!-- <footer class="modal__footer">
         <slot name="footer" />
-      </footer>
+      </footer> -->
     </div>
   </div>
 </div>

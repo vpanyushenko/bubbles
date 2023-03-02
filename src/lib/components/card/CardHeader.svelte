@@ -2,6 +2,7 @@
   import { pageStore, addQueryParam, uuid, Select, IconButton } from "$lib/index";
   import { page } from "$app/stores";
   import { browser, dev } from "$app/environment";
+  import { onMount } from "svelte";
 
   export let filters = [];
   export let title = "";
@@ -62,6 +63,17 @@
 
     return filter;
   });
+
+  // onMount(() => {
+  //   if (formatted_filters.length > 0 && $pageStore.search !== id) {
+  //     //Check if any of the filters have a value and if so, add the query params
+  //     formatted_filters.forEach((filter) => {
+  //       if (filter.value) {
+  //         addQueryParam(filter.id, filter.value, { show_loading: filter.id, keep_only: filter_ids, invalidate: true });
+  //       }
+  //     });
+  //   }
+  // });
 </script>
 
 {#if $pageStore?.table?.selected_table_rows && $pageStore?.table?.id && browser && $pageStore.table.id === document
@@ -133,7 +145,7 @@
       <div class="filters" class:mt={title || caption}>
         {#each filters as filter}
           <div class="filter">
-            <Select {...filter} value={$page.url.searchParams.get(filter.id)} />
+            <Select {...filter} value={$page.url.searchParams.get(filter.id) || filter.value} />
           </div>
         {/each}
       </div>

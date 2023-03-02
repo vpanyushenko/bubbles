@@ -53,6 +53,7 @@ import Sidebar from "./components/sidebar/Sidebar.svelte";
 import Form from "./components/form/Form.svelte";
 import Modal from "./components/modal/Modal.svelte";
 import ModalContainer from "./components/modal/ModalContainer.svelte";
+import ModalHeader from "./components/modal/ModalHeader.svelte";
 import Toast from "./components/toast/Toast.svelte";
 import ToastContainer from "./components/toast/ToastContainer.svelte";
 import Tag from "./components/tag/Tag.svelte";
@@ -65,6 +66,7 @@ import SegmentedController from "./components/segmented-controller/SegmentedCont
 import Pulse from "./components/pulse/Pulse.svelte";
 import Gallery from "./components/gallery/Gallery.svelte";
 import GalleryCard from "./components/gallery/GalleryCard.svelte";
+import Avatar from "./components/avatar/Avatar.svelte";
 
 export {
   Header,
@@ -77,6 +79,7 @@ export {
   Sidebar,
   Modal,
   ModalContainer,
+  ModalHeader,
   Toast,
   ToastContainer,
   Form,
@@ -90,6 +93,7 @@ export {
   Pulse,
   Gallery,
   GalleryCard,
+  Avatar,
 };
 
 //input

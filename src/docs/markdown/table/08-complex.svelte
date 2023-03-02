@@ -98,7 +98,7 @@
           {
             id: "type",
             label: "Type",
-            value: "",
+            value: "normal",
             reset_label: "All",
             break_after_reset: true,
             options: types.map((type) => {
