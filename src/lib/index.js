@@ -132,8 +132,9 @@ import Table from "./components/table/Table.svelte";
 import TableRow from "./components/table/TableRow.svelte";
 import TableHeader from "./components/table/TableHeader.svelte";
 import TableCell from "./components/table/TableCell.svelte";
+import EmptyTableRow from "./components/table/EmptyState.svelte";
 import Pagination from "./components/pagination/Pagination.svelte";
-export { Table, TableCell, TableHeader, TableRow, Pagination };
+export { Table, TableCell, TableHeader, TableRow, Pagination, EmptyTableRow };
 
 //layouts
 import SidebarPageWrapper from "./layouts/SidebarPageWrapper.svelte";

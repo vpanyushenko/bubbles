@@ -225,10 +225,6 @@
           <RadioGroup {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
 
-        {#if input.type === "checkbox"}
-          <LabeledCheckbox {...input} bind:value={input.value} background={input.background === false ? false : true} />
-        {/if}
-
         {#if input.type === "checkbox-group"}
           <CheckboxGroup {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}

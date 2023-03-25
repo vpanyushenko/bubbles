@@ -86,7 +86,7 @@
             type="checkbox"
             value={option.value}
             bind:group={value}
-            checked={value.includes(option.value)}
+            checked={Array.isArray(value) && value.includes(option.value)}
             on:click={() => {
               $pageStore.errors = $pageStore.errors.filter((a) => a === id);
             }}

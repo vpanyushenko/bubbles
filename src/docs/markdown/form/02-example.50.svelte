@@ -6,8 +6,276 @@
   import { validateInputs, getFormData } from "$lib/utils/form";
   import { showLoading, hideLoading } from "$lib/utils/loading";
   import { showToast } from "$lib/utils/toast";
+  import fuzzySearch from "$lib/utils/fuzzy-search";
+
+  // let display_value = null;
 
   const formInputs = [
+    {
+      id: "favorite",
+      type: "text",
+      label: "Favorite U.S. State",
+      error: "we can't find that one!",
+      desc: "This is an example of typeahead to get results based on what the user is typing. It can be used on text and textarea inputs. Just add a function to the typeahead property that accepts the current value and responds with a Promise that array of options. Each option is the completed string. ",
+      margin: true,
+      autocomplete: false,
+      display_value: display_value,
+      typeahead: (input) => {
+        const states = [
+          {
+            name: "Alabama",
+            abbreviation: "AL",
+          },
+          {
+            name: "Alaska",
+            abbreviation: "AK",
+          },
+          {
+            name: "American Samoa",
+            abbreviation: "AS",
+          },
+          {
+            name: "Arizona",
+            abbreviation: "AZ",
+          },
+          {
+            name: "Arkansas",
+            abbreviation: "AR",
+          },
+          {
+            name: "California",
+            abbreviation: "CA",
+            caption: "West coast, best coast",
+          },
+          {
+            name: "Colorado",
+            abbreviation: "CO",
+          },
+          {
+            name: "Connecticut",
+            abbreviation: "CT",
+          },
+          {
+            name: "Delaware",
+            abbreviation: "DE",
+          },
+          {
+            name: "District Of Columbia",
+            abbreviation: "DC",
+          },
+          {
+            name: "Federated States Of Micronesia",
+            abbreviation: "FM",
+          },
+          {
+            name: "Florida",
+            abbreviation: "FL",
+          },
+          {
+            name: "Georgia",
+            abbreviation: "GA",
+          },
+          {
+            name: "Guam",
+            abbreviation: "GU",
+          },
+          {
+            name: "Hawaii",
+            abbreviation: "HI",
+          },
+          {
+            name: "Idaho",
+            abbreviation: "ID",
+          },
+          {
+            name: "Illinois",
+            abbreviation: "IL",
+          },
+          {
+            name: "Indiana",
+            abbreviation: "IN",
+          },
+          {
+            name: "Iowa",
+            abbreviation: "IA",
+          },
+          {
+            name: "Kansas",
+            abbreviation: "KS",
+          },
+          {
+            name: "Kentucky",
+            abbreviation: "KY",
+          },
+          {
+            name: "Louisiana",
+            abbreviation: "LA",
+          },
+          {
+            name: "Maine",
+            abbreviation: "ME",
+          },
+          {
+            name: "Marshall Islands",
+            abbreviation: "MH",
+          },
+          {
+            name: "Maryland",
+            abbreviation: "MD",
+          },
+          {
+            name: "Massachusetts",
+            abbreviation: "MA",
+          },
+          {
+            name: "Michigan",
+            abbreviation: "MI",
+          },
+          {
+            name: "Minnesota",
+            abbreviation: "MN",
+          },
+          {
+            name: "Mississippi",
+            abbreviation: "MS",
+          },
+          {
+            name: "Missouri",
+            abbreviation: "MO",
+          },
+          {
+            name: "Montana",
+            abbreviation: "MT",
+          },
+          {
+            name: "Nebraska",
+            abbreviation: "NE",
+          },
+          {
+            name: "Nevada",
+            abbreviation: "NV",
+          },
+          {
+            name: "New Hampshire",
+            abbreviation: "NH",
+          },
+          {
+            name: "New Jersey",
+            abbreviation: "NJ",
+          },
+          {
+            name: "New Mexico",
+            abbreviation: "NM",
+          },
+          {
+            name: "New York",
+            abbreviation: "NY",
+            caption: "I ❤️ New York",
+          },
+          {
+            name: "North Carolina",
+            abbreviation: "NC",
+          },
+          {
+            name: "North Dakota",
+            abbreviation: "ND",
+          },
+          {
+            name: "Northern Mariana Islands",
+            abbreviation: "MP",
+          },
+          {
+            name: "Ohio",
+            abbreviation: "OH",
+          },
+          {
+            name: "Oklahoma",
+            abbreviation: "OK",
+          },
+          {
+            name: "Oregon",
+            abbreviation: "OR",
+          },
+          {
+            name: "Palau",
+            abbreviation: "PW",
+          },
+          {
+            name: "Pennsylvania",
+            abbreviation: "PA",
+          },
+          {
+            name: "Puerto Rico",
+            abbreviation: "PR",
+          },
+          {
+            name: "Rhode Island",
+            abbreviation: "RI",
+          },
+          {
+            name: "South Carolina",
+            abbreviation: "SC",
+          },
+          {
+            name: "South Dakota",
+            abbreviation: "SD",
+          },
+          {
+            name: "Tennessee",
+            abbreviation: "TN",
+          },
+          {
+            name: "Texas",
+            abbreviation: "TX",
+          },
+          {
+            name: "Utah",
+            abbreviation: "UT",
+          },
+          {
+            name: "Vermont",
+            abbreviation: "VT",
+          },
+          {
+            name: "Virgin Islands",
+            abbreviation: "VI",
+          },
+          {
+            name: "Virginia",
+            abbreviation: "VA",
+          },
+          {
+            name: "Washington",
+            abbreviation: "WA",
+          },
+          {
+            name: "West Virginia",
+            abbreviation: "WV",
+          },
+          {
+            name: "Wisconsin",
+            abbreviation: "WI",
+          },
+          {
+            name: "Wyoming",
+            abbreviation: "WY",
+          },
+        ];
+
+        const filtered = fuzzySearch(input, states, { keys: ["name", "abbreviation"], sort: true });
+
+        return Promise.resolve(
+          filtered.map((obj) => {
+            return { label: obj.name, value: obj.name, caption: obj?.caption };
+          })
+        );
+      },
+      // onselect: (value) => {
+      //   formInputs[0].display_value = "HELLOOOOO";
+      //   console.log("Selected: ", value);
+      //   display_value = "HELLO";
+      // },
+    },
     {
       type: "text",
       id: "name",

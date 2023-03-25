@@ -7,11 +7,13 @@
   export let mb = false;
   /**@type {Boolean} [larger=true] - if the buttons should be larger */
   export let larger = true;
+  /**@type {"left"|"right"|"start"|"end"} [larger=true] - if the buttons should be larger */
+  export let align = "left";
 
   export let buttons = [];
 </script>
 
-<div class="button__group" class:mb class:mt>
+<div class="button__group" class:mb class:mt class:right={align === "right" || align === "end"}>
   {#if Array.isArray(buttons) && buttons.length > 0}
     {#each buttons as button}
       <Button {...button} type="button" {larger} />
@@ -41,5 +43,9 @@
 
   .mt {
     margin-top: 1rem;
+  }
+
+  .right {
+    justify-content: flex-end;
   }
 </style>

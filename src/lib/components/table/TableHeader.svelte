@@ -68,6 +68,7 @@
       {#if cell.checkbox}
         <Checkbox onchange={selectAll} bind:value={checkbox_value} />
       {:else if cell.sort}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <span
           class="sort"
           on:click={(event) => {

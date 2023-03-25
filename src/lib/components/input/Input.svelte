@@ -8,6 +8,9 @@
   import { onMount } from "svelte";
   import { showLoading, hideLoading } from "$lib/index";
 
+  import display_value_icon from "./delete-icon.svelte";
+  import { browser } from "$app/environment";
+
   // import DatePicker from "$lib/components/calendar/DatePicker.svelte";
 
   export let id;
@@ -30,6 +33,7 @@
   export let typeahead_options = [];
   export let onselect = null;
   export let allow_multiple_files = true;
+  export let display_value = null;
 
   $: is_list_open = typeahead_options.length > 0 ? true : false;
 
@@ -109,6 +113,7 @@
   async function typeaheadOnInput(event) {
     const typeahead_value = event.target.value;
     was_typeahead_options_selected = false;
+    display_value = null;
 
     await new Promise((resolve) => setTimeout(resolve, debounce));
 
@@ -150,6 +155,11 @@
   }
 
   function inputFocused() {
+    if (display_value) {
+      value = "";
+      display_value = null;
+    }
+
     const index = $pageStore?.errors?.findIndex((item) => item === id);
     if (index > -1) {
       $pageStore.errors.splice(index, 1);
@@ -243,8 +253,6 @@
   }
 
   function tagCreated(new_value) {
-    console.log(value);
-
     value = [...new Set([...value, new_value])];
   }
 </script>
@@ -252,16 +260,29 @@
 {#if type === "text"}
   <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field" class:active={focused || value}>
+      {#if display_value}
+        <div class="display__value" on:mousedown={() => inputFocused()}>
+          <span class="text">
+            {display_value}
+          </span>
+          <span class="display_value_icon">
+            <svelte:component this={display_value_icon} />
+          </span>
+        </div>
+      {/if}
+
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
         <span class="error hidden" class:hidden={!is_error}>{error}</span>
       </div>
       <div class="field__wrap">
         <input
+          class:hide__text={display_value}
           class="field__input"
           class:error={is_error}
           type="text"
           autocomplete={autocomplete ? "on" : "nope"}
+          spellcheck={display_value ? "false" : "true"}
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlurred}
@@ -492,6 +513,7 @@
 {:else if type === "file"}
   <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
     <div class="field">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-mouse-events-have-key-events -->
       <div
         class="image__preview"
@@ -863,6 +885,41 @@
     filter: blur(2px);
   }
 
+  .display__value {
+    width: 100%;
+    height: 5rem;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: transparent;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--black);
+    transition: all 0.2s;
+    position: absolute;
+    padding: 1.125rem 1.35rem 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .display__value span.text {
+    font-size: 0.875rem;
+    padding-top: 1.25rem;
+  }
+
+  .display__value span.display_value_icon {
+    height: fit-content;
+    padding-top: 0.5rem;
+  }
+
+  .display__value span svg {
+    fill: var(--primary);
+  }
+
+  input.hide__text {
+    color: transparent;
+  }
+
   :global(html.dark) textarea:disabled,
   :global(html.dark) input:disabled {
     color: var(--gray);
@@ -870,13 +927,15 @@
   :global(html.dark) .field__label {
     color: var(--gray-lighter);
   }
+
   :global(html.dark) .field__textarea,
   :global(html.dark) .image__preview,
   :global(html.dark) .field__input {
     background: var(--dark);
     color: var(--gray-lighter);
   }
-  :global(html.dark) input {
+  :global(html.dark) input,
+  :global(html.dark) .display__value {
     caret-color: var(--white);
     color: var(--gray-lighter);
   }

@@ -2,7 +2,6 @@ import vercel from "@sveltejs/adapter-vercel";
 import autoprefixer from "autoprefixer";
 import preprocess from "svelte-preprocess";
 import { mdsvex } from "mdsvex";
-import path from "path";
 
 // import dns from "dns";
 
@@ -20,9 +19,8 @@ const config = {
       },
     }),
   ],
-  package: {},
   kit: {
-    adapter: vercel({ edge: true }),
+    adapter: vercel({ runtime: "edge" }),
     prerender: {
       entries: [],
     },
