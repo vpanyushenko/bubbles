@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>user</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="user">
+            <path d="M24,0 L24,24 L0,24 L0,0 L24,0 Z" id="Vector"></path>
+            <g id="Group" transform="translate(5.839996, 5.000000)" stroke="#000000" stroke-dasharray="0,0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                <path d="M5.9200058,5.86000061 C4.30181146,5.86000061 2.99000549,4.54819465 2.99000549,2.93000031 C2.99000549,1.31180596 4.30181146,0 5.9200058,0 C7.53820014,0 8.8500061,1.31180596 8.8500061,2.93000031 C8.8500061,4.54819465 7.53820014,5.86000061 5.9200058,5.86000061 Z" id="Vector"></path>
+                <path d="M0,14 L0,12.3300018 C0,10.3800018 1.58000422,8.80999756 3.52000427,8.80999756 L8.79000092,8.80999756 C10.740001,8.80999756 12.3100052,10.3900018 12.3100052,12.3300018 L12.3100052,14" id="Vector" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>trash</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="trash">
+            <path d="M24,0 L24,24 L0,24 L0,0 L24,0 Z" id="Vector"></path>
+            <path d="M5.69000244,5.83001709 L5.69000244,19.1900177 C5.69000244,20.3200177 6.6100055,21.2400208 7.74000549,21.2400208 L15.8999939,21.2400208 C17.0299939,21.2400208 17.9500122,20.3200177 17.9500122,19.1900177 L17.9500122,5.83001709 L17.9599915,5.83001709 L5.69000244,5.83001709 Z" id="Vector" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0,0" fill-rule="nonzero"></path>
+            <line x1="3.78997803" y1="5.83001709" x2="20.2099762" y2="5.83001709" id="Vector" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0,0"></line>
+            <path d="M15.0799866,2.73999023 L15.0799866,5.81999207 L8.91998291,5.81999207 L8.91998291,2.73999023 L15.0799866,2.73999023 Z" id="Vector" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0,0"></path>
+            <line x1="9.94000244" y1="9.75" x2="9.94000244" y2="17.1399994" id="Vector" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0,0"></line>
+            <line x1="14.0499878" y1="9.75" x2="14.0499878" y2="17.1399994" id="Vector" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0,0"></line>
+        </g>
+    </g>
+</svg>
