@@ -2,7 +2,7 @@
 /** @typedef {typeof __propDef.events}  SidebarPageWrapperEvents */
 /** @typedef {typeof __propDef.slots}  SidebarPageWrapperSlots */
 export default class SidebarPageWrapper extends SvelteComponentTyped<{
-    max_content_width?: number;
+    max_content_width?: number | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -15,7 +15,7 @@ export type SidebarPageWrapperSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        max_content_width?: number;
+        max_content_width?: number | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

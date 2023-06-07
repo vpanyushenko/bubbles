@@ -2,15 +2,15 @@
 /** @typedef {typeof __propDef.events}  TagInputEvents */
 /** @typedef {typeof __propDef.slots}  TagInputSlots */
 export default class TagInput extends SvelteComponentTyped<{
-    dark_mode_invert?: boolean;
-    label?: string;
-    small?: boolean;
-    color?: string;
-    id?: string;
-    tooltip?: string;
-    min_width?: number;
-    margin?: string;
-    color_options?: any[];
+    dark_mode_invert?: boolean | undefined;
+    id?: string | undefined;
+    margin?: string | undefined;
+    label?: string | undefined;
+    min_width?: number | undefined;
+    small?: boolean | undefined;
+    color?: string | undefined;
+    tooltip?: string | undefined;
+    color_options?: any[] | undefined;
 }, {
     click: CustomEvent<any>;
 } & {
@@ -25,15 +25,15 @@ export type TagInputSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        dark_mode_invert?: boolean;
-        label?: string;
-        small?: boolean;
-        color?: string;
-        id?: string;
-        tooltip?: string;
-        min_width?: number;
-        margin?: string;
-        color_options?: any[];
+        dark_mode_invert?: boolean | undefined;
+        id?: string | undefined;
+        margin?: string | undefined;
+        label?: string | undefined;
+        min_width?: number | undefined;
+        small?: boolean | undefined;
+        color?: string | undefined;
+        tooltip?: string | undefined;
+        color_options?: any[] | undefined;
     };
     events: {
         click: CustomEvent<any>;

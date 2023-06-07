@@ -11,8 +11,8 @@
 export function showModal(title: string, options?: {
     img: string | null;
     message: string | null;
-    form: Array<any> | null;
-    file: any | null;
+    form: Array<Object> | null;
+    file: Object | null;
     footer: any[] | null;
 }): void;
 /**

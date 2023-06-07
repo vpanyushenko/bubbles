@@ -4,7 +4,7 @@
 
   import Tag from "$lib/components/tag/Tag.svelte";
 
-  let label = "OPTIONS";
+  let label = "0";
 </script>
 
 <Card>
@@ -23,9 +23,10 @@
   <Tag
     {label}
     margin="1rem 0 1rem 0"
-    color_options={[
+    colors={[
       { label: "OPTIONS", color: "dark" },
       { label: "testing", color: "success" },
+      { label: "0", color: "warning" },
     ]}
   />
   <Tag
@@ -66,4 +67,19 @@
   <Tag color="info-darker" label="info-darker" margin="1rem 0 1rem 0" />
   <Tag color="gray-darker" label="gray-darker" margin="1rem 0 1rem 0" />
   <Tag color="dark-darker" label="dark-darker" margin="1rem 0 1rem 0" />
+</Card>
+
+<Card>
+  <CardHeader title="Small tags" border={false} />
+
+  <Tag color="primary" margin="1rem 0 1rem 0" small={true}>primary</Tag>
+  <Tag color="secondary" margin="1rem 0 1rem 0" small={true}>secondary</Tag>
+  <Tag color="error" margin="1rem 0 1rem 0" small={true}>error</Tag>
+  <Tag color="warning" margin="1rem 0 1rem 0" small={true}>warning</Tag>
+  <Tag color="success" margin="1rem 0 1rem 0" small={true}>success</Tag>
+  <Tag color="info" margin="1rem 0 1rem 0" small={true}>info</Tag>
+  <Tag color="gray" margin="1rem 0 1rem 0" small={true}>gray</Tag>
+  <Tag color="dark" margin="1rem 0 1rem 0" small={true}>dark</Tag>
+  <Tag color={null} margin="1rem 0 1rem 0" small={true}>No Color</Tag>
+  <Tag color="primary" margin="1rem 0 1rem 0" small={true} tooltip="Hello, you can do a tooltip">tooltip</Tag>
 </Card>

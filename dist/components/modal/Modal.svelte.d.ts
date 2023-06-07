@@ -3,12 +3,12 @@
 /** @typedef {typeof __propDef.slots}  ModalSlots */
 export default class Modal extends SvelteComponentTyped<{
     height: any;
-    title?: string;
-    type?: string;
-    id?: string;
-    hideModal?: () => {};
-    lock_scroll?: boolean;
-    hide_on_overlay_click?: boolean;
+    title?: string | undefined;
+    type?: string | undefined;
+    id?: string | undefined;
+    hideModal?: (() => {}) | undefined;
+    lock_scroll?: boolean | undefined;
+    hide_on_overlay_click?: boolean | undefined;
 }, {
     click: MouseEvent;
 } & {
@@ -24,12 +24,12 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         height: any;
-        title?: string;
-        type?: string;
-        id?: string;
-        hideModal?: () => {};
-        lock_scroll?: boolean;
-        hide_on_overlay_click?: boolean;
+        title?: string | undefined;
+        type?: string | undefined;
+        id?: string | undefined;
+        hideModal?: (() => {}) | undefined;
+        lock_scroll?: boolean | undefined;
+        hide_on_overlay_click?: boolean | undefined;
     };
     events: {
         click: MouseEvent;

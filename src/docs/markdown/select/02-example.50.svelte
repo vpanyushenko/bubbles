@@ -21,7 +21,6 @@
     desc="This is the description that will be below the select element. Any description field can render inline html elements."
     type="select"
     validation="required|string"
-    vob={true}
     onselect={(value) => {
       //This will fire for every item you select with the value of the selected item
       console.log(value);

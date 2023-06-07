@@ -2,10 +2,10 @@
 /** @typedef {typeof __propDef.events}  ModalHeaderEvents */
 /** @typedef {typeof __propDef.slots}  ModalHeaderSlots */
 export default class ModalHeader extends SvelteComponentTyped<{
-    title?: string;
-    caption?: string;
-    buttons?: any[];
-    hideModal?: () => {};
+    title?: string | undefined;
+    caption?: string | undefined;
+    buttons?: any[] | undefined;
+    hideModal?: (() => {}) | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -18,10 +18,10 @@ export type ModalHeaderSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        title?: string;
-        caption?: string;
-        buttons?: any[];
-        hideModal?: () => {};
+        title?: string | undefined;
+        caption?: string | undefined;
+        buttons?: any[] | undefined;
+        hideModal?: (() => {}) | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

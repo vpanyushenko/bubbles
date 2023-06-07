@@ -2,10 +2,10 @@
 /** @typedef {typeof __propDef.events}  RowEvents */
 /** @typedef {typeof __propDef.slots}  RowSlots */
 export default class Row extends SvelteComponentTyped<{
-    padding: any;
-    style?: string;
-    border?: boolean;
-    mobile_reverse?: boolean;
+    padding?: "roomy" | "compact" | undefined;
+    style?: string | undefined;
+    border?: boolean | undefined;
+    mobile_reverse?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -18,10 +18,10 @@ export type RowSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        padding: any;
-        style?: string;
-        border?: boolean;
-        mobile_reverse?: boolean;
+        padding?: "roomy" | "compact" | undefined;
+        style?: string | undefined;
+        border?: boolean | undefined;
+        mobile_reverse?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

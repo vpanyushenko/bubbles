@@ -35,6 +35,24 @@
           },
           tag: { label: 99, color: "error" },
         },
+        {
+          label: "The Second Section",
+          onclick: () => {
+            active = "2";
+          },
+        },
+        {
+          label: "The Second Section",
+          onclick: () => {
+            active = "2";
+          },
+        },
+        {
+          label: "The Second Section",
+          onclick: () => {
+            active = "2";
+          },
+        },
       ]}
     />
     <div class:hidden={active !== "1"}>

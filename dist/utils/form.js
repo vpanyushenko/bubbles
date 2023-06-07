@@ -290,6 +290,7 @@ const _inputTypes = [
   "checkbox",
   "checkbox-group", //custom type for bubbles
   "radio",
+  "radio-group",
   "date",
   "password",
   "email",
@@ -353,24 +354,29 @@ const createStripeToken = (stripe_input, inputs) => {
 };
 
 /**
+ * @template T
  * Gets an Object of input keys and their entered values
- * @param {Array} inputs - pass in the array of input values
+ * @param {import("$types").FormInput[]} inputs - The array of Select objects.
  * @param {Object} [options] - options you can pass
- * @param {Boolean} [options.include_hidden_props = false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
- * @param {String|Number|Boolean|null} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
- * @returns {Object} key value pairs of your inputs and their values
+ * @param {boolean} [options.include_hidden_props = false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
+ * @param {string|number|boolean|null} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
+ * @param {boolean} [options.debug = false] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
+ * @returns {Promise<Record<import("$types").FormInput["id"], import("$types").FormInput["value"]>>} key value pairs of your inputs and their values
  */
-const getFormData = (inputs, options = { include_hidden_props: false, hidden_prop_values: null, debug: false }) => {
-  const _options = {
-    include_hidden_props: options.include_hidden_props === true ? true : false,
-    hidden_prop_values: options.hidden_prop_values === undefined ? null : options.hidden_prop_values,
-    debug: options.debug || false,
-  };
+const getFormData = async (
+  inputs,
+  options = { include_hidden_props: false, hidden_prop_values: null, debug: false }
+) => {
+  if (!options) options = {};
+
+  options.include_hidden_props = options.include_hidden_props === true ? true : false;
+  options.hidden_prop_values = options.hidden_prop_values === undefined ? null : options.hidden_prop_values;
+  options.debug = options.debug || false;
 
   let data = {};
 
   //remove inputs from data if the use does not want to input hidden items
-  const filtered_inputs = !_options.include_hidden_props ? inputs.filter((input) => input.is_hidden === false) : inputs;
+  const filtered_inputs = !options.include_hidden_props ? inputs.filter((input) => input.is_hidden === false) : inputs;
 
   const promises = filtered_inputs.map((input) => {
     return new Promise(async (resolve, reject) => {
@@ -387,8 +393,8 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
           value = null;
         }
 
-        if (input.is_hidden && _options.hidden_prop_values !== "**") {
-          value = _options.hidden_prop_values;
+        if (input.is_hidden && options.hidden_prop_values !== "**") {
+          value = options.hidden_prop_values;
         } else if (type === "number") {
           value = Number(value);
 
@@ -439,11 +445,11 @@ const getFormData = (inputs, options = { include_hidden_props: false, hidden_pro
 
   return Promise.all(promises)
     .then(() => {
-      return data;
+      return Promise.resolve(data);
     })
     .catch((err) => {
       console.error(err);
-      return err;
+      return Promise.reject(err);
     });
 };
 
@@ -566,6 +572,7 @@ const validateInputs = (inputs) => {
 };
 
 /**
+ * @template T
  * Submits data to and endpoint after running `validateInputs` and `getFormData` functions
  * @param {Array<Object>} inputs - the inputs you used to create the form
  * @param {String} endpoint - The endpoint to submit the results to. If it's submitting to an internal endpoint, bubbles will prefix the URI from import.meta.env.VITE_API_URL
@@ -580,8 +587,8 @@ const validateInputs = (inputs) => {
  * @param {Boolean} [options.include_hidden_props=false] - if you want to include inputs that were hidden as a result of another input (logic set in the "hidden_if" property)
  * @param {?String} [options.bearer] - The bearer token to add to the authorization headers
  * @param {(String|Number|Boolean|null)} [options.hidden_prop_values = null] - if you do want to include hidden inputs, you can set their value. By default, it will set the value to null, but you can pick any value you want. If you set this to the string "**"", if will include the last entered value of this input.
- * @param {?Object>} [options.data = null] - This object will be merged with the one generated from inputs. This will override any properties from inputs that conflict.
- * @returns {Promise} The response from the api request
+ * @param {?Object} [options.data = null] - This object will be merged with the one generated from inputs. This will override any properties from inputs that conflict.
+ * @returns {Promise<T>} The response from the api request
  */
 const submitForm = (
   inputs,
@@ -652,6 +659,7 @@ const submitForm = (
           console.log(data);
         }
 
+        /** @type {HeadersInit} */
         const headers = {
           "Content-Type": "application/json",
         };

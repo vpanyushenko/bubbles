@@ -2,13 +2,13 @@
 /** @typedef {typeof __propDef.events}  OverlayEvents */
 /** @typedef {typeof __propDef.slots}  OverlaySlots */
 export default class Overlay extends SvelteComponentTyped<{
-    img?: string;
-    id?: string;
-    onclick?: () => void;
-    colors?: string[];
-    background?: "solid" | "gradient";
-    solid?: boolean;
-    transition_duration?: number;
+    img?: string | undefined;
+    id?: string | undefined;
+    onclick?: (() => void) | null | undefined;
+    colors?: string[] | undefined;
+    background?: "solid" | "gradient" | null | undefined;
+    solid?: boolean | undefined;
+    transition_duration?: number | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -21,13 +21,13 @@ export type OverlaySlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        img?: string;
-        id?: string;
-        onclick?: (() => void) | null;
-        colors?: Array<string>;
-        background?: ("solid" | "gradient") | null;
-        solid?: boolean;
-        transition_duration?: number;
+        img?: string | undefined;
+        id?: string | undefined;
+        onclick?: (() => void) | null | undefined;
+        colors?: string[] | undefined;
+        background?: "solid" | "gradient" | null | undefined;
+        solid?: boolean | undefined;
+        transition_duration?: number | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

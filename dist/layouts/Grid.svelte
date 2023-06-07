@@ -16,12 +16,13 @@
 
   let grid_columns = "";
 
-  let pageWidth;
+  /** @type {number=}*/
+  let page_width;
 
-  $: if (pageWidth <= 767) {
+  $: if (page_width && page_width <= 767) {
     calculateGrid(min_columns);
     current_step = min_columns;
-  } else if (pageWidth >= 1420) {
+  } else if (page_width && page_width >= 1420) {
     calculateGrid(max_columns);
     current_step = max_columns;
   } else {
@@ -30,7 +31,7 @@
     let columns = min_columns;
 
     for (let i = 1; i <= steps; i++) {
-      if (i * step_value >= pageWidth - min_breakpoint && !done) {
+      if (i * step_value >= page_width - min_breakpoint && !done) {
         done = true;
         columns = min_columns + i;
       }
@@ -64,9 +65,9 @@
   }
 </script>
 
-<svelte:window bind:innerWidth={pageWidth} />
+<svelte:window bind:innerWidth={page_width} />
 
-{#if pageWidth}
+{#if page_width}
   <div
     class:page__grid={!ignore_root_styles}
     style="grid-template-columns: {grid_columns}; grid-row-gap: {row_gap}rem; grid-column-gap: {column_gap}rem; {style}"

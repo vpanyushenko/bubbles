@@ -36,30 +36,71 @@
     filter: filter,
   };
 
+  /** @type {import("$types").IconButton["id"]} id */
   export let id = uuid();
+
+  /** @type {import("$types").IconButton["icon"]} icon */
   export let icon = "more";
-  export let onclick = null;
+
+  /** @type {import("$types").IconButton["onclick"]} onclick */
+  export let onclick;
+
+  /** @type {import("$types").IconButton["options"]} options */
   export let options = [];
+
+  /** @type {import("$types").IconButton["href"]} href */
   export let href = "";
+
+  /** @type {import("$types").IconButton["new_page"]} new_page */
   export let new_page = false;
+
+  /** @type {import("$types").IconButton["align"]} align */
   export let align = "right";
+
+  /** @type {import("$types").IconButton["radius"]} radius */
   export let radius = "rounded"; //or blocky
+
+  /** @type {import("$types").IconButton["larger"]} larger */
   export let larger = false;
 
-  export let color = null;
+  /** @type {import("$types").IconButton["dropdown_buttons"]} dropdown_buttons */
+  export let dropdown_buttons;
+
+  /** @type {import("$types").IconButton["counter"]} counter */
+  export let counter;
+
+  /** @type {import("$types").IconButton["color"]} color */
+  export let color;
+
+  /** @type {import("$types").IconButton["dark_mode_invert"]} dark_mode_invert */
   export let dark_mode_invert = $configStore?.dark_mode_invert;
 
+  /** @type {import("$types").IconButton["shadow"]} shadow */
   export let shadow = false;
 
-  export let typeahead = null;
-  export let onselect = null;
+  /** @type {import("$types").IconButton["typeahead"]} typeahead */
+  export let typeahead;
+
+  /** @type {import("$types").IconButton["onselect"]} onselect */
+  export let onselect;
+
+  /** @type {import("$types").IconButton["debounce"]} debounce */
   export let debounce = 350;
+
+  /** @type {import("$types").IconButton["search"]} search */
   export let search = false;
+
+  /** @type {import("$types").IconButton["reset_on_select"]} reset_on_select */
   export let reset_on_select = true;
-  export let __search_id = null;
+
+  /** @type {string} id */
+  export let __search_id;
+
+  /** @type {boolean} id */
   export let __search_width_100 = false;
-  export let dom_component_width;
-  export let href_listener = null;
+
+  /** @type {import("$types").IconButton["href_listener"]} href_listener */
+  export let href_listener;
 
   let dom_ref;
 
@@ -325,6 +366,13 @@
   </a>
 {:else}
   <div class="icon__btn js-bubbles-icon-button" class:active={dropdown && active} bind:this={dom_ref}>
+    {#if counter && typeof counter === "number"}
+      {#if counter > 99}
+        <div class="counter">99+</div>
+      {:else}
+        <div class="counter">{counter}</div>
+      {/if}
+    {/if}
     <button
       on:click={iconClick}
       on:click={onclick}
@@ -494,6 +542,7 @@
           active = false;
           $pageStore.dropdown = null;
         }}
+        buttons={dropdown_buttons}
       />
     {/if}
   </div>
@@ -593,20 +642,6 @@
     height: 3.5rem;
   }
 
-  /* .icon__btn__counter {
-    position: absolute;
-    top: 0;
-    right: -12px;
-    display: inline-block;
-    min-width: 1.5rem;
-    line-height: 1.5rem;
-    border-radius: 50%;
-    background: var(--error);
-    font-size: 12px;
-    font-weight: 600;
-    color: #ffffff;
-  } */
-
   .icon__btn.active button {
     background: #6c5dd3;
     box-shadow: 0 5px 0.625rem rgba(227, 230, 236, 0.6);
@@ -690,14 +725,23 @@
     button .icon {
       font-size: 1.25rem;
     }
+  }
 
-    /* .icon__btn__counter {
-      top: 5px;
-      right: 5px;
-      min-width: 12px;
-      height: 12px;
-      font-size: 0;
-    } */
+  .counter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 1.25rem;
+    min-height: 1rem;
+    padding: 0 0.25rem;
+    background-color: var(--error);
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--white);
+    z-index: 2;
+    /* outline: var(--white) solid 1px; */
   }
 
   :global(html.dark) button.shadow_on_hover:hover {

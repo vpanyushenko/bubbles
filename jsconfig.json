@@ -5,8 +5,19 @@
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
       "$docs/*": ["src/docs/*"],
-      "$types": ["src/types/jsdoc.js"]
-    }
+      "$types": ["src/types/types.d.ts"],
+      "bubbles-ui": ["dist"],
+      "bubbles-ui/*": ["dist/*"]
+    },
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": false
+    // "importsNotUsedAsValues": "preserve"
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"],
   "extends": "./.svelte-kit/tsconfig.json"

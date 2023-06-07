@@ -2,12 +2,12 @@
 /** @typedef {typeof __propDef.events}  SwitchEvents */
 /** @typedef {typeof __propDef.slots}  SwitchSlots */
 export default class Switch extends SvelteComponentTyped<{
-    disabled?: boolean;
-    value?: boolean;
-    id?: string;
-    onclick?: any;
-    onselect?: any;
-    onchange?: any;
+    id?: string | undefined;
+    value?: boolean | undefined;
+    disabled?: boolean | undefined;
+    onselect?: null | undefined;
+    onclick?: null | undefined;
+    onchange?: null | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -18,12 +18,12 @@ export type SwitchSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        disabled?: boolean;
-        value?: boolean;
-        id?: string;
-        onclick?: any;
-        onselect?: any;
-        onchange?: any;
+        id?: string | undefined;
+        value?: boolean | undefined;
+        disabled?: boolean | undefined;
+        onselect?: null | undefined;
+        onclick?: null | undefined;
+        onchange?: null | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

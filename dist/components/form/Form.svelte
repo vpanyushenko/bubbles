@@ -17,8 +17,13 @@
 
   import { createEventDispatcher, onMount } from "svelte";
 
+  /** @type {import("$types").Input[]} inputs */
   export let inputs = [];
+
+  /** @type {string} - id */
   export let id = uuid();
+
+  /** @type {?number=} [breakpoint=300]*/
   export let breakpoint = 380;
   let row_width = 0;
   let is_mobile_width = false;
@@ -133,10 +138,8 @@
         console.warn("hidden_if has been deprecated. Use hide function instead");
       }
 
-      if (input.hide && input.hide instanceof Function) {
-        if (input.hide() === true) {
-          input.is_hidden = true;
-        }
+      if (input.hide && input.hide instanceof Function && input.hide() === true) {
+        input.is_hidden = true;
       }
 
       return input;
@@ -164,7 +167,7 @@
 
 <svelte:window on:resize={getFormWidth} />
 
-<div class="form js-bubbles-form" {id}>
+<form class="form js-bubbles-form" {id}>
   {#each formatted_inputs as input}
     {#if !input.is_hidden}
       <span
@@ -244,7 +247,7 @@
     {/if}
   {/each}
   <slot />
-</div>
+</form>
 
 <svelte:body on:keydown={keydown} />
 

@@ -8,9 +8,9 @@
  * @param {Array<String>} [options.keep_only=[]] - An array of query parameter strings that you want to keep. If the array is empty, then no query parameters will be deleted
  */
 export function addQueryParam(key: string, value: string, options?: {
-    invalidate?: boolean;
-    show_loading?: string;
-    keep_only?: Array<string>;
+    invalidate?: boolean | undefined;
+    show_loading?: string | undefined;
+    keep_only?: string[] | undefined;
 }): void;
 /**
  * Will return an object with all of the query parameters for a url. Works on server and client
@@ -18,7 +18,7 @@ export function addQueryParam(key: string, value: string, options?: {
  * @param {String} [key=null] - if you pass a key, you'll get the query param for that key
  * @returns {String|Object} - If you pass in a key, the return will be the value of the param. Without a key, an Object is returned for all of the query params
  */
-export function getQueryParam(url: any, key?: string): string | any;
+export function getQueryParam(url: Object, key?: string | undefined): string | Object;
 /**
  * Deletes a url query param
  * @param {String} param - The name of the url param you want to delete

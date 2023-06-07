@@ -2,9 +2,9 @@
 /** @typedef {typeof __propDef.events}  PulseEvents */
 /** @typedef {typeof __propDef.slots}  PulseSlots */
 export default class Pulse extends SvelteComponentTyped<{
-    dark_mode_invert?: boolean;
-    animate?: boolean;
-    color?: string;
+    dark_mode_invert?: boolean | undefined;
+    animate?: boolean | undefined;
+    color?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -15,9 +15,9 @@ export type PulseSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        dark_mode_invert?: boolean;
-        animate?: boolean;
-        color?: string;
+        dark_mode_invert?: boolean | undefined;
+        animate?: boolean | undefined;
+        color?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

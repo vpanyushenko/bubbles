@@ -1,18 +1,20 @@
 <script>
-  export let label = null;
-  export let image = null;
+  import { Tag } from "../../index.js";
+
+  /** @type {string=}*/
+  export let label;
+  /** @type {string=}*/
+  export let image;
+  /** @type {import("$types").Tag=}*/
+  export let tag;
 </script>
 
 <div class="divider" tabindex="-1">
   <hr class="left" />
   <div class="flex">
-    {#if image}
-      <img src={image} alt={label || "Divider"} />
-    {/if}
-
-    {#if label}
-      <span>{label}</span>
-    {/if}
+    {#if image} <img src={image} alt={label || "Divider"} /> {/if}
+    {#if tag?.label} <Tag {...tag} margin="0 0 0.5rem 0" /> {/if}
+    {#if label} <span>{label}</span> {/if}
   </div>
   <hr class="right" />
 </div>

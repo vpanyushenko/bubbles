@@ -9,37 +9,74 @@
   import { showLoading, hideLoading } from "../../index";
 
   import display_value_icon from "./delete-icon.svelte";
-  import { browser } from "$app/environment";
 
   // import DatePicker from "../calendar/DatePicker.svelte";
 
+  /** @type {import("$types").Input["id"]} id */
   export let id;
+
+  /** @type {import("$types").Input["label"]} label */
   export let label;
+
+  /** @type {import("$types").Input["error"]} error */
   export let error = "An error occurred";
+
+  /** @type {import("$types").Input["type"]} type */
   export let type = "text";
+
+  /** @type {import("$types").Input["desc"]} desc */
   export let desc;
+
+  /** @type {import("$types").Input["value"]} value */
   export let value = null;
+
+  /** @type {import("$types").Input["margin"]} margin */
   export let margin = false;
-  export let bounds = null;
-  export let validation = null;
+
+  /** @type {import("$types").Input["bounds"]} bounds */
+  export let bounds;
+
+  /** @type {import("$types").Input["validation"]} validation */
+  export let validation;
+
+  /** @type {import("$types").Input["rows"]} rows */
   export let rows = 5;
-  export let typeahead = null;
+
+  /** @type {import("$types").Input["typeahead"]} typeahead */
+  export let typeahead;
+
+  /** @type {import("$types").Input["autocomplete"]} autocomplete */
   export let autocomplete = true;
+
+  /** @type {import("$types").Input["validate_on_blur"]} validate_on_blur */
   export let validate_on_blur = $configStore.validate_on_blur;
-  export let vob = $configStore.validate_on_blur;
+
+  /** @type {import("$types").Input["debounce"]} debounce */
   export let debounce = 350;
+
+  /** @type {import("$types").Input["disabled"]} disabled */
   export let disabled = false;
+
+  /** @type {import("$types").Input["extensions"]} extensions=[".png", ".jpg", ".jpeg", ".svg"] */
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
+
+  /** @type {import("$types").Input["typeahead_options"]} typeahead_options */
   export let typeahead_options = [];
-  export let onselect = null;
+
+  /** @type {import("$types").Input["onselect"]} onselect */
+  export let onselect;
+
+  /** @type {import("$types").Input["allow_multiple_files"]} allow_multiple_files */
   export let allow_multiple_files = true;
-  export let display_value = null;
 
-  $: is_list_open = typeahead_options.length > 0 ? true : false;
+  /** @type {import("$types").Input["display_value"]} display_value */
+  export let display_value;
 
-  if (Array.isArray(extensions)) {
-    extensions = extensions.join(",");
-  }
+  $: is_list_open = Array.isArray(typeahead_options) && typeahead_options.length > 0 ? true : false;
+
+  let accept_extensions = Array.isArray(extensions)
+    ? extensions.join(",")
+    : [".png", ".jpg", ".jpeg", ".svg"].join(",");
 
   $: _label = configLabel(label, validation);
   let focused = false;
@@ -90,20 +127,36 @@
     }
   });
 
-  async function dateFieldFocused(event) {
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
+  function dateFieldFocused(event) {
     event.currentTarget.type = "date";
   }
 
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
   function dateFieldBlurred(event) {
-    if (!event.currentTarget.value) {
+    if (!event?.currentTarget?.value) {
       event.currentTarget.type = "text";
     }
   }
 
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
   function timeFieldFocused(event) {
     event.currentTarget.type = "time";
   }
 
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
   function timeFieldBlurred(event) {
     if (!event.currentTarget.value) {
       event.currentTarget.type = "text";
@@ -176,7 +229,7 @@
       return;
     }
 
-    if (validate_on_blur === true && vob === true) {
+    if (validate_on_blur === true) {
       if (validation && !isValidInput(value, validation)) {
         if ($pageStore.errors === undefined) {
           $pageStore.errors = [];
@@ -204,10 +257,6 @@
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
-  };
-
-  const getExtension = (file) => {
-    const type = file.split(";")[0].split("/")[1];
   };
 
   async function fileChanged(event) {
@@ -284,6 +333,7 @@
           autocomplete={autocomplete ? "on" : "nope"}
           spellcheck={display_value ? "false" : "true"}
           bind:value
+          name={id}
           on:focus={inputFocused}
           on:blur={inputBlurred}
           on:input={typeaheadOnInput}
@@ -545,7 +595,7 @@
           class="image__upload_button"
           on:change={fileChanged}
           {id}
-          accept={extensions}
+          accept={accept_extensions}
           bind:value
           multiple={allow_multiple_files}
         />

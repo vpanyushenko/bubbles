@@ -2,16 +2,16 @@
 /** @typedef {typeof __propDef.events}  PaginationEvents */
 /** @typedef {typeof __propDef.slots}  PaginationSlots */
 export default class Pagination extends SvelteComponentTyped<{
-    limit?: any;
-    id?: string;
-    rows_per_page?: number[];
-    count?: any;
-    max_buttons?: number;
-    arrows?: boolean;
-    first_last_arrows?: boolean;
-    has_more?: boolean;
-    page_query_name?: string;
-    limit_query_name?: string;
+    id?: string | undefined;
+    limit?: null | undefined;
+    rows_per_page?: number[] | undefined;
+    count?: null | undefined;
+    max_buttons?: number | undefined;
+    arrows?: boolean | undefined;
+    first_last_arrows?: boolean | undefined;
+    has_more?: boolean | undefined;
+    page_query_name?: string | undefined;
+    limit_query_name?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -22,16 +22,16 @@ export type PaginationSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        limit?: any;
-        id?: string;
-        rows_per_page?: number[];
-        count?: any;
-        max_buttons?: number;
-        arrows?: boolean;
-        first_last_arrows?: boolean;
-        has_more?: boolean;
-        page_query_name?: string;
-        limit_query_name?: string;
+        id?: string | undefined;
+        limit?: null | undefined;
+        rows_per_page?: number[] | undefined;
+        count?: null | undefined;
+        max_buttons?: number | undefined;
+        arrows?: boolean | undefined;
+        first_last_arrows?: boolean | undefined;
+        has_more?: boolean | undefined;
+        page_query_name?: string | undefined;
+        limit_query_name?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

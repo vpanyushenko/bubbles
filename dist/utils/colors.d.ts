@@ -9,7 +9,7 @@ export function hexToRgb(hex: string): any[];
  * @param {Array} rgb - The array of rgb values
  * @returns {Object} - returns an object with the filter string, loss value, and array of values. Object.filter, Object.loss, Object.values
  */
-export function getColorFilter(rgb: any[]): any;
+export function getColorFilter(rgb: any[]): Object;
 export function gradient(colors: any, canvas_id: any): Gradient;
 declare class Gradient {
     constructor(colors: any);
@@ -29,7 +29,7 @@ declare class Gradient {
         noise: string;
         blend: string;
         fragment: string;
-    };
+    } | undefined;
     conf: {
         presetName: string;
         wireframe: boolean;
@@ -37,9 +37,9 @@ declare class Gradient {
         zoom: number;
         rotation: number;
         playing: boolean;
-    };
-    minigl: MiniGl;
-    computedCanvasStyle: CSSStyleDeclaration;
+    } | undefined;
+    minigl: MiniGl | undefined;
+    computedCanvasStyle: CSSStyleDeclaration | undefined;
     disconnect(): void;
     initMaterial(): any;
     uniforms: {
@@ -51,17 +51,17 @@ declare class Gradient {
         u_vertDeform: any;
         u_baseColor: any;
         u_waveLayers: any;
-    };
-    vertexShader: string;
+    } | undefined;
+    vertexShader: string | undefined;
     initMesh(): void;
     material: any;
     geometry: any;
     mesh: any;
-    shouldSkipFrame(e: any): true;
+    shouldSkipFrame(e: any): true | undefined;
     updateFrequency(e: any): void;
     toggleColor(index: any): void;
     showGradientLegend(): void;
-    isGradientLegendVisible: boolean;
+    isGradientLegendVisible: boolean | undefined;
     hideGradientLegend(): void;
     init(): void;
     waitForCssVars(): void;
@@ -81,8 +81,8 @@ declare class MiniGl {
         aspectRatio: any;
     };
     setSize(e?: number, t?: number): void;
-    width: number;
-    height: number;
+    width: number | undefined;
+    height: number | undefined;
     setOrthographicCamera(e?: number, t?: number, n?: number, i?: number, s?: number): void;
     render(): void;
 }

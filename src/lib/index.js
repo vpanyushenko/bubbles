@@ -67,6 +67,8 @@ import Pulse from "./components/pulse/Pulse.svelte";
 import Gallery from "./components/gallery/Gallery.svelte";
 import GalleryCard from "./components/gallery/GalleryCard.svelte";
 import Avatar from "./components/avatar/Avatar.svelte";
+import Skeleton from "./components/skeleton/Skeleton.svelte";
+import SkeletonSVG from "./components/skeleton/SkeletonSVG.svelte";
 
 export {
   Header,
@@ -94,6 +96,8 @@ export {
   Gallery,
   GalleryCard,
   Avatar,
+  Skeleton,
+  SkeletonSVG,
 };
 
 //input

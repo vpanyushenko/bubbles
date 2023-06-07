@@ -12,18 +12,17 @@
 <Card height100={true}>
   <CardHeader title="Examples" border={false} />
   <div>
-    <!-- <Input
+    <Input
       id="tags"
       type="tags"
       label="States"
       error="Please add your name"
       validation="string|required|min:3"
-      vob={true}
       desc="This is a text input that has validation that checks for a string with a minimum length of 3"
       margin={true}
       typeahead_options={["testing", "long test"]}
       value={["testing"]}
-    /> -->
+    />
 
     <Input
       id="name"
@@ -31,7 +30,6 @@
       label="Full Name"
       error="Please add your name"
       validation="string|required|min:3"
-      vob={true}
       desc="This is a text input that has validation that checks for a string with a minimum length of 3"
       margin={true}
     />
@@ -42,7 +40,6 @@
       label="Passphrase"
       error="Your passphrase must be at least 10 characters"
       validation="string|required|min:10"
-      vob={true}
       desc="This is a password field that has a minimum requirement of 10 characters."
       margin={true}
     />
@@ -95,7 +92,6 @@
       label="Enter your address"
       error="Enter your address"
       validation="string"
-      vob={true}
       desc="This is a textarea field with a height of 5 rows."
       margin={true}
       rows="5"

@@ -5,101 +5,104 @@
   import Spinner from "../spinner/Spinner.svelte";
   import IconButton from "./IconButton.svelte";
 
-  /** @type {?String} id */
+  /** @type {import("$types").Button["id"]} id */
   export let id = uuid();
 
-  /**@type {?String} label - This is the text that will be shown on the button */
-  export let label = null;
+  /** @type {import("$types").Button["label"]} label */
+  export let label;
 
-  /**@type {?Function} onclick - The function to run when this button is clicked */
-  export let onclick = null;
+  /** @type {import("$types").Button["type"]} label */
+  export let type = "button";
 
-  /**@type {?Function} onsubmit - This is the same as on click but should be used in a form so that the use can press enter to submit the details. */
-  export let onsubmit = null;
+  /** @type {import("$types").Button["onclick"]} onclick */
+  export let onclick;
 
-  /**@type {String} color - The CSS color variable */
+  /** @type {import("$types").Button["onsubmit"]} onsubmit */
+  export let onsubmit;
+
+  /** @type {import("$types").Button["color"]} color */
   export let color = "__default";
 
-  /**@type {Boolean} [mt=false] - If you want to add margin to the top of this button */
+  /** @type {import("$types").Button["mt"]} mt */
   export let mt = false;
 
-  /**@type {Boolean} [mb=false] - If you want to add margin to the bottom of this button */
+  /** @type {import("$types").Button["mb"]} mb */
   export let mb = false;
 
-  /**@type {Boolean} [wide=true] - If you want the button to take the full width of the container */
+  /** @type {import("$types").Button["wide"]} wide */
   export let wide = true;
 
-  /**@type {Boolean} [new_page=false] - If you want this button to open a new page. You should only use this if you're also using the href value. */
+  /** @type {import("$types").Button["new_page"]} new_page */
   export let new_page = false;
 
-  /**@type {?String} [href=null] - If you want this button to link to another web page. You should use href instead of onclick because you'll get link prefetching which will make the UX faster. */
+  /** @type {import("$types").Button["href"]} href */
   export let href;
 
-  /**@type {"hover"|"tap"|"off"} [href=null] - If you want this button to link to another web page. You should use href instead of onclick because you'll get link prefetching which will make the UX faster. */
+  /** @type {import("$types").Button["counter"]} counter */
+  export let counter;
+
+  /** @type {import("$types").Button["preload"]} preload */
   export let preload = "hover";
 
   //TODO: Types. Maybe we should update this to style props
+  /** @type {import("$types").Button["style"]} style */
   export let style;
 
-  /**@type {?Boolean} [disabled=false] - if this button should be disabled */
+  /** @type {import("$types").Button["disabled"]} disabled */
   export let disabled = false;
 
-  /**@type {?"arrowLeft"|"arrowLeftDouble"|"arrowRight"|"arrowRightDouble"|"more"|"add"|"close"|"search"|"edit"|"trash"|"filter"|String} [icon=null] - The icon to add to this button. */
-  export let icon = null;
+  /** @type {import("$types").Button["icon"]} icon */
+  export let icon;
 
-  /**@type {?Boolean} [dark_mode_invert=$configStore?.dark_mode_invert] - If the button colors should be inverted if the theme changes to dark mode */
+  /** @type {import("$types").Button["dark_mode_invert"]} dark_mode_invert */
   export let dark_mode_invert = $configStore?.dark_mode_invert;
 
-  //IconButton exclusive
-  //TODO: Do we need this? Should the button be aligned or the container it's in. Are we using a naked button
-  export let align = "right";
+  // //IconButton exclusive
+  // //TODO: Do we need this? Should the button be aligned or the container it's in. Are we using a naked button
+  // export let align = "right";
 
-  //TODO: I think we don't have this property anymore
-  export let border = null;
+  // //TODO: I think this happens automatically now.
+  // export let invert_icon = false;
 
-  //TODO: I think this happens automatically now.
-  export let invert_icon = false;
-
-  /**@type {?Boolean} [shadow=false] - Applies to buttons without labels only! If the icon button should have a shadow */
+  /** @type {import("$types").Button["shadow"]} shadow */
   export let shadow = false;
 
-  /**@type {?Function} [typeahead=null] - Applies to buttons without labels only! A function that will take in the value of a search input and give users options to choose from. This  can only be used if `search` is set to true. */
-  export let typeahead = null;
+  /** @type {import("$types").Button["typeahead"]} typeahead */
+  export let typeahead;
 
-  /**@type {?Number} [debounce=350] - Applies to buttons without labels only! Duration in milliseconds. If using typeahead, this will allow you to only trigger the function after a certain amount if time. */
+  /** @type {import("$types").Button["debounce"]} debounce */
   export let debounce = 350;
 
-  /**@type {Boolean} [search=false] - Applies to buttons without labels only! If this button will transform into a search input when clicked. */
+  /** @type {import("$types").Button["search"]} search */
   export let search = false;
 
-  export let __search_id = null;
-  export let __search_width_100 = false;
+  /** @type {string} __search_id */
+  export let __search_id;
+  /** @type {string} __search_width_100*/
+  export let __search_width_100;
 
-  /**@type {"blocky"|"rounded"} [radius="blocky"] - Applies to buttons without labels only! If the radius of the button will be blocky or rounded. This will only apply to a button without a label. */
+  /** @type {import("$types").Button["radius"]} radius */
   export let radius = "blocky"; //or rounded
 
-  /**@type {Boolean} [larger=true] - Applies to buttons without labels only! Will ensure that the button without a label has the same height as the button with a label */
+  /** @type {import("$types").Button["larger"]} larger */
   export let larger = true;
+
+  if (onclick || onsubmit) {
+    console.log("onclick and onsubmit are deprecated. Use the on:click and on:submit events instead.");
+  }
 
   let component = "IconButton";
 
-  if (label) {
-    component = "Button";
-  }
-
-  if (component === "IconButton" && color === "__default") {
-    color = null;
-  }
-
-  if (component === "Button" && color === "__default") {
-    color = "primary";
-  }
+  if (label) component = "Button";
+  if (component === "IconButton" && color === "__default") color = null;
+  if (component === "Button" && color === "__default") color = "primary";
 
   $: is_loading = ($pageStore.clicked === id && $navigating) || $pageStore.loading.includes(id);
 </script>
 
 {#if !label && icon}
   <IconButton
+    {type}
     {id}
     {onclick}
     {color}
@@ -107,9 +110,6 @@
     {href}
     {disabled}
     {icon}
-    {align}
-    {border}
-    {invert_icon}
     {dark_mode_invert}
     {shadow}
     {typeahead}
@@ -119,6 +119,9 @@
     {__search_width_100}
     {radius}
     {larger}
+    {counter}
+    on:click
+    on:keydown
   />
 {:else if href}
   <a
@@ -140,6 +143,7 @@
     }}
   >
     <button
+      {type}
       {id}
       class:mb
       class:mt
@@ -225,7 +229,10 @@
       if (disabled) return;
       if (typeof onsubmit === "function") onsubmit(event);
     }}
+    on:click
+    on:submit
     {id}
+    {type}
     class:mb
     class:mt
     class:wide

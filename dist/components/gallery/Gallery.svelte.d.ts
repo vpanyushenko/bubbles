@@ -2,17 +2,17 @@
 /** @typedef {typeof __propDef.events}  GalleryEvents */
 /** @typedef {typeof __propDef.slots}  GallerySlots */
 export default class Gallery extends SvelteComponentTyped<{
-    title?: any;
-    id?: string;
-    buttons?: any[];
-    page?: number;
-    pagination?: boolean;
-    images?: string[];
-    grid?: string;
-    overlay_buttons?: any[];
-    previous_icon?: string;
-    next_icon?: string;
-    new_image?: Function;
+    title?: null | undefined;
+    id?: string | undefined;
+    buttons?: any[] | undefined;
+    page?: number | undefined;
+    pagination?: boolean | undefined;
+    images?: string[] | undefined;
+    grid?: string | null | undefined;
+    overlay_buttons?: any[] | undefined;
+    previous_icon?: string | undefined;
+    next_icon?: string | undefined;
+    new_image?: Function | null | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -23,17 +23,17 @@ export type GallerySlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        title?: any;
-        id?: string;
-        buttons?: any[];
-        page?: number;
-        pagination?: boolean;
-        images?: string[];
-        grid?: string;
-        overlay_buttons?: any[];
-        previous_icon?: string;
-        next_icon?: string;
-        new_image?: Function | null;
+        title?: null | undefined;
+        id?: string | undefined;
+        buttons?: any[] | undefined;
+        page?: number | undefined;
+        pagination?: boolean | undefined;
+        images?: string[] | undefined;
+        grid?: (string | null) | undefined;
+        overlay_buttons?: any[] | undefined;
+        previous_icon?: string | undefined;
+        next_icon?: string | undefined;
+        new_image?: Function | null | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

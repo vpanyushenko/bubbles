@@ -1,17 +1,29 @@
 <script>
   import { configStore, uuid } from "../../index";
 
+  /** @type {import("$types").Tag["id"]}*/
   export let id = uuid();
+  /** @type {import("$types").Tag["label"]}*/
   export let label = "";
+  /** @type {import("$types").Tag["tooltip"]}*/
   export let tooltip = null;
+  /** @type {import("$types").Tag["color"]}*/
   export let color = "__default";
+  /** @type {import("$types").Tag["colors"]}*/
   export let colors = [];
+  /** @type {import("$types").Tag["small"]}*/
   export let small = false;
+  /** @type {import("$types").Tag["min_width"]}*/
   export let min_width = 3;
+  /** @type {import("$types").Tag["margin"]}*/
   export let margin = "0 0 0 0";
+  /** @type {import("$types").Tag["dark_mode_invert"]}*/
   export let dark_mode_invert = $configStore?.dark_mode_invert;
+  /** @type {import("$types").Tag["onclick"]}*/
   export let onclick = null;
+  /** @type {import("$types").Tag["onhover"]}*/
   export let onhover = null;
+  /** @type {import("$types").Tag["onblur"]}*/
   export let onblur = null;
 
   let _mw = min_width;
@@ -201,9 +213,16 @@
     text-align: center;
   }
 
-  .small {
-    font-size: 0.6rem;
-    /* padding: 3px 0.625rem; */
+  button.small,
+  span.small {
+    font-family: "Fira Mono";
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    padding: 1px 0.375rem;
   }
 
   .hover {

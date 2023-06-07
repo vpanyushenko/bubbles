@@ -174,6 +174,12 @@ export default [
     group: "Components",
   },
   {
+    label: "Skeleton",
+    id: "skeleton",
+    href: "/skeleton",
+    group: "Components",
+  },
+  {
     label: "Spinner",
     id: "spinner",
     href: "/spinner",

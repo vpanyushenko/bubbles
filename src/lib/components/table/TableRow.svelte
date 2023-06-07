@@ -2,11 +2,22 @@
   import TableCell from "./TableCell.svelte";
   import { v4 as uuid } from "@lukeed/uuid";
 
+  /** @type {string=} id */
   export let id = uuid();
-  export let href = null;
-  export let onclick = null;
+
+  /** @type {string=} href */
+  export let href;
+
+  /** @type {Function=} onclick */
+  export let onclick;
+
+  /** @type {import("$types").TableCell[]} cells */
   export let cells = [];
+
+  /** @type {boolean=} wrap */
   export let wrap = true;
+
+  /** @type {boolean=} mobile_wrap */
   export let mobile_wrap = true;
 </script>
 

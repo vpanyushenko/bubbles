@@ -2,14 +2,14 @@
 /** @typedef {typeof __propDef.events}  StripeCardInputEvents */
 /** @typedef {typeof __propDef.slots}  StripeCardInputSlots */
 export default class StripeCardInput extends SvelteComponentTyped<{
-    error: any;
-    label: any;
-    desc: any;
     id: any;
-    __stripe_card: any;
     __stripe: any;
-    margin?: boolean;
-    stripe_key_name?: string;
+    __stripe_card: any;
+    label: any;
+    error: any;
+    desc: any;
+    margin?: boolean | undefined;
+    stripe_key_name?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -20,14 +20,14 @@ export type StripeCardInputSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        error: any;
-        label: any;
-        desc: any;
         id: any;
-        __stripe_card: any;
         __stripe: any;
-        margin?: boolean;
-        stripe_key_name?: string;
+        __stripe_card: any;
+        label: any;
+        error: any;
+        desc: any;
+        margin?: boolean | undefined;
+        stripe_key_name?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

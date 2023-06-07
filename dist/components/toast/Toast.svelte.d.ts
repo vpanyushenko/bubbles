@@ -4,8 +4,8 @@
 export default class Toast extends SvelteComponentTyped<{
     message: any;
     id: any;
-    active?: boolean;
-    color?: string;
+    active?: boolean | undefined;
+    color?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -18,8 +18,8 @@ declare const __propDef: {
     props: {
         message: any;
         id: any;
-        active?: boolean;
-        color?: string;
+        active?: boolean | undefined;
+        color?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -2,7 +2,7 @@
 /** @typedef {typeof __propDef.events}  Column50Events */
 /** @typedef {typeof __propDef.slots}  Column50Slots */
 export default class Column50 extends SvelteComponentTyped<{
-    padding: any;
+    padding?: "roomy" | "compact" | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -15,7 +15,7 @@ export type Column50Slots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        padding: any;
+        padding?: "roomy" | "compact" | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

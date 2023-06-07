@@ -19,7 +19,6 @@ type: code
       error: "A name is required",
       validation: "string|required|min:3",
       validate_on_blur: true,
-      vob: true,
     },
     {
       type: "number", //Will ensure that getFormData will return this as a number
@@ -49,7 +48,7 @@ type: code
       desc: "You'll be able to change this name later",
       error: "Email is required",
       validation: "email|required|min:3",
-      vob: true,
+
       hide: () => {
         const input = formInputs.find((input) => input.id === "preferences.email");
         if (input.value === false) {

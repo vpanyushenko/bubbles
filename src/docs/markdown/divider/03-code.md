@@ -9,5 +9,5 @@ type: code
   import { Divider } from "bubbles-ui";
 </script>
 
-<Divider label="TEXT IN THE MIDDLE" />
+<Divider label="TEXT IN THE MIDDLE" tag={{ label: "Chip" }} />
 ```

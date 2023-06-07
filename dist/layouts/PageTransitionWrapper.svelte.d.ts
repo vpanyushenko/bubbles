@@ -2,8 +2,8 @@
 /** @typedef {typeof __propDef.events}  PageTransitionWrapperEvents */
 /** @typedef {typeof __propDef.slots}  PageTransitionWrapperSlots */
 export default class PageTransitionWrapper extends SvelteComponentTyped<{
-    max_content_width?: number;
-    refresh?: string;
+    max_content_width?: number | undefined;
+    refresh?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -16,8 +16,8 @@ export type PageTransitionWrapperSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        max_content_width?: number;
-        refresh?: string;
+        max_content_width?: number | undefined;
+        refresh?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

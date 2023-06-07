@@ -2,9 +2,9 @@
 /** @typedef {typeof __propDef.events}  ListEvents */
 /** @typedef {typeof __propDef.slots}  ListSlots */
 export default class List extends SvelteComponentTyped<{
-    type?: string;
-    empty?: string;
-    items?: any[];
+    type?: string | undefined;
+    empty?: string | undefined;
+    items?: any[] | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -17,9 +17,9 @@ export type ListSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        type?: string;
-        empty?: string;
-        items?: any[];
+        type?: string | undefined;
+        empty?: string | undefined;
+        items?: any[] | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

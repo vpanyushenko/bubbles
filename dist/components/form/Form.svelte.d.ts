@@ -2,9 +2,9 @@
 /** @typedef {typeof __propDef.events}  FormEvents */
 /** @typedef {typeof __propDef.slots}  FormSlots */
 export default class Form extends SvelteComponentTyped<{
-    id?: string;
-    inputs?: any[];
-    breakpoint?: number;
+    id?: string | undefined;
+    inputs?: import("$types").Input[] | undefined;
+    breakpoint?: number | null | undefined;
 }, {
     update: CustomEvent<any>;
 } & {
@@ -19,9 +19,9 @@ export type FormSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        id?: string;
-        inputs?: any[];
-        breakpoint?: number;
+        id?: string | undefined;
+        inputs?: import("$types").Input[] | undefined;
+        breakpoint?: (number | null) | undefined;
     };
     events: {
         update: CustomEvent<any>;

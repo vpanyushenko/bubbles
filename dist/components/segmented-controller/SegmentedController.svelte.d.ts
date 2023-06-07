@@ -3,10 +3,10 @@
 /** @typedef {typeof __propDef.slots}  SegmentedControllerSlots */
 export default class SegmentedController extends SvelteComponentTyped<{
     value: any;
-    style?: string;
-    mt?: any;
-    mb?: any;
-    segments?: any[];
+    style?: string | undefined;
+    mt?: null | undefined;
+    mb?: null | undefined;
+    segments?: any[] | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -18,10 +18,10 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         value: any;
-        style?: string;
-        mt?: any;
-        mb?: any;
-        segments?: any[];
+        style?: string | undefined;
+        mt?: null | undefined;
+        mb?: null | undefined;
+        segments?: any[] | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

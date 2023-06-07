@@ -2,18 +2,18 @@
 /** @typedef {typeof __propDef.events}  CardEvents */
 /** @typedef {typeof __propDef.slots}  CardSlots */
 export default class Card extends SvelteComponentTyped<{
-    radius?: string;
-    footer?: {};
-    header?: {};
-    animate?: boolean;
-    color?: string;
-    shadow?: boolean;
-    border?: any;
-    center?: boolean;
-    px?: number;
-    py?: number;
-    height100?: boolean;
-    hide_overflow?: boolean;
+    radius?: "rounded" | "blocky" | undefined;
+    footer?: {} | undefined;
+    header?: {} | undefined;
+    animate?: boolean | undefined;
+    color?: string | undefined;
+    shadow?: boolean | undefined;
+    center?: boolean | undefined;
+    border?: null | undefined;
+    px?: number | undefined;
+    py?: number | undefined;
+    height100?: boolean | undefined;
+    hide_overflow?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -26,18 +26,18 @@ export type CardSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        radius?: string;
-        footer?: {};
-        header?: {};
-        animate?: boolean;
-        color?: string;
-        shadow?: boolean;
-        border?: any;
-        center?: boolean;
-        px?: number;
-        py?: number;
-        height100?: boolean;
-        hide_overflow?: boolean;
+        radius?: "rounded" | "blocky" | undefined;
+        footer?: {} | undefined;
+        header?: {} | undefined;
+        animate?: boolean | undefined;
+        color?: string | undefined;
+        shadow?: boolean | undefined;
+        center?: boolean | undefined;
+        border?: null | undefined;
+        px?: number | undefined;
+        py?: number | undefined;
+        height100?: boolean | undefined;
+        hide_overflow?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

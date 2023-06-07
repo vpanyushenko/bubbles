@@ -2,8 +2,8 @@
 /** @typedef {typeof __propDef.events}  TableHeaderEvents */
 /** @typedef {typeof __propDef.slots}  TableHeaderSlots */
 export default class TableHeader extends SvelteComponentTyped<{
-    hidden?: boolean;
-    cells?: any[];
+    hidden?: boolean | undefined;
+    cells?: any[] | undefined;
 }, {
     sort: CustomEvent<any>;
 } & {
@@ -16,8 +16,8 @@ export type TableHeaderSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        hidden?: boolean;
-        cells?: any[];
+        hidden?: boolean | undefined;
+        cells?: any[] | undefined;
     };
     events: {
         sort: CustomEvent<any>;

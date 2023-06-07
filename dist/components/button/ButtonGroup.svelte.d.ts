@@ -2,11 +2,11 @@
 /** @typedef {typeof __propDef.events}  ButtonGroupEvents */
 /** @typedef {typeof __propDef.slots}  ButtonGroupSlots */
 export default class ButtonGroup extends SvelteComponentTyped<{
-    align?: "left" | "right" | "end" | "start";
-    larger?: boolean;
-    mt?: boolean;
-    mb?: boolean;
-    buttons?: any[];
+    align?: "left" | "right" | "end" | "start" | undefined;
+    buttons?: any[] | undefined;
+    larger?: boolean | undefined;
+    mt?: boolean | undefined;
+    mb?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -19,11 +19,11 @@ export type ButtonGroupSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        align?: "left" | "right" | "start" | "end";
-        larger?: boolean;
-        mt?: boolean;
-        mb?: boolean;
-        buttons?: any[];
+        align?: "left" | "right" | "end" | "start" | undefined;
+        buttons?: any[] | undefined;
+        larger?: boolean | undefined;
+        mt?: boolean | undefined;
+        mb?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

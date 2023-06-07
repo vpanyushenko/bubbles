@@ -2,17 +2,17 @@
 /** @typedef {typeof __propDef.events}  RadioGroupEvents */
 /** @typedef {typeof __propDef.slots}  RadioGroupSlots */
 export default class RadioGroup extends SvelteComponentTyped<{
-    error?: string;
-    label?: string;
-    style?: string;
-    desc?: string;
-    value?: any;
-    id?: any;
-    options?: any[];
-    validation?: any;
-    form_indent?: boolean;
-    background?: boolean;
-    focus?: boolean;
+    id?: null | undefined;
+    value?: null | undefined;
+    label?: string | undefined;
+    error?: string | undefined;
+    desc?: string | undefined;
+    validation?: null | undefined;
+    options?: any[] | undefined;
+    style?: string | undefined;
+    focus?: boolean | undefined;
+    form_indent?: boolean | undefined;
+    background?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -23,17 +23,17 @@ export type RadioGroupSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        error?: string;
-        label?: string;
-        style?: string;
-        desc?: string;
-        value?: any;
-        id?: any;
-        options?: any[];
-        validation?: any;
-        form_indent?: boolean;
-        background?: boolean;
-        focus?: boolean;
+        id?: null | undefined;
+        value?: null | undefined;
+        label?: string | undefined;
+        error?: string | undefined;
+        desc?: string | undefined;
+        validation?: null | undefined;
+        options?: any[] | undefined;
+        style?: string | undefined;
+        focus?: boolean | undefined;
+        form_indent?: boolean | undefined;
+        background?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

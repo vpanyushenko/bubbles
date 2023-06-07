@@ -7,39 +7,80 @@
   import { showToast } from "$lib/utils/toast";
   import { onMount } from "svelte";
   import { showLoading, hideLoading } from "$lib/index";
-
+  import { scale } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
   import display_value_icon from "./delete-icon.svelte";
-  import { browser } from "$app/environment";
 
   // import DatePicker from "$lib/components/calendar/DatePicker.svelte";
 
+  /** @type {import("$types").Input["id"]} id */
   export let id;
+
+  /** @type {import("$types").Input["label"]} label */
   export let label;
-  export let error = "An error occurred";
+
+  /** @type {import("$types").Input["type"]} type */
   export let type = "text";
-  export let desc;
+
+  /** @type {import("$types").Input["error"]} [error="An error occurred"] */
+  export let error = "An error occurred";
+
+  /** @type {import("$types").Input["value"]} [value] */
   export let value = null;
+
+  /** @type {import("$types").Input["desc"]} desc */
+  export let desc = undefined;
+
+  /** @type {import("$types").Input["margin"]} [margin] */
   export let margin = false;
-  export let bounds = null;
-  export let validation = null;
+
+  /** @type {import("$types").Input["bounds"]} [bounds] */
+  export let bounds = undefined;
+
+  /** @type {import("$types").Input["validation"]} [validation] */
+  export let validation = undefined;
+
+  /** @type {import("$types").Input["rows"]} [rows] */
   export let rows = 5;
-  export let typeahead = null;
+
+  /** @type {import("$types").Input["typeahead"]} [typeahead] */
+  export let typeahead = undefined;
+
+  /** @type {import("$types").Input["autocomplete"]} [autocomplete] */
   export let autocomplete = true;
+
+  /** @type {import("$types").Input["validate_on_blur"]} [validate_on_blur] */
   export let validate_on_blur = $configStore.validate_on_blur;
-  export let vob = $configStore.validate_on_blur;
+
+  /** @type {import("$types").Input["debounce"]} [debounce] */
   export let debounce = 350;
+
+  /** @type {import("$types").Input["disabled"]} [disabled] */
   export let disabled = false;
+
+  /** @type {import("$types").Input["extensions"]} extensions=[".png", ".jpg", ".jpeg", ".svg"] */
   export let extensions = [".png", ".jpg", ".jpeg", ".svg"];
+
+  /** @type {import("$types").Input["typeahead_options"]} [typeahead_options] */
   export let typeahead_options = [];
-  export let onselect = null;
+
+  /** @type {import("$types").Input["onselect"]} [onselect] */
+  export let onselect = undefined;
+
+  /** @type {import("$types").Input["allow_multiple_files"]} [allow_multiple_files] */
   export let allow_multiple_files = true;
-  export let display_value = null;
 
-  $: is_list_open = typeahead_options.length > 0 ? true : false;
+  /** @type {import("$types").Input["display_value"]} [display_value] */
+  export let display_value = undefined;
 
-  if (Array.isArray(extensions)) {
-    extensions = extensions.join(",");
-  }
+  /** @type {import("$types").Input["width"]} [width=100] */
+  export let width = 100;
+
+  $: is_list_open = Array.isArray(typeahead_options) && typeahead_options.length > 0 ? true : false;
+
+  let accept_extensions = Array.isArray(extensions)
+    ? extensions.join(",")
+    : [".png", ".jpg", ".jpeg", ".svg"].join(",");
 
   $: _label = configLabel(label, validation);
   let focused = false;
@@ -90,20 +131,36 @@
     }
   });
 
-  async function dateFieldFocused(event) {
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
+  function dateFieldFocused(event) {
     event.currentTarget.type = "date";
   }
 
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
   function dateFieldBlurred(event) {
-    if (!event.currentTarget.value) {
+    if (!event?.currentTarget?.value) {
       event.currentTarget.type = "text";
     }
   }
 
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
   function timeFieldFocused(event) {
     event.currentTarget.type = "time";
   }
 
+  /**
+   * @param {Event} event
+   * @returns {void}
+   */
   function timeFieldBlurred(event) {
     if (!event.currentTarget.value) {
       event.currentTarget.type = "text";
@@ -176,7 +233,7 @@
       return;
     }
 
-    if (validate_on_blur === true && vob === true) {
+    if (validate_on_blur === true) {
       if (validation && !isValidInput(value, validation)) {
         if ($pageStore.errors === undefined) {
           $pageStore.errors = [];
@@ -204,10 +261,6 @@
       reader.onload = () => resolve(reader.result);
       reader.onerror = (error) => reject(error);
     });
-  };
-
-  const getExtension = (file) => {
-    const type = file.split(";")[0].split("/")[1];
   };
 
   async function fileChanged(event) {
@@ -257,8 +310,28 @@
   }
 </script>
 
-{#if type === "text"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+<div
+  class="form__field__container js-bubbles-field-container"
+  class:w-100={width == 100}
+  class:w-75={width == 75}
+  class:w-50={width == 50}
+  class:w-25={width == 25}
+  {id}
+  class:mb-2={margin}
+  in:scale|local={{
+    duration: 750,
+    opacity: 0,
+    start: 0.5,
+    easing: quintOut,
+  }}
+  out:scale|local={{
+    duration: 600,
+    opacity: 0,
+    start: 0,
+    easing: quintOut,
+  }}
+>
+  {#if type === "text"}
     <div class="field" class:active={focused || value}>
       {#if display_value}
         <div class="display__value" on:mousedown={() => inputFocused()}>
@@ -284,6 +357,7 @@
           autocomplete={autocomplete ? "on" : "nope"}
           spellcheck={display_value ? "false" : "true"}
           bind:value
+          name={id}
           on:focus={inputFocused}
           on:blur={inputBlurred}
           on:input={typeaheadOnInput}
@@ -313,9 +387,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "email"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "email"}
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -327,6 +399,7 @@
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
           type="email"
+          name={id}
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlurred}
@@ -337,9 +410,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "tel" || type === "phone"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "tel" || type === "phone"}
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -351,6 +422,7 @@
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
           type="tel"
+          name={id}
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlurred}
@@ -361,9 +433,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "password"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "password"}
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -375,6 +445,7 @@
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
           type="password"
+          name={id}
           bind:value
           on:focus={inputFocused}
           on:blur={inputBlurred}
@@ -385,9 +456,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "date"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "date"}
     <div class="field" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -400,6 +469,7 @@
           autocomplete={autocomplete ? "on" : "nope"}
           type="text"
           max="9999-12-31"
+          name={id}
           bind:value
           on:focus={inputFocused}
           on:focus={dateFieldFocused}
@@ -412,9 +482,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "number"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "number"}
     <div class="field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -427,6 +495,7 @@
           autocomplete={autocomplete ? "on" : "nope"}
           type="number"
           bind:value
+          name={id}
           on:focus={inputFocused}
           on:blur={inputBlurred}
           min={bounds ? bounds[0] : null}
@@ -438,9 +507,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "time"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "time"}
     <div class="field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -453,6 +520,7 @@
           autocomplete={autocomplete ? "on" : "nope"}
           type="text"
           bind:value
+          name={id}
           on:focus={inputFocused}
           on:focus={timeFieldFocused}
           on:blur={inputBlurred}
@@ -464,9 +532,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "textarea"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "textarea"}
     <div class="field" class:active={focused || value || value === 0 || value === "0"}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -479,6 +545,7 @@
           {rows}
           class:error={is_error}
           autocomplete={autocomplete ? "on" : "nope"}
+          name={id}
           on:focus={inputFocused}
           on:blur={inputBlurred}
           on:input={typeaheadOnInput}
@@ -509,9 +576,7 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "file"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "file"}
     <div class="field">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-mouse-events-have-key-events -->
@@ -545,7 +610,8 @@
           class="image__upload_button"
           on:change={fileChanged}
           {id}
-          accept={extensions}
+          accept={accept_extensions}
+          name={id}
           bind:value
           multiple={allow_multiple_files}
         />
@@ -558,9 +624,7 @@
         {/if}
       </div>
     </div>
-  </div>
-{:else if type === "chip" || type === "tag"}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else if type === "chip" || type === "tag"}
     <div class="field" class:active={tags && tags.length}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -622,20 +686,16 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else if type === "hidden"}
-  <div class="form__field__container js-bubbles-field-container hidden" {id}>
+  {:else if type === "hidden"}
     <div class="field">
       <div class="field__wrap">
-        <input class="field__input" type="hidden" bind:value />
+        <input class="field__input" type="hidden" bind:value name={id} />
       </div>
       {#if desc}
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{:else}
-  <div class="form__field__container js-bubbles-field-container" {id} class:mb-2={margin}>
+  {:else}
     <div class="field center" class:active={focused || value}>
       <div class="field__label">
         <span class:hidden={is_error}>{_label}</span>
@@ -648,6 +708,7 @@
           autocomplete={autocomplete === true ? "on" : "nope"}
           type="text"
           bind:value
+          name={id}
           on:focus={inputFocused}
           on:blur={inputBlurred}
         />
@@ -656,8 +717,8 @@
         <p class="field__desc">{@html desc}</p>
       {/if}
     </div>
-  </div>
-{/if}
+  {/if}
+</div>
 
 <style>
   input::-webkit-outer-spin-button,
@@ -918,6 +979,22 @@
 
   input.hide__text {
     color: transparent;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .w-75 {
+    width: 72.5%;
+  }
+
+  .w-50 {
+    width: 47.5%;
+  }
+
+  .w-25 {
+    width: 22.5%;
   }
 
   :global(html.dark) textarea:disabled,

@@ -1,12 +1,18 @@
 <script>
+  /** @type {String}*/
   export let name;
+
+  /** @type {Boolean} [outline=false] */
   export let outline = false;
+
+  /** @type {?number} */
+  export let counter = null;
 
   name = `${name}`;
 
   /**
    * @typedef parsed_name
-   * @type {{title: String, first: String, middle: String, last: String, nickname: String, suffix: String, initials: String, errors: Array}}
+   * @type {{title: String, first: String, middle: String, last: String, nickname: String, suffix: String, initials: String, errors: Array<String>}}
    */
 
   /**
@@ -14,7 +20,7 @@
    * @param {String} name_to_parse - the name to parse
    * @param {Object} options
    * @param {Boolean} [options.use_experimental_list=false] - if true, use experimental list of suffixes, prefixes, and titles
-   * @returns {{title: String, first: String, middle: String, last: String, nickname: String, suffix: String, errors: Array}}
+   * @returns {{title: String, first: String, middle: String, last: String, nickname: String, suffix: String, errors: Array<String>, initials: String}}
    */
   const parseName = (name_to_parse, options = { use_experimental_list: false }) => {
     let i,
@@ -759,11 +765,26 @@
   };
 </script>
 
-<div class="avatar {$$props.class || ''}" style={$$props.style} class:outline>
-  <p>{name.length > 3 ? parseName(name)?.initials : name}</p>
+<div class="avatar__container">
+  {#if counter && typeof counter === "number"}
+    {#if counter > 99}
+      <div class="counter">99+</div>
+    {:else}
+      <div class="counter">{counter}</div>
+    {/if}
+  {/if}
+
+  <div class="avatar {$$props.class || ''}" style={$$props.style} class:outline>
+    <p>{name.length > 3 ? parseName(name)?.initials : name}</p>
+  </div>
 </div>
 
 <style>
+  .avatar__container {
+    position: relative;
+    display: inline-block;
+  }
+
   .avatar {
     width: 3rem;
     height: 3rem;
@@ -779,6 +800,23 @@
     outline: 2px solid var(--line-color, var(--white));
   }
 
-  .avatar p {
+  p {
     color: var(--color, var(--white));
+    margin: 0;
+  }
+
+  .counter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 1rem;
+    min-height: 1rem;
+    padding: 0 0.25rem;
+    background-color: var(--error);
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--white);
+    z-index: 2;
   }</style>

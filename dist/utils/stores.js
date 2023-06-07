@@ -2,12 +2,15 @@ import { writable, derived } from "svelte/store";
 import { browser } from "$app/environment";
 
 const configStore = writable({
+  /** @type {boolean} [validate_on_blur=true] */
   validate_on_blur: true,
   show_required: false,
   toast_delay: 5500,
   error_delay: 4500,
   debug: true,
+  /** @type {"roomy"|"compact"} [padding="roomy"] */
   padding: "roomy",
+  /** @type {"rounded"|"blocky"} [radius="rounded"] */
   radius: "rounded",
   max_content_width: 1200,
   dark_mode_invert: true,

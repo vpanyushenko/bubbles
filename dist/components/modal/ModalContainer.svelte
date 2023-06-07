@@ -23,11 +23,11 @@
     }
   }
 
-  $: if ($modalStore.type === "side") {
+  $: if ($modalStore?.type === "side") {
     $modalStore.height = 100;
   }
 
-  $: if ($modalStore.height) {
+  $: if ($modalStore?.height) {
     style = `height: ${$modalStore.height}vh;max-height: none;`;
   } else {
     style = "max-height: 80vh";

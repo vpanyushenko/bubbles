@@ -1,42 +1,72 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { Tag, pageStore, fuzzySearch, Divider } from "$lib/index";
+  import { Tag, pageStore, fuzzySearch, Divider, Pulse, Button } from "$lib/index";
   import icon_arrowRight from "./arrow-right.svg";
   import { v4 as uuid } from "@lukeed/uuid";
-  import { onMount } from "svelte";
   import { browser } from "$app/environment";
 
   const dispatch = createEventDispatcher();
 
+  /** @type {import("$types").Dropdown["id"]} id */
   export let id = `dropdown-${uuid()}`;
+
+  /** @type {import("$types").Dropdown["value"]} value */
   export let value = null;
+
+  /** @type {import("$types").Dropdown["options"]} options */
   export let options = [];
-  export let search = options.length > 5 ? true : false;
+
+  /** @type {import("$types").Dropdown["search"]} search */
+  export let search = options && options.length > 5 ? true : false;
+
+  /** @type {import("$types").Dropdown["placeholder"]} placeholder */
   export let placeholder = "Start typing to search...";
+
+  /** @type {import("$types").Dropdown["empty"]} empty */
   export let empty = "No results found";
+
+  /** @type {import("$types").Dropdown["create_option"]} create_option */
   export let create_option = false;
+
+  /** @type {import("$types").Dropdown["search_threshold"]} search_threshold */
   export let search_threshold = 0.3;
-  export let type = null;
+
+  /** @type {import("$types").Dropdown["type"]} type */
+  export let type;
+
+  /** @type {import("$types").Dropdown["align"]} align */
   export let align = "left";
+
+  /** @type {import("$types").Dropdown["parent"]} parent */
   export let parent;
+
+  /** @type {import("$types").Dropdown["is_list_open"]} is_list_open */
   export let is_list_open = false;
 
-  $: formatted_options = options
-    .map((option) => {
-      if (option.break === false) {
-        return null;
-      }
+  /** @type {import("$types").Dropdown["buttons"]} buttons */
+  export let buttons = [];
 
-      if (typeof option === "string") {
-        return {
-          label: option,
-          value: option,
-        };
-      } else {
-        return option;
-      }
-    })
-    .filter(Boolean);
+  $: formatted_options = Array.isArray(options)
+    ? options
+        .map((option) => {
+          if (!options) return null;
+
+          // @ts-ignore
+          if (option?.break || option?.divider) {
+            return option;
+          }
+
+          if (typeof option === "string") {
+            return {
+              label: option,
+              value: option,
+            };
+          } else {
+            return option;
+          }
+        })
+        .filter(Boolean)
+    : [];
 
   $: search_value = "";
   $: filtered_options =
@@ -359,6 +389,12 @@
           on:mouseover={hoverOption}
         >
           <div class="option__content">
+            {#if option.pulse}
+              <div class="pulse">
+                <Pulse animate={false} {...option.pulse} />
+              </div>
+            {/if}
+
             {#if option.img}
               <img class="option__img" src={option.img} alt={option.label} />
             {/if}
@@ -366,6 +402,7 @@
             <div class="text">
               <div class="title" style={option.color ? `color: --var(${option.color})` : ""}>{option.label}</div>
               <input class="hidden" type="hidden" value={option.value} />
+
               {#if option.caption}
                 <div class="select__info caption">{option.caption}</div>
               {/if}
@@ -391,6 +428,12 @@
           class:focused={selected_index === index && !is_using_pointer_device}
         >
           <div class="option__content">
+            {#if option.pulse}
+              <div class="pulse">
+                <Pulse animate={false} {...option.pulse} />
+              </div>
+            {/if}
+
             {#if option.img}
               <img class="option__img" src={option.img} alt={option.label} />
             {/if}
@@ -431,6 +474,14 @@
       </div>
     </div>
   {/each}
+
+  {#if buttons && Array.isArray(buttons) && buttons.length > 0}
+    <div class="buttons">
+      {#each buttons as button}
+        <Button {...button} mt={1} />
+      {/each}
+    </div>
+  {/if}
 </div>
 
 <!-- {/if} -->
@@ -457,6 +508,15 @@
     max-height: 400px;
     overflow-y: auto;
     min-width: 22rem;
+  }
+
+  .pulse {
+    margin-right: 0.75rem;
+    margin-left: -0.5rem;
+  }
+
+  .buttons {
+    margin-bottom: -0.85rem;
   }
 
   .left {
@@ -532,14 +592,6 @@
     justify-content: right;
     margin-left: auto;
     transition: transform 0.25s;
-  }
-
-  hr {
-    border: none;
-    height: 1px;
-    color: var(--gray-light);
-    background-color: var(--gray-light);
-    margin: 1rem;
   }
 
   .title {

@@ -10,6 +10,12 @@
     color = "primary";
   }
 
+  // $: if (Array.isArray(colors) && label) {
+  //   const match = colors.find((option) => `${option?.label}`?.toLowerCase() === `${label}`?.toLowerCase());
+
+  //   if (match) color = match.color;
+  // }
+
   $: if ($pageStore.dark_mode && dark_mode_invert === true) {
     const split = color.split("-");
     if (split.length > 1 && split[1].startsWith("light")) {
@@ -80,11 +86,11 @@
     border-left: 2px dashed var(--gray);
   } */
 
-  .component__container {
+  /* .component__container {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+  } */
 
   .container {
     position: relative;

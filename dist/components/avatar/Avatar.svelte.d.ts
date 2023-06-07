@@ -4,7 +4,8 @@
 export default class Avatar extends SvelteComponentTyped<{
     [x: string]: any;
     name: string;
-    outline?: boolean;
+    counter?: number | null | undefined;
+    outline?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -17,7 +18,8 @@ declare const __propDef: {
     props: {
         [x: string]: any;
         name: string;
-        outline?: boolean;
+        counter?: number | null | undefined;
+        outline?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

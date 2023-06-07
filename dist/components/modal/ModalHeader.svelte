@@ -1,10 +1,16 @@
 <script>
+  import { browser } from "$app/environment";
   import { pageStore, uuid, IconButton, modalStore } from "../../index";
 
   export let title = "";
   export let caption = "";
   export let buttons = [];
   export let hideModal = () => ($modalStore = {});
+
+  function _hideModal() {
+    if (browser) document.body.classList.remove("noscroll");
+    hideModal();
+  }
 
   const id = `modal_header_${uuid()}`;
 </script>
@@ -30,7 +36,7 @@
           <IconButton {...button} />
         </div>
       {/each}
-      <IconButton icon="close" onclick={hideModal} />
+      <IconButton icon="close" onclick={_hideModal} />
     </div>
   </div>
 </div>

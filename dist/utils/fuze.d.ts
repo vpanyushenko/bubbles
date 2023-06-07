@@ -1,6 +1,6 @@
 export default w;
 declare class w {
-    constructor(t: any, e: {}, n: any);
+    constructor(t: any, e: {} | undefined, n: any);
     options: {
         useExtendedSearch: boolean;
         getFn: (r: any, o: any) => any;
@@ -8,7 +8,7 @@ declare class w {
         ignoreFieldNorm: boolean;
         isCaseSensitive: boolean;
         includeScore: boolean;
-        keys: any[];
+        keys: never[];
         shouldSort: boolean;
         sortFn: (t: any, e: any) => 1 | -1;
         includeMatches: boolean;
@@ -27,7 +27,7 @@ declare class w {
     removeAt(t: any): void;
     getIndex(): any;
     search(t: any, { limit: s }?: {
-        limit?: number;
+        limit?: number | undefined;
     }): any;
     _searchStringList(t: any): any[];
     _searchLogical(t: any): void;

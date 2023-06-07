@@ -9,24 +9,53 @@
 
   const _uuid = uuid();
 
-  export let label = "Select an option";
-  export let error = "An error occurred";
-  export let value = null;
-  export let options = [];
-  export let prefix_options = [];
-  export let desc = null;
+  /** @type {import("$types").Select["id"]} id */
   export let id = _uuid;
-  export let search = options.length + prefix_options.length > 5 ? true : false;
-  export let search_threshold = 0.3;
+
+  /** @type {import("$types").Select["label"]} label */
+  export let label = "Select an option";
+
+  /** @type {import("$types").Select["error"]} error */
+  export let error = "An error occurred";
+
+  /** @type {import("$types").Select["value"]} value */
+  export let value = null;
+
+  /** @type {import("$types").Select["type"]} type */
   export let type = "select";
+
+  /** @type {import("$types").Select["options"]} options */
+  export let options = [];
+
+  /** @type {import("$types").Select["prefix_options"]} prefix_options */
+  export let prefix_options = [];
+
+  /** @type {import("$types").Select["desc"]} desc */
+  export let desc = null;
+
+  /** @type {import("$types").Select["search"]} search */
+  export let search =
+    Array.isArray(options) && Array.isArray(prefix_options) && options.length + prefix_options.length > 5
+      ? true
+      : false;
+
+  /** @type {import("$types").Select["search_threshold"]} search_threshold */
+  export let search_threshold = 0.3;
+
+  /** @type {import("$types").Select["validation"]} validation */
   export let validation = null;
+
+  /** @type {import("$types").Select["validate_on_blur"]} validate_on_blur */
   export let validate_on_blur = $configStore.validate_on_blur;
-  export let vob = $configStore.validate_on_blur;
+
+  /** @type {import("$types").Select["min_width"]} min_width */
   export let min_width = true;
+
+  /** @type {boolean} debug */
   export let debug = false;
 
-  /** @prop {Function} onselect - A function that will be provided with the value of the selected option */
-  export let onselect = null;
+  /** @type {import("$types").Select["onselect"]} onselect */
+  export let onselect;
 
   $: if (Array.isArray(prefix_options) && prefix_options.length) {
     options = [...prefix_options, ...options];
@@ -59,13 +88,9 @@
 
   $: if (value !== undefined) {
     const option = options.find((item) => item.value === value);
-    if (debug) {
-      console.log("Selected options", option);
-    }
-
-    if (option?.label) {
-      title = option.label;
-    }
+    if (debug) console.log("Selected options", option);
+    if (!option) title = "Select an option";
+    if (option?.label) title = option.label;
   }
 
   $: if (value !== undefined) {
@@ -80,6 +105,11 @@
     $pageStore.errors = $pageStore.errors.filter((a) => a !== id);
   }
 
+  /**
+   * Toggles the select
+   * @param {Event} event
+   * @return {void}
+   */
   function toggleSelectWithClick(event) {
     event.preventDefault();
 
@@ -96,6 +126,10 @@
     }
   }
 
+  /**
+   * @param {Event} event
+   * @return {void}
+   */
   function selectFocused(event) {
     $pageStore.clicked = _uuid;
     timestamp = event.timeStamp;
@@ -110,6 +144,10 @@
     }
   }
 
+  /**
+   * @param {Event} event
+   * @return {void}
+   */
   function selectBlurred(event) {
     if (event.relatedTarget && event.relatedTarget.classList.contains("search")) {
       return;
@@ -118,7 +156,7 @@
     is_focused = false;
     is_list_open = false;
 
-    if (validate_on_blur === true && vob === true) {
+    if (validate_on_blur === true) {
       if (validation && !isValidInput(value, validation)) {
         if ($pageStore.errors === undefined) {
           $pageStore.errors = [];
@@ -132,9 +170,14 @@
     }
   }
 
-  const keydown = async (event) => {
+  /**
+   * Toggles the select
+   * @param {Event} event
+   * @return {Promise<void>}
+   */
+  async function keydown(event) {
     if (
-      event.target.id === id &&
+      event?.target?.id === id &&
       event.timeStamp - kd_timestamp > 200 &&
       (event.key === "Enter" || event.key === " ")
     ) {
@@ -144,7 +187,7 @@
         if (!is_list_open) is_list_open = true;
       }, 0);
     }
-  };
+  }
 </script>
 
 <svelte:body on:keydown={keydown} />
@@ -166,6 +209,7 @@
     {/if}
     <div class="label error" class:hidden={!is_error}>{error}</div>
     <span class="value">{title}</span>
+    <input bind:value name={id} class="hidden" />
   </div>
 
   <Dropdown
@@ -179,9 +223,7 @@
     on:select={(event) => {
       is_list_open = false;
       kd_timestamp = event.timeStamp;
-      if (onselect) {
-        onselect(event?.detail?.value, event);
-      }
+      if (onselect) onselect(event?.detail?.value, event);
     }}
   />
 

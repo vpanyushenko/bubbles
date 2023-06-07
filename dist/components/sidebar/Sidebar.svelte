@@ -17,16 +17,14 @@
 
   $: sections = sections
     .map((section, index) => {
-      if (!section.id) {
-        section.id = `sidebar_${index + 1}`;
-      }
+      if (!section.id) section.id = `sidebar_${index + 1}`;
       return section;
     })
     .filter((section) => section.hidden !== true);
 
-  const sectionsWithTitles = {};
+  let sections_with_titles = {};
   let path = $page.url.pathname;
-  let activeSection = false;
+  let active_section = false;
   let open_section = null;
   let is_loading = false;
   let pathname_matched_during_load = false;
@@ -45,37 +43,36 @@
     if ($navigating) is_loading = true;
   }
 
-  sections.forEach((section, index) => {
-    if (!section.id) {
-      section.id = `sidebar_${index + 1}`;
-    }
+  $: if (sections) {
+    sections_with_titles = {};
+    sections.forEach((section, index) => {
+      if (!section.id) section.id = `sidebar_${index + 1}`;
 
-    let _id = section.id;
+      let _id = section.id;
 
-    if ($pageStore.sidebar?.notifications) {
-      $pageStore.sidebar.notifications[_id] = section.notifications ? section.notifications : 0;
-    }
+      if ($pageStore.sidebar?.notifications) {
+        $pageStore.sidebar.notifications[_id] = section.notifications ? section.notifications : 0;
+      }
 
-    if (!section.href_aliases) {
-      section.href_aliases = [];
-    }
+      if (!section.href_aliases) section.href_aliases = [];
 
-    section.href_aliases.push(section.href);
+      section.href_aliases.push(section.href);
 
-    if (path === "/" && section.href_aliases.includes("/")) {
-      activeSection = true;
-      $pageStore.sidebar.active_item = section.id;
-    }
+      if (path === "/" && section.href_aliases.includes("/")) {
+        active_section = true;
+        $pageStore.sidebar.active_item = section.id;
+      }
 
-    if (!sectionsWithTitles[section.group]) {
-      sectionsWithTitles[section.group] = [];
-    }
+      if (!sections_with_titles[section.group]) sections_with_titles[section.group] = [];
 
-    section = section;
-    sectionsWithTitles[section.group].push(section);
-  });
+      section = section;
+      sections_with_titles[section.group].push(section);
+    });
 
-  if (!activeSection) {
+    findActiveSection();
+  }
+
+  if (!active_section) {
     findActiveSection();
   }
 
@@ -102,7 +99,7 @@
     return sections;
   }
 
-  $: groups = formatSidebar(sectionsWithTitles, $pageStore);
+  $: groups = formatSidebar(sections_with_titles, $pageStore);
 
   $: if (browser) document.body.classList.toggle("toggle", $pageStore.sidebar.is_toggled);
 
@@ -119,17 +116,17 @@
   }
 
   function findActiveSection() {
-    activeSection = null;
+    active_section = null;
     const params = path.split("/").filter(Boolean);
     const loops = params.length;
 
     for (let i = loops; i > 0; i--) {
       const param_path = `/${params.join("/")}`;
 
-      if (!activeSection) {
+      if (!active_section) {
         sections.forEach((section) => {
           if (Array.isArray(section.href_aliases) && section.href_aliases.includes(param_path)) {
-            activeSection = true;
+            active_section = true;
             $pageStore.sidebar.active_item = section.id;
 
             //if we found an active section and it's in a collapsed group, we should expand the group

@@ -54,15 +54,17 @@
       </span>
 
       <div class="options">
-        {#each options as option}
-          <label class="radio">
-            <input type="radio" name={id} value={option.value} bind:group={value} on:focus={focus} />
-            <span class="radio__in">
-              <span class="radio__tick" />
-              <span class="radio__text">{option.label}</span>
-            </span>
-          </label>
-        {/each}
+        {#if options && Array.isArray(options)}
+          {#each options as option}
+            <label class="radio">
+              <input type="radio" name={id} value={option.value} bind:group={value} on:focus={focus} />
+              <span class="radio__in">
+                <span class="radio__tick" />
+                <span class="radio__text">{option.label}</span>
+              </span>
+            </label>
+          {/each}
+        {/if}
       </div>
     {/if}
   </div>

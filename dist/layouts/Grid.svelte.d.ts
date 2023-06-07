@@ -2,12 +2,12 @@
 /** @typedef {typeof __propDef.events}  GridEvents */
 /** @typedef {typeof __propDef.slots}  GridSlots */
 export default class Grid extends SvelteComponentTyped<{
-    style?: string;
-    max_columns?: number;
-    min_columns?: number;
-    row_gap?: number;
-    column_gap?: number;
-    ignore_root_styles?: boolean;
+    style?: string | undefined;
+    max_columns?: number | undefined;
+    min_columns?: number | undefined;
+    row_gap?: number | undefined;
+    column_gap?: number | undefined;
+    ignore_root_styles?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -20,12 +20,12 @@ export type GridSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        style?: string;
-        max_columns?: number;
-        min_columns?: number;
-        row_gap?: number;
-        column_gap?: number;
-        ignore_root_styles?: boolean;
+        style?: string | undefined;
+        max_columns?: number | undefined;
+        min_columns?: number | undefined;
+        row_gap?: number | undefined;
+        column_gap?: number | undefined;
+        ignore_root_styles?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -2,10 +2,10 @@
 /** @typedef {typeof __propDef.events}  CenterEvents */
 /** @typedef {typeof __propDef.slots}  CenterSlots */
 export default class Center extends SvelteComponentTyped<{
-    px?: number;
-    py?: number;
-    height100?: boolean;
-    max_width?: string | number;
+    px?: number | undefined;
+    py?: number | undefined;
+    height100?: boolean | undefined;
+    max_width?: string | number | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -18,10 +18,10 @@ export type CenterSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        px?: number;
-        py?: number;
-        height100?: boolean;
-        max_width?: number | string;
+        px?: number | undefined;
+        py?: number | undefined;
+        height100?: boolean | undefined;
+        max_width?: string | number | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

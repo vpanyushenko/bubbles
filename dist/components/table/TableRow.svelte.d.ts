@@ -2,12 +2,12 @@
 /** @typedef {typeof __propDef.events}  TableRowEvents */
 /** @typedef {typeof __propDef.slots}  TableRowSlots */
 export default class TableRow extends SvelteComponentTyped<{
-    id?: string;
-    onclick?: any;
-    href?: any;
-    wrap?: boolean;
-    mobile_wrap?: boolean;
-    cells?: any[];
+    href: string | undefined;
+    onclick: Function | undefined;
+    id?: string | undefined;
+    wrap?: boolean | undefined;
+    mobile_wrap?: boolean | undefined;
+    cells?: import("$types").TableCell[] | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -20,12 +20,12 @@ export type TableRowSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        id?: string;
-        onclick?: any;
-        href?: any;
-        wrap?: boolean;
-        mobile_wrap?: boolean;
-        cells?: any[];
+        href: string | undefined;
+        onclick: Function | undefined;
+        id?: string | undefined;
+        wrap?: boolean | undefined;
+        mobile_wrap?: boolean | undefined;
+        cells?: import("$types").TableCell[] | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

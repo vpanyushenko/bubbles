@@ -3,7 +3,11 @@
   import { uuid } from "$lib/index";
 
   export let id = uuid();
+
+  /** @type {{value: string|number, label: string}[]}*/
   export let options = [];
+
+  /** @type {(string|number)[]}*/
   export let value = [];
   export let error = "An error occurred";
   export let label = "";
@@ -29,7 +33,12 @@
   }
 
   function keydown(event) {
-    if (event.key === "ArrowUp" && event?.target?.closest(".form__field__container")?.id === id) {
+    if (
+      document &&
+      options &&
+      event.key === "ArrowUp" &&
+      event?.target?.closest(".form__field__container")?.id === id
+    ) {
       event.preventDefault();
       let index = options.findIndex((a) => a.value === event.target.value);
 
@@ -40,7 +49,12 @@
       document.getElementById(id).querySelectorAll("input")[index - 1].focus();
     }
 
-    if (event.key === "ArrowDown" && event?.target?.closest(".form__field__container")?.id === id) {
+    if (
+      document &&
+      options &&
+      event.key === "ArrowDown" &&
+      event?.target?.closest(".form__field__container")?.id === id
+    ) {
       event.preventDefault();
       let index = options.findIndex((a) => a.value === event.target.value);
 
@@ -48,12 +62,12 @@
         index = -1;
       }
 
-      document.getElementById(id).querySelectorAll("input")[index + 1].focus();
+      document.getElementById(id)?.querySelectorAll("input")[index + 1].focus();
     }
 
-    if (event.key === "Enter" && event?.target?.closest(".form__field__container")?.id === id) {
+    if (document && options && event.key === "Enter" && event?.target?.closest(".form__field__container")?.id === id) {
       let index = options.findIndex((a) => a.value === event.target.value);
-      document.getElementById(id).querySelectorAll("input")[index].focus();
+      document.getElementById(id)?.querySelectorAll("input")[index].focus();
 
       if (value.includes(event.target.value)) {
         value = value.filter((a) => a !== event.target.value);
@@ -78,25 +92,26 @@
       {/if}
     </span>
 
+    <input type="hidden" name={id} bind:value />
+
     <div class="options">
-      {#each options as option}
-        <label class="checkbox">
-          <input
-            class="checkbox__input"
-            type="checkbox"
-            value={option.value}
-            bind:group={value}
-            checked={Array.isArray(value) && value.includes(option.value)}
-            on:click={() => {
-              $pageStore.errors = $pageStore.errors.filter((a) => a === id);
-            }}
-          />
-          <span class="checkbox__in">
-            <span class="checkbox__tick" />
-            <span class="checkbox__text">{option.label}</span>
-          </span>
-        </label>
-      {/each}
+      {#if options && Array.isArray(options)}
+        {#each options as option}
+          <label class="checkbox">
+            <input
+              class="checkbox__input"
+              type="checkbox"
+              value={option.value}
+              bind:group={value}
+              on:click={() => ($pageStore.errors = $pageStore.errors.filter((a) => a === id))}
+            />
+            <span class="checkbox__in">
+              <span class="checkbox__tick" />
+              <span class="checkbox__text">{option.label}</span>
+            </span>
+          </label>
+        {/each}
+      {/if}
     </div>
   </div>
 </div>

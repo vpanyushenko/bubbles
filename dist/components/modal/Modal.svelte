@@ -4,7 +4,6 @@
   import { fly, fade } from "svelte/transition";
   import IconButton from "../button/IconButton.svelte";
   import { modalStore } from "../../utils/stores";
-  import { onDestroy } from "svelte";
 
   export let title = "";
   export let hideModal = () => ($modalStore = {});
@@ -22,20 +21,26 @@
   }
 
   function keydown(event) {
-    if (event.key === "Escape") _hideModal();
+    if (event.key === "Escape") {
+      _hideModal();
+    }
   }
 
   $: if (type === "side") {
     height = 100;
   }
 
-  $: if (height) style = `height: ${height}vh;max-height: none;`;
-  else style = "max-height: 80vh";
+  $: if (height) {
+    style = `height: ${height}vh;max-height: none;`;
+  } else {
+    style = "max-height: 80vh";
+  }
 
-  $: if (lock_scroll && browser) document.body.classList.add("noscroll");
-  else if (browser) document.body.classList.remove("noscroll");
-
-  onDestroy(() => document.body.classList.remove("noscroll"));
+  $: if (lock_scroll && browser) {
+    document.body.classList.add("noscroll");
+  } else if (browser) {
+    document.body.classList.remove("noscroll");
+  }
 </script>
 
 <svelte:window on:keydown={keydown} />

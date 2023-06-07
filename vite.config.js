@@ -1,4 +1,5 @@
 import { sveltekit } from "@sveltejs/kit/vite";
+import autoprefixer from "autoprefixer";
 import path from "path";
 // import svg from "vite-plugin-svelte-svg";
 import { readFileSync } from "fs";
@@ -17,9 +18,15 @@ const config = {
       allow: [".."],
     },
   },
+  css: {
+    postcss: {
+      plugins: [autoprefixer()],
+    },
+  },
   resolve: {
     alias: {
       $docs: path.resolve("./src/docs"),
+      "bubbles-ui": path.resolve("./dist"),
     },
   },
   define: {

@@ -2,13 +2,13 @@
 /** @typedef {typeof __propDef.events}  CardHeaderEvents */
 /** @typedef {typeof __propDef.slots}  CardHeaderSlots */
 export default class CardHeader extends SvelteComponentTyped<{
-    title?: string;
-    caption?: string;
-    border?: boolean;
-    buttons?: any[];
-    filters?: any[];
-    center?: boolean;
-    px?: boolean;
+    title?: string | undefined;
+    caption?: string | undefined;
+    buttons?: any[] | undefined;
+    filters?: any[] | undefined;
+    center?: boolean | undefined;
+    border?: boolean | undefined;
+    px?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -21,13 +21,13 @@ export type CardHeaderSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        title?: string;
-        caption?: string;
-        border?: boolean;
-        buttons?: any[];
-        filters?: any[];
-        center?: boolean;
-        px?: boolean;
+        title?: string | undefined;
+        caption?: string | undefined;
+        buttons?: any[] | undefined;
+        filters?: any[] | undefined;
+        center?: boolean | undefined;
+        border?: boolean | undefined;
+        px?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -2,9 +2,9 @@
 /** @typedef {typeof __propDef.events}  BasicSelectEvents */
 /** @typedef {typeof __propDef.slots}  BasicSelectSlots */
 export default class BasicSelect extends SvelteComponentTyped<{
-    value?: any;
-    id?: string;
-    options?: any[];
+    id?: string | undefined;
+    value?: null | undefined;
+    options?: any[] | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -15,9 +15,9 @@ export type BasicSelectSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        value?: any;
-        id?: string;
-        options?: any[];
+        id?: string | undefined;
+        value?: null | undefined;
+        options?: any[] | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

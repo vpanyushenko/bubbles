@@ -54,7 +54,6 @@
       value: "Your settings were successfully updated!",
       error: "Add a message that is at least 3 characters",
       validation: "string|required|min:3",
-      vob: true,
     },
     {
       type: "submit",

@@ -46,7 +46,6 @@ type: code
           id: "name",
           label: "Name",
           error: "An error occurred",
-          vob: "true",
           validation: "required|string",
         },
         {

@@ -2,8 +2,8 @@
 /** @typedef {typeof __propDef.events}  CardFooterEvents */
 /** @typedef {typeof __propDef.slots}  CardFooterSlots */
 export default class CardFooter extends SvelteComponentTyped<{
-    align?: string;
-    pagination?: any;
+    align?: string | undefined;
+    pagination?: null | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -16,8 +16,8 @@ export type CardFooterSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        align?: string;
-        pagination?: any;
+        align?: string | undefined;
+        pagination?: null | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

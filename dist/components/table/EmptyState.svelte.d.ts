@@ -2,7 +2,7 @@
 /** @typedef {typeof __propDef.events}  EmptyStateEvents */
 /** @typedef {typeof __propDef.slots}  EmptyStateSlots */
 export default class EmptyState extends SvelteComponentTyped<{
-    text?: string;
+    text?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -13,7 +13,7 @@ export type EmptyStateSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        text?: string;
+        text?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

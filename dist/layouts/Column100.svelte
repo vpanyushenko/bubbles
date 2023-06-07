@@ -1,7 +1,8 @@
 <script>
   import { configStore } from "../index";
 
-  export let padding;
+  /** @type {"roomy"|"compact"} [padding="roomy"] */
+  export let padding = "roomy";
 
   if (!padding) padding = $configStore.padding || "roomy";
 </script>

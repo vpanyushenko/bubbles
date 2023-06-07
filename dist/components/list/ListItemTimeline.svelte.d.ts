@@ -2,16 +2,16 @@
 /** @typedef {typeof __propDef.events}  ListItemTimelineEvents */
 /** @typedef {typeof __propDef.slots}  ListItemTimelineSlots */
 export default class ListItemTimeline extends SvelteComponentTyped<{
-    active?: boolean;
-    text?: string;
-    label?: string;
-    color?: string;
-    id?: string;
-    icon?: any;
-    onclick?: any;
-    href?: any;
-    new_page?: boolean;
-    pulse?: boolean;
+    active?: boolean | undefined;
+    text?: string | undefined;
+    id?: string | undefined;
+    label?: string | undefined;
+    href?: null | undefined;
+    color?: string | undefined;
+    icon?: null | undefined;
+    onclick?: null | undefined;
+    new_page?: boolean | undefined;
+    pulse?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -24,16 +24,16 @@ export type ListItemTimelineSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        active?: boolean;
-        text?: string;
-        label?: string;
-        color?: string;
-        id?: string;
-        icon?: any;
-        onclick?: any;
-        href?: any;
-        new_page?: boolean;
-        pulse?: boolean;
+        active?: boolean | undefined;
+        text?: string | undefined;
+        id?: string | undefined;
+        label?: string | undefined;
+        href?: null | undefined;
+        color?: string | undefined;
+        icon?: null | undefined;
+        onclick?: null | undefined;
+        new_page?: boolean | undefined;
+        pulse?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -4,6 +4,7 @@
   import { v4 as uuid } from "@lukeed/uuid";
   import { Spinner } from "../../index";
   import { navigating } from "$app/stores";
+  import { onMount } from "svelte";
 
   /** @prop {Array.<{href: String, onclick: Function, label: String}>} segments */
   export let segments = [];
@@ -43,25 +44,27 @@
   $: left = selectedItem?.getBoundingClientRect().left - wrapper?.getBoundingClientRect().left + 4;
   $: width = selectedItem?.getBoundingClientRect().width - 8;
 
-  $: if (dom_component_width && style === "default") {
-    button_wrapper_width = nav.querySelector(".buttons")?.getBoundingClientRect()?.width || segments.length * 190;
+  const calcExpanded = (dom_component_width) => {
+    button_wrapper_width = nav?.querySelector(".buttons")?.getBoundingClientRect()?.width || segments.length * 190;
 
-    if (button_wrapper_width > dom_component_width) {
+    if (!button_wrapper_width && style === "default") {
+      button_wrapper_width = segments.length * 190;
+    }
+
+    if (!button_wrapper_width && style === "line") {
+      button_wrapper_width = segments.length * 100;
+    }
+
+    if (nav && button_wrapper_width > dom_component_width) {
       expanded = false;
     } else {
       expanded = true;
     }
-  }
+  };
 
-  $: if (dom_component_width && style === "line") {
-    button_wrapper_width = nav.querySelector(".buttons")?.getBoundingClientRect()?.width || segments.length * 100;
+  onMount(() => calcExpanded(dom_component_width));
 
-    if (button_wrapper_width > dom_component_width) {
-      expanded = false;
-    } else {
-      expanded = true;
-    }
-  }
+  $: if (dom_component_width) calcExpanded(dom_component_width);
 
   //Inline styles
   let css = "";
@@ -85,9 +88,9 @@
 
 <div
   bind:clientWidth={dom_component_width}
+  bind:this={nav}
   class:line={style === "line"}
   class:border={style === "line" && expanded}
-  bind:this={nav}
   style={css}
 >
   {#if expanded}
