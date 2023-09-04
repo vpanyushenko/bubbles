@@ -173,6 +173,7 @@ export declare type IconButton = {
     | "trash"
     | "filter"
     | string;
+  type?: "button" | "submit" | "reset";
   onclick?: Function;
   options: SelectOption[];
   href?: string;

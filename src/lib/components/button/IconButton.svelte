@@ -102,6 +102,9 @@
   /** @type {import("$types").IconButton["href_listener"]} href_listener */
   export let href_listener;
 
+  /** @type {import("$types").IconButton["type"]} label */
+  export let type = "button";
+
   let dom_ref;
 
   $: is_list_open = options.length ? true : false;
@@ -374,6 +377,7 @@
       {/if}
     {/if}
     <button
+      {type}
       on:click={iconClick}
       on:click={onclick}
       class:search_active={is_search_active}
