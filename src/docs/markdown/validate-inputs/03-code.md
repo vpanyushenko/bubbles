@@ -18,7 +18,6 @@ type: code
       error: "A name is required",
       validation: "string|required|min:3", //the validation requirements that will be run
       validate_on_blur: true,
-      vob: true,
     },
     {
       type: "submit",

@@ -5,6 +5,7 @@
   import { modalStore, pageStore } from "$lib/utils/stores";
   import IconButton from "$lib/components/button/IconButton.svelte";
   import Button from "$lib/components/button/Button.svelte";
+  import ButtonGroup from "$lib/components/button/ButtonGroup.svelte";
   import Form from "$lib/components/form/Form.svelte";
   import { Gallery } from "$lib/index";
 
@@ -22,11 +23,11 @@
     }
   }
 
-  $: if ($modalStore.type === "side") {
+  $: if ($modalStore?.type === "side") {
     $modalStore.height = 100;
   }
 
-  $: if ($modalStore.height) {
+  $: if ($modalStore?.height) {
     style = `height: ${$modalStore.height}vh;max-height: none;`;
   } else {
     style = "max-height: 80vh";
@@ -89,7 +90,11 @@
         {#if $modalStore.footer && $modalStore.footer.length > 0}
           <footer class="modal__footer">
             {#each $modalStore.footer as button}
-              <Button {...button} wide={true} />
+              {#if button.type === "button" || button.type === "submit"}
+                <Button {...button} wide={true} />
+              {:else if button.type === "button-group"}
+                <ButtonGroup {...button} />
+              {/if}
             {/each}
           </footer>
         {/if}

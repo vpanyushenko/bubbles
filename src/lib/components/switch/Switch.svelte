@@ -40,6 +40,7 @@
 
 <label class="switch" class:active class:disabled={disabled || is_loading}>
   <input
+    name={id}
     type="checkbox"
     on:change={toggleSwitch}
     on:change={onclick}

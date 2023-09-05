@@ -17,8 +17,13 @@
 
   import { createEventDispatcher, onMount } from "svelte";
 
+  /** @type {import("$types").Input[]} inputs */
   export let inputs = [];
+
+  /** @type {string} - id */
   export let id = uuid();
+
+  /** @type {?number=} [breakpoint=300]*/
   export let breakpoint = 380;
   let row_width = 0;
   let is_mobile_width = false;
@@ -133,10 +138,8 @@
         console.warn("hidden_if has been deprecated. Use hide function instead");
       }
 
-      if (input.hide && input.hide instanceof Function) {
-        if (input.hide() === true) {
-          input.is_hidden = true;
-        }
+      if (input.hide && input.hide instanceof Function && input.hide() === true) {
+        input.is_hidden = true;
       }
 
       return input;
@@ -164,7 +167,7 @@
 
 <svelte:window on:resize={getFormWidth} />
 
-<div class="form js-bubbles-form" {id}>
+<form class="form js-bubbles-form" {id} on:submit|preventDefault>
   {#each formatted_inputs as input}
     {#if !input.is_hidden}
       <span
@@ -225,10 +228,6 @@
           <RadioGroup {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
 
-        {#if input.type === "checkbox"}
-          <LabeledCheckbox {...input} bind:value={input.value} background={input.background === false ? false : true} />
-        {/if}
-
         {#if input.type === "checkbox-group"}
           <CheckboxGroup {...input} bind:value={input.value} background={input.background === false ? false : true} />
         {/if}
@@ -248,11 +247,19 @@
     {/if}
   {/each}
   <slot />
-</div>
+</form>
 
 <svelte:body on:keydown={keydown} />
 
 <style>
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    flex-flow: wrap;
+    justify-content: space-between;
+  }
   :global(.form .select) {
     width: 100%;
   }

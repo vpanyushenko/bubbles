@@ -1,7 +1,6 @@
 <script>
-  import Button from "$lib/components/button/Button.svelte";
-  import ButtonGroup from "$lib/components/button/ButtonGroup.svelte";
-  import { showLoading, hideLoading } from "$lib/utils/loading";
+  //import { Avatar, Button, ButtonGroup, showLoading, hideLoading } from "../../../../dist/index";
+  import { Avatar, Button, ButtonGroup, showLoading, hideLoading } from "bubbles-ui";
 
   let color = "primary";
   let dark_mode_invert = true;
@@ -16,6 +15,8 @@
     }, 2000);
   };
 </script>
+
+<Avatar name="test" outline={true} counter={4} />
 
 <Button mt="1rem" wide={true} label="Primary" color="primary" onclick={buttonLoadingDemo} />
 <Button mt="1rem" wide={true} label="Secondary" color="secondary" onclick={buttonLoadingDemo} />
@@ -95,7 +96,7 @@
 <hr />
 <br />
 <ButtonGroup mt="1rem" mb="1rem">
-  <Button icon="more" onclick={buttonLoadingDemo} color="dark" shadow={false} />
+  <Button icon="more" onclick={buttonLoadingDemo} color="dark" shadow={false} counter={4} />
   <Button wide={true} label="Button 1" color="dark" onclick={buttonLoadingDemo} />
   <Button wide={true} label="Button 2" color="dark" onclick={buttonLoadingDemo} />
 </ButtonGroup>

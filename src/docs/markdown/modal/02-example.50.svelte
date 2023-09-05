@@ -23,8 +23,7 @@
       desc: "You'll be able to change this name later", //This will add text below the input to explain in more detail what is needed from the user. Optional.
       error: "A name is required", //this is the text that will appear if this input fails validation
       validation: "string|required|min:3", // See the validation section for more details, but this adds what validation you need. In This case, it must be a string, it's required, with a min length of 3
-      validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element
-      vob: true, //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
+      validate_on_blur: true, //defaults to true. Will run validation when focus is lost from the element //defaults to true. Alias validation_on_blur just less to type. You only need to set one.
     },
     {
       type: "number", //Will ensure that getFormData will return this as a number
@@ -114,7 +113,6 @@
       desc: "This is an example of typeahead to get results based on what the user is typing. It can be used on text and textarea inputs. Just add a function to the typeahead property that accepts the current value and responds with a Promise that array of options. Each option is the completed string. ",
       margin: true,
       validation: "required|string",
-      vob: true,
       autocomplete: false,
       options: [
         {
@@ -376,7 +374,6 @@
       desc: "You'll be able to change this name later",
       error: "A name is required",
       validation: "string|required|min:3",
-      vob: true,
       hidden_if: [{ id: "preferences.email", value: false }],
     },
     {
@@ -502,7 +499,6 @@
             id: "name",
             label: "Name",
             error: "An error occurred",
-            vob: "true",
             validation: "required|string",
           },
         ],

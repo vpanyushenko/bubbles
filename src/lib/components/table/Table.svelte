@@ -1,5 +1,5 @@
 <script>
-  import { v4 as uuid } from "@lukeed/uuid";
+  import { uuid } from "$lib/index";
   import TableRow from "./TableRow.svelte";
   import TableCell from "./TableCell.svelte";
   import TableHeader from "./TableHeader.svelte";

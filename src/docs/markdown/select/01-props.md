@@ -84,11 +84,6 @@ If true, runs the validation checks when focus is lost from the input.
 
 ---
 
-**vob** `boolean` <br>
-Just an alias for `validate_on_blur`. Set whichever is best for you.
-
----
-
 **search** `boolean` <br>
 If you want the select element to be searchable. By default, if you have more than 5 options, the search will be turned on. You can override this behavior if you want to.
 

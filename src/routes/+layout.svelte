@@ -1,5 +1,5 @@
 <script>
-  import "$lib/css/app.css";
+  import "../lib/css/app.css";
   import "$docs/css/oceanic.css";
   import "$docs/css/markdown.css";
 
@@ -32,11 +32,18 @@
     logo_dark: logo_dark_mode,
     flat: $store.flat,
     padding: $store.sidebar_padding,
-    sections: sections.map((section) => {
-      // section.icon = icon;
-      // delete section.group;
-      return section;
-    }),
+    sections: sections
+      .map((section) => {
+        // section.icon = icon;
+        // delete section.group;
+        return section;
+      })
+      .concat([
+        {
+          hidden: true,
+          label: "Hidden",
+        },
+      ]),
   };
 
   let y = 0;
@@ -54,6 +61,72 @@
     return str.replace(/\w\S*/g, (txt) => {
       return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
     });
+  };
+
+  const more_button = {
+    icon: "more",
+    counter: 1,
+    color: "gray-lighter",
+    options: [
+      {
+        label: "Light Mode",
+        onclick: () => {
+          console.log("Light mode");
+          unsetDarkMode();
+        },
+      },
+      {
+        label: "Dark Mode",
+        onclick: () => {
+          console.log("Dark mode");
+          setDarkMode();
+        },
+      },
+      {
+        divider: true,
+        label: "Sidebar Options",
+      },
+      {
+        label: "Compact",
+        caption: $store.sidebar_padding === "compact" ? "(Selected)" : null,
+        onselect: () => {
+          $store.sidebar_padding = "compact";
+        },
+      },
+      {
+        label: "Roomy",
+        caption: $store.sidebar_padding === "roomy" ? "(Selected)" : null,
+        onselect: () => {
+          $store.sidebar_padding = "roomy";
+        },
+      },
+      {
+        label: "Flat",
+        caption: $store.flat === true ? "(Selected)" : null,
+        onselect: () => {
+          $store.flat = true;
+        },
+      },
+      {
+        label: "Not Flat (Nested)",
+        caption: $store.flat === false ? "(Selected)" : null,
+        onselect: () => {
+          $store.flat = false;
+        },
+      },
+    ],
+    dropdown_buttons: [
+      {
+        label: "Home",
+        color: "gray-lighter",
+        href: "/",
+      },
+      {
+        label: "About",
+        color: "gray-lighter",
+        href: "/",
+      },
+    ],
   };
 </script>
 
@@ -91,58 +164,7 @@
           );
         },
       },
-      {
-        icon: "more",
-        color: "gray-lighter",
-        options: [
-          {
-            label: "Light Mode",
-            onclick: () => {
-              console.log("Light mode");
-              unsetDarkMode();
-            },
-          },
-          {
-            label: "Dark Mode",
-            onclick: () => {
-              console.log("Dark mode");
-              setDarkMode();
-            },
-          },
-          {
-            divider: true,
-            label: "Sidebar Options",
-          },
-          {
-            label: "Compact",
-            caption: $store.sidebar_padding === "compact" ? "(Selected)" : null,
-            onselect: () => {
-              $store.sidebar_padding = "compact";
-            },
-          },
-          {
-            label: "Roomy",
-            caption: $store.sidebar_padding === "roomy" ? "(Selected)" : null,
-            onselect: () => {
-              $store.sidebar_padding = "roomy";
-            },
-          },
-          {
-            label: "Flat",
-            caption: $store.flat === true ? "(Selected)" : null,
-            onselect: () => {
-              $store.flat = true;
-            },
-          },
-          {
-            label: "Not Flat (Nested)",
-            caption: $store.flat === false ? "(Selected)" : null,
-            onselect: () => {
-              $store.flat = false;
-            },
-          },
-        ],
-      },
+      more_button,
     ]}
   />
 

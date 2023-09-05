@@ -3,7 +3,8 @@
 
   export let style = "";
   export let mobile_reverse = false;
-  export let padding;
+  /** @type {"roomy"|"compact"} [padding="roomy"] */
+  export let padding = "roomy";
   export let border = false;
 
   if (!padding) padding = $configStore.padding || "roomy";

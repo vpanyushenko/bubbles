@@ -14,9 +14,7 @@
   export let focus = false;
   export let style = "default";
 
-  if (background) {
-    form_indent = true;
-  }
+  if (background) form_indent = true;
 
   const _label =
     $configStore.show_required && validation && validation.split("|").includes("required") ? `${label}*` : label;
@@ -33,6 +31,8 @@
 
 <div class="form__field__container" {id} class:background>
   <div class="field" class:style__indent={form_indent}>
+    <input type="hidden" name={id} bind:value />
+
     {#if style === "segments"}
       <div class="segments">
         <span>
@@ -54,15 +54,17 @@
       </span>
 
       <div class="options">
-        {#each options as option}
-          <label class="radio">
-            <input type="radio" name={id} value={option.value} bind:group={value} on:focus={focus} />
-            <span class="radio__in">
-              <span class="radio__tick" />
-              <span class="radio__text">{option.label}</span>
-            </span>
-          </label>
-        {/each}
+        {#if options && Array.isArray(options)}
+          {#each options as option}
+            <label class="radio">
+              <input type="radio" value={option.value} bind:group={value} on:focus={focus} />
+              <span class="radio__in">
+                <span class="radio__tick" />
+                <span class="radio__text">{option.label}</span>
+              </span>
+            </label>
+          {/each}
+        {/if}
       </div>
     {/if}
   </div>

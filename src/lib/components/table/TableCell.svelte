@@ -9,42 +9,82 @@
   import { onMount } from "svelte";
   import { showLoading } from "$lib/utils/loading";
 
+  /** @type {import("$types").TableCell["id"]} id */
   export let id = "";
-  export let href = null;
+
+  /** @type {import("$types").TableCell["href"]} href */
+  export let href;
+
+  /** @type {import("$types").TableCell["text"]} text */
   export let text = "";
+
+  /** @type {import("$types").TableCell["caption"]} caption */
   export let caption = "";
-  export let captions = null;
+
+  /** @type {import("$types").TableCell["captions"]} captions */
+  export let captions;
+
+  /** @type {import("$types").TableCell["large"]} large */
   export let large = false;
+
+  /** @type {import("$types").TableCell["bold"]} bold */
   export let bold = false;
+
+  /** @type {import("$types").TableCell["empty"]} empty */
   export let empty = false;
+
+  /** @type {import("$types").TableCell["code"]} code */
   export let code = false;
-  export let tooltip = null;
-  /**@type {"hover"|"tap"|"off"} [preload=null] - If you want this button to link to another web page. You should use href instead of onclick because you'll get link prefetching which will make the UX faster. */
+
+  /** @type {import("$types").TableCell["tooltip"]} tooltip */
+  export let tooltip;
+
+  /** @type {import("$types").TableCell["preload"]} preload */
   export let preload = "hover";
 
-  /** @type {("left"|"right")} [align="left"] - aligns the text in the cell to the left or right (end) of the cell  */
+  /** @type {import("$types").TableCell["align"]} align */
   export let align = "left";
 
-  /** @type {?Number} [mobile_width=null] */
-  export let mobile_width = null;
+  /** @type {import("$types").TableCell["mobile_width"]} mobile_width */
+  export let mobile_width;
 
-  /** @type {Number} [mobile_order=0] */
+  // /** @type {import("$types").TableCell["mobile_order"]} mobile_order */
   export let mobile_order = 0;
-  export let width = null;
+
+  /** @type {import("$types").TableCell["width"]} width */
+  export let width;
+
+  /** @type {import("$types").TableCell["wrap"]} wrap */
   export let wrap = true;
+
+  /** @type {import("$types").TableCell["mobile_wrap"]} mobile_wrap */
   export let mobile_wrap = true;
 
   //conditions passed for custom cell types
-  export let img = null;
-  export let tag = null;
-  export let button = null;
-  export let checkbox = null;
-  export let sw = null;
+  /** @type {import("$types").TableCell["img"]} img */
+  export let img;
 
-  let _table_row_icon_button_id = false;
+  /** @type {import("$types").TableCell["tag"]} tag */
+  export let tag;
+
+  /** @type {import("$types").TableCell["button"]} button */
+  export let button;
+
+  /** @type {import("$types").TableCell["checkbox"]} checkbox */
+  export let checkbox;
+
+  //Deprecated
+  export let sw;
+
+  /** @type {string|null}*/
+  let _table_row_icon_button_id = null;
+  /** @type {HTMLElement}*/
   let _dom_element;
+  /** @type {string|null}*/
   let _type = null;
+  /** @type {HTMLElement}*/
   let _checkbox_cell;
+  /** @type {string[]|null}*/
   let _captions = null;
 
   let mobile_hidden = false;

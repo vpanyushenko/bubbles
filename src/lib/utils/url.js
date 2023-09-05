@@ -14,7 +14,7 @@ import { invalidateAll } from "$app/navigation";
 const addQueryParam = (key, value, options = { goto: false, show_loading: "", keep_only: [], invalidate: true }) => {
   const show_loading = options.show_loading || null;
   const keep_only = options.keep_only || [];
-  const invalidate = options.invalidate || true;
+  const invalidate = options.invalidate ?? true;
 
   if (browser) {
     const queryParams = new URLSearchParams(window.location.search);

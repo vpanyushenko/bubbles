@@ -4,7 +4,10 @@
   import icon_add from "./add.svg";
 
   export let id = uuid();
+  /** @type {string[]}*/
   export let images = [];
+
+  /** @type {string?=} */
   export let grid = null;
   export let page = 1;
   export let overlay_buttons = [];
@@ -17,12 +20,71 @@
   export let new_image = null;
 
   let calculated_page = 1;
+  let calculated_grid = grid;
   let show_details = false;
   let selected_image;
   $pageStore.focused_gallery_id = null;
 
   if (!images) images = [];
+  if (grid === "auto") grid = "autoxauto";
   if (!grid) grid = "1x1";
+
+  function calcGrid(calculated_grid, img_count) {
+    if (!grid) {
+      calculated_grid = "1x1";
+      grid = "1x1";
+    }
+
+    if (pagination && img_count > 0) {
+      if (grid.startsWith("auto") && grid.endsWith("auto")) {
+        if (img_count === 1) calculated_grid = "1x1";
+        else if (img_count <= 2) calculated_grid = "1x2";
+        else if (img_count <= 4) calculated_grid = "2x2";
+        else if (img_count <= 6) calculated_grid = "2x3";
+        else if (img_count <= 9) calculated_grid = "3x3";
+        else calculated_grid = "3x3";
+      } else if (grid.startsWith("auto")) {
+        if (img_count === 1 && grid.endsWith("x1")) calculated_grid = "1x1";
+        else if (img_count <= 2 && grid.endsWith("x1")) calculated_grid = "2x1";
+        else if (img_count <= 4 && grid.endsWith("x2")) calculated_grid = "2x2";
+        else if (img_count <= 6 && grid.endsWith("x3")) calculated_grid = "2x3";
+        else if (img_count <= 9 && grid.endsWith("x3")) calculated_grid = "3x3";
+        else calculated_grid = "3x3";
+      } else if (grid.endsWith("auto")) {
+        if (img_count === 1 && grid.startsWith("x1")) calculated_grid = "1x1";
+        else if (img_count <= 2 && grid.startsWith("1x")) calculated_grid = "1x2";
+        else if (img_count <= 4 && grid.startsWith("2x")) calculated_grid = "2x2";
+        else if (img_count <= 6 && grid.startsWith("3x")) calculated_grid = "3x2";
+        else if (img_count <= 9 && grid.startsWith("3x")) calculated_grid = "3x3";
+        else calculated_grid = "3x3";
+      }
+    } else {
+      if (grid.startsWith("auto") && grid.endsWith("auto")) {
+        if (img_count === 1) calculated_grid = "1x1";
+        else if (img_count <= 2) calculated_grid = "1x2";
+        else if (img_count <= 4) calculated_grid = "2x2";
+        else if (img_count <= 5) calculated_grid = "2x3";
+        else if (img_count <= 9) calculated_grid = "3x3";
+        else calculated_grid = "4x4";
+      } else if (grid.startsWith("auto")) {
+        if (img_count === 1 && grid.endsWith("x1")) calculated_grid = "1x1";
+        else if (img_count <= 2 && grid.endsWith("x1")) calculated_grid = "2x1";
+        else if (img_count <= 4 && grid.endsWith("x2")) calculated_grid = "2x2";
+        else if (img_count <= 5 && grid.endsWith("x3")) calculated_grid = "2x3";
+        else if (img_count <= 9 && grid.endsWith("x3")) calculated_grid = "3x3";
+        else calculated_grid = "4x4";
+      } else if (grid.endsWith("auto")) {
+        if (img_count === 1 && grid.startsWith("x1")) calculated_grid = "1x1";
+        if (img_count <= 2 && grid.startsWith("1x")) calculated_grid = "1x2";
+        else if (img_count <= 4 && grid.startsWith("2x")) calculated_grid = "2x2";
+        else if (img_count <= 5 && grid.startsWith("3x")) calculated_grid = "3x2";
+        else if (img_count <= 9 && grid.startsWith("3x")) calculated_grid = "3x3";
+        else calculated_grid = "4x4";
+      }
+    }
+
+    return calculated_grid;
+  }
 
   let columns = 1;
   let rows = 1;
@@ -47,24 +109,20 @@
 
   $: selected_image_index = images.findIndex((image) => image === selected_image);
 
-  if (new_image && !images.find((a) => a === "add")) {
-    images.push("add");
-  }
+  // $: if (new_image && !images.find((a) => a === "add")) {
+  //   images.push("add");
+  // }
 
   $: if (page <= 0) {
     const total = Math.floor(page / total_pages) * total_pages;
 
     calculated_page = page - total;
 
-    if (calculated_page === 0) {
-      calculated_page = total_pages;
-    }
+    if (calculated_page === 0) calculated_page = total_pages;
   } else if (page > total_pages) {
     calculated_page = page - Math.floor(page / total_pages) * total_pages;
 
-    if (calculated_page === 0) {
-      calculated_page = total_pages;
-    }
+    if (calculated_page === 0) calculated_page = total_pages;
   } else {
     calculated_page = page;
   }
@@ -80,7 +138,8 @@
     let fr_columns = [];
     let fr_rows = [];
 
-    const split = grid ? grid.toLowerCase().split("x") : ["1", "1"];
+    calculated_grid = calcGrid(calculated_grid, images.length);
+    const split = calculated_grid ? calculated_grid.toLowerCase().split("x") : ["1", "1"];
 
     if (split.length == 2) {
       columns = split[0];
@@ -100,9 +159,9 @@
     style += `grid-template-columns: ${fr_columns.join(" ")};`;
     style += `grid-template-rows: ${fr_rows.join(" ")};`;
 
-    if (new_image && !images.find((a) => a === "add")) {
-      images.push("add");
-    }
+    // if (new_image && !images.find((a) => a === "add")) {
+    //   images.push("add");
+    // }
 
     images.forEach((image, index) => {
       let page = Math.ceil((index + 1) / (columns * rows));
@@ -115,7 +174,10 @@
       paginated_images[page - 1].push(image);
     });
 
-    paginated_images = paginated_images;
+    // paginated_images = paginated_images;
+  } else {
+    paginated_images = [[]];
+    console.log("no images");
   }
 
   async function keydown(event) {

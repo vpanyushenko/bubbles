@@ -1,0 +1,383 @@
+<script>
+  import { v4 as uuid } from "@lukeed/uuid";
+  import { pageStore, configStore } from "../../utils/stores";
+  import { isValidInput } from "../../utils/form";
+  import { configLabel } from "../../utils/config";
+  import Dropdown from "../dropdown/Dropdown.svelte";
+  import { page } from "$app/stores";
+  import { browser } from "$app/environment";
+
+  const _uuid = uuid();
+
+  /** @type {import("$types").Select["id"]} id */
+  export let id = _uuid;
+
+  /** @type {import("$types").Select["label"]} label */
+  export let label = "Select an option";
+
+  /** @type {import("$types").Select["error"]} error */
+  export let error = "An error occurred";
+
+  /** @type {import("$types").Select["value"]} value */
+  export let value = null;
+
+  /** @type {import("$types").Select["type"]} type */
+  export let type = "select";
+
+  /** @type {import("$types").Select["options"]} options */
+  export let options = [];
+
+  /** @type {import("$types").Select["prefix_options"]} prefix_options */
+  export let prefix_options = [];
+
+  /** @type {import("$types").Select["desc"]} desc */
+  export let desc = null;
+
+  /** @type {import("$types").Select["search"]} search */
+  export let search =
+    Array.isArray(options) && Array.isArray(prefix_options) && options.length + prefix_options.length > 5
+      ? true
+      : false;
+
+  /** @type {import("$types").Select["search_threshold"]} search_threshold */
+  export let search_threshold = 0.3;
+
+  /** @type {import("$types").Select["validation"]} validation */
+  export let validation = null;
+
+  /** @type {import("$types").Select["validate_on_blur"]} validate_on_blur */
+  export let validate_on_blur = $configStore.validate_on_blur;
+
+  /** @type {import("$types").Select["min_width"]} min_width */
+  export let min_width = true;
+
+  /** @type {boolean} debug */
+  export let debug = false;
+
+  /** @type {import("$types").Select["onselect"]} onselect */
+  export let onselect;
+
+  $: if (Array.isArray(prefix_options) && prefix_options.length) {
+    options = [...prefix_options, ...options];
+  }
+
+  const _label = configLabel(label, validation);
+
+  let timestamp = 0;
+  let kd_timestamp = 0; //TODO: keydown fires three times so this is a hack to fix it for now
+
+  let title = "Select an option";
+  let is_focused = false;
+  let is_list_open = false;
+
+  $: is_loading = $pageStore.loading.includes(id);
+  $: is_error = $pageStore.errors && $pageStore.errors.findIndex((item) => item === id) >= 0 ? true : false;
+
+  $: if (is_error) {
+    setTimeout(() => {
+      hideError();
+    }, $configStore.error_delay);
+  }
+
+  //Stop the loading animation if the page is no longer loading
+  $: if ($pageStore.loading.includes(id) && browser) {
+    if (window.location.href === $page.url.href) {
+      $pageStore.loading = [...$pageStore.loading.filter((id) => id !== id)];
+    }
+  }
+
+  $: if (value !== undefined) {
+    const option = options.find((item) => item.value === value);
+    if (debug) console.log("Selected options", option);
+    if (!option) title = "Select an option";
+    if (option?.label) title = option.label;
+  }
+
+  $: if (value !== undefined) {
+    is_list_open = false;
+  }
+
+  $: if (is_focused) {
+    hideError();
+  }
+
+  function hideError() {
+    $pageStore.errors = $pageStore.errors.filter((a) => a !== id);
+  }
+
+  /**
+   * Toggles the select
+   * @param {Event} event
+   * @return {void}
+   */
+  function toggleSelectWithClick(event) {
+    event.preventDefault();
+
+    if (!is_focused) is_focused = true;
+
+    //the focus event fires before the click event
+    //check to make sure the focus event didn't open
+    if (event.timeStamp - timestamp > 200) {
+      if (!is_list_open) {
+        is_list_open = true;
+      } else {
+        is_list_open = false;
+      }
+    }
+  }
+
+  /**
+   * @param {Event} event
+   * @return {void}
+   */
+  function selectFocused(event) {
+    $pageStore.clicked = _uuid;
+    timestamp = event.timeStamp;
+    is_focused = true;
+
+    //if the search was open, the focus would be lost but we force the list open
+    //so when we focus back, we want to close the list
+    if (event?.relatedTarget && event?.relatedTarget?.classList.contains("search")) {
+      is_list_open = false;
+    } else {
+      is_list_open = true;
+    }
+  }
+
+  /**
+   * @param {Event} event
+   * @return {void}
+   */
+  function selectBlurred(event) {
+    if (event.relatedTarget && event.relatedTarget.classList.contains("search")) {
+      return;
+    }
+
+    is_focused = false;
+    is_list_open = false;
+
+    if (validate_on_blur === true) {
+      if (validation && !isValidInput(value, validation)) {
+        if ($pageStore.errors === undefined) {
+          $pageStore.errors = [];
+        }
+
+        if (!$pageStore.errors.includes(id)) {
+          $pageStore.errors.push(id);
+          $pageStore.errors = $pageStore.errors;
+        }
+      }
+    }
+  }
+
+  /**
+   * Toggles the select
+   * @param {Event} event
+   * @return {Promise<void>}
+   */
+  async function keydown(event) {
+    if (
+      event?.target?.id === id &&
+      event.timeStamp - kd_timestamp > 200 &&
+      (event.key === "Enter" || event.key === " ")
+    ) {
+      event.preventDefault();
+      setTimeout(() => {
+        kd_timestamp = event.timeStamp;
+        if (!is_list_open) is_list_open = true;
+      }, 0);
+    }
+  }
+</script>
+
+<svelte:body on:keydown={keydown} />
+
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+<div
+  class="form__field__container select js-bubbles-field-container js-bubbles-select"
+  class:is_list_open
+  class:min__width={min_width}
+  {id}
+  tabindex="0"
+  on:focus={selectFocused}
+  on:blur={selectBlurred}
+>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="head" class:is_loading class:error={is_error} on:click={toggleSelectWithClick}>
+    {#if label}
+      <div class="label" class:hidden={is_error}>{_label}</div>
+    {/if}
+    <div class="label error" class:hidden={!is_error}>{error}</div>
+    <span class="value">{title}</span>
+  </div>
+
+  <Dropdown
+    bind:is_list_open
+    bind:options
+    bind:is_parent_focused={is_focused}
+    {search}
+    {search_threshold}
+    bind:value
+    {type}
+    on:select={(event) => {
+      is_list_open = false;
+      kd_timestamp = event.timeStamp;
+      if (onselect) onselect(event?.detail?.value, event);
+    }}
+  />
+
+  {#if desc}
+    <p class="field__desc">{@html desc}</p>
+  {/if}
+</div>
+
+<style>
+  .select {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .min__width {
+    min-width: 15.625rem;
+  }
+
+  .select:focus .head {
+    border-color: var(--primary);
+  }
+
+  .head {
+    position: relative;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    display: block;
+    height: 5rem;
+    padding: 0 2.875rem 0 1.25rem;
+    border: 2px solid transparent;
+    background: rgba(228, 228, 228, 0.3);
+    border-radius: 1rem;
+    font-weight: 600;
+    color: var(--gray);
+    transition: all 0.25s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-align: left;
+  }
+
+  .head:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 1.25rem;
+    transform: translateY(-50%);
+    width: 0.875rem;
+    height: 8px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath fill='%231b1d21' d='M.293.293A1 1 0 0 1 1.613.21l.094.083L7 5.585 12.293.293a1 1 0 0 1 1.32-.083l.094.083a1 1 0 0 1 .083 1.32l-.083.094-6 6a1 1 0 0 1-1.32.083l-.094-.083-6-6a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E")
+      no-repeat 50% 50%/100% auto;
+    transition: transform 0.25s;
+  }
+
+  .head.is_loading:before {
+    content: "";
+    background: none;
+    transition: none;
+    transform: none;
+    position: absolute;
+    top: 35%;
+    right: 1.25rem;
+    box-sizing: border-box;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #fff;
+    animation: spinner 0.6s linear infinite;
+  }
+
+  /* .head.disabled {
+    cursor: not-allowed;
+  }
+
+  .head.disabled:before {
+    content: none;
+  } */
+
+  .label {
+    margin-bottom: 0 !important;
+    padding-top: 1rem;
+    padding-bottom: 4px;
+    pointer-events: none;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: var(--gray);
+    transition: transform 0.2s;
+  }
+
+  .error {
+    color: var(--error) !important;
+    border-color: var(--error) !important;
+  }
+
+  .value {
+    color: var(--black);
+  }
+
+  .select.is_list_open .head {
+    border-color: var(--primary);
+    background: #ffffff;
+    color: var(--black);
+  }
+
+  .select.is_list_open .head:not(.is_loading):before {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  .label {
+    margin-bottom: 0 !important;
+    padding-top: 1rem;
+    padding-bottom: 4px;
+    pointer-events: none;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: var(--gray);
+    transition: transform 0.2s;
+  }
+
+  .value {
+    color: var(--black);
+  }
+
+  .field__desc {
+    padding: 0.625rem 1.375rem 0 !important;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33333;
+    color: var(--gray);
+  }
+
+  :global(html.dark) .head {
+    background: var(--dark);
+    color: var(--gray-lighter);
+  }
+  :global(html.dark) .head:before {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath fill='white' d='M.293.293A1 1 0 0 1 1.613.21l.094.083L7 5.585 12.293.293a1 1 0 0 1 1.32-.083l.094.083a1 1 0 0 1 .083 1.32l-.083.094-6 6a1 1 0 0 1-1.32.083l-.094-.083-6-6a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E")
+      no-repeat 50% 50%/100% auto;
+  }
+  :global(html.dark) .head.is_loading:before {
+    background: none;
+  }
+
+  :global(html.dark) .select.is_list_open .head {
+    background: var(--dark-darker);
+    color: var(--gray-lighter);
+  }
+
+  :global(html.dark) .label,
+  :global(html.dark) .value {
+    color: var(--gray-lighter);
+  }</style>

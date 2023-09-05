@@ -7,6 +7,6 @@
 <Card height100={true}>
   <CardHeader title="Demo" border={false} />
   <div class="d-flex">
-    <Divider label="TEXT IN THE MIDDLE" />
+    <Divider label="TEXT IN THE MIDDLE" tag={{ label: "Chip" }} />
   </div>
 </Card>

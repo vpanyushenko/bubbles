@@ -9,15 +9,13 @@
   import arrow_up from "./arrow-up.svg";
   import arrow_down from "./arrow-down.svg";
 
-  /**
-   * @prop {Array<Cell>} cells - the details for the header cells.
-   */
+  /** @prop {Array<import("$types").TableHeaderCell>} cells - the details for the header cells */
   export let cells = [];
+
+  /** @prop {boolean} [hidden=false] - whether the header is hidden */
   export let hidden = false;
 
-  if (!$pageStore.table) {
-    $pageStore.table = {};
-  }
+  if (!$pageStore.table) $pageStore.table = {};
 
   $pageStore.table.selected_table_rows = 0;
   $pageStore.table.checkbox_options = [];
@@ -48,7 +46,7 @@
     }
   }
 
-  $: if (cells.find((obj) => obj.checkbox === true)) {
+  $: if (Array.isArray(cells) && cells.find((obj) => obj.checkbox === true)) {
     const checkbox_cell = cells.find((obj) => obj.checkbox === true);
 
     if (checkbox_cell.options && checkbox_cell.options.length) {
@@ -68,6 +66,7 @@
       {#if cell.checkbox}
         <Checkbox onchange={selectAll} bind:value={checkbox_value} />
       {:else if cell.sort}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <span
           class="sort"
           on:click={(event) => {
